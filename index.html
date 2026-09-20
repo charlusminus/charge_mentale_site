@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qui fait quoi à la maison ?</title>
+<meta name="description" content="Faites le compte de la charge mentale du foyer, à deux, en dix minutes. Gratuit, sans compte, rien n'est envoyé.">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260920a">
+<style>
+  /* Charte « Cahier de cuisine », cf docs/design/charte.md. Ces jetons sont la source unique : aucune couleur en dur plus bas. */
+  :root {
+    --bg: #FAF6EF;        /* crème, fond de page */
+    --bg-2: #F1EBDF;      /* crème foncé, blocs de rappel : le pire fond, toutes les mesures se font dessus */
+    --ink: #2A2118;       /* encre brune, texte et boutons pleins : 13,3:1 sur bg-2 */
+    --muted: #6B5F53;     /* texte secondaire : 5,2:1 sur bg-2 */
+    --line: #D3C8B6;      /* séparateurs de lignes, décoratifs (1,5:1, assumé : ce n'est pas une bordure de composant) */
+    --border: #8A7E70;    /* bordures de champs et de groupes de boutons : 3,3:1 sur bg-2 */
+    --a: #1F6F6B;         /* couleur de la première personne (teal) : blanc dessus 5,9:1 */
+    --b: #B5502A;         /* couleur de la deuxième personne (terracotta) : blanc dessus 5,1:1 */
+    --both: #6B5F53;      /* « les deux » et « quelqu'un d'autre » : pas de troisième couleur */
+    --a-clair: #8FD3CF;   /* prénom 1 sur fond encre (bandeau) : 9,3:1 */
+    --b-clair: #F2B08F;   /* prénom 2 sur fond encre (bandeau) : 8,6:1 */
+    --paper: #FFFFFF;     /* cartes et champs */
+    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+    --r: 8px;             /* rayon unique */
+    --max: 880px;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 17px; scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.5; }
+  main { max-width: var(--max); margin: 0 auto; padding: 0 16px 120px; }
+  h1, h2, h3 { line-height: 1.15; margin: 0; font-weight: 600; letter-spacing: -0.01em; }
+  h1, h2, .stat strong { font-family: var(--serif); font-weight: 600; letter-spacing: 0; }
+  h1 { font-size: clamp(2.4rem, 6vw, 3.4rem); max-width: 14ch; line-height: 1.08; }
+  h1, h2, h3, .stat strong, .verdict, .resultats th, .resultats td strong { font-variation-settings: "opsz" 40; }
+  h2 { font-size: 1.8rem; margin-bottom: .4rem; }
+  h3 { font-size: 1.05rem; }
+  p { margin: .5rem 0; }
+  .muted { color: var(--muted); }
+  small, .small { font-size: .85rem; }
+  button, input, select { font: inherit; color: inherit; }
+  .btn { display: inline-block; padding: .8rem 1.4rem; border-radius: var(--r); border: 1.5px solid var(--ink); background: var(--ink); color: var(--bg); cursor: pointer; text-decoration: none; font-weight: 600; }
+  .btn.secondary { background: transparent; color: var(--ink); }
+  .btn:hover { background: var(--muted); border-color: var(--muted); color: var(--paper); }
+  .btn.secondary:hover { background: var(--bg-2); color: var(--ink); }
+  .btn[disabled] { opacity: .4; cursor: default; }
+  .ecran { display: none; }
+  .ecran.actif { display: block; }
+
+  /* fil d'étapes */
+  .fil { display: flex; gap: 1.2rem; padding: 18px 0; font-size: .85rem; color: var(--muted); border-bottom: 1px solid var(--line); }
+  .fil span { display: flex; align-items: center; gap: .4rem; }
+  .fil span::before { content: attr(data-n); display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--line); font-size: .75rem; }
+  .fil span.on { color: var(--ink); font-weight: 600; }
+  .fil span.on::before { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .fil span.fait::before { background: var(--bg-2); border-color: var(--ink); }
+
+  /* accueil */
+  header.hero { padding: 64px 0 0; }
+  header.hero p.lead { font-size: 1.2rem; max-width: 46ch; margin: 1.2rem 0 0; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin: 64px 0; }
+  .stat { padding-top: .9rem; border-top: 1.5px solid var(--ink); }
+  .stat strong { display: block; font-size: 2.3rem; line-height: 1.1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .stat span { color: var(--muted); font-size: .9rem; }
+  .stat small { display: block; margin-top: .4rem; color: var(--muted); font-size: .75rem; }
+  .pourquoi { max-width: 60ch; }
+  .demarrer { margin-top: 64px; padding: 32px; background: var(--bg-2); border-radius: var(--r); }
+  .demarrer .nav { margin: 1.4rem 0 0; }
+  .prenoms { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 520px; margin-top: .8rem; }
+  .prenoms label, .enfants label { display: block; font-size: .85rem; color: var(--muted); margin-bottom: .3rem; }
+  .prenoms input, .enfants select { padding: .7rem .8rem; border: 1.5px solid var(--border); border-radius: var(--r); background: var(--paper); width: 100%; }
+  .prenoms input:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
+  .prenoms .a input { border-color: var(--a); }
+  .prenoms .b input { border-color: var(--b); }
+  .enfants { margin-top: 1rem; max-width: 250px; }
+
+  /* étape 2 */
+  section { padding: 36px 0 0; }
+  .etape { color: var(--muted); font-size: .85rem; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .6rem; }
+  .legende { margin: 1rem 0 0; font-size: .92rem; }
+  .legende summary { cursor: pointer; color: var(--muted); }
+  .legende dl { display: grid; grid-template-columns: auto 1fr; gap: .3rem 1rem; margin: .6rem 0 0; padding: .9rem 1.1rem; background: var(--bg-2); border-radius: var(--r); }
+  .legende dt { font-weight: 600; white-space: nowrap; }
+  .legende dd { margin: 0; }
+  .categorie { margin-top: 2rem; }
+  .categorie h3 { padding-bottom: .4rem; border-bottom: 1.5px solid var(--ink); }
+  /* colonnes : libellé | 5 cases « s'en occupe » | espace | 4 cases « y pense » */
+  .entete, .tache { display: grid; grid-template-columns: minmax(0, 1fr) repeat(5, 34px) 20px repeat(4, 34px); gap: 0 .2rem; align-items: center; }
+  .entete { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: .5rem 0 .35rem; border-bottom: 1.5px solid var(--ink); font-size: .7rem; color: var(--muted); text-align: center; line-height: 1.15; align-items: end; margin-top: 1.2rem; }
+  .entete span { overflow: hidden; overflow-wrap: anywhere; }
+  .entete .leg { text-align: left; font-size: .8rem; align-self: end; padding-bottom: .25rem; }
+  .sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin: 0 .25rem 0 0; }
+  .sw.a { background: var(--a); } .sw.b { background: var(--b); }
+  .entete > .sw { margin: 0 auto .35rem; width: 14px; height: 14px; }
+  .entete .grp { font-weight: 600; color: var(--ink); text-align: left; padding-bottom: .25rem; }
+  .entete .grp.g1 { grid-column: 2 / span 5; } .entete .grp.g2 { grid-column: 8 / span 4; }
+  .entete .ca { color: var(--a); font-weight: 600; } .entete .cb { color: var(--b); font-weight: 600; }
+  .tache { min-height: 56px; border-bottom: 1px solid var(--line); padding: .3rem 0; }
+  .tache.off .nom, .tache.off .aide { opacity: .45; }
+  .tache .txt { min-width: 0; padding-right: .6rem; }
+  .tache .nom { font-weight: 500; }
+  .tache .aide { color: var(--muted); font-size: .82rem; display: block; }
+  .tache .sep { }
+  .case { width: 28px; height: 28px; margin: 0 auto; border-radius: 6px; border: 1.5px solid var(--border); background: var(--paper); cursor: pointer; display: grid; place-items: center; color: transparent; font-size: .85rem; line-height: 1; padding: 0; }
+  .case:hover { border-color: var(--ink); }
+  .case.on-a { background: var(--a); border-color: var(--a); color: var(--paper); }
+  .case.on-b { background: var(--b); border-color: var(--b); color: var(--paper); }
+  .case.on-both { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .case.on-other { background: var(--muted); border-color: var(--muted); color: var(--paper); }
+  .case.on-none { background: var(--bg-2); border-color: var(--border); color: var(--muted); }
+  /* « y pense » : cochée à 55 % quand elle suit la réponse du dessus, pleine quand c'est un choix explicite */
+  .case.suit { opacity: .55; }
+  .case.inactive { border-color: var(--line); background: transparent; cursor: default; }
+  .case.inactive:hover { border-color: var(--line); }
+  .case.vide { visibility: hidden; }
+  .ajout-lien { display: inline-block; margin-top: .6rem; font-size: .88rem; color: var(--muted); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .ajout { margin-top: .8rem; display: flex; gap: .5rem; flex-wrap: wrap; }
+  .ajout input { flex: 1; min-width: 200px; padding: .5rem .7rem; border: 1.5px dashed var(--border); border-radius: var(--r); background: transparent; }
+  .ajout button { padding: .5rem .9rem; border-radius: var(--r); border: 1.5px solid var(--ink); background: transparent; cursor: pointer; }
+  .nav { margin: 2rem 0; display: flex; gap: .7rem; flex-wrap: wrap; align-items: center; }
+  .jalon { margin-top: 2.4rem; padding: 1.4rem 1.6rem; background: var(--bg-2); border-radius: 12px; }
+  .jalon p { max-width: 60ch; }
+  .jalon .nav { margin: 1rem 0 0; }
+
+  /* résultats */
+  .verdict { font-family: var(--serif); font-size: 1.65rem; line-height: 1.3; margin: 1.2rem 0 0; }
+  .verdict .pa { color: var(--a); } .verdict .pb { color: var(--b); }
+  .resultats { width: 100%; border-collapse: collapse; margin-top: 1.4rem; }
+  .resultats th { text-align: left; font-family: var(--serif); font-weight: 600; font-size: 1.3rem; padding: .4rem 0 .5rem; border-bottom: 1.5px solid var(--ink); }
+  .resultats th.a { color: var(--a); } .resultats th.b { color: var(--b); }
+  .resultats td { padding: .7rem 0; border-bottom: 1px solid var(--line); vertical-align: baseline; }
+  .resultats td.lbl { color: var(--muted); font-size: .9rem; width: 34%; }
+  .resultats td strong { font-family: var(--serif); font-weight: 600; font-size: 1.9rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .resultats td small { display: block; color: var(--muted); font-size: .82rem; }
+  .parcat { margin-top: 2.4rem; }
+  .parcat h3 { font-family: var(--serif); font-size: 1.3rem; }
+  .legende-barres { display: flex; gap: 1.2rem; font-size: .82rem; color: var(--muted); margin: .4rem 0 .6rem; }
+  .legende-barres i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: .35rem; vertical-align: middle; }
+  .barre { display: grid; grid-template-columns: 220px 1fr 64px; gap: 1rem; align-items: center; padding: .45rem 0; font-size: .9rem; }
+  .barre .val { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .barre .track { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--bg-2); }
+  .barre .fa { background: var(--a); } .barre .fb { background: var(--b); } .barre .fboth { background: var(--both); }
+  .lecture { margin-top: 1.6rem; padding: 1rem 1.2rem; background: var(--bg-2); border-radius: 12px; }
+  .actions { margin-top: 1.6rem; display: flex; gap: .7rem; flex-wrap: wrap; }
+  .apropos { font-size: .9rem; color: var(--muted); max-width: 64ch; }
+  /* affinage du temps */
+  .affiner { margin-top: 2.4rem; }
+  .affiner table { width: 100%; border-collapse: collapse; font-size: .9rem; margin-top: .6rem; }
+  .affiner th { text-align: left; font-weight: 600; padding: .5rem .4rem; border-bottom: 1.5px solid var(--ink); font-size: .8rem; color: var(--muted); }
+  .affiner td { padding: .4rem .4rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  .affiner tr.cat td { padding-top: 1rem; font-weight: 600; border-bottom: 0; }
+  .affiner input, .affiner select { padding: .2rem .35rem; border: 1px solid var(--border); border-radius: 6px; background: var(--paper); font-size: .85rem; }
+  .affiner input { width: 3.6rem; }
+  .affiner .hj { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .affiner .qui-cell { white-space: nowrap; }
+  .pastille { display: inline-block; width: 10px; height: 10px; border-radius: 50%; vertical-align: middle; margin-right: .3rem; }
+  .pastille.a { background: var(--a); } .pastille.b { background: var(--b); } .pastille.both { background: var(--ink); } .pastille.other { background: var(--muted); }
+
+  .suivi { position: fixed; left: 0; right: 0; bottom: 0; background: var(--bg-2); border-top: 1px solid var(--line); padding: .55rem 16px; font-variant-numeric: tabular-nums; display: none; }
+  .suivi.on { display: block; }
+  .suivi .prog { position: absolute; left: 0; top: -1px; height: 3px; width: 100%; background: transparent; }
+  .suivi .prog i { display: block; height: 100%; background: var(--a); }
+  .suivi div { max-width: var(--max); margin: 0 auto; display: flex; gap: 1rem; align-items: center; font-size: .95rem; }
+  .suivi .btn { margin-left: auto; padding: .5rem 1rem; }
+  footer { padding: 32px 0; color: var(--muted); font-size: .85rem; }
+
+  @media (max-width: 720px) {
+    .prenoms { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr; gap: 1.2rem; }
+    /* mobile : le libellé prend toute la largeur, les neuf cases dessous, alignées sur l'en-tête */
+    .entete, .tache { grid-template-columns: repeat(5, 1fr) 12px repeat(4, 1fr); gap: 0 .15rem; }
+    .entete .grp.g1 { grid-column: 1 / span 5; } .entete .grp.g2 { grid-column: 7 / span 4; }
+    .entete > .leg { grid-column: 1 / -1; padding-bottom: .4rem; }
+    .entete > span:nth-child(4) { display: none; }
+    .entete { font-size: .66rem; }
+    .tache .txt { grid-column: 1 / -1; padding: 0 0 .35rem; }
+    .case { width: 30px; height: 30px; }
+    .barre { grid-template-columns: 1fr 56px; gap: .2rem .6rem; }
+    .barre > span:first-child { grid-column: 1 / -1; }
+    .legende dl { grid-template-columns: 1fr; }
+    .affiner .cache { display: none; }
+  }
+  @media print { .suivi, .actions, .ajout, .nav, .fil { display: none; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="fil" id="fil"><span data-n="1">Vous</span><span data-n="2">Qui fait quoi</span><span data-n="3">Le compte</span></div>
+
+  <!-- ÉCRAN 1 : accueil -->
+  <div class="ecran" id="e1">
+    <header class="hero">
+      <h1>Qui fait quoi<br>à la maison ?</h1>
+      <p class="lead">Faites le compte à deux, en dix minutes. Les tâches sont déjà listées : pour chacune, dites qui s'en occupe et qui y pense. Vous lisez ensuite combien d'heures par jour et combien de choses à garder en tête ça représente pour chacun.</p>
+      </header>
+
+    <div class="stats">
+      <div class="stat"><strong>20 %</strong><span>des couples où les deux travaillent décrivent un partage égal des tâches</span><small>INED, enquête FAMEMP, 2025</small></div>
+      <div class="stat"><strong>4 h contre 2 h</strong><span>de travail domestique par jour, femmes et hommes. Le temps des hommes n'a pas bougé depuis 1999</span><small>INSEE, Emploi du temps, 2010</small></div>
+      <div class="stat"><strong>86 %</strong><span>de temps en plus passé à penser aux tâches qu'à les faire</span><small>Invisible Load Index, 6 000 Européens, 2024</small></div>
+    </div>
+
+    <div class="pourquoi">
+      <h2>Pourquoi faire l'exercice</h2>
+      <p>La plupart des couples n'ont jamais listé ce qu'il y a à faire. Chacun voit ce qu'il fait, et une partie de ce que l'autre fait. Le reste est invisible : remarquer qu'il n'y a plus de lessive, savoir quand tombe le rendez-vous chez le dentiste, vérifier que le sac de piscine est prêt. Ce travail-là ne prend pas d'heures, il prend de la place dans la tête.</p>
+      <p>Cette page ne juge rien. Elle met des chiffres à la place des impressions, pour que la conversation parte de quelque chose de concret. Chez nous, la première version a surtout révélé les tâches que personne ne voyait.</p>
+    </div>
+
+    <div class="demarrer">
+      <h2>On commence par vous</h2>
+      <div class="prenoms">
+        <div class="a"><label for="nomA">Prénom 1</label><input id="nomA" placeholder="Prénom"></div>
+        <div class="b"><label for="nomB">Prénom 2</label><input id="nomB" placeholder="Prénom"></div>
+      </div>
+      <div class="enfants">
+        <label for="enfants">Enfants à la maison</label>
+        <select id="enfants"><option value="0">Aucun</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option></select>
+      </div>
+      <div class="nav"><button class="btn" id="go2">Commencer</button><span class="small muted" id="hint1">Gratuit, sans compte. Rien n'est envoyé : tout se calcule dans votre navigateur.</span></div>
+    </div>
+  </div>
+
+  <!-- ÉCRAN 2 : qui fait quoi -->
+  <div class="ecran" id="e2">
+    <section>
+      <h2>Qui fait quoi</h2>
+      <p class="muted">Pour chaque tâche, cochez qui s'en occupe. Les tâches vont du plus courant au plus rare : si vous vous arrêtez en route, vous aurez répondu à ce qui compte le plus.</p>
+      <details class="legende"><summary>Les cinq réponses, et ce que veut dire « y pense »</summary>
+        <dl>
+          <dt>Prénom 1, Prénom 2</dt><dd>la personne qui fait la tâche. C'est ce qui compte en heures.</dd>
+          <dt>Les deux</dt><dd>à parts égales, ou à tour de rôle.</dd>
+          <dt>Quelqu'un d'autre</dt><dd>aide à domicile, grands-parents, nounou, enfants : la tâche existe mais ne pèse sur aucun de vous deux.</dd>
+          <dt>Pas chez nous</dt><dd>la tâche n'existe pas chez vous, elle sort du compte.</dd>
+          <dt>Y pense</dt><dd>la personne qui remarque qu'il faut le faire, planifie et vérifie. La petite ligne « y pense » suit votre réponse : ne la changez que si c'est vraiment quelqu'un d'autre. C'est la charge mentale, comptée en nombre de choses à garder en tête. Les tâches qui sont déjà du « penser à » (décider, suivre, organiser) ne posent pas la question.</dd>
+        </dl>
+      </details>
+      <div id="catalogue"></div>
+      <div class="nav"><button class="btn secondary" id="back1">Retour</button><button class="btn" id="go3">Voir le compte</button><span class="small muted" id="hint2"></span></div>
+    </section>
+  </div>
+
+  <!-- ÉCRAN 3 : le compte -->
+  <div class="ecran" id="e3">
+    <section>
+      <h2>Votre répartition</h2>
+      <p class="muted">Calculée avec des durées courantes pour chaque tâche. Affinez-les plus bas avec votre réalité : le compte se met à jour en direct.</p>
+      <p class="verdict" id="verdict"></p>
+      <table class="resultats" id="cartes"></table>
+      <div class="parcat" id="parcat"></div>
+      <div class="lecture" id="lecture"></div>
+      <div class="actions">
+        <button class="btn" id="xlsx">Télécharger en Excel</button>
+        <button class="btn secondary" id="partager">Copier le lien</button>
+        <button class="btn secondary" onclick="window.print()">Imprimer</button>
+      </div>
+      <p class="small muted" id="partage-ok"></p>
+
+      <div class="affiner">
+        <h2>Affinez le temps</h2>
+        <p class="muted">Les valeurs proposées viennent d'enquêtes sur le temps domestique. Corrigez ce qui ne correspond pas à chez vous : combien de fois, et combien de minutes à chaque fois.</p>
+        <table id="table-affiner"></table>
+      </div>
+
+      <div class="nav"><button class="btn secondary" id="back2">Modifier qui fait quoi</button><button class="btn secondary" id="reset">Recommencer</button></div>
+      <p class="apropos">D'où viennent les durées par défaut : de l'enquête Emploi du temps de l'INSEE (2010), qui mesure le temps domestique au carnet, et du jeu de cartes Fair Play (Eve Rodsky, 2019) pour les tâches que le carnet ne voit pas. Un couple avec enfants qui garde toutes les valeurs par défaut totalise environ 9 heures par jour, ce que l'INSEE observe. La distinction « y penser » et « s'en occuper » vient des travaux d'Allison Daminger (2019) : anticiper et vérifier, c'est du travail, même quand quelqu'un d'autre exécute.</p>
+    </section>
+  </div>
+
+  <footer>Un tableur tenu à deux depuis 2025, rendu utilisable par tous. Le lien de partage contient vos réponses, rien d'autre. Code ouvert.</footer>
+</main>
+
+<div class="suivi" id="suivi"><span class="prog"><i id="prog" style="width:0%"></i></span><div>
+  <span id="nTaches"></span>
+  <button class="btn" id="suiviBtn">Voir le compte</button>
+</div></div>
+
+<script src="catalogue.js?v=20260920a"></script>
+<script>
+(function () {
+  const C = window.CATALOGUE;
+  const J = C.periodes;
+  const WHO = ["a", "b", "both", "other", "none"];
+  const FAMILLES_ENFANTS = new Set(["enfants-quotidien", "enfants-suivi"]);
+  const TACHES_ENFANTS = new Set(["employeur"]);
+
+  // état : { nomA, nomB, enfants, ecran, t: { id: {fait, pense, n, p, d} }, custom: [{id, cat, nom, aide}] }
+  let S = load() || fresh();
+
+  function fresh() {
+    const s = { nomA: "", nomB: "", enfants: 0, ecran: 1, t: {}, custom: [] };
+    for (const cat of C.categories) for (const t of cat.taches) s.t[t.id] = { fait: null, pense: null, n: t.n, p: t.periode, d: t.duree };
+    return s;
+  }
+  function load() { try { const h = location.hash.slice(1); if (!h) return null; return JSON.parse(decodeURIComponent(escape(atob(h)))); } catch (e) { return null; } }
+  function encode() { return btoa(unescape(encodeURIComponent(JSON.stringify(S)))); }
+  function save() { history.replaceState(null, "", "#" + encode()); }
+
+  function visibleCats() { return C.categories.filter(c => S.enfants > 0 || !FAMILLES_ENFANTS.has(c.id)); }
+  function visibleTasks(cat) { return [...cat.taches.filter(t => S.enfants > 0 || !TACHES_ENFANTS.has(t.id)), ...S.custom.filter(c => c.cat === cat.id)]; }
+  function allTasks() { const out = []; for (const cat of visibleCats()) for (const t of visibleTasks(cat)) out.push({ ...t, cat: cat.id, catNom: cat.nom }); return out; }
+  function hj(st) { return (st.n * st.d / 60) / J[st.p]; }
+  function fmt(x, dec = 1) { return x.toFixed(dec).replace(".", ","); }
+  function nomA() { return S.nomA.trim() || "Prénom 1"; }
+  function nomB() { return S.nomB.trim() || "Prénom 2"; }
+  function label(k) { return k === "a" ? nomA() : k === "b" ? nomB() : k === "both" ? "les deux" : k === "other" ? "quelqu'un d'autre" : "pas chez nous"; }
+  function penseOf(st, t) { return (t && t.mental) || st.pense === null ? st.fait : st.pense; }
+  function parts(who) { return who === "a" || who === "b" ? [[who, 1]] : who === "both" ? [["a", .5], ["b", .5]] : []; }
+
+  function compute() {
+    const r = { a: { h: 0, nFait: 0, nPense: 0 }, b: { h: 0, nFait: 0, nPense: 0 }, cats: {}, renseignees: 0, total: 0 };
+    for (const t of allTasks()) {
+      r.total++;
+      const st = S.t[t.id]; if (!st || st.fait === null) continue;
+      r.renseignees++;
+      if (st.fait === "none") continue;
+      const h = hj(st);
+      const cat = r.cats[t.cat] || (r.cats[t.cat] = { nom: t.catNom, a: 0, b: 0, both: 0 });
+      if (st.fait === "both") cat.both += h; else if (st.fait === "a" || st.fait === "b") cat[st.fait] += h;
+      for (const [who, k] of parts(st.fait)) { r[who].h += h * k; r[who].nFait += k; }
+      for (const [who, k] of parts(penseOf(st, t))) { r[who].nPense += k; }
+    }
+    return r;
+  }
+
+  /* ---------- écrans ---------- */
+  function show(n) {
+    S.ecran = n;
+    document.querySelectorAll(".ecran").forEach((e, i) => e.classList.toggle("actif", i + 1 === n));
+    document.querySelectorAll("#fil span").forEach((s, i) => { s.classList.toggle("on", i + 1 === n); s.classList.toggle("fait", i + 1 < n); });
+    document.getElementById("suivi").classList.toggle("on", n === 2);
+    if (n === 2) renderCatalogue();
+    if (n === 3) renderAffiner();
+    update();
+    window.scrollTo(0, 0);
+  }
+
+  /* ---------- écran 2 ---------- */
+  function renderCatalogue() {
+    const root = document.getElementById("catalogue");
+    root.innerHTML = "";
+    const cats = visibleCats();
+    const derniereEssentielle = cats.filter(c => c.essentiel).slice(-1)[0];
+    const entete = document.createElement("div"); entete.className = "entete";
+    const sw = `<i class="sw a"></i><span class="ca">${nomA()}</span> <i class="sw b"></i><span class="cb">${nomB()}</span>`;
+    entete.innerHTML = `<span class="leg">${sw}</span><span class="grp g1">S'en occupe</span><span class="grp g2">Y pense</span>
+      <span></span><i class="sw a"></i><i class="sw b"></i><span>les deux</span><span>autre</span><span>pas chez nous</span><span></span><i class="sw a"></i><i class="sw b"></i><span>les deux</span><span>autre</span>`;
+    root.appendChild(entete);
+    for (const cat of cats) {
+      const box = document.createElement("div"); box.className = "categorie";
+      box.innerHTML = `<h3>${cat.nom}</h3>`;
+      for (const t of visibleTasks(cat)) box.appendChild(renderTask(t));
+      const lien = document.createElement("button"); lien.type = "button"; lien.className = "ajout-lien"; lien.textContent = "Ajouter une tâche dans « " + cat.nom + " »";
+      const add = document.createElement("form"); add.className = "ajout"; add.hidden = true;
+      add.innerHTML = `<input placeholder="Nom de la tâche" aria-label="Nouvelle tâche"><button type="submit">Ajouter</button>`;
+      lien.addEventListener("click", () => { add.hidden = false; lien.hidden = true; add.querySelector("input").focus(); });
+      add.addEventListener("submit", e => {
+        e.preventDefault();
+        const nom = add.querySelector("input").value.trim(); if (!nom) return;
+        const id = "c-" + Date.now().toString(36);
+        S.custom.push({ id, cat: cat.id, nom, aide: "" });
+        S.t[id] = { fait: null, pense: null, n: 1, p: "semaine", d: 30 };
+        renderCatalogue(); update();
+      });
+      box.appendChild(lien); box.appendChild(add);
+      root.appendChild(box);
+      if (cat === derniereEssentielle) {
+        const j = document.createElement("div"); j.className = "jalon";
+        const reste = cats.filter(c => !c.essentiel).map(c => c.nom.toLowerCase()).join(", ");
+        j.innerHTML = `<h3>L'essentiel est fait</h3><p>Vous pouvez voir le compte maintenant. Le reste (${reste}) affine le résultat : c'est là que se cache souvent le « y penser ».</p>
+          <div class="nav"><button class="btn" type="button">Voir le compte</button><button class="btn secondary" type="button">Continuer</button></div>`;
+        const [voir, cont] = j.querySelectorAll("button");
+        voir.addEventListener("click", () => show(3));
+        cont.addEventListener("click", () => j.nextElementSibling && j.nextElementSibling.scrollIntoView({ behavior: "smooth", block: "start" }));
+        root.appendChild(j);
+      }
+    }
+  }
+
+  function renderTask(t) {
+    const st = S.t[t.id];
+    const el = document.createElement("div"); el.className = "tache" + (st.fait === "none" ? " off" : "");
+    el.innerHTML = `<div class="txt"><span class="nom">${t.nom}</span>${t.aide ? `<span class="aide">${t.aide}</span>` : ""}</div>`;
+    for (const k of WHO) {
+      const c = document.createElement("button"); c.type = "button"; c.className = "case" + (st.fait === k ? " on-" + k : "");
+      c.textContent = "✓"; c.setAttribute("aria-label", label(k)); c.title = label(k);
+      c.addEventListener("click", () => { st.fait = k; st.pense = null; el.replaceWith(renderTask(t)); update(); });
+      el.appendChild(c);
+    }
+    el.appendChild(Object.assign(document.createElement("span"), { className: "sep" }));
+    const actif = !t.mental && st.fait && st.fait !== "none";
+    const cur = actif ? penseOf(st, t) : null;
+    for (const k of ["a", "b", "both", "other"]) {
+      const c = document.createElement("button"); c.type = "button";
+      if (t.mental) { c.className = "case vide"; c.tabIndex = -1; }
+      else if (!actif) { c.className = "case inactive"; c.disabled = true; }
+      else c.className = "case" + (cur === k ? " on-" + k + (st.pense === null ? " suit" : "") : "");
+      c.textContent = "✓"; c.setAttribute("aria-label", "y pense : " + label(k)); c.title = "y pense : " + label(k);
+      if (actif) c.addEventListener("click", () => { st.pense = (k === st.fait) ? null : k; el.replaceWith(renderTask(t)); update(); });
+      el.appendChild(c);
+    }
+    return el;
+  }
+
+  /* ---------- écran 3 ---------- */
+  function renderResults(r) {
+    const cartes = document.getElementById("cartes");
+    const n0 = v => fmt(v, v % 1 ? 1 : 0);
+    cartes.innerHTML = `<tr><th></th><th class="a">${nomA()}</th><th class="b">${nomB()}</th></tr>
+      <tr><td class="lbl">Temps à faire</td><td><strong>${fmt(r.a.h)} h</strong><small>par jour, ${fmt(r.a.h * 7)} h par semaine</small></td><td><strong>${fmt(r.b.h)} h</strong><small>par jour, ${fmt(r.b.h * 7)} h par semaine</small></td></tr>
+      <tr><td class="lbl">Tâches faites</td><td><strong>${n0(r.a.nFait)}</strong></td><td><strong>${n0(r.b.nFait)}</strong></td></tr>
+      <tr><td class="lbl">Tâches à garder en tête</td><td><strong>${n0(r.a.nPense)}</strong></td><td><strong>${n0(r.b.nPense)}</strong></td></tr>`;
+
+    const pc = document.getElementById("parcat");
+    const cats = Object.values(r.cats).filter(c => c.a + c.b + c.both > 0);
+    pc.innerHTML = cats.length ? `<h3>Le temps, par famille de tâches</h3>
+      <div class="legende-barres"><span><i style="background:var(--a)"></i>${nomA()}</span><span><i style="background:var(--both)"></i>les deux</span><span><i style="background:var(--b)"></i>${nomB()}</span></div>` + cats.map(c => {
+      const tot = c.a + c.b + c.both;
+      return `<div class="barre"><span>${c.nom}</span>
+        <div class="track"><div class="fa" style="width:${100 * c.a / tot}%"></div><div class="fboth" style="width:${100 * c.both / tot}%"></div><div class="fb" style="width:${100 * c.b / tot}%"></div></div><span class="val">${fmt(tot, 1)} h/j</span></div>`;
+    }).join("") : "";
+
+    const L = document.getElementById("lecture"), V = document.getElementById("verdict");
+    const tot = r.a.h + r.b.h;
+    if (!tot) { V.textContent = ""; L.textContent = "Aucune tâche attribuée pour l'instant. Revenez à l'étape 2."; return; }
+    const pa = Math.round(100 * r.a.h / tot), pb = 100 - pa;
+    const totP = r.a.nPense + r.b.nPense;
+    const qa = totP ? Math.round(100 * r.a.nPense / totP) : 0;
+    const gros = pa >= 50 ? ["pa", nomA(), pa] : ["pb", nomB(), pb];
+    const tete = qa >= 50 ? ["pa", nomA(), qa] : ["pb", nomB(), 100 - qa];
+    V.innerHTML = gros[0] === tete[0]
+      ? `<span class="${gros[0]}">${gros[1]}</span> porte ${gros[2]} % du temps et ${tete[2]} % de la charge mentale.`
+      : `<span class="${gros[0]}">${gros[1]}</span> porte ${gros[2]} % du temps, <span class="${tete[0]}">${tete[1]}</span> ${tete[2]} % de la charge mentale.`;
+    let txt = `${fmt(tot)} h par jour à faire en tout.`;
+    if (totP) {
+      if (Math.abs(qa - pa) >= 15) {
+        const who = (qa > pa) ? nomA() : nomB();
+        txt += ` L'écart entre faire et y penser est net : ${who} pense à bien plus de choses que le temps ne le montre. C'est là que se loge la charge mentale.`;
+      }
+    }
+    txt += " Ces chiffres ne jugent rien, ils donnent un point de départ pour en parler.";
+    L.textContent = txt;
+  }
+
+  function renderAffiner() {
+    const tb = document.getElementById("table-affiner");
+    let html = `<tr><th>Tâche</th><th class="cache">S'en occupe</th><th>Fois</th><th>par</th><th>Minutes</th><th class="hj">h / jour</th></tr>`;
+    for (const cat of visibleCats()) {
+      const rows = visibleTasks(cat).filter(t => S.t[t.id].fait && S.t[t.id].fait !== "none");
+      if (!rows.length) continue;
+      html += `<tr class="cat"><td colspan="6">${cat.nom}</td></tr>`;
+      for (const t of rows) {
+        const st = S.t[t.id];
+        html += `<tr data-id="${t.id}"><td>${t.nom}</td><td class="cache qui-cell"><i class="pastille ${st.fait}"></i>${label(st.fait)}</td>
+          <td><input type="number" min="0" step="1" value="${st.n}" data-k="n" aria-label="Nombre de fois"></td>
+          <td><select data-k="p" aria-label="Période">${Object.keys(J).map(p => `<option value="${p}" ${p === st.p ? "selected" : ""}>${p}</option>`).join("")}</select></td>
+          <td><input type="number" min="0" step="5" value="${st.d}" data-k="d" aria-label="Minutes"></td>
+          <td class="hj">${fmt(hj(st), 2)}</td></tr>`;
+      }
+    }
+    tb.innerHTML = html;
+    tb.querySelectorAll("tr[data-id]").forEach(tr => {
+      const st = S.t[tr.dataset.id];
+      tr.querySelectorAll("input, select").forEach(inp => inp.addEventListener("input", () => {
+        st[inp.dataset.k] = inp.dataset.k === "p" ? inp.value : (+inp.value || 0);
+        tr.querySelector(".hj").textContent = fmt(hj(st), 2);
+        update();
+      }));
+    });
+  }
+
+  /* ---------- export Excel ---------- */
+  function loadXlsx() {
+    return new Promise((ok, ko) => {
+      if (window.XLSX) return ok(window.XLSX);
+      const s = document.createElement("script");
+      s.src = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
+      s.onload = () => ok(window.XLSX); s.onerror = ko; document.head.appendChild(s);
+    });
+  }
+  function rowsExport() {
+    const rows = [["Famille", "Tâche", "S'en occupe", "Y pense", "Fois", "Par", "Minutes à chaque fois", "Heures par jour", "Heures par semaine"]];
+    for (const t of allTasks()) {
+      const st = S.t[t.id]; if (!st.fait) continue;
+      const off = st.fait === "none";
+      rows.push([t.catNom, t.nom, label(st.fait), off ? "" : label(penseOf(st, t)), off ? "" : st.n, off ? "" : st.p, off ? "" : st.d, off ? "" : +hj(st).toFixed(3), off ? "" : +(hj(st) * 7).toFixed(2)]);
+    }
+    return rows;
+  }
+  async function exportXlsx() {
+    const r = compute();
+    const res = [["", nomA(), nomB()],
+      ["Heures par jour à faire", +r.a.h.toFixed(2), +r.b.h.toFixed(2)],
+      ["Heures par semaine à faire", +(r.a.h * 7).toFixed(1), +(r.b.h * 7).toFixed(1)],
+      ["Tâches faites", r.a.nFait, r.b.nFait],
+      ["Tâches à garder en tête", r.a.nPense, r.b.nPense],
+      [], ["Enfants à la maison", S.enfants], ["Généré le", new Date().toLocaleDateString("fr-FR")], ["Source", "quifaitquoi.org, valeurs par défaut INSEE Emploi du temps 2010 et Fair Play"]];
+    const nomFichier = `qui-fait-quoi-${(nomA() + "-" + nomB()).toLowerCase().replace(/[^a-z0-9-]+/g, "")}`;
+    try {
+      const X = await loadXlsx();
+      const wb = X.utils.book_new();
+      X.utils.book_append_sheet(wb, X.utils.aoa_to_sheet(res), "Résultats");
+      X.utils.book_append_sheet(wb, X.utils.aoa_to_sheet(rowsExport()), "Tâches");
+      X.writeFile(wb, nomFichier + ".xlsx");
+    } catch (e) {
+      // repli sans réseau : CSV, qu'Excel ouvre aussi
+      const csv = [...res, [], ...rowsExport()].map(r => r.map(v => `"${String(v ?? "").replace(/"/g, '""')}"`).join(";")).join("\n");
+      const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" })); a.download = nomFichier + ".csv"; a.click();
+    }
+  }
+
+  /* ---------- mise à jour globale ---------- */
+  function update() {
+    const r = compute();
+    document.getElementById("nTaches").textContent = `${r.renseignees} / ${r.total}`;
+    document.getElementById("prog").style.width = (100 * r.renseignees / Math.max(1, r.total)) + "%";
+    document.getElementById("hint2").textContent = r.renseignees < r.total ? `${r.total - r.renseignees} tâche${r.total - r.renseignees > 1 ? "s" : ""} sans réponse seront ignorées` : "";
+    if (S.ecran === 3) renderResults(r);
+    save();
+  }
+
+  /* ---------- câblage ---------- */
+  const iA = document.getElementById("nomA"), iB = document.getElementById("nomB"), iE = document.getElementById("enfants");
+  iA.value = S.nomA; iB.value = S.nomB; iE.value = String(S.enfants);
+  const onName = () => {
+    S.nomA = iA.value; S.nomB = iB.value;
+    document.querySelectorAll('.entete .ca').forEach(b => b.textContent = nomA());
+    document.querySelectorAll('.entete .cb').forEach(b => b.textContent = nomB());
+    document.querySelectorAll('.resultats th.a').forEach(b => b.textContent = nomA());
+    document.querySelectorAll('.resultats th.b').forEach(b => b.textContent = nomB());
+    update();
+  };
+  iA.addEventListener("input", onName); iB.addEventListener("input", onName);
+  iE.addEventListener("change", () => { S.enfants = +iE.value; update(); });
+  document.getElementById("go2").addEventListener("click", () => {
+    if (!S.nomA.trim() || !S.nomB.trim()) { document.getElementById("hint1").textContent = "Les deux prénoms d'abord."; return; }
+    show(2);
+  });
+  document.getElementById("back1").addEventListener("click", () => show(1));
+  document.getElementById("go3").addEventListener("click", () => show(3));
+  document.getElementById("suiviBtn").addEventListener("click", () => show(3));
+  document.getElementById("back2").addEventListener("click", () => show(2));
+  document.getElementById("xlsx").addEventListener("click", exportXlsx);
+  document.getElementById("partager").addEventListener("click", async () => {
+    const url = location.href;
+    try { await navigator.clipboard.writeText(url); document.getElementById("partage-ok").textContent = "Lien copié. Envoyez-le à l'autre : il retrouvera exactement ce compte."; }
+    catch (e) { document.getElementById("partage-ok").textContent = url; }
+  });
+  document.getElementById("reset").addEventListener("click", () => {
+    if (!confirm("Tout effacer et recommencer ?")) return;
+    S = fresh(); iA.value = iB.value = ""; iE.value = "0"; location.hash = ""; show(1);
+  });
+
+  show(S.ecran || 1);
+})();
+</script>
+</body>
+</html>
