@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Qui fait quoi à la maison ?</title>
 <meta name="description" content="Faites le compte de la charge mentale du foyer, à deux, en dix minutes. Gratuit, sans compte, rien n'est envoyé.">
-<link rel="stylesheet" href="fonts/fonts.css?v=20260920a">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260920b">
 <style>
   /* Charte « Cahier de cuisine », cf docs/design/charte.md. Ces jetons sont la source unique : aucune couleur en dur plus bas. */
   :root {
@@ -86,7 +86,7 @@
   .categorie { margin-top: 2rem; }
   .categorie h3 { padding-bottom: .4rem; border-bottom: 1.5px solid var(--ink); }
   /* colonnes : libellé | 5 cases « s'en occupe » | espace | 4 cases « y pense » */
-  .entete, .tache { display: grid; grid-template-columns: minmax(0, 1fr) repeat(5, 34px) 20px repeat(4, 34px); gap: 0 .2rem; align-items: center; }
+  .entete, .tache { display: grid; grid-template-columns: minmax(0, 1fr) repeat(4, 34px) 20px repeat(4, 34px); gap: 0 .2rem; align-items: center; }
   .entete { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: .5rem 0 .35rem; border-bottom: 1.5px solid var(--ink); font-size: .7rem; color: var(--muted); text-align: center; line-height: 1.15; align-items: end; margin-top: 1.2rem; }
   .entete span { overflow: hidden; overflow-wrap: anywhere; }
   .entete .leg { text-align: left; font-size: .8rem; align-self: end; padding-bottom: .25rem; }
@@ -94,10 +94,9 @@
   .sw.a { background: var(--a); } .sw.b { background: var(--b); }
   .entete > .sw { margin: 0 auto .35rem; width: 14px; height: 14px; }
   .entete .grp { font-weight: 600; color: var(--ink); text-align: left; padding-bottom: .25rem; }
-  .entete .grp.g1 { grid-column: 2 / span 5; } .entete .grp.g2 { grid-column: 8 / span 4; }
+  .entete .grp.g1 { grid-column: 2 / span 4; } .entete .grp.g2 { grid-column: 7 / span 4; }
   .entete .ca { color: var(--a); font-weight: 600; } .entete .cb { color: var(--b); font-weight: 600; }
   .tache { min-height: 56px; border-bottom: 1px solid var(--line); padding: .3rem 0; }
-  .tache.off .nom, .tache.off .aide { opacity: .45; }
   .tache .txt { min-width: 0; padding-right: .6rem; }
   .tache .nom { font-weight: 500; }
   .tache .aide { color: var(--muted); font-size: .82rem; display: block; }
@@ -108,7 +107,6 @@
   .case.on-b { background: var(--b); border-color: var(--b); color: var(--paper); }
   .case.on-both { background: var(--ink); border-color: var(--ink); color: var(--paper); }
   .case.on-other { background: var(--muted); border-color: var(--muted); color: var(--paper); }
-  .case.on-none { background: var(--bg-2); border-color: var(--border); color: var(--muted); }
   /* « y pense » : cochée à 55 % quand elle suit la réponse du dessus, pleine quand c'est un choix explicite */
   .case.suit { opacity: .55; }
   .case.inactive { border-color: var(--line); background: transparent; cursor: default; }
@@ -169,8 +167,8 @@
     .prenoms { grid-template-columns: 1fr; }
     .stats { grid-template-columns: 1fr; gap: 1.2rem; }
     /* mobile : le libellé prend toute la largeur, les neuf cases dessous, alignées sur l'en-tête */
-    .entete, .tache { grid-template-columns: repeat(5, 1fr) 12px repeat(4, 1fr); gap: 0 .15rem; }
-    .entete .grp.g1 { grid-column: 1 / span 5; } .entete .grp.g2 { grid-column: 7 / span 4; }
+    .entete, .tache { grid-template-columns: repeat(4, 1fr) 12px repeat(4, 1fr); gap: 0 .15rem; }
+    .entete .grp.g1 { grid-column: 1 / span 4; } .entete .grp.g2 { grid-column: 6 / span 4; }
     .entete > .leg { grid-column: 1 / -1; padding-bottom: .4rem; }
     .entete > span:nth-child(4) { display: none; }
     .entete { font-size: .66rem; }
@@ -226,12 +224,11 @@
     <section>
       <h2>Qui fait quoi</h2>
       <p class="muted">Pour chaque tâche, cochez qui s'en occupe. Les tâches vont du plus courant au plus rare : si vous vous arrêtez en route, vous aurez répondu à ce qui compte le plus.</p>
-      <details class="legende"><summary>Les cinq réponses, et ce que veut dire « y pense »</summary>
+      <details class="legende"><summary>Les quatre réponses, et ce que veut dire « y pense »</summary>
         <dl>
           <dt>Prénom 1, Prénom 2</dt><dd>la personne qui fait la tâche. C'est ce qui compte en heures.</dd>
           <dt>Les deux</dt><dd>à parts égales, ou à tour de rôle.</dd>
-          <dt>Quelqu'un d'autre</dt><dd>aide à domicile, grands-parents, nounou, enfants : la tâche existe mais ne pèse sur aucun de vous deux.</dd>
-          <dt>Pas chez nous</dt><dd>la tâche n'existe pas chez vous, elle sort du compte.</dd>
+          <dt>Pas nous</dt><dd>quelqu'un d'autre s'en occupe (aide à domicile, grands-parents, nounou, enfants), ou la tâche n'existe pas chez vous. Elle ne compte en heures pour aucun de vous deux. Si l'un de vous y pense quand même, dites-le dans « y pense ».</dd>
           <dt>Y pense</dt><dd>la personne qui remarque qu'il faut le faire, planifie et vérifie. La petite ligne « y pense » suit votre réponse : ne la changez que si c'est vraiment quelqu'un d'autre. C'est la charge mentale, comptée en nombre de choses à garder en tête. Les tâches qui sont déjà du « penser à » (décider, suivre, organiser) ne posent pas la question.</dd>
         </dl>
       </details>
@@ -275,12 +272,12 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260920a"></script>
+<script src="catalogue.js?v=20260920b"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
   const J = C.periodes;
-  const WHO = ["a", "b", "both", "other", "none"];
+  const WHO = ["a", "b", "both", "other"];   // « other » = pas nous : quelqu'un d'autre s'en occupe, ou la tâche n'existe pas chez eux
   const FAMILLES_ENFANTS = new Set(["enfants-quotidien", "enfants-suivi"]);
   const TACHES_ENFANTS = new Set(["employeur"]);
 
@@ -292,7 +289,14 @@
     for (const cat of C.categories) for (const t of cat.taches) s.t[t.id] = { fait: null, pense: null, n: t.n, p: t.periode, d: t.duree };
     return s;
   }
-  function load() { try { const h = location.hash.slice(1); if (!h) return null; return JSON.parse(decodeURIComponent(escape(atob(h)))); } catch (e) { return null; } }
+  function load() {
+    try {
+      const h = location.hash.slice(1); if (!h) return null;
+      const s = JSON.parse(decodeURIComponent(escape(atob(h))));
+      for (const st of Object.values(s.t || {})) { if (st.fait === "none") st.fait = "other"; if (st.pense === "none") st.pense = null; }  // anciens liens
+      return s;
+    } catch (e) { return null; }
+  }
   function encode() { return btoa(unescape(encodeURIComponent(JSON.stringify(S)))); }
   function save() { history.replaceState(null, "", "#" + encode()); }
 
@@ -303,7 +307,7 @@
   function fmt(x, dec = 1) { return x.toFixed(dec).replace(".", ","); }
   function nomA() { return S.nomA.trim() || "Prénom 1"; }
   function nomB() { return S.nomB.trim() || "Prénom 2"; }
-  function label(k) { return k === "a" ? nomA() : k === "b" ? nomB() : k === "both" ? "les deux" : k === "other" ? "quelqu'un d'autre" : "pas chez nous"; }
+  function label(k) { return k === "a" ? nomA() : k === "b" ? nomB() : k === "both" ? "les deux" : "pas nous"; }
   function penseOf(st, t) { return (t && t.mental) || st.pense === null ? st.fait : st.pense; }
   function parts(who) { return who === "a" || who === "b" ? [[who, 1]] : who === "both" ? [["a", .5], ["b", .5]] : []; }
 
@@ -313,7 +317,6 @@
       r.total++;
       const st = S.t[t.id]; if (!st || st.fait === null) continue;
       r.renseignees++;
-      if (st.fait === "none") continue;
       const h = hj(st);
       const cat = r.cats[t.cat] || (r.cats[t.cat] = { nom: t.catNom, a: 0, b: 0, both: 0 });
       if (st.fait === "both") cat.both += h; else if (st.fait === "a" || st.fait === "b") cat[st.fait] += h;
@@ -344,7 +347,7 @@
     const entete = document.createElement("div"); entete.className = "entete";
     const sw = `<i class="sw a"></i><span class="ca">${nomA()}</span> <i class="sw b"></i><span class="cb">${nomB()}</span>`;
     entete.innerHTML = `<span class="leg">${sw}</span><span class="grp g1">S'en occupe</span><span class="grp g2">Y pense</span>
-      <span></span><i class="sw a"></i><i class="sw b"></i><span>les deux</span><span>autre</span><span>pas chez nous</span><span></span><i class="sw a"></i><i class="sw b"></i><span>les deux</span><span>autre</span>`;
+      <span></span><i class="sw a"></i><i class="sw b"></i><span>les deux</span><span>pas nous</span><span></span><i class="sw a"></i><i class="sw b"></i><span>les deux</span><span>pas nous</span>`;
     root.appendChild(entete);
     for (const cat of cats) {
       const box = document.createElement("div"); box.className = "categorie";
@@ -379,7 +382,7 @@
 
   function renderTask(t) {
     const st = S.t[t.id];
-    const el = document.createElement("div"); el.className = "tache" + (st.fait === "none" ? " off" : "");
+    const el = document.createElement("div"); el.className = "tache";
     el.innerHTML = `<div class="txt"><span class="nom">${t.nom}</span>${t.aide ? `<span class="aide">${t.aide}</span>` : ""}</div>`;
     for (const k of WHO) {
       const c = document.createElement("button"); c.type = "button"; c.className = "case" + (st.fait === k ? " on-" + k : "");
@@ -388,7 +391,7 @@
       el.appendChild(c);
     }
     el.appendChild(Object.assign(document.createElement("span"), { className: "sep" }));
-    const actif = !t.mental && st.fait && st.fait !== "none";
+    const actif = !t.mental && st.fait;
     const cur = actif ? penseOf(st, t) : null;
     for (const k of ["a", "b", "both", "other"]) {
       const c = document.createElement("button"); c.type = "button";
@@ -422,7 +425,7 @@
 
     const L = document.getElementById("lecture"), V = document.getElementById("verdict");
     const tot = r.a.h + r.b.h;
-    if (!tot) { V.textContent = ""; L.textContent = "Aucune tâche attribuée pour l'instant. Revenez à l'étape 2."; return; }
+    if (!tot) { V.textContent = ""; L.textContent = "Aucune tâche attribuée à l'un de vous deux pour l'instant. Revenez à l'étape 2."; return; }
     const pa = Math.round(100 * r.a.h / tot), pb = 100 - pa;
     const totP = r.a.nPense + r.b.nPense;
     const qa = totP ? Math.round(100 * r.a.nPense / totP) : 0;
@@ -446,7 +449,7 @@
     const tb = document.getElementById("table-affiner");
     let html = `<tr><th>Tâche</th><th class="cache">S'en occupe</th><th>Fois</th><th>par</th><th>Minutes</th><th class="hj">h / jour</th></tr>`;
     for (const cat of visibleCats()) {
-      const rows = visibleTasks(cat).filter(t => S.t[t.id].fait && S.t[t.id].fait !== "none");
+      const rows = visibleTasks(cat).filter(t => S.t[t.id].fait && S.t[t.id].fait !== "other");
       if (!rows.length) continue;
       html += `<tr class="cat"><td colspan="6">${cat.nom}</td></tr>`;
       for (const t of rows) {
@@ -482,7 +485,7 @@
     const rows = [["Famille", "Tâche", "S'en occupe", "Y pense", "Fois", "Par", "Minutes à chaque fois", "Heures par jour", "Heures par semaine"]];
     for (const t of allTasks()) {
       const st = S.t[t.id]; if (!st.fait) continue;
-      const off = st.fait === "none";
+      const off = st.fait === "other";
       rows.push([t.catNom, t.nom, label(st.fait), off ? "" : label(penseOf(st, t)), off ? "" : st.n, off ? "" : st.p, off ? "" : st.d, off ? "" : +hj(st).toFixed(3), off ? "" : +(hj(st) * 7).toFixed(2)]);
     }
     return rows;
