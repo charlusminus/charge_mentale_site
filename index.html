@@ -42,7 +42,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921u">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921v">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -153,6 +153,8 @@
   .demarrer { margin-top: 40px; padding: 32px; background: var(--bg-2); border-radius: var(--r); }
   .demarrer .nav { margin: 1.4rem 0 0; }
   .prenoms { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 520px; margin-top: .8rem; }
+  .prenoms.foyer { margin-top: 1rem; }
+  .foyer .enfants { margin-top: 0; max-width: none; }
   .prenoms label, .enfants label { display: block; font-size: .85rem; color: var(--muted); margin-bottom: .3rem; }
   .prenoms input, .enfants select { padding: .7rem .8rem; border: 1.5px solid var(--border); border-radius: var(--r); background: var(--paper); width: 100%; }
   .prenoms input:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
@@ -376,9 +378,15 @@
         <div class="a"><label for="nomA">Prénom 1</label><input id="nomA" placeholder="Prénom"></div>
         <div class="b"><label for="nomB">Prénom 2</label><input id="nomB" placeholder="Prénom"></div>
       </div>
-      <div class="enfants">
-        <label for="enfants">Enfants à la maison</label>
-        <select id="enfants"><option value="0">Aucun</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option></select>
+      <div class="prenoms foyer">
+        <div class="enfants">
+          <label for="enfants">Enfants à la maison</label>
+          <select id="enfants"><option value="0">Aucun</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option></select>
+        </div>
+        <div class="enfants">
+          <label for="animaux">Animaux</label>
+          <select id="animaux"><option value="0">Aucun</option><option value="1">Oui</option></select>
+        </div>
       </div>
       <div class="nav"><button class="btn" id="go2">Commencer</button><span class="small muted" id="hint1">Gratuit, sans compte. Rien n'est envoyé : tout se calcule dans votre navigateur.</span></div>
     </div>
@@ -552,7 +560,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921u"></script>
+<script src="catalogue.js?v=20260921v"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -562,6 +570,7 @@
   const TURNSTILE_SITEKEY = "0x4AAAAAAE-qa9jJxGWCyc5B";   // clé publique Cloudflare Turnstile (la secrète vit dans n8n)
   const WHO = ["a", "b", "both", "other"];   // « other » = pas nous : quelqu'un d'autre s'en occupe, ou la tâche n'existe pas chez eux
   const FAMILLES_ENFANTS = new Set(["enfants-quotidien", "enfants-suivi"]);
+  const FAMILLES_ANIMAUX = new Set(["animaux"]);
   const TACHES_ENFANTS = new Set(["employeur"]);
 
   const ALPHA = "0123456789abcdefghijklmnopqrstuvwxyz", WHO0 = [null, ...WHO], PER = Object.keys(J);   // déclarées avant load(), sinon zone morte temporelle
@@ -570,7 +579,7 @@
   let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
 
   function fresh() {
-    const s = { nomA: "", nomB: "", enfants: 0, ecran: 1, t: {}, custom: [] };
+    const s = { nomA: "", nomB: "", enfants: 0, animaux: 0, ecran: 1, t: {}, custom: [] };
     for (const cat of C.categories) for (const t of cat.taches) s.t[t.id] = { fait: null, pense: null, n: t.n, p: t.periode, d: t.duree };
     return s;
   }
@@ -587,11 +596,12 @@
     const regl = catTasks().filter(t => { const st = S.t[t.id]; return st && (st.n !== t.n || st.p !== t.periode || st.d !== t.duree); })
       .map(t => { const st = S.t[t.id]; return [t.id, esc(st.n), PER.indexOf(st.p), esc(st.d)].join("_"); }).join(".");
     const ajouts = S.custom.map(c => { const st = S.t[c.id] || {}; return [c.id, c.cat, esc(c.nom), lettre(st), esc(st.n), PER.indexOf(st.p), esc(st.d)].join("_"); }).join(".");
-    return ["2", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts].join("~").replace(/~+$/, "");
+    return ["2", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0].join("~");
   }
   function decode2(h) {
     const f = h.split("~"), s = fresh();
     s.nomA = unesc(f[1] || ""); s.nomB = unesc(f[2] || ""); s.enfants = +f[3] || 0; s.ecran = +f[4] || 1;
+    s.animaux = f[8] === undefined ? 1 : (+f[8] || 0);   // anciens liens sans le champ : la famille Animaux restait visible
     catTasks().forEach((t, i) => Object.assign(s.t[t.id], delettre((f[5] || "")[i])));
     if (f[6]) for (const o of f[6].split(".")) { const [id, n, p, d] = o.split("_"); if (s.t[id]) Object.assign(s.t[id], { n: +unesc(n) || 0, p: PER[+p] || s.t[id].p, d: +unesc(d) || 0 }); }
     if (f[7]) for (const o of f[7].split(".")) {
@@ -606,12 +616,12 @@
       if (h.startsWith("2~")) return decode2(h);
       const s = JSON.parse(decodeURIComponent(escape(atob(h))));   // anciens liens (format 1, JSON base64)
       for (const st of Object.values(s.t || {})) { if (st.fait === "none") st.fait = "other"; if (st.pense === "none") st.pense = null; }
-      const f = fresh(); return { ...f, ...s, t: { ...f.t, ...(s.t || {}) }, custom: s.custom || [] };   // complète les tâches absentes
+      const f = fresh(); return { ...f, animaux: 1, ...s, t: { ...f.t, ...(s.t || {}) }, custom: s.custom || [] };   // complète les tâches absentes
     } catch (e) { return null; }
   }
   function save() { history.replaceState(null, "", "#" + encode()); }
 
-  function visibleCats() { return C.categories.filter(c => S.enfants > 0 || !FAMILLES_ENFANTS.has(c.id)); }
+  function visibleCats() { return C.categories.filter(c => (S.enfants > 0 || !FAMILLES_ENFANTS.has(c.id)) && (S.animaux > 0 || !FAMILLES_ANIMAUX.has(c.id))); }
   function visibleTasks(cat) { return [...cat.taches.filter(t => S.enfants > 0 || !TACHES_ENFANTS.has(t.id)), ...S.custom.filter(c => c.cat === cat.id)]; }
   function allTasks() { const out = []; for (const cat of visibleCats()) for (const t of visibleTasks(cat)) out.push({ ...t, cat: cat.id, catNom: cat.nom }); return out; }
   function hj(st) { return (st.n * st.d / 60) / J[st.p]; }
@@ -813,7 +823,7 @@
       ["Heures par semaine à faire", +(r.a.h * 7).toFixed(1), +(r.b.h * 7).toFixed(1)],
       ["Tâches faites", r.a.nFait, r.b.nFait],
       ["Tâches à garder en tête", r.a.nPense, r.b.nPense],
-      [], ["Enfants à la maison", S.enfants], ["Généré le", new Date().toLocaleDateString("fr-FR")], ["Source", "quiypense.org, durées par défaut INSEE Emploi du temps 2010 et Fair Play"]];
+      [], ["Enfants à la maison", S.enfants], ["Animaux", S.animaux ? "oui" : "non"], ["Généré le", new Date().toLocaleDateString("fr-FR")], ["Source", "quiypense.org, durées par défaut INSEE Emploi du temps 2010 et Fair Play"]];
     const nomFichier = `qui-y-pense-${(nomA() + "-" + nomB()).toLowerCase().replace(/[^a-z0-9-]+/g, "")}`;
     try {
       const X = await loadXlsx();
@@ -840,8 +850,9 @@
   }
 
   /* ---------- câblage ---------- */
-  const iA = document.getElementById("nomA"), iB = document.getElementById("nomB"), iE = document.getElementById("enfants");
-  iA.value = S.nomA; iB.value = S.nomB; iE.value = String(S.enfants);
+  const iA = document.getElementById("nomA"), iB = document.getElementById("nomB"), iE = document.getElementById("enfants"), iAn = document.getElementById("animaux");
+  iA.value = S.nomA; iB.value = S.nomB; iE.value = String(S.enfants); iAn.value = String(S.animaux ? 1 : 0);
+  iAn.addEventListener("change", () => { S.animaux = +iAn.value; update(); });
   const onName = () => {
     S.nomA = iA.value; S.nomB = iB.value;
     document.querySelectorAll('.entete .ca').forEach(b => b.textContent = nomA());
@@ -869,7 +880,7 @@
   document.getElementById("reset").addEventListener("click", (e) => {
     e.preventDefault();
     if (!confirm("Tout effacer et recommencer ?")) return;
-    S = fresh(); iA.value = iB.value = ""; iE.value = "0"; location.hash = ""; show(1);
+    S = fresh(); iA.value = iB.value = ""; iE.value = "0"; iAn.value = "0"; location.hash = ""; show(1);
   });
 
   show(S.ecran || 1);
