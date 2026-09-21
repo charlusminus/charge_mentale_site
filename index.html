@@ -40,7 +40,7 @@
 <link rel="icon" href="img/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="img/icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921d">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921f">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -86,7 +86,7 @@
     --border: #8A7E70;    /* bordures de champs et de groupes de boutons : 3,3:1 sur bg-2 */
     --a: #1F6F6B;         /* couleur de la première personne (teal) : blanc dessus 5,9:1 */
     --b: #B5502A;         /* couleur de la deuxième personne (terracotta) : blanc dessus 5,1:1 */
-    --both: #6B5F53;      /* « les deux » et « quelqu'un d'autre » : pas de troisième couleur */
+    --both: #6B5F53;      /* « les deux » et « pas nous » : pas de troisième couleur */
     --a-clair: #8FD3CF;   /* prénom 1 sur fond encre (bandeau) : 9,3:1 */
     --b-clair: #F2B08F;   /* prénom 2 sur fond encre (bandeau) : 8,6:1 */
     --paper: #FFFFFF;     /* cartes et champs */
@@ -237,6 +237,19 @@
   .suivi .prog i { display: block; height: 100%; background: var(--a); }
   .suivi div { max-width: var(--max); margin: 0 auto; display: flex; gap: 1rem; align-items: center; font-size: .95rem; }
   .suivi .btn { margin-left: auto; padding: .5rem 1rem; }
+  /* modale générique (fermable), même vocabulaire que le bandeau de consentement */
+  .modale { position: fixed; inset: 0; z-index: 40; background: rgba(42, 33, 24, .55); display: grid; place-items: center; padding: 16px; overflow: auto; }
+  .modale[hidden] { display: none; }
+  .modale-boite { position: relative; background: var(--bg); border-radius: var(--r); padding: 28px; max-width: 560px; width: 100%; box-shadow: 0 0 0 1.5px var(--border); }
+  .modale-boite h2 { font-size: 1.35rem; margin-bottom: .4rem; padding-right: 4rem; }
+  .modale-fermer { position: absolute; top: 16px; right: 16px; background: none; border: 0; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font-size: .9rem; }
+  .modale fieldset { border: 0; padding: 0; margin: 1rem 0 0; }
+  .modale legend { font-weight: 600; margin-bottom: .4rem; }
+  .modale fieldset label { display: block; padding: .3rem 0; }
+  .modale .champ { display: block; margin-top: 1rem; font-weight: 600; }
+  .modale .champ input { display: block; width: 100%; margin-top: .3rem; padding: .6rem .8rem; border: 1.5px solid var(--border); border-radius: var(--r); background: var(--paper); font-weight: 400; }
+  .modale-actions { margin-top: 1rem; }
+  body.modale-ouverte { overflow: hidden; }
   /* consentement : bloquant, deux boutons de même poids, pas de fermeture sans choix (CNIL) */
   .consent { position: fixed; inset: 0; z-index: 50; background: rgba(42, 33, 24, .55); display: grid; place-items: center; padding: 16px; }
   .consent[hidden] { display: none; }
@@ -245,6 +258,14 @@
   .consent-actions { display: flex; gap: .7rem; margin-top: 1.2rem; }
   .consent-actions .btn { flex: 1; text-align: center; }
   body.consent-ouvert { overflow: hidden; }
+  /* partage : icônes fonctionnelles (le picto porte le sens), boutons ronds à bordure, jamais dans un CTA */
+  .partage { margin-top: 64px; max-width: 64ch; }
+  #partage-compte { margin-top: 2rem; }
+  #partage-compte h3 { margin-top: 1.2rem; }
+  .rs { display: flex; gap: .6rem; flex-wrap: wrap; margin: .7rem 0 0; }
+  .rs a, .rs button { display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .85rem .5rem .7rem; border-radius: 999px; border: 1.5px solid var(--border); background: var(--paper); color: var(--ink); text-decoration: none; font: inherit; font-size: .9rem; cursor: pointer; }
+  .rs a:hover, .rs button:hover { border-color: var(--ink); }
+  .rs svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
   footer { padding: 32px 0; color: var(--muted); font-size: .85rem; }
   footer a { color: var(--muted); }
 
@@ -268,6 +289,15 @@
 </style>
 </head>
 <body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></symbol>
+  <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M2 4h20a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm1 2.8V18h18V6.8l-9 6.3-9-6.3zM4.4 6l7.6 5.3L19.6 6H4.4z"/></symbol>
+  <symbol id="i-lien" viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4l3.5-3.5a3 3 0 0 1 4.3 4.3l-1.6 1.6a1 1 0 1 1-1.4-1.4l1.6-1.6a1 1 0 0 0-1.5-1.5L12 13.4a1 1 0 0 1-1.4 0zm2.8-2.8a1 1 0 0 1 0 1.4l-3.5 3.5a3 3 0 0 1-4.3-4.3l1.6-1.6a1 1 0 1 1 1.4 1.4l-1.6 1.6a1 1 0 0 0 1.5 1.5L12 10.6a1 1 0 0 1 1.4 0z"/></symbol>
+  <symbol id="i-partager" viewBox="0 0 24 24"><path d="M18 16.1a3 3 0 0 0-2 .8l-7.1-4.1a3 3 0 0 0 0-1.6L16 7.1a3 3 0 1 0-1-1.7L7.9 9.5a3 3 0 1 0 0 5l7.1 4.1a3 3 0 1 0 3-2.5z"/></symbol>
+</svg>
 <main>
   <nav class="fil" id="fil" aria-label="Étapes"><span data-n="1">Vous</span><span data-n="2">Qui fait quoi</span><span data-n="3">Le compte</span></nav>
 
@@ -298,6 +328,13 @@
       <details><summary>D'où viennent les chiffres cités ?</summary><p>INSEE, enquête Emploi du temps 2010 : 4 h 01 par jour de travail domestique pour les femmes, 2 h 13 pour les hommes, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP publiée en 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens interrogés : 86 % de temps en plus passé à penser aux tâches qu'à les faire. Les libellés des tâches suivent la nomenclature INSEE, complétée par les cent cartes Fair Play.</p></details>
       <details><summary>Mes réponses sont-elles envoyées quelque part ?</summary><p>Non. Tout se calcule dans votre navigateur, il n'y a ni compte ni serveur. Vos réponses sont encodées dans l'adresse de la page : c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur. Les polices sont hébergées avec le site. Une mesure d'audience (Google Analytics) compte les visites, seulement si vous l'acceptez dans le bandeau, et sans jamais recevoir vos réponses.</p></details>
       <details><summary>Combien de temps ça prend, et à combien ?</summary><p>Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, et le nombre d'enfants. Les tâches vont du plus courant au plus rare : on peut s'arrêter à mi-parcours et voir le compte, puis y revenir.</p></details>
+    </section>
+
+
+    <section class="partage" id="partage-accueil" aria-labelledby="partage-accueil-titre">
+      <h2 id="partage-accueil-titre">Faire connaître Qui y pense ?</h2>
+      <p class="muted">Le site vit par le bouche-à-oreille. Un lien envoyé à un couple, c'est un compte de plus qui se fait.</p>
+      <div class="rs" data-partage="site"></div>
     </section>
 
     <div class="demarrer">
@@ -343,8 +380,15 @@
       <div class="lecture" id="lecture"></div>
       <div class="actions">
         <button class="btn" id="xlsx">Télécharger en Excel</button>
-        <button class="btn secondary" id="partager">Copier le lien</button>
+        <button class="btn secondary" id="sauver">Sauvegarder</button>
         <button class="btn secondary" onclick="window.print()">Imprimer</button>
+      </div>
+      <div class="partage" id="partage-compte">
+        <h3>Envoyer ce compte à l'autre</h3>
+        <p class="muted small">Le lien contient vos réponses, rien d'autre : la personne qui l'ouvre retrouve exactement ce compte.</p>
+        <div class="rs" data-partage="compte"></div>
+        <h3>Faire connaître Qui y pense ?</h3>
+        <div class="rs" data-partage="site"></div>
       </div>
       <p class="small muted" id="partage-ok"></p>
 
@@ -355,13 +399,38 @@
       </div>
 
       <div class="nav"><button class="btn secondary" id="back2">Modifier qui fait quoi</button><button class="btn secondary" id="reset">Recommencer</button></div>
-      <p class="apropos">D'où viennent les durées par défaut : de l'enquête Emploi du temps de l'INSEE (2010), qui mesure le temps domestique au carnet, et du jeu de cartes Fair Play (Eve Rodsky, 2019) pour les tâches que le carnet ne voit pas. Un couple avec enfants qui garde toutes les valeurs par défaut totalise environ 9 heures par jour, ce que l'INSEE observe. La distinction « y penser » et « s'en occuper » vient des travaux d'Allison Daminger (2019) : anticiper et vérifier, c'est du travail, même quand quelqu'un d'autre exécute.</p>
+      <p class="apropos">D'où viennent les durées par défaut : de l'enquête Emploi du temps de l'INSEE (2010), qui mesure le temps domestique au carnet, et du jeu de cartes Fair Play (Eve Rodsky, 2019) pour les tâches que le carnet ne voit pas. Un couple avec enfants qui garde toutes les valeurs par défaut totalise environ 8 heures et demie par jour, dans la fourchette haute de ce que l'INSEE observe. La distinction « y penser » et « s'en occuper » vient des travaux d'Allison Daminger (2019) : anticiper et vérifier, c'est du travail, même quand quelqu'un d'autre exécute.</p>
     </section>
   </div>
 
   <footer>Qui y pense ? Un tableur tenu à deux depuis 2025, rendu utilisable par tous. Le lien de partage contient vos réponses, rien d'autre. <a href="https://github.com/charlusminus/charge_mentale_site">Code ouvert</a>. <a href="#" id="consent-lien">Cookies</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>.</footer>
   <noscript><p style="padding:16px;background:#F1EBDF">Ce site calcule tout dans votre navigateur : il a besoin de JavaScript pour fonctionner.</p></noscript>
 </main>
+
+<div class="modale" id="intention" role="dialog" aria-modal="true" aria-labelledby="intention-titre" hidden>
+  <div class="modale-boite">
+    <button class="modale-fermer" type="button" id="intention-fermer" aria-label="Fermer">Fermer</button>
+    <h2 id="intention-titre">Sauvegarder, pas encore</h2>
+    <p>Aujourd'hui votre compte vit dans le lien de partage et dans le fichier Excel. On réfléchit à une version payante pour l'enregistrer, le modifier plus tard et recevoir des rappels. Deux questions pour savoir si ça vaut le coup :</p>
+    <form id="intention-form">
+      <fieldset>
+        <legend>Combien seriez-vous prêt à payer pour ces fonctions ?</legend>
+        <label><input type="radio" name="prix" value="0" required> Rien, je m'en passe</label>
+        <label><input type="radio" name="prix" value="2-une-fois"> 2 € une fois</label>
+        <label><input type="radio" name="prix" value="5-une-fois"> 5 € une fois</label>
+        <label><input type="radio" name="prix" value="2-par-mois"> 2 € par mois</label>
+        <label><input type="radio" name="prix" value="5-par-mois"> 5 € par mois</label>
+        <label><input type="radio" name="prix" value="plus"> Plus, si c'est vraiment utile</label>
+      </fieldset>
+      <label class="champ">Votre e-mail, pour vous prévenir si ça se fait
+        <input type="email" name="email" placeholder="facultatif" autocomplete="email">
+      </label>
+      <p class="small muted">En laissant votre e-mail, vous acceptez qu'on vous écrive une fois pour ça, rien d'autre. Vos réponses au questionnaire ne sont pas envoyées.</p>
+      <div class="modale-actions"><button class="btn" type="submit">Envoyer</button></div>
+      <p class="small muted" id="intention-ok" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
 
 <div class="consent" id="consent" role="dialog" aria-modal="true" aria-labelledby="consent-titre" hidden>
   <div class="consent-boite">
@@ -380,11 +449,13 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921d"></script>
+<script src="catalogue.js?v=20260921f"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
   const J = C.periodes;
+  const SITE = "https://quiypense.org/";
+  const INTENTIONS_URL = "https://charlusminus.app.n8n.cloud/webhook/quiypense-intentions";   // workflow n8n « Qui y pense, Intentions », cf n8n/README.md
   const WHO = ["a", "b", "both", "other"];   // « other » = pas nous : quelqu'un d'autre s'en occupe, ou la tâche n'existe pas chez eux
   const FAMILLES_ENFANTS = new Set(["enfants-quotidien", "enfants-suivi"]);
   const TACHES_ENFANTS = new Set(["employeur"]);
@@ -600,13 +671,14 @@
   }
   async function exportXlsx() {
     const r = compute();
-    const res = [["", nomA(), nomB()],
+    const res = [["Qui y pense ? Qui fait quoi à la maison, le compte de la charge mentale", "", ""], [],
+      ["", nomA(), nomB()],
       ["Heures par jour à faire", +r.a.h.toFixed(2), +r.b.h.toFixed(2)],
       ["Heures par semaine à faire", +(r.a.h * 7).toFixed(1), +(r.b.h * 7).toFixed(1)],
       ["Tâches faites", r.a.nFait, r.b.nFait],
       ["Tâches à garder en tête", r.a.nPense, r.b.nPense],
-      [], ["Enfants à la maison", S.enfants], ["Généré le", new Date().toLocaleDateString("fr-FR")], ["Source", "quifaitquoi.org, valeurs par défaut INSEE Emploi du temps 2010 et Fair Play"]];
-    const nomFichier = `qui-fait-quoi-${(nomA() + "-" + nomB()).toLowerCase().replace(/[^a-z0-9-]+/g, "")}`;
+      [], ["Enfants à la maison", S.enfants], ["Généré le", new Date().toLocaleDateString("fr-FR")], ["Source", "quiypense.org, durées par défaut INSEE Emploi du temps 2010 et Fair Play"]];
+    const nomFichier = `qui-y-pense-${(nomA() + "-" + nomB()).toLowerCase().replace(/[^a-z0-9-]+/g, "")}`;
     try {
       const X = await loadXlsx();
       const wb = X.utils.book_new();
@@ -628,6 +700,7 @@
     document.getElementById("hint2").textContent = r.renseignees < r.total ? `${r.total - r.renseignees} tâche${r.total - r.renseignees > 1 ? "s" : ""} sans réponse seront ignorées` : "";
     if (S.ecran === 3) renderResults(r);
     save();
+    renderPartage();
   }
 
   /* ---------- câblage ---------- */
@@ -652,17 +725,75 @@
   document.getElementById("suiviBtn").addEventListener("click", () => show(3));
   document.getElementById("back2").addEventListener("click", () => show(2));
   document.getElementById("xlsx").addEventListener("click", exportXlsx);
-  document.getElementById("partager").addEventListener("click", async () => {
-    const url = location.href;
-    try { await navigator.clipboard.writeText(url); document.getElementById("partage-ok").textContent = "Lien copié. Envoyez-le à l'autre : il retrouvera exactement ce compte."; }
-    catch (e) { document.getElementById("partage-ok").textContent = url; }
-  });
   document.getElementById("reset").addEventListener("click", () => {
     if (!confirm("Tout effacer et recommencer ?")) return;
     S = fresh(); iA.value = iB.value = ""; iE.value = "0"; location.hash = ""; show(1);
   });
 
   show(S.ecran || 1);
+
+
+  /* ---------- partage ---------- */
+  function renderPartage() {
+    document.querySelectorAll(".rs").forEach(box => {
+      const compte = box.dataset.partage === "compte";
+      const url = compte ? location.href : SITE;
+      const texte = compte
+        ? `Voici notre compte « Qui y pense ? », à lire ensemble : `
+        : `Qui fait quoi à la maison, et surtout qui y pense ? Faites le compte à deux, en dix minutes, gratuit et sans compte : `;
+      const sujet = compte ? "Notre compte Qui y pense ?" : "Qui y pense ? Qui fait quoi à la maison";
+      const enc = encodeURIComponent;
+      const items = [
+        ["whatsapp", "WhatsApp", `https://wa.me/?text=${enc(texte + url)}`],
+        ["mail", "E-mail", `mailto:?subject=${enc(sujet)}&body=${enc(texte + url)}`],
+      ];
+      if (!compte) items.push(["linkedin", "LinkedIn", `https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}`],
+        ["facebook", "Facebook", `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`],
+        ["x", "X", `https://twitter.com/intent/tweet?text=${enc(texte)}&url=${enc(url)}`]);
+      box.innerHTML = items.map(([ic, nom, href]) => `<a href="${href}" target="_blank" rel="noopener" aria-label="Partager par ${nom}"><svg><use href="#i-${ic}"/></svg>${nom}</a>`).join("");
+      const copier = document.createElement("button"); copier.type = "button"; copier.innerHTML = `<svg><use href="#i-lien"/></svg>Copier le lien`;
+      copier.addEventListener("click", async () => {
+        try { await navigator.clipboard.writeText(url); copier.lastChild.textContent = "Lien copié"; setTimeout(() => copier.lastChild.textContent = "Copier le lien", 2000); }
+        catch (e) { prompt("Copiez ce lien :", url); }
+      });
+      box.appendChild(copier);
+      if (navigator.share) {
+        const natif = document.createElement("button"); natif.type = "button"; natif.innerHTML = `<svg><use href="#i-partager"/></svg>Autre application`;
+        natif.addEventListener("click", () => navigator.share({ title: sujet, text: texte, url }).catch(() => {}));
+        box.appendChild(natif);
+      }
+    });
+  }
+
+
+  /* ---------- intention « Sauvegarder » : mesure l'intérêt pour une version payante ---------- */
+  (function intention() {
+    const m = document.getElementById("intention"), form = document.getElementById("intention-form"), ok = document.getElementById("intention-ok");
+    const ouvrir = () => { m.hidden = false; document.body.classList.add("modale-ouverte"); form.querySelector("input").focus(); if (window.__ga) gtag("event", "sauvegarder_clic"); };
+    const fermer = () => { m.hidden = true; document.body.classList.remove("modale-ouverte"); };
+    document.getElementById("sauver").addEventListener("click", ouvrir);
+    document.getElementById("intention-fermer").addEventListener("click", fermer);
+    m.addEventListener("click", e => { if (e.target === m) fermer(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermer(); });
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      const r = compute();
+      const data = new URLSearchParams({
+        prix: form.prix.value, email: form.email.value.trim(), enfants: S.enfants, taches_renseignees: r.renseignees, taches_total: r.total,
+        heures_a: r.a.h.toFixed(2), heures_b: r.b.h.toFixed(2), date: new Date().toISOString(), page: location.origin + location.pathname
+      });
+      if (window.__ga) gtag("event", "intention_payante", { prix: form.prix.value, email_laisse: form.email.value ? "oui" : "non" });
+      form.querySelector("button[type=submit]").disabled = true;
+      try {
+        if (INTENTIONS_URL) await fetch(INTENTIONS_URL, { method: "POST", body: data });
+        ok.textContent = "Merci, c'est noté." + (form.email.value ? " On vous écrira si ça se fait." : "");
+        setTimeout(fermer, 1800);
+      } catch (err) {
+        ok.textContent = "L'envoi n'a pas abouti. Réessayez plus tard, ou écrivez-nous.";
+        form.querySelector("button[type=submit]").disabled = false;
+      }
+    });
+  })();
 
   /* ---------- consentement ---------- */
   (function consentement() {
