@@ -42,7 +42,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921w">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921y">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -176,12 +176,17 @@
   .entete, .tache { display: grid; grid-template-columns: minmax(0, 1fr) repeat(4, 34px) 20px repeat(4, 34px); gap: 0 .2rem; align-items: center; }
   .entete { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: .5rem 0 .35rem; border-bottom: 1.5px solid var(--ink); font-size: .7rem; color: var(--muted); text-align: center; line-height: 1.15; align-items: end; margin-top: 1.2rem; }
   .entete span { overflow: hidden; overflow-wrap: anywhere; }
-  .entete .leg { text-align: left; font-size: .8rem; align-self: end; padding-bottom: .25rem; }
-  .sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin: 0 .25rem 0 0; }
+  /* légende des prénoms : sur deux rangées, calée à droite contre les colonnes, centrée verticalement (retour Charles 21/09) */
+  .entete .leg { grid-column: 1; grid-row: 1 / span 2; justify-self: end; align-self: center; text-align: right; font-size: .85rem; padding: 0 1.1rem 0 0; display: flex; flex-direction: column; align-items: flex-end; gap: .3rem; overflow: visible; }
+  .entete .leg .qui { display: inline-flex; align-items: center; gap: .4rem; white-space: nowrap; }
+  .sw { display: inline-grid; place-items: center; min-width: 16px; width: auto; padding: 0 3px; height: 16px; border-radius: 4px; font-style: normal; font-size: .6rem; font-weight: 700; color: var(--paper); line-height: 1; }
   .sw.a { background: var(--a); } .sw.b { background: var(--b); }
-  .entete > .sw { margin: 0 auto .35rem; width: 14px; height: 14px; }
-  .entete .grp { font-weight: 600; color: var(--ink); text-align: left; padding-bottom: .25rem; }
+  .entete > .sw { margin: 0 auto .3rem; min-width: 18px; height: 18px; font-size: .66rem; }
+  .entete .grp { grid-row: 1; font-weight: 600; color: var(--ink); text-align: left; padding-bottom: .25rem; }
   .entete .grp.g1 { grid-column: 2 / span 4; } .entete .grp.g2 { grid-column: 7 / span 4; }
+  .entete .r2 { grid-row: 2; align-self: end; }
+  .entete .c2 { grid-column: 2; } .entete .c3 { grid-column: 3; } .entete .c4 { grid-column: 4; } .entete .c5 { grid-column: 5; }
+  .entete .c7 { grid-column: 7; } .entete .c8 { grid-column: 8; } .entete .c9 { grid-column: 9; } .entete .c10 { grid-column: 10; }
   .entete .ca { color: var(--a); font-weight: 600; } .entete .cb { color: var(--b); font-weight: 600; }
   .tache { min-height: 56px; border-bottom: 1px solid var(--line); padding: .3rem 0; }
   .tache .txt { min-width: 0; padding-right: .6rem; }
@@ -240,6 +245,8 @@
   .affiner input, .affiner select { padding: .2rem .35rem; border: 1px solid var(--border); border-radius: 6px; background: var(--paper); font-size: .85rem; }
   .affiner input { width: 3.6rem; }
   .affiner .hj { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .affiner .eq { color: var(--muted); margin-right: .35rem; font-weight: 600; }
+  .affiner td .aide { display: block; font-size: .78rem; color: var(--muted); line-height: 1.25; margin-top: .1rem; }
   .affiner .qui-cell { white-space: nowrap; }
   .pastille { display: inline-block; width: 10px; height: 10px; border-radius: 50%; vertical-align: middle; margin-right: .3rem; }
   .pastille.a { background: var(--a); } .pastille.b { background: var(--b); } .pastille.both { background: var(--ink); } .pastille.other { background: var(--muted); }
@@ -327,9 +334,11 @@
     .stats { grid-template-columns: 1fr; gap: 1.2rem; }
     /* mobile : le libellé prend toute la largeur, les neuf cases dessous, alignées sur l'en-tête */
     .entete, .tache { grid-template-columns: repeat(4, 1fr) 12px repeat(4, 1fr); gap: 0 .15rem; }
-    .entete .grp.g1 { grid-column: 1 / span 4; } .entete .grp.g2 { grid-column: 6 / span 4; }
-    .entete > .leg { grid-column: 1 / -1; padding-bottom: .4rem; }
-    .entete > span:nth-child(4) { display: none; }
+    .entete .grp { grid-row: 2; } .entete .grp.g1 { grid-column: 1 / span 4; } .entete .grp.g2 { grid-column: 6 / span 4; }
+    .entete > .leg { grid-column: 1 / -1; grid-row: 1; justify-self: start; flex-direction: row; gap: .9rem; padding: 0 0 .45rem; text-align: left; }
+    .entete .r2 { grid-row: 3; }
+    .entete .c2 { grid-column: 1; } .entete .c3 { grid-column: 2; } .entete .c4 { grid-column: 3; } .entete .c5 { grid-column: 4; }
+    .entete .c7 { grid-column: 6; } .entete .c8 { grid-column: 7; } .entete .c9 { grid-column: 8; } .entete .c10 { grid-column: 9; }
     .entete { font-size: .66rem; }
     .tache .txt { grid-column: 1 / -1; padding: 0 0 .35rem; }
     .case { width: 30px; height: 30px; }
@@ -569,7 +578,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921w"></script>
+<script src="catalogue.js?v=20260921y"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -676,9 +685,10 @@
     const cats = visibleCats();
     const derniereEssentielle = cats.filter(c => c.essentiel).slice(-1)[0];
     const entete = document.createElement("div"); entete.className = "entete";
-    const sw = `<i class="sw a"></i><span class="ca">${nomA()}</span> <i class="sw b"></i><span class="cb">${nomB()}</span>`;
-    entete.innerHTML = `<span class="leg">${sw}</span><span class="grp g1">S'en occupe</span><span class="grp g2">Y pense</span>
-      <span></span><i class="sw a"></i><i class="sw b"></i><span>les deux</span><span>pas nous</span><span></span><i class="sw a"></i><i class="sw b"></i><span>les deux</span><span>pas nous</span>`;
+    const ia = initiale(S.nomA, "1"), ib = initiale(S.nomB, "2");
+    const sw = `<span class="qui"><i class="sw a">${ia}</i><span class="ca">${nomA()}</span></span><span class="qui"><i class="sw b">${ib}</i><span class="cb">${nomB()}</span></span>`;
+    const cols = (c) => `<i class="sw a r2 c${c}">${ia}</i><i class="sw b r2 c${c + 1}">${ib}</i><span class="r2 c${c + 2}">les deux</span><span class="r2 c${c + 3}">pas nous</span>`;
+    entete.innerHTML = `<span class="leg">${sw}</span><span class="grp g1">S'en occupe</span><span class="grp g2">Y pense</span>${cols(2)}${cols(7)}`;
     root.appendChild(entete);
     for (const cat of cats) {
       const box = document.createElement("div"); box.className = "categorie";
@@ -713,10 +723,18 @@
 
   // Repère dans chaque case vide (retour testeur du 21/09 : « je galère à comprendre ce que veut dire chaque coche ») :
   // initiale de chaque prénom, les deux initiales pour « les deux », une croix pour « pas nous ».
-  function initiale(nom, defaut) { const n = (nom || "").trim(); return n ? n[0].toUpperCase() : defaut; }
+  // Repères des deux prénoms : l'initiale, ou le plus court préfixe qui les distingue (Charles / Christelle → Cha / Chr), 3 lettres au plus.
+  function reperes() {
+    const A = (S.nomA || "").trim(), B = (S.nomB || "").trim();
+    if (!A || !B) return [A ? A[0].toUpperCase() : "1", B ? B[0].toUpperCase() : "2"];
+    let n = 1; while (n < 3 && A.slice(0, n).toLowerCase() === B.slice(0, n).toLowerCase()) n++;
+    const maj = x => x[0].toUpperCase() + x.slice(1);
+    return [maj(A.slice(0, n)), maj(B.slice(0, n))];
+  }
+  function initiale(nom, defaut) { return nom === S.nomA ? reperes()[0] : nom === S.nomB ? reperes()[1] : defaut; }
   function glyphe(k) {
-    const a = initiale(S.nomA, "1"), b = initiale(S.nomB, "2");
-    return k === "a" ? a : k === "b" ? b : k === "both" ? a + "+" + b : "×";
+    const [a, b] = reperes(), deux = a + "+" + b;
+    return k === "a" ? a : k === "b" ? b : k === "both" ? (deux.length <= 3 ? deux : "les 2") : "×";
   }
   function renderTask(t) {
     const st = S.t[t.id];
@@ -787,18 +805,18 @@
 
   function renderAffiner() {
     const tb = document.getElementById("table-affiner");
-    let html = `<tr><th>Tâche</th><th class="cache">S'en occupe</th><th>Combien de fois</th><th>par</th><th>Minutes à chaque fois</th><th class="hj">Total par jour</th></tr>`;
+    let html = `<tr><th>Tâche</th><th class="cache">S'en occupe</th><th>Combien de fois</th><th>par</th><th>Minutes à chaque fois</th><th class="hj">= par jour</th></tr>`;
     for (const cat of visibleCats()) {
       const rows = visibleTasks(cat).filter(t => S.t[t.id].fait && S.t[t.id].fait !== "other");
       if (!rows.length) continue;
       html += `<tr class="cat"><td colspan="6">${cat.nom}</td></tr>`;
       for (const t of rows) {
         const st = S.t[t.id];
-        html += `<tr data-id="${t.id}"><td>${t.nom}</td><td class="cache qui-cell"><i class="pastille ${st.fait}"></i>${label(st.fait)}</td>
+        html += `<tr data-id="${t.id}"><td title="${(t.aide || "").replace(/"/g, "&quot;")}"><span class="nom">${t.nom}</span>${t.aide ? `<span class="aide">${t.aide}</span>` : ""}</td><td class="cache qui-cell"><i class="pastille ${st.fait}"></i>${label(st.fait)}</td>
           <td><input type="number" min="0" step="1" value="${st.n}" data-k="n" aria-label="Nombre de fois"></td>
           <td><select data-k="p" aria-label="Période">${Object.keys(J).map(p => `<option value="${p}" ${p === st.p ? "selected" : ""}>${p}</option>`).join("")}</select></td>
           <td><input type="number" min="0" step="5" value="${st.d}" data-k="d" aria-label="Minutes"></td>
-          <td class="hj">${hm(hj(st))}</td></tr>`;
+          <td class="hj"><span class="eq">=</span>${hm(hj(st))}</td></tr>`;
       }
     }
     tb.innerHTML = html;
@@ -873,6 +891,8 @@
     S.nomA = iA.value; S.nomB = iB.value;
     document.querySelectorAll('.entete .ca').forEach(b => b.textContent = nomA());
     document.querySelectorAll('.entete .cb').forEach(b => b.textContent = nomB());
+    document.querySelectorAll('.entete .sw.a').forEach(b => b.textContent = initiale(S.nomA, "1"));
+    document.querySelectorAll('.entete .sw.b').forEach(b => b.textContent = initiale(S.nomB, "2"));
     document.querySelectorAll('.resultats th.a').forEach(b => b.textContent = nomA());
     document.querySelectorAll('.resultats th.b').forEach(b => b.textContent = nomB());
     update();
