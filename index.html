@@ -42,7 +42,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921v">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921w">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -188,7 +188,9 @@
   .tache .nom { font-weight: 500; }
   .tache .aide { color: var(--muted); font-size: .82rem; display: block; }
   .tache .sep { }
-  .case { width: 28px; height: 28px; margin: 0 auto; border-radius: 6px; border: 1.5px solid var(--border); background: var(--paper); cursor: pointer; display: grid; place-items: center; color: transparent; font-size: .85rem; line-height: 1; padding: 0; }
+  .case { width: 28px; height: 28px; margin: 0 auto; border-radius: 6px; border: 1.5px solid var(--border); background: var(--paper); cursor: pointer; display: grid; place-items: center; color: var(--muted); font-size: .62rem; font-weight: 600; letter-spacing: -.02em; line-height: 1; padding: 0; }
+  .case.g-a { color: var(--a); } .case.g-b { color: var(--b); } .case.g-both { color: var(--ink); }
+  .case[class*="on-"] { font-size: .85rem; }
   .case:hover { border-color: var(--ink); }
   .case.on-a { background: var(--a); border-color: var(--a); color: var(--paper); }
   .case.on-b { background: var(--b); border-color: var(--b); color: var(--paper); }
@@ -196,7 +198,7 @@
   .case.on-other { background: var(--muted); border-color: var(--muted); color: var(--paper); }
   /* « y pense » : cochée à 55 % quand elle suit la réponse du dessus, pleine quand c'est un choix explicite */
   .case.suit { opacity: .55; }
-  .case.inactive { border-color: var(--line); background: transparent; cursor: default; }
+  .case.inactive { border-color: var(--line); background: transparent; cursor: default; color: var(--line); }
   .case.inactive:hover { border-color: var(--line); }
   .case.vide { visibility: hidden; }
   .ajout-lien { display: inline-block; margin-top: .6rem; font-size: .88rem; color: var(--muted); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
@@ -335,6 +337,13 @@
     .barre > span:first-child { grid-column: 1 / -1; }
     .legende dl { grid-template-columns: 1fr; }
     .affiner .cache { display: none; }
+    .affiner { overflow-x: auto; }   /* sous 380 px le tableau déborde légèrement : il défile dans son cadre, pas la page */
+    .affiner table { font-size: .85rem; }
+    .affiner th { font-size: .72rem; padding: .4rem .15rem; }
+    .affiner td { padding: .35rem .15rem; }
+    .affiner input { width: 2.7rem; padding: .2rem .25rem; }
+    .affiner select { padding: .2rem .1rem; font-size: .8rem; max-width: 5.2rem; }
+    .affiner .hj { font-size: .8rem; }
     .fin .actions { flex-direction: column; }
     .fin .actions .btn { width: 100%; flex: none; }
     .modale { padding: 8px; }
@@ -433,7 +442,7 @@
   <div class="ecran" id="e2">
     <section>
       <h2>Qui y pense ?</h2>
-      <p class="muted">Pour chaque tâche, cochez qui s'en occupe. Les tâches vont du plus courant au plus rare : si vous vous arrêtez en route, vous aurez répondu à ce qui compte le plus.</p>
+      <p class="muted">Pour chaque tâche, deux questions : à gauche, qui s'en occupe ; à droite, qui y pense. Une case par personne, une pour les deux, une croix si ce n'est pas vous. Un clic à gauche suffit, la droite suit ; ne la corrigez que si c'est différent. Les tâches vont du plus courant au plus rare : si vous vous arrêtez en route, vous aurez répondu à ce qui compte le plus.</p>
       <details class="legende"><summary>Les quatre réponses, et ce que veut dire « y pense »</summary>
         <dl>
           <dt>Prénom 1, Prénom 2</dt><dd>la personne qui fait la tâche. C'est ce qui compte en heures.</dd>
@@ -458,7 +467,7 @@
       <div class="lecture" id="lecture"></div>
       <div class="affiner">
         <h2>Affinez le temps</h2>
-        <p class="muted">Les valeurs proposées viennent d'enquêtes sur le temps domestique. Corrigez ce qui ne correspond pas à chez vous : combien de fois, et combien de minutes à chaque fois.</p>
+        <p class="muted">Les valeurs proposées viennent d'enquêtes sur le temps domestique. Pour chaque tâche : combien de fois par jour, semaine, mois ou an, et combien de minutes à chaque fois (pas au total). Le total par jour se recalcule tout seul. Exemple : les courses 2 fois par semaine, 90 minutes à chaque fois, font 26 minutes par jour.</p>
         <table id="table-affiner"></table>
       </div>
 
@@ -560,7 +569,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921v"></script>
+<script src="catalogue.js?v=20260921w"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -702,13 +711,20 @@
     }
   }
 
+  // Repère dans chaque case vide (retour testeur du 21/09 : « je galère à comprendre ce que veut dire chaque coche ») :
+  // initiale de chaque prénom, les deux initiales pour « les deux », une croix pour « pas nous ».
+  function initiale(nom, defaut) { const n = (nom || "").trim(); return n ? n[0].toUpperCase() : defaut; }
+  function glyphe(k) {
+    const a = initiale(S.nomA, "1"), b = initiale(S.nomB, "2");
+    return k === "a" ? a : k === "b" ? b : k === "both" ? a + "+" + b : "×";
+  }
   function renderTask(t) {
     const st = S.t[t.id];
     const el = document.createElement("div"); el.className = "tache";
     el.innerHTML = `<div class="txt"><span class="nom">${t.nom}</span>${t.aide ? `<span class="aide">${t.aide}</span>` : ""}</div>`;
     for (const k of WHO) {
       const c = document.createElement("button"); c.type = "button"; c.className = "case" + (st.fait === k ? " on-" + k : "");
-      c.textContent = "✓"; c.setAttribute("aria-label", label(k)); c.title = label(k);
+      c.textContent = st.fait === k ? "✓" : glyphe(k); c.classList.add("g-" + k); c.setAttribute("aria-label", label(k)); c.title = label(k);
       c.addEventListener("click", () => { st.fait = k; st.pense = null; el.replaceWith(renderTask(t)); update(); });
       el.appendChild(c);
     }
@@ -720,7 +736,7 @@
       if (t.mental) { c.className = "case vide"; c.tabIndex = -1; }
       else if (!actif) { c.className = "case inactive"; c.disabled = true; }
       else c.className = "case" + (cur === k ? " on-" + k + (st.pense === null ? " suit" : "") : "");
-      c.textContent = "✓"; c.setAttribute("aria-label", "y pense : " + label(k)); c.title = "y pense : " + label(k);
+      c.textContent = cur === k ? "✓" : glyphe(k); c.classList.add("g-" + k); c.setAttribute("aria-label", "y pense : " + label(k)); c.title = "y pense : " + label(k);
       if (actif) c.addEventListener("click", () => { st.pense = (k === st.fait) ? null : k; el.replaceWith(renderTask(t)); update(); });
       el.appendChild(c);
     }
@@ -771,7 +787,7 @@
 
   function renderAffiner() {
     const tb = document.getElementById("table-affiner");
-    let html = `<tr><th>Tâche</th><th class="cache">S'en occupe</th><th>Fois</th><th>par</th><th>Minutes</th><th class="hj">par jour</th></tr>`;
+    let html = `<tr><th>Tâche</th><th class="cache">S'en occupe</th><th>Combien de fois</th><th>par</th><th>Minutes à chaque fois</th><th class="hj">Total par jour</th></tr>`;
     for (const cat of visibleCats()) {
       const rows = visibleTasks(cat).filter(t => S.t[t.id].fait && S.t[t.id].fait !== "other");
       if (!rows.length) continue;
