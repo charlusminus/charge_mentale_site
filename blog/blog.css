@@ -28,8 +28,9 @@ strong { font-weight: 600; }
 .btn { display: inline-block; padding: .75rem 1.3rem; border-radius: var(--r); border: 1.5px solid var(--ink); background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 600; }
 .btn:hover { background: var(--muted); border-color: var(--muted); color: var(--paper); }
 .btn.petit { padding: .45rem .9rem; font-size: .9rem; }
-.soutenir { padding: .45rem .9rem; border-radius: 999px; border: 1.5px solid #72a4f2; background: #72a4f2; color: var(--ink); text-decoration: none; font-weight: 600; font-size: .9rem; }
-.soutenir:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.soutenir { display: inline-flex; align-items: center; gap: .45rem; padding: .45rem .9rem .45rem .7rem; border-radius: 999px; border: 1.5px solid var(--ink); background: var(--paper); color: var(--ink); text-decoration: none; font-weight: 600; font-size: .9rem; }
+.soutenir:hover { background: var(--bg-2); color: var(--ink); }
+.kofi-logo { height: 18px; width: auto; display: block; }
 
 main { max-width: 68ch; margin: 0 auto; padding: 32px 16px 48px; }
 .fil { font-size: .85rem; color: var(--muted); margin-bottom: .4rem; }
