@@ -40,7 +40,7 @@
 <link rel="icon" href="img/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="img/icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921f">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921i">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -132,7 +132,7 @@
   header.hero h1 { font-size: clamp(3rem, 8vw, 4.6rem); }
   .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin: 64px 0; }
   .stat { padding-top: .9rem; border-top: 1.5px solid var(--ink); }
-  .stat strong { display: block; font-size: 2.3rem; line-height: 1.1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .stat strong { display: block; font-size: clamp(1.6rem, 2.4vw, 2.3rem); line-height: 1.1; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .stat span { color: var(--muted); font-size: .9rem; }
   .stat small { display: block; margin-top: .4rem; color: var(--muted); font-size: .75rem; }
   .pourquoi { max-width: 60ch; }
@@ -141,7 +141,7 @@
   .faq details:last-of-type { border-bottom: 1px solid var(--line); }
   .faq summary { cursor: pointer; font-weight: 500; }
   .faq p { color: var(--muted); margin: .5rem 0 .2rem; }
-  .demarrer { margin-top: 64px; padding: 32px; background: var(--bg-2); border-radius: var(--r); }
+  .demarrer { margin-top: 40px; padding: 32px; background: var(--bg-2); border-radius: var(--r); }
   .demarrer .nav { margin: 1.4rem 0 0; }
   .prenoms { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 520px; margin-top: .8rem; }
   .prenoms label, .enfants label { display: block; font-size: .85rem; color: var(--muted); margin-bottom: .3rem; }
@@ -249,6 +249,7 @@
   .modale .champ { display: block; margin-top: 1rem; font-weight: 600; }
   .modale .champ input { display: block; width: 100%; margin-top: .3rem; padding: .6rem .8rem; border: 1.5px solid var(--border); border-radius: var(--r); background: var(--paper); font-weight: 400; }
   .modale-actions { margin-top: 1rem; }
+  .turnstile { margin-top: 1rem; min-height: 65px; }
   body.modale-ouverte { overflow: hidden; }
   /* consentement : bloquant, deux boutons de même poids, pas de fermeture sans choix (CNIL) */
   .consent { position: fixed; inset: 0; z-index: 50; background: rgba(42, 33, 24, .55); display: grid; place-items: center; padding: 16px; }
@@ -260,14 +261,18 @@
   body.consent-ouvert { overflow: hidden; }
   /* partage : icônes fonctionnelles (le picto porte le sens), boutons ronds à bordure, jamais dans un CTA */
   .partage { margin-top: 64px; max-width: 64ch; }
-  #partage-compte { margin-top: 2rem; }
-  #partage-compte h3 { margin-top: 1.2rem; }
+  #partage-compte { margin-top: 1.8rem; }
+  #partage-compte .rs a:first-child { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .rs { display: flex; gap: .6rem; flex-wrap: wrap; margin: .7rem 0 0; }
   .rs a, .rs button { display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .85rem .5rem .7rem; border-radius: 999px; border: 1.5px solid var(--border); background: var(--paper); color: var(--ink); text-decoration: none; font: inherit; font-size: .9rem; cursor: pointer; }
   .rs a:hover, .rs button:hover { border-color: var(--ink); }
   .rs svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
   footer { padding: 32px 0; color: var(--muted); font-size: .85rem; }
   footer a { color: var(--muted); }
+  footer .rs-pied { display: flex; gap: .5rem; margin: 0 0 .8rem; }
+  footer .rs-pied a, footer .rs-pied button { font-size: .85rem; padding: .35rem .7rem .35rem .55rem; }
+  footer .rs-pied svg { width: 15px; height: 15px; }
+  .ajout[hidden] { display: none; }
 
   @media (max-width: 720px) {
     .prenoms { grid-template-columns: 1fr; }
@@ -306,19 +311,32 @@
     <header class="hero">
       <p class="sur">Qui fait quoi à la maison ?</p>
       <h1>Qui y pense ?</h1>
-      <p class="lead">Faites le compte à deux, en dix minutes. Les tâches sont déjà listées : pour chacune, dites qui s'en occupe, et qui y pense. Vous lisez ensuite combien d'heures par jour et combien de choses à garder en tête ça représente pour chacun.</p>
+      <p class="lead">Faites le compte à deux, en dix minutes. Les tâches sont déjà listées : pour chacune, dites qui s'en occupe, et qui y pense. Vous lisez ensuite le résultat pour chacun : les heures par jour, et le nombre de choses à garder en tête.</p>
       </header>
+
+    <div class="demarrer">
+      <h2>On commence</h2>
+      <div class="prenoms">
+        <div class="a"><label for="nomA">Prénom 1</label><input id="nomA" placeholder="Prénom"></div>
+        <div class="b"><label for="nomB">Prénom 2</label><input id="nomB" placeholder="Prénom"></div>
+      </div>
+      <div class="enfants">
+        <label for="enfants">Enfants à la maison</label>
+        <select id="enfants"><option value="0">Aucun</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option></select>
+      </div>
+      <div class="nav"><button class="btn" id="go2">Commencer</button><span class="small muted" id="hint1">Gratuit, sans compte. Rien n'est envoyé : tout se calcule dans votre navigateur.</span></div>
+    </div>
 
     <div class="stats">
       <div class="stat"><strong>20 %</strong><span>des couples où les deux travaillent décrivent un partage égal des tâches</span><small>INED, enquête FAMEMP, 2025</small></div>
-      <div class="stat"><strong>4 h contre 2 h</strong><span>de travail domestique par jour, femmes et hommes. Le temps des hommes n'a pas bougé depuis 1999</span><small>INSEE, Emploi du temps, 2010</small></div>
+      <div class="stat"><strong>4 h 01 contre 2 h 13</strong><span>de travail domestique par jour, femmes et hommes de 15 à 60 ans. Côté hommes, inchangé depuis 1999</span><small>INSEE, Emploi du temps, 2010</small></div>
       <div class="stat"><strong>86 %</strong><span>de temps en plus passé à penser aux tâches qu'à les faire</span><small>Invisible Load Index, 6 000 Européens, 2024</small></div>
     </div>
 
     <div class="pourquoi">
       <h2>Pourquoi faire l'exercice</h2>
       <p>La plupart des couples n'ont jamais listé ce qu'il y a à faire. Chacun voit ce qu'il fait, et une partie de ce que l'autre fait. Le reste est invisible : remarquer qu'il n'y a plus de lessive, savoir quand tombe le rendez-vous chez le dentiste, vérifier que le sac de piscine est prêt. Ce travail-là ne prend pas d'heures, il prend de la place dans la tête.</p>
-      <p>Cette page ne juge rien. Elle met des chiffres à la place des impressions, pour que la conversation parte de quelque chose de concret. Chez nous, la première version a surtout révélé les tâches que personne ne voyait.</p>
+      <p>Cette page ne juge rien. Elle met des chiffres à la place des impressions, pour que la conversation parte de quelque chose de concret. Chez nous, Christelle et moi, la première version a surtout révélé les tâches que personne ne voyait.</p>
     </div>
 
     <section class="faq" id="faq" aria-labelledby="faq-titre">
@@ -331,24 +349,6 @@
     </section>
 
 
-    <section class="partage" id="partage-accueil" aria-labelledby="partage-accueil-titre">
-      <h2 id="partage-accueil-titre">Faire connaître Qui y pense ?</h2>
-      <p class="muted">Le site vit par le bouche-à-oreille. Un lien envoyé à un couple, c'est un compte de plus qui se fait.</p>
-      <div class="rs" data-partage="site"></div>
-    </section>
-
-    <div class="demarrer">
-      <h2>On commence par vous</h2>
-      <div class="prenoms">
-        <div class="a"><label for="nomA">Prénom 1</label><input id="nomA" placeholder="Prénom"></div>
-        <div class="b"><label for="nomB">Prénom 2</label><input id="nomB" placeholder="Prénom"></div>
-      </div>
-      <div class="enfants">
-        <label for="enfants">Enfants à la maison</label>
-        <select id="enfants"><option value="0">Aucun</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option></select>
-      </div>
-      <div class="nav"><button class="btn" id="go2">Commencer</button><span class="small muted" id="hint1">Gratuit, sans compte. Rien n'est envoyé : tout se calcule dans votre navigateur.</span></div>
-    </div>
   </div>
 
   <!-- ÉCRAN 2 : qui fait quoi -->
@@ -373,22 +373,19 @@
   <div class="ecran" id="e3">
     <section>
       <h2>Votre répartition</h2>
-      <p class="muted">Calculée avec des durées courantes pour chaque tâche. Affinez-les plus bas avec votre réalité : le compte se met à jour en direct.</p>
+      <p class="muted">Calculée avec des durées courantes pour chaque tâche. Corrigez-les plus bas si elles ne collent pas chez vous : le compte se met à jour en direct.</p>
       <p class="verdict" id="verdict"></p>
       <table class="resultats" id="cartes"></table>
       <div class="parcat" id="parcat"></div>
       <div class="lecture" id="lecture"></div>
-      <div class="actions">
-        <button class="btn" id="xlsx">Télécharger en Excel</button>
-        <button class="btn secondary" id="sauver">Sauvegarder</button>
-        <button class="btn secondary" onclick="window.print()">Imprimer</button>
-      </div>
       <div class="partage" id="partage-compte">
         <h3>Envoyer ce compte à l'autre</h3>
         <p class="muted small">Le lien contient vos réponses, rien d'autre : la personne qui l'ouvre retrouve exactement ce compte.</p>
         <div class="rs" data-partage="compte"></div>
-        <h3>Faire connaître Qui y pense ?</h3>
-        <div class="rs" data-partage="site"></div>
+      </div>
+      <div class="actions">
+        <button class="btn secondary" id="xlsx">Télécharger en Excel</button>
+        <button class="btn secondary" id="sauver">Sauvegarder</button>
       </div>
       <p class="small muted" id="partage-ok"></p>
 
@@ -403,7 +400,7 @@
     </section>
   </div>
 
-  <footer>Qui y pense ? Un tableur tenu à deux depuis 2025, rendu utilisable par tous. Le lien de partage contient vos réponses, rien d'autre. <a href="https://github.com/charlusminus/charge_mentale_site">Code ouvert</a>. <a href="#" id="consent-lien">Cookies</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>.</footer>
+  <footer><span class="rs rs-pied" data-partage="site"></span>Qui y pense ? est fait par Charles Alzon, à partir du tableur tenu avec sa femme depuis 2025. Le lien de partage contient vos réponses, rien d'autre. <a href="https://github.com/charlusminus/charge_mentale_site">Code ouvert</a>. <a href="#" id="consent-lien">Cookies</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>.</footer>
   <noscript><p style="padding:16px;background:#F1EBDF">Ce site calcule tout dans votre navigateur : il a besoin de JavaScript pour fonctionner.</p></noscript>
 </main>
 
@@ -414,7 +411,7 @@
     <p>Aujourd'hui votre compte vit dans le lien de partage et dans le fichier Excel. On réfléchit à une version payante pour l'enregistrer, le modifier plus tard et recevoir des rappels. Deux questions pour savoir si ça vaut le coup :</p>
     <form id="intention-form">
       <fieldset>
-        <legend>Combien seriez-vous prêt à payer pour ces fonctions ?</legend>
+        <legend>Combien paieriez-vous pour ces fonctions ?</legend>
         <label><input type="radio" name="prix" value="0" required> Rien, je m'en passe</label>
         <label><input type="radio" name="prix" value="2-une-fois"> 2 € une fois</label>
         <label><input type="radio" name="prix" value="5-une-fois"> 5 € une fois</label>
@@ -425,7 +422,8 @@
       <label class="champ">Votre e-mail, pour vous prévenir si ça se fait
         <input type="email" name="email" placeholder="facultatif" autocomplete="email">
       </label>
-      <p class="small muted">En laissant votre e-mail, vous acceptez qu'on vous écrive une fois pour ça, rien d'autre. Vos réponses au questionnaire ne sont pas envoyées.</p>
+      <p class="small muted">En laissant votre e-mail, vous acceptez qu'on vous écrive une fois pour ça, rien d'autre. Vos réponses au questionnaire ne sont pas envoyées. L'envoi est protégé contre les robots par Cloudflare Turnstile.</p>
+      <div class="turnstile" id="cf-widget"></div>
       <div class="modale-actions"><button class="btn" type="submit">Envoyer</button></div>
       <p class="small muted" id="intention-ok" aria-live="polite"></p>
     </form>
@@ -436,7 +434,6 @@
   <div class="consent-boite">
     <h2 id="consent-titre">Une mesure d'audience, avec votre accord</h2>
     <p>Ce site utilise Google Analytics pour compter les visites et comprendre ce qui est utile. Ça dépose un cookie et envoie des données de navigation à Google. Vos réponses au questionnaire, elles, ne quittent jamais votre navigateur, quel que soit votre choix.</p>
-    <p class="small muted">Votre choix est gardé six mois sur cet appareil et se modifie à tout moment depuis « Cookies » en bas de page.</p>
     <div class="consent-actions">
       <button class="btn secondary" type="button" id="consent-non">Refuser</button>
       <button class="btn secondary" type="button" id="consent-oui">Accepter</button>
@@ -449,13 +446,14 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921f"></script>
+<script src="catalogue.js?v=20260921i"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
   const J = C.periodes;
   const SITE = "https://quiypense.org/";
   const INTENTIONS_URL = "https://charlusminus.app.n8n.cloud/webhook/quiypense-intentions";   // workflow n8n « Qui y pense, Intentions », cf n8n/README.md
+  const TURNSTILE_SITEKEY = "0x4AAAAAAE-qa9jJxGWCyc5B";   // clé publique Cloudflare Turnstile (la secrète vit dans n8n)
   const WHO = ["a", "b", "both", "other"];   // « other » = pas nous : quelqu'un d'autre s'en occupe, ou la tâche n'existe pas chez eux
   const FAMILLES_ENFANTS = new Set(["enfants-quotidien", "enfants-suivi"]);
   const TACHES_ENFANTS = new Set(["employeur"]);
@@ -484,6 +482,7 @@
   function allTasks() { const out = []; for (const cat of visibleCats()) for (const t of visibleTasks(cat)) out.push({ ...t, cat: cat.id, catNom: cat.nom }); return out; }
   function hj(st) { return (st.n * st.d / 60) / J[st.p]; }
   function fmt(x, dec = 1) { return x.toFixed(dec).replace(".", ","); }
+  function hm(h, gros) { if (gros) return Math.round(h) + " h"; const m = Math.round(h * 60); if (m < 60) return m + " min"; const hh = Math.floor(m / 60), mm = m % 60; return mm ? `${hh} h ${String(mm).padStart(2, "0")}` : `${hh} h`; }
   function nomA() { return S.nomA.trim() || "Prénom 1"; }
   function nomB() { return S.nomB.trim() || "Prénom 2"; }
   function label(k) { return k === "a" ? nomA() : k === "b" ? nomB() : k === "both" ? "les deux" : "pas nous"; }
@@ -589,17 +588,19 @@
     const cartes = document.getElementById("cartes");
     const n0 = v => fmt(v, v % 1 ? 1 : 0);
     cartes.innerHTML = `<tr><th></th><th class="a">${nomA()}</th><th class="b">${nomB()}</th></tr>
-      <tr><td class="lbl">Temps à faire</td><td><strong>${fmt(r.a.h)} h</strong><small>par jour, ${fmt(r.a.h * 7)} h par semaine</small></td><td><strong>${fmt(r.b.h)} h</strong><small>par jour, ${fmt(r.b.h * 7)} h par semaine</small></td></tr>
+      <tr><td class="lbl">Temps à faire</td><td><strong>${hm(r.a.h)}</strong><small>par jour, soit ${hm(r.a.h * 7, true)} par semaine</small></td><td><strong>${hm(r.b.h)}</strong><small>par jour, soit ${hm(r.b.h * 7, true)} par semaine</small></td></tr>
       <tr><td class="lbl">Tâches faites</td><td><strong>${n0(r.a.nFait)}</strong></td><td><strong>${n0(r.b.nFait)}</strong></td></tr>
       <tr><td class="lbl">Tâches à garder en tête</td><td><strong>${n0(r.a.nPense)}</strong></td><td><strong>${n0(r.b.nPense)}</strong></td></tr>`;
 
     const pc = document.getElementById("parcat");
     const cats = Object.values(r.cats).filter(c => c.a + c.b + c.both > 0);
-    pc.innerHTML = cats.length ? `<h3>Le temps, par famille de tâches</h3>
+    const maxTot = Math.max(...cats.map(c => c.a + c.b + c.both), 0.01);
+    pc.innerHTML = cats.length ? `<h3>Le temps par jour, par famille de tâches</h3>
       <div class="legende-barres"><span><i style="background:var(--a)"></i>${nomA()}</span><span><i style="background:var(--both)"></i>les deux</span><span><i style="background:var(--b)"></i>${nomB()}</span></div>` + cats.map(c => {
       const tot = c.a + c.b + c.both;
+      const w = 100 * tot / maxTot;
       return `<div class="barre"><span>${c.nom}</span>
-        <div class="track"><div class="fa" style="width:${100 * c.a / tot}%"></div><div class="fboth" style="width:${100 * c.both / tot}%"></div><div class="fb" style="width:${100 * c.b / tot}%"></div></div><span class="val">${fmt(tot, 1)} h/j</span></div>`;
+        <div class="track" style="width:${w}%"><div class="fa" style="width:${100 * c.a / tot}%"></div><div class="fboth" style="width:${100 * c.both / tot}%"></div><div class="fb" style="width:${100 * c.b / tot}%"></div></div><span class="val">${hm(tot)}</span></div>`;
     }).join("") : "";
 
     const L = document.getElementById("lecture"), V = document.getElementById("verdict");
@@ -613,20 +614,20 @@
     V.innerHTML = gros[0] === tete[0]
       ? `<span class="${gros[0]}">${gros[1]}</span> porte ${gros[2]} % du temps et ${tete[2]} % de la charge mentale.`
       : `<span class="${gros[0]}">${gros[1]}</span> porte ${gros[2]} % du temps, <span class="${tete[0]}">${tete[1]}</span> ${tete[2]} % de la charge mentale.`;
-    let txt = `${fmt(tot)} h par jour à faire en tout.`;
+    let txt = `${hm(tot)} par jour à faire en tout.`;
     if (totP) {
       if (Math.abs(qa - pa) >= 15) {
         const who = (qa > pa) ? nomA() : nomB();
         txt += ` L'écart entre faire et y penser est net : ${who} pense à bien plus de choses que le temps ne le montre. C'est là que se loge la charge mentale.`;
       }
     }
-    txt += " Ces chiffres ne jugent rien, ils donnent un point de départ pour en parler.";
+    txt += " Un point de départ pour en parler.";
     L.textContent = txt;
   }
 
   function renderAffiner() {
     const tb = document.getElementById("table-affiner");
-    let html = `<tr><th>Tâche</th><th class="cache">S'en occupe</th><th>Fois</th><th>par</th><th>Minutes</th><th class="hj">h / jour</th></tr>`;
+    let html = `<tr><th>Tâche</th><th class="cache">S'en occupe</th><th>Fois</th><th>par</th><th>Minutes</th><th class="hj">par jour</th></tr>`;
     for (const cat of visibleCats()) {
       const rows = visibleTasks(cat).filter(t => S.t[t.id].fait && S.t[t.id].fait !== "other");
       if (!rows.length) continue;
@@ -637,7 +638,7 @@
           <td><input type="number" min="0" step="1" value="${st.n}" data-k="n" aria-label="Nombre de fois"></td>
           <td><select data-k="p" aria-label="Période">${Object.keys(J).map(p => `<option value="${p}" ${p === st.p ? "selected" : ""}>${p}</option>`).join("")}</select></td>
           <td><input type="number" min="0" step="5" value="${st.d}" data-k="d" aria-label="Minutes"></td>
-          <td class="hj">${fmt(hj(st), 2)}</td></tr>`;
+          <td class="hj">${hm(hj(st))}</td></tr>`;
       }
     }
     tb.innerHTML = html;
@@ -645,7 +646,7 @@
       const st = S.t[tr.dataset.id];
       tr.querySelectorAll("input, select").forEach(inp => inp.addEventListener("input", () => {
         st[inp.dataset.k] = inp.dataset.k === "p" ? inp.value : (+inp.value || 0);
-        tr.querySelector(".hj").textContent = fmt(hj(st), 2);
+        tr.querySelector(".hj").textContent = hm(hj(st));
         update();
       }));
     });
@@ -747,17 +748,18 @@
         ["whatsapp", "WhatsApp", `https://wa.me/?text=${enc(texte + url)}`],
         ["mail", "E-mail", `mailto:?subject=${enc(sujet)}&body=${enc(texte + url)}`],
       ];
-      if (!compte) items.push(["linkedin", "LinkedIn", `https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}`],
+      if (!compte && !box.classList.contains("rs-pied")) items.push(["linkedin", "LinkedIn", `https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}`],
         ["facebook", "Facebook", `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`],
         ["x", "X", `https://twitter.com/intent/tweet?text=${enc(texte)}&url=${enc(url)}`]);
+      if (box.classList.contains("rs-pied")) items.splice(1, 1);   // pied de page : WhatsApp et copier le lien, pas d'e-mail
       box.innerHTML = items.map(([ic, nom, href]) => `<a href="${href}" target="_blank" rel="noopener" aria-label="Partager par ${nom}"><svg><use href="#i-${ic}"/></svg>${nom}</a>`).join("");
-      const copier = document.createElement("button"); copier.type = "button"; copier.innerHTML = `<svg><use href="#i-lien"/></svg>Copier le lien`;
+      const copier = document.createElement("button"); copier.type = "button"; copier.innerHTML = `<svg><use href="#i-lien"/></svg>${box.classList.contains("rs-pied") ? "Copier le lien du site" : "Copier le lien"}`;
       copier.addEventListener("click", async () => {
         try { await navigator.clipboard.writeText(url); copier.lastChild.textContent = "Lien copié"; setTimeout(() => copier.lastChild.textContent = "Copier le lien", 2000); }
         catch (e) { prompt("Copiez ce lien :", url); }
       });
       box.appendChild(copier);
-      if (navigator.share) {
+      if (navigator.share && !box.classList.contains("rs-pied")) {
         const natif = document.createElement("button"); natif.type = "button"; natif.innerHTML = `<svg><use href="#i-partager"/></svg>Autre application`;
         natif.addEventListener("click", () => navigator.share({ title: sujet, text: texte, url }).catch(() => {}));
         box.appendChild(natif);
@@ -769,7 +771,18 @@
   /* ---------- intention « Sauvegarder » : mesure l'intérêt pour une version payante ---------- */
   (function intention() {
     const m = document.getElementById("intention"), form = document.getElementById("intention-form"), ok = document.getElementById("intention-ok");
-    const ouvrir = () => { m.hidden = false; document.body.classList.add("modale-ouverte"); form.querySelector("input").focus(); if (window.__ga) gtag("event", "sauvegarder_clic"); };
+    let widget = null;
+    function turnstile() {
+      // Le script Cloudflare ne se charge qu'à l'ouverture de la modale : personne d'autre ne le télécharge.
+      // Ne pas nommer le conteneur « turnstile » : un id devient une propriété de window et masquerait l'API.
+      const pret = () => window.turnstile && typeof window.turnstile.render === "function";
+      const rendre = () => { if (widget === null && pret()) widget = window.turnstile.render("#cf-widget", { sitekey: TURNSTILE_SITEKEY, language: "fr", theme: "light", size: "flexible" }); };
+      if (pret()) return rendre();
+      if (document.getElementById("cf-turnstile")) return;
+      const sc = document.createElement("script"); sc.id = "cf-turnstile"; sc.async = true; sc.defer = true;
+      sc.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__turnstileReady"; window.__turnstileReady = rendre; document.head.appendChild(sc);
+    }
+    const ouvrir = () => { m.hidden = false; document.body.classList.add("modale-ouverte"); form.querySelector("input").focus(); turnstile(); if (window.__ga) gtag("event", "sauvegarder_clic"); };
     const fermer = () => { m.hidden = true; document.body.classList.remove("modale-ouverte"); };
     document.getElementById("sauver").addEventListener("click", ouvrir);
     document.getElementById("intention-fermer").addEventListener("click", fermer);
@@ -778,19 +791,24 @@
     form.addEventListener("submit", async e => {
       e.preventDefault();
       const r = compute();
+      const jeton = (form.querySelector('[name="cf-turnstile-response"]') || {}).value || "";
+      if (!jeton) { ok.textContent = "Un instant, la vérification anti-robot n'est pas terminée."; return; }
       const data = new URLSearchParams({
         prix: form.prix.value, email: form.email.value.trim(), enfants: S.enfants, taches_renseignees: r.renseignees, taches_total: r.total,
-        heures_a: r.a.h.toFixed(2), heures_b: r.b.h.toFixed(2), date: new Date().toISOString(), page: location.origin + location.pathname
+        heures_a: r.a.h.toFixed(2), heures_b: r.b.h.toFixed(2), date: new Date().toISOString(), page: location.origin + location.pathname,
+        "cf-turnstile-response": jeton
       });
       if (window.__ga) gtag("event", "intention_payante", { prix: form.prix.value, email_laisse: form.email.value ? "oui" : "non" });
       form.querySelector("button[type=submit]").disabled = true;
       try {
-        if (INTENTIONS_URL) await fetch(INTENTIONS_URL, { method: "POST", body: data });
+        const rep = INTENTIONS_URL ? await (await fetch(INTENTIONS_URL, { method: "POST", body: data })).json() : { ok: true };
+        if (!rep.ok) throw new Error(rep.reason || "refus");
         ok.textContent = "Merci, c'est noté." + (form.email.value ? " On vous écrira si ça se fait." : "");
         setTimeout(fermer, 1800);
       } catch (err) {
-        ok.textContent = "L'envoi n'a pas abouti. Réessayez plus tard, ou écrivez-nous.";
+        ok.textContent = String(err.message) === "captcha" ? "La vérification anti-robot a échoué. Fermez et réessayez." : "L'envoi n'a pas abouti. Réessayez plus tard, ou écrivez-nous.";
         form.querySelector("button[type=submit]").disabled = false;
+        if (window.turnstile && widget !== null) window.turnstile.reset(widget);
       }
     });
   })();
