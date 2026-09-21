@@ -1,11 +1,24 @@
 <!doctype html>
 <html lang="fr">
 <head>
+<!-- Google tag (gtag.js), chargé seulement après consentement : voir consentement() en bas de page -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  function chargerGA() {
+    if (window.__ga) return; window.__ga = true;
+    gtag('consent', 'update', { analytics_storage: 'granted' });
+    const sc = document.createElement('script'); sc.async = true; sc.src = 'https://www.googletagmanager.com/gtag/js?id=G-NYTV9VXCBN'; document.head.appendChild(sc);
+    gtag('js', new Date());
+    gtag('config', 'G-NYTV9VXCBN');
+  }
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Qui y pense ? Qui fait quoi à la maison, le compte de la charge mentale</title>
 <meta name="description" content="Qui fait quoi à la maison, et surtout qui y pense ? Listez les tâches du foyer à deux et lisez le résultat en heures par jour et en choses à garder en tête. Gratuit, sans compte, rien n'est envoyé.">
-<link rel="canonical" href="https://charlusminus.github.io/charge_mentale_site/">
+<link rel="canonical" href="https://quiypense.org/">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="Charles Alzon">
 <meta name="theme-color" content="#FAF6EF">
@@ -14,30 +27,30 @@
 <meta property="og:site_name" content="Qui y pense ?">
 <meta property="og:title" content="Qui y pense ? Qui fait quoi à la maison">
 <meta property="og:description" content="Le compte de la charge mentale du foyer, à deux, en dix minutes. Gratuit, sans compte, rien n'est envoyé.">
-<meta property="og:url" content="https://charlusminus.github.io/charge_mentale_site/">
-<meta property="og:image" content="https://charlusminus.github.io/charge_mentale_site/img/og.png">
+<meta property="og:url" content="https://quiypense.org/">
+<meta property="og:image" content="https://quiypense.org/img/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Qui y pense ? Qui fait quoi à la maison. Le compte de la charge mentale du foyer, à deux, en dix minutes.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Qui y pense ? Qui fait quoi à la maison">
 <meta name="twitter:description" content="Le compte de la charge mentale du foyer, à deux, en dix minutes. Gratuit, sans compte, rien n'est envoyé.">
-<meta name="twitter:image" content="https://charlusminus.github.io/charge_mentale_site/img/og.png">
+<meta name="twitter:image" content="https://quiypense.org/img/og.png">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="img/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="img/icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921b">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921d">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebApplication",
-      "@id": "https://charlusminus.github.io/charge_mentale_site/#app",
+      "@id": "https://quiypense.org/#app",
       "name": "Qui y pense ?",
       "alternateName": "Qui fait quoi à la maison",
-      "url": "https://charlusminus.github.io/charge_mentale_site/",
+      "url": "https://quiypense.org/",
       "description": "Outil gratuit pour faire le compte des tâches et de la charge mentale du foyer : qui s'en occupe, qui y pense, combien d'heures par jour et combien de choses en tête pour chacun.",
       "applicationCategory": "LifestyleApplication",
       "operatingSystem": "Any",
@@ -46,16 +59,16 @@
       "isAccessibleForFree": true,
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
       "author": { "@type": "Person", "name": "Charles Alzon" },
-      "image": "https://charlusminus.github.io/charge_mentale_site/img/og.png"
+      "image": "https://quiypense.org/img/og.png"
     },
     {
       "@type": "FAQPage",
-      "@id": "https://charlusminus.github.io/charge_mentale_site/#faq",
+      "@id": "https://quiypense.org/#faq",
       "mainEntity": [
         { "@type": "Question", "name": "Qu'est-ce que la charge mentale ?", "acceptedAnswer": { "@type": "Answer", "text": "La charge mentale est le travail constant de gestion, d'organisation et de planification de la bonne marche de la maison (définition de Nicole Brais). Concrètement : remarquer qu'il faut faire quelque chose, planifier, et vérifier que c'est fait, même quand quelqu'un d'autre exécute. Le terme vient de la sociologue Monique Haicault (1984) ; Allison Daminger (2019) a montré que l'anticipation et le suivi restent presque toujours portés par la même personne du couple." } },
         { "@type": "Question", "name": "Comment le compte est-il calculé ?", "acceptedAnswer": { "@type": "Answer", "text": "Pour chaque tâche, vous dites qui s'en occupe et qui y pense. Les heures par jour se calculent sur qui s'en occupe : nombre de fois par période multiplié par la durée, ramené à la journée. La charge mentale se compte en nombre de tâches à garder en tête, pas en heures. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE (2010) et du jeu de cartes Fair Play (Eve Rodsky, 2019) ; vous les corrigez ensuite avec votre réalité." } },
         { "@type": "Question", "name": "D'où viennent les chiffres cités ?", "acceptedAnswer": { "@type": "Answer", "text": "INSEE, enquête Emploi du temps 2010 : les femmes consacrent 4 h 01 par jour au travail domestique, les hommes 2 h 13, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens : on passe 86 % de temps en plus à penser aux tâches qu'à les faire." } },
-        { "@type": "Question", "name": "Mes réponses sont-elles envoyées quelque part ?", "acceptedAnswer": { "@type": "Answer", "text": "Non. Tout se calcule dans votre navigateur, il n'y a ni compte ni serveur. Vos réponses sont encodées dans l'adresse de la page : c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur." } },
+        { "@type": "Question", "name": "Mes réponses sont-elles envoyées quelque part ?", "acceptedAnswer": { "@type": "Answer", "text": "Non. Tout se calcule dans votre navigateur, il n'y a ni compte ni serveur. Vos réponses sont encodées dans l'adresse de la page : c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur. Seule une mesure d'audience (Google Analytics) compte les visites, sans jamais recevoir vos réponses." } },
         { "@type": "Question", "name": "Combien de temps ça prend et à combien ?", "acceptedAnswer": { "@type": "Answer", "text": "Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, et le nombre d'enfants. Les tâches vont du plus courant au plus rare : on peut s'arrêter à mi-parcours et voir le compte." } }
       ]
     }
@@ -224,6 +237,14 @@
   .suivi .prog i { display: block; height: 100%; background: var(--a); }
   .suivi div { max-width: var(--max); margin: 0 auto; display: flex; gap: 1rem; align-items: center; font-size: .95rem; }
   .suivi .btn { margin-left: auto; padding: .5rem 1rem; }
+  /* consentement : bloquant, deux boutons de même poids, pas de fermeture sans choix (CNIL) */
+  .consent { position: fixed; inset: 0; z-index: 50; background: rgba(42, 33, 24, .55); display: grid; place-items: center; padding: 16px; }
+  .consent[hidden] { display: none; }
+  .consent-boite { background: var(--bg); border-radius: var(--r); padding: 28px; max-width: 520px; width: 100%; box-shadow: 0 0 0 1.5px var(--border); }
+  .consent-boite h2 { font-size: 1.35rem; margin-bottom: .4rem; }
+  .consent-actions { display: flex; gap: .7rem; margin-top: 1.2rem; }
+  .consent-actions .btn { flex: 1; text-align: center; }
+  body.consent-ouvert { overflow: hidden; }
   footer { padding: 32px 0; color: var(--muted); font-size: .85rem; }
   footer a { color: var(--muted); }
 
@@ -275,7 +296,7 @@
       <details><summary>Qu'est-ce que la charge mentale ?</summary><p>Le travail constant de gestion, d'organisation et de planification de la bonne marche de la maison, selon la définition de Nicole Brais. Concrètement : remarquer qu'il faut faire quelque chose, planifier, vérifier que c'est fait, même quand quelqu'un d'autre exécute. Le terme vient de la sociologue Monique Haicault (1984). Allison Daminger (2019) a montré que l'anticipation et le suivi restent presque toujours portés par la même personne du couple, alors que les décisions se prennent à deux.</p></details>
       <details><summary>Comment le compte est-il calculé ?</summary><p>Pour chaque tâche, vous dites qui s'en occupe et qui y pense. Les heures par jour se calculent sur « qui s'en occupe » : nombre de fois par période, multiplié par la durée, ramené à la journée. La charge mentale se compte en nombre de tâches à garder en tête, pas en heures : aucune enquête sérieuse ne convertit la pensée en minutes. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE (2010) et du jeu de cartes Fair Play (Eve Rodsky, 2019). Vous les corrigez ensuite avec votre réalité.</p></details>
       <details><summary>D'où viennent les chiffres cités ?</summary><p>INSEE, enquête Emploi du temps 2010 : 4 h 01 par jour de travail domestique pour les femmes, 2 h 13 pour les hommes, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP publiée en 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens interrogés : 86 % de temps en plus passé à penser aux tâches qu'à les faire. Les libellés des tâches suivent la nomenclature INSEE, complétée par les cent cartes Fair Play.</p></details>
-      <details><summary>Mes réponses sont-elles envoyées quelque part ?</summary><p>Non. Tout se calcule dans votre navigateur, il n'y a ni compte ni serveur. Vos réponses sont encodées dans l'adresse de la page : c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur. Les polices sont hébergées avec le site, rien n'est chargé chez un tiers.</p></details>
+      <details><summary>Mes réponses sont-elles envoyées quelque part ?</summary><p>Non. Tout se calcule dans votre navigateur, il n'y a ni compte ni serveur. Vos réponses sont encodées dans l'adresse de la page : c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur. Les polices sont hébergées avec le site. Une mesure d'audience (Google Analytics) compte les visites, seulement si vous l'acceptez dans le bandeau, et sans jamais recevoir vos réponses.</p></details>
       <details><summary>Combien de temps ça prend, et à combien ?</summary><p>Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, et le nombre d'enfants. Les tâches vont du plus courant au plus rare : on peut s'arrêter à mi-parcours et voir le compte, puis y revenir.</p></details>
     </section>
 
@@ -338,16 +359,28 @@
     </section>
   </div>
 
-  <footer>Qui y pense ? Un tableur tenu à deux depuis 2025, rendu utilisable par tous. Le lien de partage contient vos réponses, rien d'autre. <a href="https://github.com/charlusminus/charge_mentale_site">Code ouvert</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>.</footer>
+  <footer>Qui y pense ? Un tableur tenu à deux depuis 2025, rendu utilisable par tous. Le lien de partage contient vos réponses, rien d'autre. <a href="https://github.com/charlusminus/charge_mentale_site">Code ouvert</a>. <a href="#" id="consent-lien">Cookies</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>.</footer>
   <noscript><p style="padding:16px;background:#F1EBDF">Ce site calcule tout dans votre navigateur : il a besoin de JavaScript pour fonctionner.</p></noscript>
 </main>
+
+<div class="consent" id="consent" role="dialog" aria-modal="true" aria-labelledby="consent-titre" hidden>
+  <div class="consent-boite">
+    <h2 id="consent-titre">Une mesure d'audience, avec votre accord</h2>
+    <p>Ce site utilise Google Analytics pour compter les visites et comprendre ce qui est utile. Ça dépose un cookie et envoie des données de navigation à Google. Vos réponses au questionnaire, elles, ne quittent jamais votre navigateur, quel que soit votre choix.</p>
+    <p class="small muted">Votre choix est gardé six mois sur cet appareil et se modifie à tout moment depuis « Cookies » en bas de page.</p>
+    <div class="consent-actions">
+      <button class="btn secondary" type="button" id="consent-non">Refuser</button>
+      <button class="btn secondary" type="button" id="consent-oui">Accepter</button>
+    </div>
+  </div>
+</div>
 
 <div class="suivi" id="suivi"><span class="prog"><i id="prog" style="width:0%"></i></span><div>
   <span id="nTaches"></span>
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921b"></script>
+<script src="catalogue.js?v=20260921d"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -630,6 +663,22 @@
   });
 
   show(S.ecran || 1);
+
+  /* ---------- consentement ---------- */
+  (function consentement() {
+    const CLE = "consent-ga", SIX_MOIS = 1000 * 60 * 60 * 24 * 182;
+    const boite = document.getElementById("consent");
+    function lire() { try { const v = JSON.parse(localStorage.getItem(CLE) || "null"); return v && Date.now() - v.t < SIX_MOIS ? v.ok : null; } catch (e) { return null; } }
+    function ecrire(ok) { try { localStorage.setItem(CLE, JSON.stringify({ ok, t: Date.now() })); } catch (e) {} }
+    function ouvrir() { boite.hidden = false; document.body.classList.add("consent-ouvert"); document.getElementById("consent-non").focus(); }
+    function fermer() { boite.hidden = true; document.body.classList.remove("consent-ouvert"); }
+    document.getElementById("consent-oui").addEventListener("click", () => { ecrire(true); fermer(); chargerGA(); });
+    document.getElementById("consent-non").addEventListener("click", () => { ecrire(false); fermer(); });
+    document.getElementById("consent-lien").addEventListener("click", e => { e.preventDefault(); ouvrir(); });
+    boite.addEventListener("keydown", e => { if (e.key === "Tab") { const b = boite.querySelectorAll("button"); const first = b[0], last = b[b.length - 1]; if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); } } });
+    const choix = lire();
+    if (choix === true) chargerGA(); else if (choix === null) ouvrir();
+  })();
 })();
 </script>
 </body>
