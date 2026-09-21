@@ -42,7 +42,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921m">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921n">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -282,7 +282,28 @@
   footer .rs-pied svg { width: 15px; height: 15px; }
   .ajout[hidden] { display: none; }
 
+  /* en-tête de site */
+  .haut { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 14px 0 0; }
+  .marque { font-family: var(--serif); font-weight: 600; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
+  .haut nav { display: flex; align-items: center; gap: 1rem; font-size: .95rem; }
+  .soutenir { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .9rem .45rem .75rem; border-radius: 999px; border: 1.5px solid var(--b); background: var(--b); color: var(--paper); font: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; }
+  .soutenir:hover { background: var(--ink); border-color: var(--ink); }
+  .soutenir svg { width: 17px; height: 17px; fill: currentColor; }
+  /* faire connaître, sous le compte */
+  .connaitre { margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1.5px solid var(--ink); }
+  .connaitre h2 { margin-bottom: .3rem; }
+  .garde-note { margin: .8rem 0 0; }
+  /* modales Ko-fi et sortie */
+  .kofi-boite { max-width: 440px; }
+  .kofi-cadre { min-height: 200px; margin-top: .8rem; }
+  .kofi-cadre iframe { display: block; width: 100%; height: 620px; border: 0; border-radius: var(--r); background: var(--paper); }
+  .sortie-actions { display: grid; gap: .6rem; margin-top: 1.2rem; }
+  .sortie-actions .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; text-align: center; }
+  .sortie-actions .btn svg { width: 18px; height: 18px; fill: currentColor; }
+  .sortie-actions .small { margin: -.1rem 0 .2rem; }
   @media (max-width: 720px) {
+    .haut nav a:not(.soutenir) { display: none; }
+    .kofi-cadre iframe { height: 560px; }
     .prenoms { grid-template-columns: 1fr; }
     .stats { grid-template-columns: 1fr; gap: 1.2rem; }
     /* mobile : le libellé prend toute la largeur, les neuf cases dessous, alignées sur l'en-tête */
@@ -317,9 +338,14 @@
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></symbol>
   <symbol id="i-mail" viewBox="0 0 24 24"><path d="M2 4h20a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm1 2.8V18h18V6.8l-9 6.3-9-6.3zM4.4 6l7.6 5.3L19.6 6H4.4z"/></symbol>
   <symbol id="i-lien" viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4l3.5-3.5a3 3 0 0 1 4.3 4.3l-1.6 1.6a1 1 0 1 1-1.4-1.4l1.6-1.6a1 1 0 0 0-1.5-1.5L12 13.4a1 1 0 0 1-1.4 0zm2.8-2.8a1 1 0 0 1 0 1.4l-3.5 3.5a3 3 0 0 1-4.3-4.3l1.6-1.6a1 1 0 1 1 1.4 1.4l-1.6 1.6a1 1 0 0 0 1.5 1.5L12 10.6a1 1 0 0 1 1.4 0z"/></symbol>
+  <symbol id="i-kofi" viewBox="0 0 24 24"><path d="M3 5h13.5A3.5 3.5 0 0 1 20 8.5v.5a3.5 3.5 0 0 1-3.5 3.5H16v1.2A4.8 4.8 0 0 1 11.2 18.5H7.8A4.8 4.8 0 0 1 3 13.7V5zm13 2.2v3.3h.5a1.3 1.3 0 0 0 1.3-1.3v-.7a1.3 1.3 0 0 0-1.3-1.3H16zM3 20h15v2H3z"/><path d="M9.5 8.6c.9-.9 2.2-.6 2.6.4.4-1 1.7-1.3 2.6-.4.9.9.4 2.2-2.6 4.4-3-2.2-3.5-3.5-2.6-4.4z" fill="#FAF6EF"/></symbol>
   <symbol id="i-partager" viewBox="0 0 24 24"><path d="M18 16.1a3 3 0 0 0-2 .8l-7.1-4.1a3 3 0 0 0 0-1.6L16 7.1a3 3 0 1 0-1-1.7L7.9 9.5a3 3 0 1 0 0 5l7.1 4.1a3 3 0 1 0 3-2.5z"/></symbol>
 </svg>
 <main>
+  <header class="haut">
+    <a class="marque" href="./">Qui y pense&nbsp;?</a>
+    <nav aria-label="Site"><a href="blog/">Blog</a><button type="button" class="soutenir" id="soutenir"><svg aria-hidden="true"><use href="#i-kofi"/></svg>Soutenir</button></nav>
+  </header>
   <nav class="fil" id="fil" aria-label="Étapes"><span data-n="1">Vous</span><span data-n="2">Qui y pense</span><span data-n="3">Le compte</span></nav>
 
   <!-- ÉCRAN 1 : accueil -->
@@ -408,11 +434,17 @@
           <button class="btn secondary" id="xlsx">Télécharger en Excel</button>
           <button class="btn secondary" id="back2">Modifier qui y pense</button>
         </div>
+        <p class="small muted garde-note">Ce compte n'est enregistré nulle part : copiez le lien ou ajoutez la page aux favoris pour le retrouver.</p>
         <div class="partage" id="partage-compte" hidden>
           <p class="muted small">Le lien contient vos réponses, rien d'autre : la personne qui l'ouvre retrouve exactement ce compte.</p>
           <div class="rs" data-partage="compte"></div>
         </div>
         <p class="small"><a href="#" id="reset">Recommencer depuis le début</a></p>
+      </div>
+      <div class="connaitre" id="connaitre">
+        <h2>Faire connaître Qui y pense ?</h2>
+        <p class="muted">Un couple sur cinq se dit à égalité. Si le compte vous a été utile, envoyez le site à un couple qui en aurait besoin, ou partagez-le sur vos réseaux : c'est ce qui le fait vivre.</p>
+        <div class="rs" data-partage="site"></div>
       </div>
       <p class="apropos">D'où viennent les durées par défaut : de l'enquête Emploi du temps de l'INSEE (2010), qui mesure le temps domestique au carnet, et du jeu de cartes Fair Play (Eve Rodsky, 2019) pour les tâches que le carnet ne voit pas. Un couple avec enfants qui garde toutes les valeurs par défaut totalise environ 8 heures et demie par jour, dans la fourchette haute de ce que l'INSEE observe. La distinction « y penser » et « s'en occuper » vient des travaux d'Allison Daminger (2019) : anticiper et vérifier, c'est du travail, même quand quelqu'un d'autre exécute.</p>
     </section>
@@ -448,6 +480,30 @@
   </div>
 </div>
 
+<div class="modale" id="kofi" role="dialog" aria-modal="true" aria-labelledby="kofi-titre" hidden>
+  <div class="modale-boite kofi-boite">
+    <button class="modale-fermer" type="button" id="kofi-fermer" aria-label="Fermer">Fermer</button>
+    <h2 id="kofi-titre">Soutenir Qui y pense ?</h2>
+    <p>Le site est gratuit, sans compte ni publicité. Si le compte vous a servi, un café sur Ko-fi aide à le garder en ligne et à préparer la suite : sauvegarder, refaire le compte dans six mois, comparer.</p>
+    <div class="kofi-cadre" id="kofi-cadre"></div>
+    <p class="small muted">Le paiement se fait chez Ko-fi. <a href="https://ko-fi.com/quiypense?utm_source=quiypense&utm_medium=modale&utm_campaign=soutenir" target="_blank" rel="noopener" id="kofi-lien">Ouvrir Ko-fi dans un nouvel onglet</a>.</p>
+  </div>
+</div>
+
+<div class="modale" id="sortie" role="dialog" aria-modal="true" aria-labelledby="sortie-titre" hidden>
+  <div class="modale-boite">
+    <button class="modale-fermer" type="button" id="sortie-fermer" aria-label="Fermer">Fermer</button>
+    <h2 id="sortie-titre">Avant de partir : ce compte n'est pas sauvegardé</h2>
+    <p>Rien n'est enregistré sur un serveur. Votre compte vit dans le lien de cette page : si vous fermez l'onglet sans le garder, il est perdu.</p>
+    <div class="sortie-actions">
+      <button class="btn" type="button" id="sortie-copier"><svg aria-hidden="true"><use href="#i-lien"/></svg><span>Copier le lien de ce compte</span></button>
+      <p class="small muted" id="sortie-ok">Ou ajoutez la page aux favoris : Ctrl + D (⌘ + D sur Mac).</p>
+      <button class="btn secondary" type="button" id="sortie-sauver">Sauvegarder, bientôt : dites-nous si ça vous intéresse</button>
+      <button class="btn secondary" type="button" id="sortie-soutenir"><svg aria-hidden="true"><use href="#i-kofi"/></svg><span>Soutenir le projet</span></button>
+    </div>
+  </div>
+</div>
+
 <div class="consent" id="consent" role="dialog" aria-modal="true" aria-labelledby="consent-titre" hidden>
   <div class="consent-boite">
     <h2 id="consent-titre">Une mesure d'audience, avec votre accord</h2>
@@ -464,7 +520,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921m"></script>
+<script src="catalogue.js?v=20260921n"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -479,6 +535,7 @@
   const ALPHA = "0123456789abcdefghijklmnopqrstuvwxyz", WHO0 = [null, ...WHO], PER = Object.keys(J);   // déclarées avant load(), sinon zone morte temporelle
   // état : { nomA, nomB, enfants, ecran, t: { id: {fait, pense, n, p, d} }, custom: [{id, cat, nom, aide}] }
   let S = load() || fresh();
+  let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
 
   function fresh() {
     const s = { nomA: "", nomB: "", enfants: 0, ecran: 1, t: {}, custom: [] };
@@ -716,6 +773,7 @@
     return rows;
   }
   async function exportXlsx() {
+    garde = true;
     const r = compute();
     const res = [["Qui y pense ? Qui fait quoi à la maison, le compte de la charge mentale", "", ""], [],
       ["", nomA(), nomB()],
@@ -786,37 +844,90 @@
 
 
   /* ---------- partage ---------- */
+  // Chaque canal porte son utm_source ; utm_medium=partage ; utm_campaign = compte (lien avec les réponses), site ou pied.
+  function lienPartage(compte, source, campagne) {
+    const q = `?utm_source=${source}&utm_medium=partage&utm_campaign=${campagne}`;
+    return compte ? location.origin + location.pathname + q + location.hash : SITE + q;
+  }
   function renderPartage() {
     document.querySelectorAll(".rs").forEach(box => {
-      const compte = box.dataset.partage === "compte";
-      const url = compte ? location.href : SITE;
+      const compte = box.dataset.partage === "compte", pied = box.classList.contains("rs-pied");
+      const campagne = compte ? "compte" : pied ? "pied" : "site";
+      const L = src => lienPartage(compte, src, campagne);
       const texte = compte
         ? `Voici notre compte « Qui y pense ? », à lire ensemble : `
         : `Qui fait quoi à la maison, et surtout qui y pense ? Faites le compte à deux, en dix minutes, gratuit et sans compte : `;
       const sujet = compte ? "Notre compte Qui y pense ?" : "Qui y pense ? Qui fait quoi à la maison";
       const enc = encodeURIComponent;
       const items = [
-        ["whatsapp", "WhatsApp", `https://wa.me/?text=${enc(texte + url)}`],
-        ["mail", "E-mail", `mailto:?subject=${enc(sujet)}&body=${enc(texte + url)}`],
+        ["whatsapp", "WhatsApp", `https://wa.me/?text=${enc(texte + L("whatsapp"))}`],
+        ["mail", "E-mail", `mailto:?subject=${enc(sujet)}&body=${enc(texte + L("email"))}`],
       ];
-      if (!compte && !box.classList.contains("rs-pied")) items.push(["linkedin", "LinkedIn", `https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}`],
-        ["facebook", "Facebook", `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`],
-        ["x", "X", `https://twitter.com/intent/tweet?text=${enc(texte)}&url=${enc(url)}`]);
-      if (box.classList.contains("rs-pied")) items.splice(1, 1);   // pied de page : WhatsApp et copier le lien, pas d'e-mail
-      box.innerHTML = items.map(([ic, nom, href]) => `<a href="${href}" target="_blank" rel="noopener" aria-label="Partager par ${nom}"><svg><use href="#i-${ic}"/></svg>${nom}</a>`).join("");
-      const copier = document.createElement("button"); copier.type = "button"; copier.innerHTML = `<svg><use href="#i-lien"/></svg>${box.classList.contains("rs-pied") ? "Copier le lien du site" : "Copier le lien"}`;
+      if (!compte && !pied) items.push(["linkedin", "LinkedIn", `https://www.linkedin.com/sharing/share-offsite/?url=${enc(L("linkedin"))}`],
+        ["facebook", "Facebook", `https://www.facebook.com/sharer/sharer.php?u=${enc(L("facebook"))}`],
+        ["x", "X", `https://twitter.com/intent/tweet?text=${enc(texte)}&url=${enc(L("x"))}`]);
+      if (pied) items.splice(1, 1);   // pied de page : WhatsApp et copier le lien, pas d'e-mail
+      box.innerHTML = items.map(([ic, nom, href]) => `<a href="${href}" target="_blank" rel="noopener" data-canal="${ic}" aria-label="Partager par ${nom}"><svg><use href="#i-${ic}"/></svg>${nom}</a>`).join("");
+      box.querySelectorAll("a").forEach(a => a.addEventListener("click", () => { if (compte) garde = true; if (window.__ga) gtag("event", "partage", { canal: a.dataset.canal, campagne }); }));
+      const copier = document.createElement("button"); copier.type = "button"; copier.dataset.canal = "copie"; copier.innerHTML = `<svg><use href="#i-lien"/></svg>${pied ? "Copier le lien du site" : "Copier le lien"}`;
       copier.addEventListener("click", async () => {
-        try { await navigator.clipboard.writeText(url); copier.lastChild.textContent = "Lien copié"; setTimeout(() => copier.lastChild.textContent = "Copier le lien", 2000); }
+        const url = L("copie"); if (compte) garde = true; if (window.__ga) gtag("event", "partage", { canal: "copie", campagne });
+        try { await navigator.clipboard.writeText(url); copier.lastChild.textContent = "Lien copié"; setTimeout(() => copier.lastChild.textContent = pied ? "Copier le lien du site" : "Copier le lien", 2000); }
         catch (e) { prompt("Copiez ce lien :", url); }
       });
       box.appendChild(copier);
-      if (navigator.share && !box.classList.contains("rs-pied")) {
-        const natif = document.createElement("button"); natif.type = "button"; natif.innerHTML = `<svg><use href="#i-partager"/></svg>Autre application`;
-        natif.addEventListener("click", () => navigator.share({ title: sujet, text: texte, url }).catch(() => {}));
+      if (navigator.share && !pied) {
+        const natif = document.createElement("button"); natif.type = "button"; natif.dataset.canal = "natif"; natif.innerHTML = `<svg><use href="#i-partager"/></svg>Autre application`;
+        natif.addEventListener("click", () => { if (compte) garde = true; if (window.__ga) gtag("event", "partage", { canal: "natif", campagne }); navigator.share({ title: sujet, text: texte, url: L("natif") }).catch(() => {}); });
         box.appendChild(natif);
       }
     });
   }
+
+
+  /* ---------- modales génériques : Ko-fi (soutenir) et sortie (compte non sauvegardé) ---------- */
+  function ouvrirModale(m, focus) { m.hidden = false; document.body.classList.add("modale-ouverte"); const f = focus || m.querySelector(".modale-fermer"); if (f) f.focus(); }
+  function fermerModale(m) { m.hidden = true; document.body.classList.remove("modale-ouverte"); }
+  function modaleOuverte() { return document.body.classList.contains("modale-ouverte") || document.body.classList.contains("consent-ouvert"); }
+
+  (function kofi() {
+    const m = document.getElementById("kofi"), cadre = document.getElementById("kofi-cadre");
+    function ouvrir(origine) {
+      // L'iframe Ko-fi ne se charge qu'à l'ouverture : personne d'autre ne télécharge quoi que ce soit chez Ko-fi.
+      if (!cadre.firstChild) { const f = document.createElement("iframe"); f.src = "https://ko-fi.com/quiypense/?hidefeed=true&widget=true&embed=true&preview=true"; f.title = "Soutenir Qui y pense ? sur Ko-fi"; f.loading = "lazy"; cadre.appendChild(f); }
+      ouvrirModale(m); if (window.__ga) gtag("event", "soutenir_clic", { origine });
+    }
+    document.getElementById("soutenir").addEventListener("click", () => ouvrir("entete"));
+    document.getElementById("kofi-fermer").addEventListener("click", () => fermerModale(m));
+    m.addEventListener("click", e => { if (e.target === m) fermerModale(m); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });
+    window.__ouvrirKofi = ouvrir;
+  })();
+
+  (function sortie() {
+    // Sur l'écran du compte, si rien n'a été gardé (lien copié ou envoyé, Excel, intention envoyée) :
+    // desktop, la souris qui file vers le haut (fermer l'onglet, barre d'adresse) ouvre une fois la modale ;
+    // partout, la fermeture de l'onglet déclenche l'avertissement natif du navigateur.
+    const m = document.getElementById("sortie"), okEl = document.getElementById("sortie-ok");
+    let vue = false; try { vue = sessionStorage.getItem("sortie-vue") === "1"; } catch (e) {}
+    function ouvrir() {
+      if (vue || garde || S.ecran !== 3 || modaleOuverte()) return;
+      vue = true; try { sessionStorage.setItem("sortie-vue", "1"); } catch (e) {}
+      ouvrirModale(m, document.getElementById("sortie-copier")); if (window.__ga) gtag("event", "sortie_modale");
+    }
+    document.addEventListener("mouseout", e => { if (!e.relatedTarget && e.clientY <= 0) ouvrir(); });
+    window.addEventListener("beforeunload", e => { if (S.ecran === 3 && !garde) { e.preventDefault(); e.returnValue = ""; } });
+    document.getElementById("sortie-copier").addEventListener("click", async () => {
+      const url = lienPartage(true, "copie", "sortie"); garde = true; if (window.__ga) gtag("event", "sortie_action", { action: "copie" });
+      try { await navigator.clipboard.writeText(url); okEl.textContent = "Lien copié. Ajoutez aussi la page aux favoris : Ctrl + D (⌘ + D sur Mac)."; }
+      catch (err) { prompt("Copiez ce lien :", url); }
+    });
+    document.getElementById("sortie-sauver").addEventListener("click", () => { fermerModale(m); if (window.__ga) gtag("event", "sortie_action", { action: "sauvegarder" }); document.getElementById("sauver").click(); });
+    document.getElementById("sortie-soutenir").addEventListener("click", () => { fermerModale(m); if (window.__ga) gtag("event", "sortie_action", { action: "soutenir" }); window.__ouvrirKofi("sortie"); });
+    document.getElementById("sortie-fermer").addEventListener("click", () => fermerModale(m));
+    m.addEventListener("click", e => { if (e.target === m) fermerModale(m); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });
+  })();
 
 
   /* ---------- intention « Sauvegarder » : mesure l'intérêt pour une version payante ---------- */
@@ -850,6 +961,7 @@
         "cf-turnstile-response": jeton
       });
       if (window.__ga) gtag("event", "intention_payante", { prix: form.prix.value, email_laisse: form.email.value ? "oui" : "non" });
+      garde = true;
       form.querySelector("button[type=submit]").disabled = true;
       try {
         const rep = INTENTIONS_URL ? await (await fetch(INTENTIONS_URL, { method: "POST", body: data })).json() : { ok: true };
