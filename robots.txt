@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://charlusminus.github.io/charge_mentale_site/sitemap.xml
