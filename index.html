@@ -42,7 +42,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921q">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921r">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -143,6 +143,13 @@
   .faq details:last-of-type { border-bottom: 1px solid var(--line); }
   .faq summary { cursor: pointer; font-weight: 500; }
   .faq p { color: var(--muted); margin: .5rem 0 .2rem; }
+  /* blog sur l'accueil : quatre articles, liste tenue par blog/build.py */
+  .blog-accueil { margin-top: 64px; max-width: 64ch; }
+  .blog-cartes { list-style: none; padding: 0; margin: 1rem 0 1.2rem; display: grid; gap: .7rem; }
+  .blog-cartes a { display: block; padding: .9rem 1rem 1rem; background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; text-decoration: none; color: var(--ink); }
+  .blog-cartes a:hover { border-color: var(--ink); }
+  .blog-cartes .titre { display: block; font-family: var(--serif); font-weight: 600; font-size: 1.15rem; line-height: 1.2; margin-bottom: .3rem; }
+  .blog-cartes .desc { display: block; color: var(--muted); font-size: .95rem; }
   .demarrer { margin-top: 40px; padding: 32px; background: var(--bg-2); border-radius: var(--r); }
   .demarrer .nav { margin: 1.4rem 0 0; }
   .prenoms { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 520px; margin-top: .8rem; }
@@ -397,6 +404,20 @@
       <details><summary>Combien de temps ça prend, et à combien ?</summary><p>Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, et le nombre d'enfants. Les tâches vont du plus courant au plus rare : on peut s'arrêter à mi-parcours et voir le compte, puis y revenir.</p></details>
     </section>
 
+    <section class="blog-accueil" id="blog-accueil" aria-labelledby="blog-titre">
+      <h2 id="blog-titre">Pour aller plus loin</h2>
+      <p class="muted">Ce que disent les enquêtes, comment ça a bougé en quarante ans, et comment en parler à deux sans tribunal. Écrit par les deux personnes derrière le tableur.</p>
+      <ul class="blog-cartes">
+<!-- blog:debut -->
+        <li><a href="blog/charge-mentale-definition.html"><span class="titre">La charge mentale, c'est quoi exactement&nbsp;? Le mot a quarante ans</span><span class="desc">Le terme date de 1984 et il ne voulait pas dire «&nbsp;avoir beaucoup de choses à faire&nbsp;». Ce qu'il désigne, ce qu'il ne désigne pas, et pourquoi on le confond si souvent avec la fatigue.</span></a></li>
+        <li><a href="blog/repartition-taches-chiffres-france.html"><span class="titre">Qui fait quoi à la maison en France&nbsp;: les chiffres, sans commentaire</span><span class="desc">4 h 01 contre 2 h 13 par jour. 20 % de couples qui se disent à égalité. Le repassage à 86 % féminin. Ce que mesurent l'INSEE, l'INED et l'Observatoire des inégalités, tâche par tâche.</span></a></li>
+        <li><a href="blog/evolution-partage-taches-quarante-ans.html"><span class="titre">Quarante ans de partage des tâches&nbsp;: ce qui a bougé, ce qui n'a pas bougé</span><span class="desc">Entre 1986 et 2010, les femmes ont réduit leur temps domestique d'une heure par jour. Les hommes l'ont augmenté de six minutes. L'écart s'est resserré surtout parce qu'on fait moins, pas parce qu'on partage plus.</span></a></li>
+        <li><a href="blog/desequilibre-assume-couple.html"><span class="titre">Un déséquilibre choisi n'est pas une injustice&nbsp;: à quelles conditions</span><span class="desc">L'un se concentre sur sa carrière, l'autre tient la maison. Ce n'est un problème ni pour la recherche ni pour le couple, tant que c'est dit, compté et réversible. Les trois conditions qui font la différence.</span></a></li>
+<!-- blog:fin -->
+      </ul>
+      <p><a class="btn secondary" href="blog/">Tous les articles du blog</a></p>
+    </section>
+
 
   </div>
 
@@ -531,7 +552,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921q"></script>
+<script src="catalogue.js?v=20260921r"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
