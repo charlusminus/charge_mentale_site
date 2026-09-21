@@ -3,9 +3,64 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Qui fait quoi à la maison ?</title>
-<meta name="description" content="Faites le compte de la charge mentale du foyer, à deux, en dix minutes. Gratuit, sans compte, rien n'est envoyé.">
-<link rel="stylesheet" href="fonts/fonts.css?v=20260920b">
+<title>Qui fait quoi à la maison ? Le compte de la charge mentale, à deux</title>
+<meta name="description" content="Listez qui s'occupe de quoi et qui y pense dans votre foyer, et lisez le résultat en heures par jour et en tâches à garder en tête. Gratuit, sans compte, rien n'est envoyé, dix minutes à deux.">
+<link rel="canonical" href="https://charlusminus.github.io/charge_mentale_site/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Charles Alzon">
+<meta name="theme-color" content="#FAF6EF">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Qui fait quoi à la maison ?">
+<meta property="og:title" content="Qui fait quoi à la maison ?">
+<meta property="og:description" content="Faites le compte de la charge mentale du foyer, à deux, en dix minutes. Gratuit, sans compte, rien n'est envoyé.">
+<meta property="og:url" content="https://charlusminus.github.io/charge_mentale_site/">
+<meta property="og:image" content="https://charlusminus.github.io/charge_mentale_site/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Qui fait quoi à la maison ? Faites le compte de la charge mentale du foyer, à deux, en dix minutes.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Qui fait quoi à la maison ?">
+<meta name="twitter:description" content="Faites le compte de la charge mentale du foyer, à deux, en dix minutes. Gratuit, sans compte, rien n'est envoyé.">
+<meta name="twitter:image" content="https://charlusminus.github.io/charge_mentale_site/img/og.png">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="img/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921a">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://charlusminus.github.io/charge_mentale_site/#app",
+      "name": "Qui fait quoi à la maison ?",
+      "url": "https://charlusminus.github.io/charge_mentale_site/",
+      "description": "Outil gratuit pour répartir les tâches et la charge mentale du foyer : qui s'en occupe, qui y pense, combien d'heures par jour pour chacun.",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Fonctionne dans tout navigateur récent, sans compte",
+      "inLanguage": "fr",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+      "author": { "@type": "Person", "name": "Charles Alzon" },
+      "image": "https://charlusminus.github.io/charge_mentale_site/img/og.png"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://charlusminus.github.io/charge_mentale_site/#faq",
+      "mainEntity": [
+        { "@type": "Question", "name": "Qu'est-ce que la charge mentale ?", "acceptedAnswer": { "@type": "Answer", "text": "La charge mentale est le travail constant de gestion, d'organisation et de planification de la bonne marche de la maison (définition de Nicole Brais). Concrètement : remarquer qu'il faut faire quelque chose, planifier, et vérifier que c'est fait, même quand quelqu'un d'autre exécute. Le terme vient de la sociologue Monique Haicault (1984) ; Allison Daminger (2019) a montré que l'anticipation et le suivi restent presque toujours portés par la même personne du couple." } },
+        { "@type": "Question", "name": "Comment le compte est-il calculé ?", "acceptedAnswer": { "@type": "Answer", "text": "Pour chaque tâche, vous dites qui s'en occupe et qui y pense. Les heures par jour se calculent sur qui s'en occupe : nombre de fois par période multiplié par la durée, ramené à la journée. La charge mentale se compte en nombre de tâches à garder en tête, pas en heures. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE (2010) et du jeu de cartes Fair Play (Eve Rodsky, 2019) ; vous les corrigez ensuite avec votre réalité." } },
+        { "@type": "Question", "name": "D'où viennent les chiffres cités ?", "acceptedAnswer": { "@type": "Answer", "text": "INSEE, enquête Emploi du temps 2010 : les femmes consacrent 4 h 01 par jour au travail domestique, les hommes 2 h 13, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens : on passe 86 % de temps en plus à penser aux tâches qu'à les faire." } },
+        { "@type": "Question", "name": "Mes réponses sont-elles envoyées quelque part ?", "acceptedAnswer": { "@type": "Answer", "text": "Non. Tout se calcule dans votre navigateur, il n'y a ni compte ni serveur. Vos réponses sont encodées dans l'adresse de la page : c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur." } },
+        { "@type": "Question", "name": "Combien de temps ça prend et à combien ?", "acceptedAnswer": { "@type": "Answer", "text": "Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, et le nombre d'enfants. Les tâches vont du plus courant au plus rare : on peut s'arrêter à mi-parcours et voir le compte." } }
+      ]
+    }
+  ]
+}
+</script>
 <style>
   /* Charte « Cahier de cuisine », cf docs/design/charte.md. Ces jetons sont la source unique : aucune couleur en dur plus bas. */
   :root {
@@ -65,6 +120,11 @@
   .stat span { color: var(--muted); font-size: .9rem; }
   .stat small { display: block; margin-top: .4rem; color: var(--muted); font-size: .75rem; }
   .pourquoi { max-width: 60ch; }
+  .faq { margin-top: 64px; max-width: 64ch; }
+  .faq details { border-top: 1px solid var(--line); padding: .7rem 0; }
+  .faq details:last-of-type { border-bottom: 1px solid var(--line); }
+  .faq summary { cursor: pointer; font-weight: 500; }
+  .faq p { color: var(--muted); margin: .5rem 0 .2rem; }
   .demarrer { margin-top: 64px; padding: 32px; background: var(--bg-2); border-radius: var(--r); }
   .demarrer .nav { margin: 1.4rem 0 0; }
   .prenoms { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 520px; margin-top: .8rem; }
@@ -162,6 +222,7 @@
   .suivi div { max-width: var(--max); margin: 0 auto; display: flex; gap: 1rem; align-items: center; font-size: .95rem; }
   .suivi .btn { margin-left: auto; padding: .5rem 1rem; }
   footer { padding: 32px 0; color: var(--muted); font-size: .85rem; }
+  footer a { color: var(--muted); }
 
   @media (max-width: 720px) {
     .prenoms { grid-template-columns: 1fr; }
@@ -184,7 +245,7 @@
 </head>
 <body>
 <main>
-  <div class="fil" id="fil"><span data-n="1">Vous</span><span data-n="2">Qui fait quoi</span><span data-n="3">Le compte</span></div>
+  <nav class="fil" id="fil" aria-label="Étapes"><span data-n="1">Vous</span><span data-n="2">Qui fait quoi</span><span data-n="3">Le compte</span></nav>
 
   <!-- ÉCRAN 1 : accueil -->
   <div class="ecran" id="e1">
@@ -204,6 +265,15 @@
       <p>La plupart des couples n'ont jamais listé ce qu'il y a à faire. Chacun voit ce qu'il fait, et une partie de ce que l'autre fait. Le reste est invisible : remarquer qu'il n'y a plus de lessive, savoir quand tombe le rendez-vous chez le dentiste, vérifier que le sac de piscine est prêt. Ce travail-là ne prend pas d'heures, il prend de la place dans la tête.</p>
       <p>Cette page ne juge rien. Elle met des chiffres à la place des impressions, pour que la conversation parte de quelque chose de concret. Chez nous, la première version a surtout révélé les tâches que personne ne voyait.</p>
     </div>
+
+    <section class="faq" id="faq" aria-labelledby="faq-titre">
+      <h2 id="faq-titre">Questions fréquentes</h2>
+      <details><summary>Qu'est-ce que la charge mentale ?</summary><p>Le travail constant de gestion, d'organisation et de planification de la bonne marche de la maison, selon la définition de Nicole Brais. Concrètement : remarquer qu'il faut faire quelque chose, planifier, vérifier que c'est fait, même quand quelqu'un d'autre exécute. Le terme vient de la sociologue Monique Haicault (1984). Allison Daminger (2019) a montré que l'anticipation et le suivi restent presque toujours portés par la même personne du couple, alors que les décisions se prennent à deux.</p></details>
+      <details><summary>Comment le compte est-il calculé ?</summary><p>Pour chaque tâche, vous dites qui s'en occupe et qui y pense. Les heures par jour se calculent sur « qui s'en occupe » : nombre de fois par période, multiplié par la durée, ramené à la journée. La charge mentale se compte en nombre de tâches à garder en tête, pas en heures : aucune enquête sérieuse ne convertit la pensée en minutes. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE (2010) et du jeu de cartes Fair Play (Eve Rodsky, 2019). Vous les corrigez ensuite avec votre réalité.</p></details>
+      <details><summary>D'où viennent les chiffres cités ?</summary><p>INSEE, enquête Emploi du temps 2010 : 4 h 01 par jour de travail domestique pour les femmes, 2 h 13 pour les hommes, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP publiée en 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens interrogés : 86 % de temps en plus passé à penser aux tâches qu'à les faire. Les libellés des tâches suivent la nomenclature INSEE, complétée par les cent cartes Fair Play.</p></details>
+      <details><summary>Mes réponses sont-elles envoyées quelque part ?</summary><p>Non. Tout se calcule dans votre navigateur, il n'y a ni compte ni serveur. Vos réponses sont encodées dans l'adresse de la page : c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur. Les polices sont hébergées avec le site, rien n'est chargé chez un tiers.</p></details>
+      <details><summary>Combien de temps ça prend, et à combien ?</summary><p>Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, et le nombre d'enfants. Les tâches vont du plus courant au plus rare : on peut s'arrêter à mi-parcours et voir le compte, puis y revenir.</p></details>
+    </section>
 
     <div class="demarrer">
       <h2>On commence par vous</h2>
@@ -264,7 +334,8 @@
     </section>
   </div>
 
-  <footer>Un tableur tenu à deux depuis 2025, rendu utilisable par tous. Le lien de partage contient vos réponses, rien d'autre. Code ouvert.</footer>
+  <footer>Un tableur tenu à deux depuis 2025, rendu utilisable par tous. Le lien de partage contient vos réponses, rien d'autre. <a href="https://github.com/charlusminus/charge_mentale_site">Code ouvert</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>.</footer>
+  <noscript><p style="padding:16px;background:#F1EBDF">Ce site calcule tout dans votre navigateur : il a besoin de JavaScript pour fonctionner.</p></noscript>
 </main>
 
 <div class="suivi" id="suivi"><span class="prog"><i id="prog" style="width:0%"></i></span><div>
@@ -272,7 +343,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260920b"></script>
+<script src="catalogue.js?v=20260921a"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -330,7 +401,7 @@
   function show(n) {
     S.ecran = n;
     document.querySelectorAll(".ecran").forEach((e, i) => e.classList.toggle("actif", i + 1 === n));
-    document.querySelectorAll("#fil span").forEach((s, i) => { s.classList.toggle("on", i + 1 === n); s.classList.toggle("fait", i + 1 < n); });
+    document.querySelectorAll("#fil span").forEach((s, i) => { s.classList.toggle("on", i + 1 === n); s.classList.toggle("fait", i + 1 < n); if (i + 1 === n) s.setAttribute("aria-current", "step"); else s.removeAttribute("aria-current"); });
     document.getElementById("suivi").classList.toggle("on", n === 2);
     if (n === 2) renderCatalogue();
     if (n === 3) renderAffiner();
