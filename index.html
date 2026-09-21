@@ -40,7 +40,7 @@
 <link rel="icon" href="img/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="img/icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921e">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921f">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -449,13 +449,13 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921e"></script>
+<script src="catalogue.js?v=20260921f"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
   const J = C.periodes;
   const SITE = "https://quiypense.org/";
-  const INTENTIONS_URL = "";   // webhook n8n (POST formulaire) qui reçoit les intentions « Sauvegarder » ; vide = seulement l'événement GA
+  const INTENTIONS_URL = "https://charlusminus.app.n8n.cloud/webhook/quiypense-intentions";   // workflow n8n « Qui y pense, Intentions », cf n8n/README.md
   const WHO = ["a", "b", "both", "other"];   // « other » = pas nous : quelqu'un d'autre s'en occupe, ou la tâche n'existe pas chez eux
   const FAMILLES_ENFANTS = new Set(["enfants-quotidien", "enfants-suivi"]);
   const TACHES_ENFANTS = new Set(["employeur"]);
