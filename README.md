@@ -1,4 +1,4 @@
-# Qui fait quoi à la maison ?
+# Qui y pense ? Qui fait quoi à la maison
 
 Faites le compte de la répartition des tâches et de la charge mentale du foyer, à deux, en dix minutes.
 Gratuit, sans compte : tout se calcule dans le navigateur, rien n'est envoyé.
