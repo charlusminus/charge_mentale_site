@@ -1,7 +1,7 @@
 {
-  "name": "Qui fait quoi à la maison ?",
-  "short_name": "Qui fait quoi",
-  "description": "Faites le compte de la charge mentale du foyer, à deux, en dix minutes.",
+  "name": "Qui y pense ?",
+  "short_name": "Qui y pense",
+  "description": "Qui fait quoi à la maison, et qui y pense. Le compte de la charge mentale du foyer, à deux, en dix minutes.",
   "lang": "fr",
   "start_url": "./",
   "display": "standalone",
