@@ -42,7 +42,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921p">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921q">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -96,7 +96,6 @@
     --sans: "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
     --r: 8px;             /* rayon unique */
     --max: 880px;
-    --kofi: #72a4f2;
   }
   * { box-sizing: border-box; }
   html { font-size: 17px; scroll-behavior: smooth; }
@@ -294,9 +293,9 @@
   .haut { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 14px 0 0; }
   .marque { font-family: var(--serif); font-weight: 600; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
   .haut nav { display: flex; align-items: center; gap: 1rem; font-size: .95rem; }
-  /* bouton Soutenir : bleu Ko-fi (#72a4f2, code couleur du widget officiel) ; texte encre, le blanc ne passe pas le contraste sur ce bleu */
-  .soutenir { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .9rem .45rem .75rem; border-radius: 999px; border: 1.5px solid var(--kofi); background: var(--kofi); color: var(--ink); font: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; }
-  .soutenir:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  /* bouton Soutenir : à la charte (pilule papier, bord encre, comme les contrôles de partage), le logo Ko-fi garde ses couleurs */
+  .soutenir { display: inline-flex; align-items: center; gap: .45rem; padding: .45rem .9rem .45rem .7rem; border-radius: 999px; border: 1.5px solid var(--ink); background: var(--paper); color: var(--ink); font: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; }
+  .soutenir:hover { background: var(--bg-2); }
   .kofi-logo { height: 18px; width: auto; display: block; }   /* logo officiel Ko-fi (tasse au cœur), détouré, img/kofi.png */
   .soutenir .kofi-logo { height: 18px; }
   /* faire connaître, sous le compte */
@@ -532,7 +531,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921p"></script>
+<script src="catalogue.js?v=20260921q"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
