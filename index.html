@@ -42,7 +42,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921t">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921u">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -552,7 +552,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921t"></script>
+<script src="catalogue.js?v=20260921u"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -895,7 +895,7 @@
         ["whatsapp", "WhatsApp", `https://wa.me/?text=${enc(texte + L("whatsapp"))}`],
         ["mail", "E-mail", `mailto:?subject=${enc(sujet)}&body=${enc(texte + L("email"))}`],
       ];
-      if (!compte) items.push(["linkedin", "LinkedIn", `https://www.linkedin.com/sharing/share-offsite/?url=${enc(L("linkedin"))}`],
+      if (!compte) items.push(["linkedin", "LinkedIn", `https://www.linkedin.com/feed/?shareActive=true&text=${enc(texte + L("linkedin"))}`],   // share-offsite ne préremplit que le lien ; feed?shareActive préremplit le texte du post
         ["facebook", "Facebook", `https://www.facebook.com/sharer/sharer.php?u=${enc(L("facebook"))}`],
         ["x", "X", `https://twitter.com/intent/tweet?text=${enc(texte)}&url=${enc(L("x"))}`]);
       box.innerHTML = items.map(([ic, nom, href]) => `<a href="${href}" target="_blank" rel="noopener" data-canal="${ic}" aria-label="Partager par ${nom}"><svg><use href="#i-${ic}"/></svg>${nom}</a>`).join("");
