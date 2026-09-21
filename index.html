@@ -40,7 +40,7 @@
 <link rel="icon" href="img/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="img/icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921g">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921h">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -427,7 +427,7 @@
         <input type="email" name="email" placeholder="facultatif" autocomplete="email">
       </label>
       <p class="small muted">En laissant votre e-mail, vous acceptez qu'on vous écrive une fois pour ça, rien d'autre. Vos réponses au questionnaire ne sont pas envoyées. L'envoi est protégé contre les robots par Cloudflare Turnstile.</p>
-      <div class="turnstile" id="turnstile"></div>
+      <div class="turnstile" id="cf-widget"></div>
       <div class="modale-actions"><button class="btn" type="submit">Envoyer</button></div>
       <p class="small muted" id="intention-ok" aria-live="polite"></p>
     </form>
@@ -451,7 +451,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921g"></script>
+<script src="catalogue.js?v=20260921h"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -775,8 +775,10 @@
     let widget = null;
     function turnstile() {
       // Le script Cloudflare ne se charge qu'à l'ouverture de la modale : personne d'autre ne le télécharge.
-      const rendre = () => { if (widget === null && window.turnstile) widget = window.turnstile.render("#turnstile", { sitekey: TURNSTILE_SITEKEY, language: "fr", theme: "light", size: "flexible" }); };
-      if (window.turnstile) return rendre();
+      // Ne pas nommer le conteneur « turnstile » : un id devient une propriété de window et masquerait l'API.
+      const pret = () => window.turnstile && typeof window.turnstile.render === "function";
+      const rendre = () => { if (widget === null && pret()) widget = window.turnstile.render("#cf-widget", { sitekey: TURNSTILE_SITEKEY, language: "fr", theme: "light", size: "flexible" }); };
+      if (pret()) return rendre();
       if (document.getElementById("cf-turnstile")) return;
       const sc = document.createElement("script"); sc.id = "cf-turnstile"; sc.async = true; sc.defer = true;
       sc.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__turnstileReady"; window.__turnstileReady = rendre; document.head.appendChild(sc);
