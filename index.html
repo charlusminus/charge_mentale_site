@@ -42,7 +42,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921n">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921o">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -96,6 +96,7 @@
     --sans: "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
     --r: 8px;             /* rayon unique */
     --max: 880px;
+    --kofi: #72a4f2;
   }
   * { box-sizing: border-box; }
   html { font-size: 17px; scroll-behavior: smooth; }
@@ -243,7 +244,7 @@
   .modale { position: fixed; inset: 0; z-index: 40; background: rgba(42, 33, 24, .55); display: flex; padding: 16px; overflow: auto; -webkit-overflow-scrolling: touch; }
   .modale[hidden] { display: none; }
   /* margin auto : centrée quand elle tient, entièrement atteignable au défilement quand elle dépasse (place-items center coupait le haut sur mobile) */
-  .modale-boite { position: relative; background: var(--bg); border-radius: var(--r); padding: 28px; max-width: 560px; width: 100%; margin: auto; box-shadow: 0 0 0 1.5px var(--border); }
+  .modale-boite { position: relative; background: var(--bg); border-radius: var(--r); padding: 28px; max-width: var(--max); width: 100%; margin: auto; box-shadow: 0 0 0 1.5px var(--border); }
   .modale-boite h2 { font-size: 1.35rem; margin-bottom: .4rem; padding-right: 4rem; }
   .modale-fermer { position: absolute; top: 16px; right: 16px; background: none; border: 0; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font-size: .9rem; }
   .modale fieldset { border: 0; padding: 0; margin: 1rem 0 0; }
@@ -277,7 +278,13 @@
   .rs svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
   footer { padding: 32px 0; color: var(--muted); font-size: .85rem; }
   footer a { color: var(--muted); }
-  footer .rs-pied { display: flex; gap: .5rem; margin: 0 0 .8rem; }
+  footer p { margin: 0; }
+  .pied-nav { display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: center; margin: 0 0 .9rem; font-size: .95rem; }
+  .pied-nav a, .pied-nav button { display: inline-flex; align-items: center; gap: .35rem; background: none; border: 0; padding: 0; font: inherit; font-size: .95rem; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .pied-nav a:hover, .pied-nav button:hover { color: var(--muted); }
+  .pied-nav svg { width: 16px; height: 16px; fill: currentColor; }
+  footer .rs-pied { display: flex; gap: .5rem; flex-wrap: wrap; margin: 0 0 1rem; }
+  footer .rs-pied[hidden] { display: none; }
   footer .rs-pied a, footer .rs-pied button { font-size: .85rem; padding: .35rem .7rem .35rem .55rem; }
   footer .rs-pied svg { width: 15px; height: 15px; }
   .ajout[hidden] { display: none; }
@@ -286,24 +293,23 @@
   .haut { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 14px 0 0; }
   .marque { font-family: var(--serif); font-weight: 600; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
   .haut nav { display: flex; align-items: center; gap: 1rem; font-size: .95rem; }
-  .soutenir { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .9rem .45rem .75rem; border-radius: 999px; border: 1.5px solid var(--b); background: var(--b); color: var(--paper); font: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; }
-  .soutenir:hover { background: var(--ink); border-color: var(--ink); }
+  /* bouton Soutenir : bleu Ko-fi (#72a4f2, code couleur du widget officiel) ; texte encre, le blanc ne passe pas le contraste sur ce bleu */
+  .soutenir { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .9rem .45rem .75rem; border-radius: 999px; border: 1.5px solid var(--kofi); background: var(--kofi); color: var(--ink); font: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; }
+  .soutenir:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
   .soutenir svg { width: 17px; height: 17px; fill: currentColor; }
   /* faire connaître, sous le compte */
   .connaitre { margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1.5px solid var(--ink); }
   .connaitre h2 { margin-bottom: .3rem; }
   .garde-note { margin: .8rem 0 0; }
   /* modales Ko-fi et sortie */
-  .kofi-boite { max-width: 440px; }
   .kofi-cadre { min-height: 200px; margin-top: .8rem; }
-  .kofi-cadre iframe { display: block; width: 100%; height: 620px; border: 0; border-radius: var(--r); background: var(--paper); }
+  .kofi-cadre iframe { display: block; width: 100%; height: 712px; border: 0; border-radius: var(--r); background: var(--paper); }
   .sortie-actions { display: grid; gap: .6rem; margin-top: 1.2rem; }
   .sortie-actions .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; text-align: center; }
   .sortie-actions .btn svg { width: 18px; height: 18px; fill: currentColor; }
   .sortie-actions .small { margin: -.1rem 0 .2rem; }
   @media (max-width: 720px) {
-    .haut nav a:not(.soutenir) { display: none; }
-    .kofi-cadre iframe { height: 560px; }
+    .kofi-cadre iframe { height: 640px; }
     .prenoms { grid-template-columns: 1fr; }
     .stats { grid-template-columns: 1fr; gap: 1.2rem; }
     /* mobile : le libellé prend toute la largeur, les neuf cases dessous, alignées sur l'en-tête */
@@ -344,7 +350,7 @@
 <main>
   <header class="haut">
     <a class="marque" href="./">Qui y pense&nbsp;?</a>
-    <nav aria-label="Site"><a href="blog/">Blog</a><button type="button" class="soutenir" id="soutenir"><svg aria-hidden="true"><use href="#i-kofi"/></svg>Soutenir</button></nav>
+    <nav aria-label="Site"><button type="button" class="soutenir" id="soutenir"><svg aria-hidden="true"><use href="#i-kofi"/></svg>Soutenir</button></nav>
   </header>
   <nav class="fil" id="fil" aria-label="Étapes"><span data-n="1">Vous</span><span data-n="2">Qui y pense</span><span data-n="3">Le compte</span></nav>
 
@@ -450,7 +456,11 @@
     </section>
   </div>
 
-  <footer><span class="rs rs-pied" data-partage="site"></span>Qui y pense ? est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans compte ni publicité. Le lien de partage contient vos réponses, rien d'autre. <a href="blog/">Blog</a>. <a href="https://github.com/charlusminus/charge_mentale_site">Code ouvert</a>. <a href="#" id="consent-lien">Cookies</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>.</footer>
+  <footer>
+    <nav class="pied-nav" aria-label="Pied de page"><a href="blog/">Blog</a><button type="button" id="pied-soutenir"><svg aria-hidden="true"><use href="#i-kofi"/></svg>Soutenir</button><button type="button" id="pied-partager" aria-expanded="false" aria-controls="pied-partage"><svg aria-hidden="true"><use href="#i-partager"/></svg>Partager le site</button></nav>
+    <div class="rs rs-pied" id="pied-partage" data-partage="site" hidden></div>
+    <p>Qui y pense ? est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans compte ni publicité. Le lien de partage contient vos réponses, rien d'autre. <a href="https://github.com/charlusminus/charge_mentale_site">Code ouvert</a>. <a href="#" id="consent-lien">Cookies</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>.</p>
+  </footer>
   <noscript><p style="padding:16px;background:#F1EBDF">Ce site calcule tout dans votre navigateur : il a besoin de JavaScript pour fonctionner.</p></noscript>
 </main>
 
@@ -520,7 +530,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921n"></script>
+<script src="catalogue.js?v=20260921o"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -863,10 +873,9 @@
         ["whatsapp", "WhatsApp", `https://wa.me/?text=${enc(texte + L("whatsapp"))}`],
         ["mail", "E-mail", `mailto:?subject=${enc(sujet)}&body=${enc(texte + L("email"))}`],
       ];
-      if (!compte && !pied) items.push(["linkedin", "LinkedIn", `https://www.linkedin.com/sharing/share-offsite/?url=${enc(L("linkedin"))}`],
+      if (!compte) items.push(["linkedin", "LinkedIn", `https://www.linkedin.com/sharing/share-offsite/?url=${enc(L("linkedin"))}`],
         ["facebook", "Facebook", `https://www.facebook.com/sharer/sharer.php?u=${enc(L("facebook"))}`],
         ["x", "X", `https://twitter.com/intent/tweet?text=${enc(texte)}&url=${enc(L("x"))}`]);
-      if (pied) items.splice(1, 1);   // pied de page : WhatsApp et copier le lien, pas d'e-mail
       box.innerHTML = items.map(([ic, nom, href]) => `<a href="${href}" target="_blank" rel="noopener" data-canal="${ic}" aria-label="Partager par ${nom}"><svg><use href="#i-${ic}"/></svg>${nom}</a>`).join("");
       box.querySelectorAll("a").forEach(a => a.addEventListener("click", () => { if (compte) garde = true; if (window.__ga) gtag("event", "partage", { canal: a.dataset.canal, campagne }); }));
       const copier = document.createElement("button"); copier.type = "button"; copier.dataset.canal = "copie"; copier.innerHTML = `<svg><use href="#i-lien"/></svg>${pied ? "Copier le lien du site" : "Copier le lien"}`;
@@ -876,7 +885,7 @@
         catch (e) { prompt("Copiez ce lien :", url); }
       });
       box.appendChild(copier);
-      if (navigator.share && !pied) {
+      if (navigator.share) {
         const natif = document.createElement("button"); natif.type = "button"; natif.dataset.canal = "natif"; natif.innerHTML = `<svg><use href="#i-partager"/></svg>Autre application`;
         natif.addEventListener("click", () => { if (compte) garde = true; if (window.__ga) gtag("event", "partage", { canal: "natif", campagne }); navigator.share({ title: sujet, text: texte, url: L("natif") }).catch(() => {}); });
         box.appendChild(natif);
@@ -898,6 +907,11 @@
       ouvrirModale(m); if (window.__ga) gtag("event", "soutenir_clic", { origine });
     }
     document.getElementById("soutenir").addEventListener("click", () => ouvrir("entete"));
+    document.getElementById("pied-soutenir").addEventListener("click", () => ouvrir("pied"));
+    document.getElementById("pied-partager").addEventListener("click", e => {
+      const box = document.getElementById("pied-partage"), ouvert = box.hidden;
+      box.hidden = !ouvert; e.currentTarget.setAttribute("aria-expanded", String(ouvert));
+    });
     document.getElementById("kofi-fermer").addEventListener("click", () => fermerModale(m));
     m.addEventListener("click", e => { if (e.target === m) fermerModale(m); });
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });
@@ -916,7 +930,10 @@
       ouvrirModale(m, document.getElementById("sortie-copier")); if (window.__ga) gtag("event", "sortie_modale");
     }
     document.addEventListener("mouseout", e => { if (!e.relatedTarget && e.clientY <= 0) ouvrir(); });
-    window.addEventListener("beforeunload", e => { if (S.ecran === 3 && !garde) { e.preventDefault(); e.returnValue = ""; } });
+    // Un lien interne (blog, sources en même onglet) n'est pas une sortie : pas d'avertissement natif dans ce cas.
+    let navInterne = false;
+    document.addEventListener("click", e => { const a = e.target.closest("a[href]"); if (a && a.origin === location.origin && !a.target) { navInterne = true; setTimeout(() => { navInterne = false; }, 2000); } });
+    window.addEventListener("beforeunload", e => { if (S.ecran === 3 && !garde && !navInterne) { e.preventDefault(); e.returnValue = ""; } });
     document.getElementById("sortie-copier").addEventListener("click", async () => {
       const url = lienPartage(true, "copie", "sortie"); garde = true; if (window.__ga) gtag("event", "sortie_action", { action: "copie" });
       try { await navigator.clipboard.writeText(url); okEl.textContent = "Lien copié. Ajoutez aussi la page aux favoris : Ctrl + D (⌘ + D sur Mac)."; }
