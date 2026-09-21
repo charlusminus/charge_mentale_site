@@ -40,7 +40,7 @@
 <link rel="icon" href="img/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="img/icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921f">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921g">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -249,6 +249,7 @@
   .modale .champ { display: block; margin-top: 1rem; font-weight: 600; }
   .modale .champ input { display: block; width: 100%; margin-top: .3rem; padding: .6rem .8rem; border: 1.5px solid var(--border); border-radius: var(--r); background: var(--paper); font-weight: 400; }
   .modale-actions { margin-top: 1rem; }
+  .turnstile { margin-top: 1rem; min-height: 65px; }
   body.modale-ouverte { overflow: hidden; }
   /* consentement : bloquant, deux boutons de même poids, pas de fermeture sans choix (CNIL) */
   .consent { position: fixed; inset: 0; z-index: 50; background: rgba(42, 33, 24, .55); display: grid; place-items: center; padding: 16px; }
@@ -425,7 +426,8 @@
       <label class="champ">Votre e-mail, pour vous prévenir si ça se fait
         <input type="email" name="email" placeholder="facultatif" autocomplete="email">
       </label>
-      <p class="small muted">En laissant votre e-mail, vous acceptez qu'on vous écrive une fois pour ça, rien d'autre. Vos réponses au questionnaire ne sont pas envoyées.</p>
+      <p class="small muted">En laissant votre e-mail, vous acceptez qu'on vous écrive une fois pour ça, rien d'autre. Vos réponses au questionnaire ne sont pas envoyées. L'envoi est protégé contre les robots par Cloudflare Turnstile.</p>
+      <div class="turnstile" id="turnstile"></div>
       <div class="modale-actions"><button class="btn" type="submit">Envoyer</button></div>
       <p class="small muted" id="intention-ok" aria-live="polite"></p>
     </form>
@@ -449,13 +451,14 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921f"></script>
+<script src="catalogue.js?v=20260921g"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
   const J = C.periodes;
   const SITE = "https://quiypense.org/";
   const INTENTIONS_URL = "https://charlusminus.app.n8n.cloud/webhook/quiypense-intentions";   // workflow n8n « Qui y pense, Intentions », cf n8n/README.md
+  const TURNSTILE_SITEKEY = "0x4AAAAAAE-qa9jJxGWCyc5B";   // clé publique Cloudflare Turnstile (la secrète vit dans n8n)
   const WHO = ["a", "b", "both", "other"];   // « other » = pas nous : quelqu'un d'autre s'en occupe, ou la tâche n'existe pas chez eux
   const FAMILLES_ENFANTS = new Set(["enfants-quotidien", "enfants-suivi"]);
   const TACHES_ENFANTS = new Set(["employeur"]);
@@ -769,7 +772,16 @@
   /* ---------- intention « Sauvegarder » : mesure l'intérêt pour une version payante ---------- */
   (function intention() {
     const m = document.getElementById("intention"), form = document.getElementById("intention-form"), ok = document.getElementById("intention-ok");
-    const ouvrir = () => { m.hidden = false; document.body.classList.add("modale-ouverte"); form.querySelector("input").focus(); if (window.__ga) gtag("event", "sauvegarder_clic"); };
+    let widget = null;
+    function turnstile() {
+      // Le script Cloudflare ne se charge qu'à l'ouverture de la modale : personne d'autre ne le télécharge.
+      const rendre = () => { if (widget === null && window.turnstile) widget = window.turnstile.render("#turnstile", { sitekey: TURNSTILE_SITEKEY, language: "fr", theme: "light", size: "flexible" }); };
+      if (window.turnstile) return rendre();
+      if (document.getElementById("cf-turnstile")) return;
+      const sc = document.createElement("script"); sc.id = "cf-turnstile"; sc.async = true; sc.defer = true;
+      sc.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__turnstileReady"; window.__turnstileReady = rendre; document.head.appendChild(sc);
+    }
+    const ouvrir = () => { m.hidden = false; document.body.classList.add("modale-ouverte"); form.querySelector("input").focus(); turnstile(); if (window.__ga) gtag("event", "sauvegarder_clic"); };
     const fermer = () => { m.hidden = true; document.body.classList.remove("modale-ouverte"); };
     document.getElementById("sauver").addEventListener("click", ouvrir);
     document.getElementById("intention-fermer").addEventListener("click", fermer);
@@ -778,19 +790,24 @@
     form.addEventListener("submit", async e => {
       e.preventDefault();
       const r = compute();
+      const jeton = (form.querySelector('[name="cf-turnstile-response"]') || {}).value || "";
+      if (!jeton) { ok.textContent = "Un instant, la vérification anti-robot n'est pas terminée."; return; }
       const data = new URLSearchParams({
         prix: form.prix.value, email: form.email.value.trim(), enfants: S.enfants, taches_renseignees: r.renseignees, taches_total: r.total,
-        heures_a: r.a.h.toFixed(2), heures_b: r.b.h.toFixed(2), date: new Date().toISOString(), page: location.origin + location.pathname
+        heures_a: r.a.h.toFixed(2), heures_b: r.b.h.toFixed(2), date: new Date().toISOString(), page: location.origin + location.pathname,
+        "cf-turnstile-response": jeton
       });
       if (window.__ga) gtag("event", "intention_payante", { prix: form.prix.value, email_laisse: form.email.value ? "oui" : "non" });
       form.querySelector("button[type=submit]").disabled = true;
       try {
-        if (INTENTIONS_URL) await fetch(INTENTIONS_URL, { method: "POST", body: data });
+        const rep = INTENTIONS_URL ? await (await fetch(INTENTIONS_URL, { method: "POST", body: data })).json() : { ok: true };
+        if (!rep.ok) throw new Error(rep.reason || "refus");
         ok.textContent = "Merci, c'est noté." + (form.email.value ? " On vous écrira si ça se fait." : "");
         setTimeout(fermer, 1800);
       } catch (err) {
-        ok.textContent = "L'envoi n'a pas abouti. Réessayez plus tard, ou écrivez-nous.";
+        ok.textContent = String(err.message) === "captcha" ? "La vérification anti-robot a échoué. Fermez et réessayez." : "L'envoi n'a pas abouti. Réessayez plus tard, ou écrivez-nous.";
         form.querySelector("button[type=submit]").disabled = false;
+        if (window.turnstile && widget !== null) window.turnstile.reset(widget);
       }
     });
   })();
