@@ -42,7 +42,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921aa">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921ab">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -578,7 +578,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921aa"></script>
+<script src="catalogue.js?v=20260921ab"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -595,6 +595,8 @@
   // Ordre des tâches du format 2 (liens créés le 21/09/2026 avant le passage de Courses devant Repas et la fusion du petit déjeuner) :
   // un lien « 2~… » se lit avec cet ordre, un lien « 3~… » avec l'ordre du catalogue courant.
   // Format 3 (21/09/2026, apres-midi) : Courses devant Repas, sans le petit dejeuner. Format 4 : menage reordonne, draps dans Linge, deposer / recuperer separes.
+  // Format 5 (21/09/2026, soir) : draps de retour dans Menage, Linge = machines, repasser, ranger le linge propre, gros linge, entretenir.
+  const ORDRE_V4 = ["courses", "produits-maison", "cuisiner", "vaisselle", "ranger", "poussiere", "sols", "poubelles", "cuisine-nettoyage", "sanitaires", "gros-nettoyage", "tri", "machines", "lits", "taches", "repassage", "gros-linge", "matin", "trajets", "recuperer", "gouter-devoirs", "bain", "coucher", "jouer", "garde", "malade", "ecole", "sante-enfants", "activites", "vetements-enfants", "mode-garde", "anniversaires-enfants", "ecrans-regles", "souvenirs", "factures", "papiers", "impots", "numerique", "employeur", "agenda", "amis", "cadeaux", "vacances", "parents-ages", "reparations", "plantes", "voiture", "chauffage", "animal-quotidien", "animal-suivi"];
   const ORDRE_V3 = ["courses", "produits-maison", "cuisiner", "vaisselle", "ranger", "cuisine-nettoyage", "sols", "sanitaires", "poubelles", "poussiere", "lits", "gros-nettoyage", "tri", "machines", "taches", "repassage", "gros-linge", "matin", "trajets", "gouter-devoirs", "coucher", "bain", "jouer", "garde", "malade", "ecole", "sante-enfants", "activites", "vetements-enfants", "mode-garde", "anniversaires-enfants", "ecrans-regles", "souvenirs", "factures", "papiers", "impots", "numerique", "employeur", "agenda", "amis", "cadeaux", "vacances", "parents-ages", "reparations", "plantes", "voiture", "chauffage", "animal-quotidien", "animal-suivi"];
   const ORDRE_V2 = ["cuisiner", "vaisselle", "petit-dej", "courses", "produits-maison", "ranger", "cuisine-nettoyage", "sols", "sanitaires", "poubelles", "poussiere", "lits", "gros-nettoyage", "tri", "machines", "taches", "repassage", "gros-linge", "matin", "trajets", "gouter-devoirs", "coucher", "bain", "jouer", "garde", "malade", "ecole", "sante-enfants", "activites", "vetements-enfants", "mode-garde", "anniversaires-enfants", "ecrans-regles", "souvenirs", "factures", "papiers", "impots", "numerique", "employeur", "agenda", "amis", "cadeaux", "vacances", "parents-ages", "reparations", "plantes", "voiture", "chauffage", "animal-quotidien", "animal-suivi"];
   // état : { nomA, nomB, enfants, ecran, t: { id: {fait, pense, n, p, d} }, custom: [{id, cat, nom, aide}] }
@@ -619,7 +621,7 @@
     const regl = catTasks().filter(t => { const st = S.t[t.id]; return st && (st.n !== t.n || st.p !== t.periode || st.d !== t.duree); })
       .map(t => { const st = S.t[t.id]; return [t.id, esc(st.n), PER.indexOf(st.p), esc(st.d)].join("_"); }).join(".");
     const ajouts = S.custom.map(c => { const st = S.t[c.id] || {}; return [c.id, c.cat, esc(c.nom), lettre(st), esc(st.n), PER.indexOf(st.p), esc(st.d)].join("_"); }).join(".");
-    return ["4", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0].join("~");
+    return ["5", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0].join("~");
   }
   function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
@@ -636,7 +638,8 @@
   function load() {
     try {
       const h = location.hash.slice(1); if (!h) return null;
-      if (h.startsWith("4~")) return decode2(h, catTasks().map(t => t.id));
+      if (h.startsWith("5~")) return decode2(h, catTasks().map(t => t.id));
+      if (h.startsWith("4~")) return decode2(h, ORDRE_V4);
       if (h.startsWith("3~")) return decode2(h, ORDRE_V3);
       if (h.startsWith("2~")) return decode2(h, ORDRE_V2);
       const s = JSON.parse(decodeURIComponent(escape(atob(h))));   // anciens liens (format 1, JSON base64)
