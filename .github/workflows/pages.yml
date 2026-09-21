@@ -23,8 +23,11 @@ jobs:
       - uses: actions/configure-pages@v5
         with:
           enablement: true
+      # Seuls les fichiers du site partent en ligne : pas de README, RELEASE, outils ni workflow (aucune trace du dépôt sur le site).
+      - name: Assembler le site
+        run: rsync -a --exclude='.git' --exclude='.github' --exclude='README.md' --exclude='RELEASE.md' --exclude='tools' --exclude='_site' ./ _site/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - id: deploy
         uses: actions/deploy-pages@v4
