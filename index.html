@@ -42,7 +42,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260921y">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260921z">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -578,7 +578,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260921y"></script>
+<script src="catalogue.js?v=20260921z"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -592,6 +592,9 @@
   const TACHES_ENFANTS = new Set(["employeur"]);
 
   const ALPHA = "0123456789abcdefghijklmnopqrstuvwxyz", WHO0 = [null, ...WHO], PER = Object.keys(J);   // déclarées avant load(), sinon zone morte temporelle
+  // Ordre des tâches du format 2 (liens créés le 21/09/2026 avant le passage de Courses devant Repas et la fusion du petit déjeuner) :
+  // un lien « 2~… » se lit avec cet ordre, un lien « 3~… » avec l'ordre du catalogue courant.
+  const ORDRE_V2 = ["cuisiner", "vaisselle", "petit-dej", "courses", "produits-maison", "ranger", "cuisine-nettoyage", "sols", "sanitaires", "poubelles", "poussiere", "lits", "gros-nettoyage", "tri", "machines", "taches", "repassage", "gros-linge", "matin", "trajets", "gouter-devoirs", "coucher", "bain", "jouer", "garde", "malade", "ecole", "sante-enfants", "activites", "vetements-enfants", "mode-garde", "anniversaires-enfants", "ecrans-regles", "souvenirs", "factures", "papiers", "impots", "numerique", "employeur", "agenda", "amis", "cadeaux", "vacances", "parents-ages", "reparations", "plantes", "voiture", "chauffage", "animal-quotidien", "animal-suivi"];
   // état : { nomA, nomB, enfants, ecran, t: { id: {fait, pense, n, p, d} }, custom: [{id, cat, nom, aide}] }
   let S = load() || fresh();
   let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
@@ -614,13 +617,13 @@
     const regl = catTasks().filter(t => { const st = S.t[t.id]; return st && (st.n !== t.n || st.p !== t.periode || st.d !== t.duree); })
       .map(t => { const st = S.t[t.id]; return [t.id, esc(st.n), PER.indexOf(st.p), esc(st.d)].join("_"); }).join(".");
     const ajouts = S.custom.map(c => { const st = S.t[c.id] || {}; return [c.id, c.cat, esc(c.nom), lettre(st), esc(st.n), PER.indexOf(st.p), esc(st.d)].join("_"); }).join(".");
-    return ["2", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0].join("~");
+    return ["3", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0].join("~");
   }
-  function decode2(h) {
+  function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
     s.nomA = unesc(f[1] || ""); s.nomB = unesc(f[2] || ""); s.enfants = +f[3] || 0; s.ecran = +f[4] || 1;
     s.animaux = f[8] === undefined ? 1 : (+f[8] || 0);   // anciens liens sans le champ : la famille Animaux restait visible
-    catTasks().forEach((t, i) => Object.assign(s.t[t.id], delettre((f[5] || "")[i])));
+    ordre.forEach((id, i) => { if (s.t[id]) Object.assign(s.t[id], delettre((f[5] || "")[i])); });   // une tâche disparue du catalogue est ignorée
     if (f[6]) for (const o of f[6].split(".")) { const [id, n, p, d] = o.split("_"); if (s.t[id]) Object.assign(s.t[id], { n: +unesc(n) || 0, p: PER[+p] || s.t[id].p, d: +unesc(d) || 0 }); }
     if (f[7]) for (const o of f[7].split(".")) {
       const [id, cat, nom, l, n, p, d] = o.split("_"); if (!id || !cat || !nom) continue;
@@ -631,7 +634,8 @@
   function load() {
     try {
       const h = location.hash.slice(1); if (!h) return null;
-      if (h.startsWith("2~")) return decode2(h);
+      if (h.startsWith("3~")) return decode2(h, catTasks().map(t => t.id));
+      if (h.startsWith("2~")) return decode2(h, ORDRE_V2);
       const s = JSON.parse(decodeURIComponent(escape(atob(h))));   // anciens liens (format 1, JSON base64)
       for (const st of Object.values(s.t || {})) { if (st.fait === "none") st.fait = "other"; if (st.pense === "none") st.pense = null; }
       const f = fresh(); return { ...f, animaux: 1, ...s, t: { ...f.t, ...(s.t || {}) }, custom: s.custom || [] };   // complète les tâches absentes
