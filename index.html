@@ -161,6 +161,16 @@
   .prenoms .a input { border-color: var(--a); }
   .prenoms .b input { border-color: var(--b); }
   .enfants { margin-top: 1rem; max-width: 250px; }
+  /* genre : trois pastilles, aucune cochée au départ, facultatif et sans incidence sur le calcul */
+  .genre { display: flex; gap: .35rem; margin-top: .45rem; }
+  .genre .g { flex: 1; padding: .35rem 0; border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper);
+    color: var(--muted); cursor: pointer; font-size: .95rem; line-height: 1.2; font-family: inherit; }
+  .genre .g .sym { font-size: 1.3rem; line-height: 1; vertical-align: -.12em; }
+  .genre .g:hover { border-color: var(--border); color: var(--ink); }
+  .genre .g[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+  .prenoms .a .genre .g[aria-pressed="true"] { border-color: var(--a); background: var(--a); }
+  .prenoms .b .genre .g[aria-pressed="true"] { border-color: var(--b); background: var(--b); }
+  .sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
   /* étape 2 */
   section { padding: 36px 0 0; }
@@ -400,8 +410,18 @@
     <div class="demarrer">
       <h2>On commence</h2>
       <div class="prenoms">
-        <div class="a"><label for="nomA">Prénom 1</label><input id="nomA" placeholder="Prénom"></div>
-        <div class="b"><label for="nomB">Prénom 2</label><input id="nomB" placeholder="Prénom"></div>
+        <div class="a"><label for="nomA">Prénom 1</label><input id="nomA" placeholder="Prénom">
+          <div class="genre" role="group" aria-label="Genre de la première personne. Facultatif. Ne change rien au calcul : sert seulement à l'étude, si vous l'acceptez à la fin." title="Facultatif. Ne change rien au calcul : sert seulement à l'étude, si vous l'acceptez à la fin." data-genre="A">
+            <button type="button" class="g" value="f" aria-pressed="false" title="Femme"><span class="sym" aria-hidden="true">&#9792;</span><span class="sr">Femme</span></button>
+            <button type="button" class="g" value="h" aria-pressed="false" title="Homme"><span class="sym" aria-hidden="true">&#9794;</span><span class="sr">Homme</span></button>
+            <button type="button" class="g" value="x" aria-pressed="false" title="Ne se prononce pas"><span aria-hidden="true">nc</span><span class="sr">Ne se prononce pas</span></button>
+          </div></div>
+        <div class="b"><label for="nomB">Prénom 2</label><input id="nomB" placeholder="Prénom">
+          <div class="genre" role="group" aria-label="Genre de la deuxième personne. Facultatif. Ne change rien au calcul : sert seulement à l'étude, si vous l'acceptez à la fin." title="Facultatif. Ne change rien au calcul : sert seulement à l'étude, si vous l'acceptez à la fin." data-genre="B">
+            <button type="button" class="g" value="f" aria-pressed="false" title="Femme"><span class="sym" aria-hidden="true">&#9792;</span><span class="sr">Femme</span></button>
+            <button type="button" class="g" value="h" aria-pressed="false" title="Homme"><span class="sym" aria-hidden="true">&#9794;</span><span class="sr">Homme</span></button>
+            <button type="button" class="g" value="x" aria-pressed="false" title="Ne se prononce pas"><span aria-hidden="true">nc</span><span class="sr">Ne se prononce pas</span></button>
+          </div></div>
       </div>
       <div class="prenoms foyer">
         <div class="enfants">
@@ -573,7 +593,7 @@
   <div class="modale-boite etude-boite">
     <h2 id="etude-titre">Important, avant d'afficher votre compte</h2>
     <p>Donnez-vous votre accord pour que vos réponses soient stockées de façon <strong class="souligne">anonymisée</strong>, dans le but de faire une grande étude sur la répartition des tâches et de la charge mentale dans les foyers ?</p>
-    <p class="small muted">Ce qui part, si vous acceptez : vos réponses, les durées que vous avez réglées, le nombre d'enfants, les tâches que vous avez ajoutées vous-même. Jamais vos prénoms, jamais d'adresse, rien qui permette de remonter jusqu'à vous. Quel que soit votre choix, le compte s'affiche juste après.</p>
+    <p class="small muted">Ce qui part, si vous acceptez : vos réponses, les durées que vous avez réglées, le nombre d'enfants, le genre que chacun a bien voulu indiquer, les tâches que vous avez ajoutées vous-même. Jamais vos prénoms, jamais d'adresse, rien qui permette de remonter jusqu'à vous. Quel que soit votre choix, le compte s'affiche juste après.</p>
     <div class="etude-actions">
       <button class="btn secondary" type="button" id="etude-non">Refuser</button>
       <button class="btn" type="button" id="etude-oui">Approuver</button>
@@ -626,7 +646,7 @@
   let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
 
   function fresh() {
-    const s = { nomA: "", nomB: "", enfants: 0, animaux: 0, ecran: 1, t: {}, custom: [] };
+    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, ecran: 1, t: {}, custom: [] };
     for (const cat of C.categories) for (const t of cat.taches) s.t[t.id] = { fait: null, pense: null, n: t.n, p: t.periode, d: t.duree };
     return s;
   }
@@ -643,12 +663,15 @@
     const regl = catTasks().filter(t => { const st = S.t[t.id]; return st && (st.n !== t.n || st.p !== t.periode || st.d !== t.duree); })
       .map(t => { const st = S.t[t.id]; return [t.id, esc(st.n), PER.indexOf(st.p), esc(st.d)].join("_"); }).join(".");
     const ajouts = S.custom.map(c => { const st = S.t[c.id] || {}; return [c.id, c.cat, esc(c.nom), lettre(st), esc(st.n), PER.indexOf(st.p), esc(st.d)].join("_"); }).join(".");
-    return ["6", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0].join("~");
+    const genres = (S.genreA || "-") + (S.genreB || "-");   // champ ajouté en fin de chaîne : un lien sans lui se lit pareil
+    return ["6", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres].join("~");
   }
   function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
     s.nomA = unesc(f[1] || ""); s.nomB = unesc(f[2] || ""); s.enfants = +f[3] || 0; s.ecran = +f[4] || 1;
     s.animaux = f[8] === undefined ? 1 : (+f[8] || 0);   // anciens liens sans le champ : la famille Animaux restait visible
+    const g = f[9] || "";   // genres, ajoutés le 22/09/2026 : absents des liens antérieurs, ils restent vides
+    s.genreA = "fhx".includes(g[0]) ? g[0] : ""; s.genreB = "fhx".includes(g[1]) ? g[1] : "";
     ordre.forEach((id, i) => { if (s.t[id]) Object.assign(s.t[id], delettre((f[5] || "")[i])); });   // une tâche disparue du catalogue est ignorée
     if (f[6]) for (const o of f[6].split(".")) { const [id, n, p, d] = o.split("_"); if (s.t[id]) Object.assign(s.t[id], { n: +unesc(n) || 0, p: PER[+p] || s.t[id].p, d: +unesc(d) || 0 }); }
     if (f[7]) for (const o of f[7].split(".")) {
@@ -931,6 +954,17 @@
     update();
   };
   iA.addEventListener("input", onName); iB.addEventListener("input", onName);
+  // Genre : facultatif, aucune option cochée au départ, un second clic sur la même option la retire.
+  document.querySelectorAll(".genre").forEach(grp => {
+    const cle = "genre" + grp.dataset.genre;
+    const peindre = () => grp.querySelectorAll(".g").forEach(b => b.setAttribute("aria-pressed", String(S[cle] === b.value)));
+    grp.querySelectorAll(".g").forEach(b => b.addEventListener("click", () => {
+      S[cle] = S[cle] === b.value ? "" : b.value;
+      peindre(); save();
+      if (window.__ga) gtag("event", "genre_choisi", { personne: grp.dataset.genre, valeur: S[cle] || "vide" });
+    }));
+    peindre();
+  });
   iE.addEventListener("change", () => { S.enfants = +iE.value; update(); });
   document.getElementById("go2").addEventListener("click", () => {
     if (!S.nomA.trim() || !S.nomB.trim()) { document.getElementById("hint1").textContent = "Les deux prénoms d'abord."; return; }
@@ -1016,7 +1050,8 @@
       const pct = (x, y) => (x + y) ? String(Math.round(100 * x / (x + y))) : "";
       const data = new URLSearchParams({
         sid: jeton(), date: new Date().toISOString(), catalogue: C.version || "", format: champs[0],
-        enfants: S.enfants, animaux: S.animaux ? 1 : 0, taches_total: r.total, taches_renseignees: r.renseignees,
+        enfants: S.enfants, animaux: S.animaux ? 1 : 0, genre_a: S.genreA, genre_b: S.genreB,
+        taches_total: r.total, taches_renseignees: r.renseignees,
         heures_a: r.a.h.toFixed(3), heures_b: r.b.h.toFixed(3), part_temps_a: pct(r.a.h, r.b.h),
         faites_a: r.a.nFait, faites_b: r.b.nFait, tete_a: r.a.nPense, tete_b: r.b.nPense, part_tete_a: pct(r.a.nPense, r.b.nPense),
         reponses: champs[5] || "", reglages: champs[6] || "",
