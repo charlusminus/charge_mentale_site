@@ -17,7 +17,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Qui y pense ? Qui fait quoi à la maison, le compte de la charge mentale</title>
-<meta name="description" content="Qui fait quoi à la maison, et surtout qui y pense ? Listez les tâches du foyer à deux et lisez le résultat en heures par jour et en choses à garder en tête. Gratuit, sans compte, rien n'est envoyé.">
+<meta name="description" content="Qui fait quoi à la maison, et surtout qui y pense ? Listez les tâches du foyer à deux et lisez le résultat en heures par jour et en choses à garder en tête. Gratuit, sans compte, sans publicité.">
 <link rel="canonical" href="https://quiypense.org/">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="Qui y pense ?">
@@ -26,7 +26,7 @@
 <meta property="og:locale" content="fr_FR">
 <meta property="og:site_name" content="Qui y pense ?">
 <meta property="og:title" content="Qui y pense ? Qui fait quoi à la maison">
-<meta property="og:description" content="Le compte de la charge mentale du foyer, à deux, en dix minutes. Gratuit, sans compte, rien n'est envoyé.">
+<meta property="og:description" content="Le compte de la charge mentale du foyer, à deux, en dix minutes. Gratuit, sans compte, sans publicité.">
 <meta property="og:url" content="https://quiypense.org/">
 <meta property="og:image" content="https://quiypense.org/img/og.png">
 <meta property="og:image:width" content="1200">
@@ -34,7 +34,7 @@
 <meta property="og:image:alt" content="Qui y pense ? Qui fait quoi à la maison. Le compte de la charge mentale du foyer, à deux, en dix minutes.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Qui y pense ? Qui fait quoi à la maison">
-<meta name="twitter:description" content="Le compte de la charge mentale du foyer, à deux, en dix minutes. Gratuit, sans compte, rien n'est envoyé.">
+<meta name="twitter:description" content="Le compte de la charge mentale du foyer, à deux, en dix minutes. Gratuit, sans compte, sans publicité.">
 <meta name="twitter:image" content="https://quiypense.org/img/og.png">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="img/icon-32.png" sizes="32x32" type="image/png">
@@ -42,7 +42,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260922c">
+<link rel="stylesheet" href="fonts/fonts.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -328,6 +328,13 @@
   .sortie-actions .btn svg { width: 18px; height: 18px; fill: currentColor; }
   .sortie-actions .btn .kofi-logo { height: 20px; }
   .sortie-actions .small { margin: -.1rem 0 .2rem; }
+  /* modale de l'étude : deux sorties de même poids visuel, refuser à gauche, approuver à droite */
+  .etude-boite { max-width: 620px; }
+  .etude-boite h2 { padding-right: 0; }
+  .etude-boite .small { margin-top: .7rem; }
+  .souligne { text-decoration: underline; text-underline-offset: 3px; }
+  .etude-actions { display: flex; gap: .8rem; margin-top: 1.4rem; }
+  .etude-actions .btn { flex: 1; text-align: center; }
   @media (max-width: 720px) {
     .kofi-cadre iframe { height: 640px; }
     .prenoms { grid-template-columns: 1fr; }
@@ -406,7 +413,7 @@
           <select id="animaux"><option value="0">Aucun</option><option value="1">Oui</option></select>
         </div>
       </div>
-      <div class="nav"><button class="btn" id="go2">Commencer</button><span class="small muted" id="hint1">Gratuit, sans compte. Rien n'est envoyé : tout se calcule dans votre navigateur.</span></div>
+      <div class="nav"><button class="btn" id="go2">Commencer</button><span class="small muted" id="hint1">Gratuit, sans compte. Tout se calcule dans votre navigateur.</span></div>
     </div>
 
     <div class="stats">
@@ -426,7 +433,7 @@
       <details><summary>Qu'est-ce que la charge mentale ?</summary><p>Le travail constant de gestion, d'organisation et de planification de la bonne marche de la maison, selon la définition de Nicole Brais. Concrètement : remarquer qu'il faut faire quelque chose, planifier, vérifier que c'est fait, même quand quelqu'un d'autre exécute. Le terme vient de la sociologue Monique Haicault (1984). Allison Daminger (2019) a montré que l'anticipation et le suivi restent presque toujours portés par la même personne du couple, alors que les décisions se prennent à deux.</p></details>
       <details><summary>Comment le compte est-il calculé ?</summary><p>Pour chaque tâche, vous dites qui s'en occupe et qui y pense. Les heures par jour se calculent sur « qui s'en occupe » : nombre de fois par période, multiplié par la durée, ramené à la journée. La charge mentale se compte en nombre de tâches à garder en tête, pas en heures : aucune enquête sérieuse ne convertit la pensée en minutes. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE (2010) et du jeu de cartes Fair Play (Eve Rodsky, 2019). Vous les corrigez ensuite avec votre réalité.</p></details>
       <details><summary>D'où viennent les chiffres cités ?</summary><p>INSEE, enquête Emploi du temps 2010 : 4 h 01 par jour de travail domestique pour les femmes, 2 h 13 pour les hommes, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP publiée en 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens interrogés : 86 % de temps en plus passé à penser aux tâches qu'à les faire. Les libellés des tâches suivent la nomenclature INSEE, complétée par les cent cartes Fair Play.</p></details>
-      <details><summary>Mes réponses sont-elles envoyées quelque part ?</summary><p>Non. Tout se calcule dans votre navigateur, il n'y a ni compte ni serveur. Vos réponses sont encodées dans l'adresse de la page : c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur. Les polices sont hébergées avec le site. Une mesure d'audience (Google Analytics) compte les visites, seulement si vous l'acceptez dans le bandeau, et sans jamais recevoir vos réponses.</p></details>
+      <details><summary>Mes réponses sont-elles envoyées quelque part ?</summary><p>Seulement si vous le demandez. Tout se calcule dans votre navigateur, il n'y a ni compte ni serveur : vos réponses sont encodées dans l'adresse de la page, c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur. Une seule exception, et elle vous est posée en face : avant d'afficher le compte, nous vous demandons si vous acceptez d'en verser une copie anonyme à une étude sur la répartition domestique. Sans prénoms, sans adresse, sans rien qui permette de remonter jusqu'à vous. Si vous refusez, rien ne part et le compte s'affiche pareil. Les polices sont hébergées avec le site. Une mesure d'audience (Google Analytics) compte les visites, seulement si vous l'acceptez dans le bandeau, et sans jamais recevoir vos réponses.</p></details>
       <details><summary>Combien de temps ça prend, et à combien ?</summary><p>Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, et le nombre d'enfants. Les tâches vont du plus courant au plus rare : on peut s'arrêter à mi-parcours et voir le compte, puis y revenir.</p></details>
     </section>
 
@@ -488,7 +495,7 @@
           <button class="btn secondary" id="xlsx">Télécharger en Excel</button>
           <button class="btn secondary" id="back2">Modifier qui y pense</button>
         </div>
-        <p class="small muted garde-note">Ce compte n'est enregistré nulle part : copiez le lien ou ajoutez la page aux favoris pour le retrouver.</p>
+        <p class="small muted garde-note">Ce compte n'est gardé pour vous nulle part : copiez le lien ou ajoutez la page aux favoris pour le retrouver.</p>
         <div class="partage" id="partage-compte" hidden>
           <p class="muted small">Le lien contient vos réponses, rien d'autre : la personne qui l'ouvre retrouve exactement ce compte.</p>
           <div class="rs" data-partage="compte"></div>
@@ -530,7 +537,7 @@
       <label class="champ">Votre e-mail, pour vous prévenir si ça se fait
         <input type="email" name="email" placeholder="facultatif" autocomplete="email">
       </label>
-      <p class="small muted">En laissant votre e-mail, vous acceptez qu'on vous écrive une fois pour ça, rien d'autre. Vos réponses au questionnaire ne sont pas envoyées. L'envoi est protégé contre les robots par Cloudflare Turnstile.</p>
+      <p class="small muted">En laissant votre e-mail, vous acceptez qu'on vous écrive une fois pour ça, rien d'autre. Vos réponses au questionnaire ne partent pas avec ce formulaire. L'envoi est protégé contre les robots par Cloudflare Turnstile.</p>
       <div class="turnstile" id="cf-widget"></div>
       <div class="modale-actions"><button class="btn" type="submit">Envoyer</button></div>
       <p class="small muted" id="intention-ok" aria-live="polite"></p>
@@ -552,7 +559,7 @@
   <div class="modale-boite">
     <button class="modale-fermer" type="button" id="sortie-fermer" aria-label="Fermer">Fermer</button>
     <h2 id="sortie-titre">Avant de partir : ce compte n'est pas sauvegardé</h2>
-    <p>Rien n'est enregistré sur un serveur. Votre compte vit dans le lien de cette page : si vous fermez l'onglet sans le garder, il est perdu.</p>
+    <p>Votre compte n'est gardé pour vous nulle part. Il vit dans le lien de cette page : si vous fermez l'onglet sans le garder, il est perdu.</p>
     <div class="sortie-actions">
       <button class="btn" type="button" id="sortie-copier"><svg aria-hidden="true"><use href="#i-lien"/></svg><span>Copier le lien de ce compte</span></button>
       <p class="small muted" id="sortie-ok">Ou ajoutez la page aux favoris : Ctrl + D (⌘ + D sur Mac).</p>
@@ -562,10 +569,22 @@
   </div>
 </div>
 
+<div class="modale" id="etude" role="dialog" aria-modal="true" aria-labelledby="etude-titre" hidden>
+  <div class="modale-boite etude-boite">
+    <h2 id="etude-titre">Important, avant d'afficher votre compte</h2>
+    <p>Donnez-vous votre accord pour que vos réponses soient stockées de façon <strong class="souligne">anonymisée</strong>, dans le but de faire une grande étude sur la répartition des tâches et de la charge mentale dans les foyers ?</p>
+    <p class="small muted">Ce qui part, si vous acceptez : vos réponses, les durées que vous avez réglées, le nombre d'enfants, les tâches que vous avez ajoutées vous-même. Jamais vos prénoms, jamais d'adresse, rien qui permette de remonter jusqu'à vous. Quel que soit votre choix, le compte s'affiche juste après.</p>
+    <div class="etude-actions">
+      <button class="btn secondary" type="button" id="etude-non">Refuser</button>
+      <button class="btn" type="button" id="etude-oui">Approuver</button>
+    </div>
+  </div>
+</div>
+
 <div class="consent" id="consent" role="dialog" aria-modal="true" aria-labelledby="consent-titre" hidden>
   <div class="consent-boite">
     <h2 id="consent-titre">Une mesure d'audience, avec votre accord</h2>
-    <p>Ce site utilise Google Analytics pour compter les visites et comprendre ce qui est utile. Ça dépose un cookie et envoie des données de navigation à Google. Vos réponses au questionnaire, elles, ne quittent jamais votre navigateur, quel que soit votre choix.</p>
+    <p>Ce site utilise Google Analytics pour compter les visites et comprendre ce qui est utile. Ça dépose un cookie et envoie des données de navigation à Google. Vos réponses au questionnaire ne sont jamais envoyées à Google, quel que soit votre choix.</p>
     <div class="consent-actions">
       <button class="btn secondary" type="button" id="consent-non">Refuser</button>
       <button class="btn secondary" type="button" id="consent-oui">Accepter</button>
@@ -578,13 +597,14 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260922c"></script>
+<script src="catalogue.js"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
   const J = C.periodes;
   const SITE = "https://quiypense.org/";
   const INTENTIONS_URL = "https://charlusminus.app.n8n.cloud/webhook/quiypense-intentions";   // workflow n8n « Qui y pense, Intentions », cf n8n/README.md
+  const ETUDE_URL = "https://charlusminus.app.n8n.cloud/webhook/quiypense-etude";   // workflow n8n « Qui y pense, Étude », cf n8n/README.md
   const TURNSTILE_SITEKEY = "0x4AAAAAAE-qa9jJxGWCyc5B";   // clé publique Cloudflare Turnstile (la secrète vit dans n8n)
   const WHO = ["a", "b", "both", "other"];   // « other » = pas nous : quelqu'un d'autre s'en occupe, ou la tâche n'existe pas chez eux
   const FAMILLES_ENFANTS = new Set(["enfants-quotidien", "enfants-suivi"]);
@@ -727,7 +747,7 @@
         j.innerHTML = `<h3>L'essentiel est fait</h3><p>Vous pouvez voir le compte maintenant. Le reste (${reste}) affine le résultat : c'est là que se cache souvent le « y penser ».</p>
           <div class="nav"><button class="btn" type="button">Voir le compte</button><button class="btn secondary" type="button">Continuer</button></div>`;
         const [voir, cont] = j.querySelectorAll("button");
-        voir.addEventListener("click", () => show(3));
+        voir.addEventListener("click", voirCompte);
         cont.addEventListener("click", () => j.nextElementSibling && j.nextElementSibling.scrollIntoView({ behavior: "smooth", block: "start" }));
         root.appendChild(j);
       }
@@ -917,8 +937,8 @@
     show(2);
   });
   document.getElementById("back1").addEventListener("click", () => show(1));
-  document.getElementById("go3").addEventListener("click", () => show(3));
-  document.getElementById("suiviBtn").addEventListener("click", () => show(3));
+  document.getElementById("go3").addEventListener("click", voirCompte);
+  document.getElementById("suiviBtn").addEventListener("click", voirCompte);
   document.getElementById("back2").addEventListener("click", () => show(2));
   document.getElementById("xlsx").addEventListener("click", exportXlsx);
   document.getElementById("envoyer").addEventListener("click", e => {
@@ -975,6 +995,55 @@
     });
   }
 
+
+  /* ---------- étude : accord demandé avant d'afficher le compte ----------
+     Rien ne part sans un clic sur « Approuver ». Ce qui part alors ne contient ni les prénoms ni de quoi
+     revenir à un foyer : les réponses tâche par tâche, les réglages, les tâches ajoutées, les totaux calculés.
+     La réponse est gardée six mois dans le navigateur, on ne repose pas la question à chaque compte. */
+  const etude = (function () {
+    const CLE = "consent-etude", SIX_MOIS = 1000 * 60 * 60 * 24 * 182;
+    let envoye = false;
+    function choix() { try { const v = JSON.parse(localStorage.getItem(CLE) || "null"); return v && Date.now() - v.t < SIX_MOIS ? v.ok : null; } catch (e) { return null; } }
+    function ecrire(ok) { try { localStorage.setItem(CLE, JSON.stringify({ ok, t: Date.now() })); } catch (e) {} }
+    function jeton() {
+      const neuf = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+      try { let v = sessionStorage.getItem("etude-sid"); if (!v) { v = neuf(); sessionStorage.setItem("etude-sid", v); } return v; } catch (e) { return neuf(); }
+    }
+    function envoyer() {
+      if (envoye || !ETUDE_URL) return;
+      envoye = true;
+      const r = compute(), champs = encode().split("~");   // 5 = réponses, 6 = réglages ; les prénoms (1 et 2) ne sont pas repris
+      const pct = (x, y) => (x + y) ? String(Math.round(100 * x / (x + y))) : "";
+      const data = new URLSearchParams({
+        sid: jeton(), date: new Date().toISOString(), catalogue: C.version || "", format: champs[0],
+        enfants: S.enfants, animaux: S.animaux ? 1 : 0, taches_total: r.total, taches_renseignees: r.renseignees,
+        heures_a: r.a.h.toFixed(3), heures_b: r.b.h.toFixed(3), part_temps_a: pct(r.a.h, r.b.h),
+        faites_a: r.a.nFait, faites_b: r.b.nFait, tete_a: r.a.nPense, tete_b: r.b.nPense, part_tete_a: pct(r.a.nPense, r.b.nPense),
+        reponses: champs[5] || "", reglages: champs[6] || "",
+        ajouts: S.custom.map(c => c.nom).join(" | ").slice(0, 600),
+        page: location.origin + location.pathname, source: new URLSearchParams(location.search).get("utm_source") || ""
+      });
+      try { fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true }).catch(() => {}); } catch (e) {}
+    }
+    function repondre(ok) {
+      ecrire(ok); fermerModale(m);
+      if (ok) envoyer();
+      if (window.__ga) gtag("event", "etude_consentement", { accord: ok ? "oui" : "non" });
+      show(3);
+    }
+    const m = document.getElementById("etude"), non = document.getElementById("etude-non");
+    document.getElementById("etude-oui").addEventListener("click", () => repondre(true));
+    non.addEventListener("click", () => repondre(false));
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });   // échap : on referme sans rien décider, on reste sur la liste
+    return { choix, envoyer, demander: () => ouvrirModale(m, non) };
+  })();
+  // Trois chemins mènent au compte : le bouton de bas de liste, la barre de suivi, le palier « l'essentiel est fait ».
+  function voirCompte() {
+    const rep = etude.choix();
+    if (rep === null) return etude.demander();   // la modale appelle show(3) dans les deux cas
+    if (rep) etude.envoyer();
+    show(3);
+  }
 
   /* ---------- modales génériques : Ko-fi (soutenir) et sortie (compte non sauvegardé) ---------- */
   function ouvrirModale(m, focus) { m.hidden = false; document.body.classList.add("modale-ouverte"); const f = focus || m.querySelector(".modale-fermer"); if (f) f.focus(); }
