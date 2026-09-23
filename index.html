@@ -11,7 +11,10 @@
     gtag('consent', 'update', { analytics_storage: 'granted' });
     const sc = document.createElement('script'); sc.async = true; sc.src = 'https://www.googletagmanager.com/gtag/js?id=G-NYTV9VXCBN'; document.head.appendChild(sc);
     gtag('js', new Date());
-    gtag('config', 'G-NYTV9VXCBN');
+    // Pas de page vue automatique : l'application a trois écrans sur une seule adresse, chacun est compté comme
+    // une page à part (/, /etape/qui-y-pense, /etape/compte) par window.__pageEtape, dans le script de l'appli.
+    gtag('config', 'G-NYTV9VXCBN', { send_page_view: false });
+    if (window.__pageEtape) window.__pageEtape(true);
   }
 </script>
 <meta charset="utf-8">
@@ -42,7 +45,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260923e">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260923f">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -624,11 +627,24 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260923e"></script>
+<script src="catalogue.js?v=20260923f"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
   const J = C.periodes;
+  // Mesure : une page vue par écran, pour suivre le parcours jusqu'au compte dans « Pages et écrans ». Chemins
+  // virtuels, qui n'existent pas sur le serveur. La chaîne de requête (utm_…) suit, pour garder la source.
+  const ETAPES = { 1: ["/", "Accueil"], 2: ["/etape/qui-y-pense", "Étape 2, qui y pense"], 3: ["/etape/compte", "Étape 3, le compte"] };
+  let etapeMesuree = 0;
+  function pageEtape(force) {
+    if (!window.__ga) return;   // appelée seulement après l'initialisation de S : à la fin du script ou au clic « Accepter »
+    const n = S.ecran || 1;
+    if (!force && n === etapeMesuree) return;
+    etapeMesuree = n;
+    const [chemin, titre] = ETAPES[n] || ETAPES[1];
+    gtag("event", "page_view", { page_location: location.origin + chemin + location.search, page_title: "Qui y pense ? " + titre });
+  }
+  window.__pageEtape = pageEtape;
   const SITE = "https://quiypense.org/";
   const INTENTIONS_URL = "https://charlusminus.app.n8n.cloud/webhook/quiypense-intentions";   // workflow n8n « Qui y pense, Intentions », cf n8n/README.md
   const ETUDE_URL = "https://charlusminus.app.n8n.cloud/webhook/quiypense-etude";   // workflow n8n « Qui y pense, Étude », cf n8n/README.md
@@ -742,6 +758,7 @@
     if (n === 3) renderAffiner();
     update();
     window.scrollTo(0, 0);
+    pageEtape();
   }
 
   /* ---------- écran 2 ---------- */
@@ -916,6 +933,7 @@
   }
   async function exportXlsx() {
     garde = true;
+    if (window.__ga) gtag("event", "export_excel");
     const r = compute();
     const res = [["Qui y pense ? Qui fait quoi à la maison, le compte de la charge mentale", "", ""], [],
       ["", nomA(), nomB()],
@@ -1083,10 +1101,12 @@
     oui.addEventListener("click", accepter);
     document.getElementById("etude-retour").addEventListener("click", () => fermerModale(m));
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });   // échap : on referme, on reste sur la liste
-    return { accepte: () => choix() === true, envoyer, demander: () => ouvrirModale(m, oui) };
+    return { accepte: () => choix() === true, envoyer, demander: () => { ouvrirModale(m, oui); if (window.__ga) gtag("event", "etude_demandee"); } };
   })();
   // Trois chemins mènent au compte : le bouton de bas de liste, la barre de suivi, le palier « l'essentiel est fait ».
-  function voirCompte() {
+  function voirCompte(e) {
+    const id = e && e.currentTarget && e.currentTarget.id;
+    if (window.__ga) gtag("event", "voir_compte_clic", { origine: id === "go3" ? "bas_de_liste" : id === "suiviBtn" ? "barre" : "palier", taches_renseignees: compute().renseignees });
     if (!etude.accepte()) return etude.demander();   // un ancien « Refuser » gardé en mémoire ne suffit plus : on redemande
     etude.envoyer();
     show(3);

@@ -62,3 +62,16 @@ main { max-width: 68ch; margin: 0 auto; padding: 32px 16px 48px; }
   body { font-size: 1rem; }
 }
 @media print { .haut nav, .compte, .pied { display: none; } }
+
+/* bandeau de consentement (mesure.js), copie de celui de l'accueil */
+.btn.secondary { background: transparent; color: var(--ink); }
+.btn.secondary:hover { background: var(--bg-2); color: var(--ink); }
+.consent { position: fixed; inset: 0; z-index: 50; background: rgba(42, 33, 24, .55); display: grid; place-items: center; padding: 16px; }
+.consent[hidden] { display: none; }
+.consent-boite { background: var(--bg); border-radius: var(--r, 8px); padding: 28px; max-width: 520px; width: 100%; box-shadow: 0 0 0 1.5px var(--border); }
+.consent-boite h2 { font-size: 1.35rem; margin: 0 0 .4rem; }
+.consent-boite p { margin: 0; }
+.consent-actions { display: flex; gap: .7rem; margin-top: 1.2rem; }
+.consent-actions .btn { flex: 1; text-align: center; cursor: pointer; font: inherit; font-weight: 600; }
+body.consent-ouvert { overflow: hidden; }
+
