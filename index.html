@@ -42,7 +42,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260923a">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260923b">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -621,7 +621,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260923a"></script>
+<script src="catalogue.js?v=20260923b"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -997,16 +997,18 @@
 
 
   /* ---------- partage ---------- */
-  // Chaque canal porte son utm_source ; utm_medium=partage ; utm_campaign = compte (lien avec les réponses), site ou pied.
-  function lienPartage(compte, source, campagne) {
-    const q = `?utm_source=${source}&utm_medium=partage&utm_campaign=${campagne}`;
+  // Chaque canal porte son utm_source, et utm_medium=partage. Pas d'utm_campaign : ce lien part dans une
+  // conversation, chaque paramètre de plus l'allonge et le rend louche. L'endroit d'où part le partage reste
+  // suivi dans l'événement GA, pas dans l'adresse.
+  function lienPartage(compte, source) {
+    const q = `?utm_source=${source}&utm_medium=partage`;
     return compte ? location.origin + location.pathname + q + location.hash : SITE + q;
   }
   function renderPartage() {
     document.querySelectorAll(".rs").forEach(box => {
       const compte = box.dataset.partage === "compte", pied = box.classList.contains("rs-pied");
       const campagne = compte ? "compte" : pied ? "pied" : "site";
-      const L = src => lienPartage(compte, src, campagne);
+      const L = src => lienPartage(compte, src);
       const texte = compte
         ? `Voici notre compte « Qui y pense ? », à lire ensemble : `
         : `Qui fait quoi à la maison, et surtout qui y pense ? Faites le compte à deux, en dix minutes, gratuit et sans compte : `;
@@ -1128,7 +1130,7 @@
     document.addEventListener("click", e => { const a = e.target.closest("a[href]"); if (a && a.origin === location.origin && !a.target) { navInterne = true; setTimeout(() => { navInterne = false; }, 2000); } });
     window.addEventListener("beforeunload", e => { if (S.ecran === 3 && !garde && !navInterne) { e.preventDefault(); e.returnValue = ""; } });
     document.getElementById("sortie-copier").addEventListener("click", async () => {
-      const url = lienPartage(true, "copie", "sortie"); garde = true; if (window.__ga) gtag("event", "sortie_action", { action: "copie" });
+      const url = lienPartage(true, "copie"); garde = true; if (window.__ga) gtag("event", "sortie_action", { action: "copie" });
       try { await navigator.clipboard.writeText(url); okEl.textContent = "Lien copié. Ajoutez aussi la page aux favoris : Ctrl + D (⌘ + D sur Mac)."; }
       catch (err) { prompt("Copiez ce lien :", url); }
     });
