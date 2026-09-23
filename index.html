@@ -42,7 +42,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260923c">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260923d">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -70,7 +70,7 @@
         { "@type": "Question", "name": "Qu'est-ce que la charge mentale ?", "acceptedAnswer": { "@type": "Answer", "text": "La charge mentale est le travail constant de gestion, d'organisation et de planification de la bonne marche de la maison (définition de Nicole Brais). Concrètement : remarquer qu'il faut faire quelque chose, planifier, et vérifier que c'est fait, même quand quelqu'un d'autre exécute. Le terme vient de la sociologue Monique Haicault (1984) ; Allison Daminger (2019) a montré que l'anticipation et le suivi restent presque toujours portés par la même personne du couple." } },
         { "@type": "Question", "name": "Comment le compte est-il calculé ?", "acceptedAnswer": { "@type": "Answer", "text": "Pour chaque tâche, vous dites qui s'en occupe et qui y pense. Les heures par jour se calculent sur qui s'en occupe : nombre de fois par période multiplié par la durée, ramené à la journée. La charge mentale se compte en nombre de tâches à garder en tête, pas en heures. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE (2010) et du jeu de cartes Fair Play (Eve Rodsky, 2019) ; vous les corrigez ensuite avec votre réalité." } },
         { "@type": "Question", "name": "D'où viennent les chiffres cités ?", "acceptedAnswer": { "@type": "Answer", "text": "INSEE, enquête Emploi du temps 2010 : les femmes consacrent 4 h 01 par jour au travail domestique, les hommes 2 h 13, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens : on passe 86 % de temps en plus à penser aux tâches qu'à les faire." } },
-        { "@type": "Question", "name": "Mes réponses sont-elles envoyées quelque part ?", "acceptedAnswer": { "@type": "Answer", "text": "Non. Tout se calcule dans votre navigateur, il n'y a ni compte ni serveur. Vos réponses sont encodées dans l'adresse de la page : c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur. Seule une mesure d'audience (Google Analytics) compte les visites, sans jamais recevoir vos réponses." } },
+        { "@type": "Question", "name": "Mes réponses sont-elles envoyées quelque part ?", "acceptedAnswer": { "@type": "Answer", "text": "Une copie anonymisée, oui, et c'est annoncé avant le résultat. Tout se calcule dans votre navigateur, sans compte à créer : vos réponses sont encodées dans l'adresse de la page, et le fichier Excel se génère sur votre ordinateur. Pour afficher le compte, le site en conserve une copie anonymisée, destinée à une étude sur la répartition domestique : ni prénoms, ni adresse, ni e-mail, ni adresse IP. C'est la contrepartie d'un outil gratuit et sans publicité." } },
         { "@type": "Question", "name": "Combien de temps ça prend et à combien ?", "acceptedAnswer": { "@type": "Answer", "text": "Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, et le nombre d'enfants. Les tâches vont du plus courant au plus rare : on peut s'arrêter à mi-parcours et voir le compte." } }
       ]
     }
@@ -346,8 +346,9 @@
   .etude-boite h2 { padding-right: 0; }
   .etude-boite .small { margin-top: .7rem; }
   .souligne { text-decoration: underline; text-underline-offset: 3px; }
-  .etude-actions { display: flex; gap: .8rem; margin-top: 1.4rem; }
-  .etude-actions .btn { flex: 1; text-align: center; }
+  .etude-actions { display: flex; gap: 1rem; margin-top: 1.4rem; align-items: center; justify-content: flex-end; }
+  .etude-actions .btn { flex: 0 1 auto; text-align: center; }
+  .etude-actions .etude-retour { margin-top: 0; white-space: nowrap; }
   @media (max-width: 720px) {
     .kofi-cadre iframe { height: 640px; }
     .prenoms { grid-template-columns: 1fr; }
@@ -381,6 +382,8 @@
     .modale-fermer { top: 12px; right: 12px; }
     .modale fieldset label { padding: .45rem 0; }
     .modale-actions .btn { width: 100%; text-align: center; }
+    .etude-actions { flex-direction: column-reverse; align-items: stretch; gap: .7rem; }
+    .etude-actions .btn { width: 100%; }
   }
   @media print { .suivi, .actions, .ajout, .nav, .fil { display: none; } }
 </style>
@@ -414,13 +417,13 @@
       <h2>On commence</h2>
       <div class="prenoms">
         <div class="a"><label for="nomA">Prénom 1</label><input id="nomA" placeholder="Prénom">
-          <div class="genre" role="group" aria-label="Genre de la première personne. Facultatif. Ne change rien au calcul : sert seulement à l'étude, si vous l'acceptez à la fin." title="Facultatif. Ne change rien au calcul : sert seulement à l'étude, si vous l'acceptez à la fin." data-genre="A">
+          <div class="genre" role="group" aria-label="Genre de la première personne. Facultatif. Ne change rien au calcul : sert seulement à l'étude anonyme." title="Facultatif. Ne change rien au calcul : sert seulement à l'étude anonyme." data-genre="A">
             <button type="button" class="g" value="f" aria-pressed="false" title="Femme"><span class="sym" aria-hidden="true">&#9792;</span><span class="sr">Femme</span></button>
             <button type="button" class="g" value="h" aria-pressed="false" title="Homme"><span class="sym" aria-hidden="true">&#9794;</span><span class="sr">Homme</span></button>
             <button type="button" class="g" value="x" aria-pressed="false" title="Ne se prononce pas"><span aria-hidden="true">nc</span><span class="sr">Ne se prononce pas</span></button>
           </div></div>
         <div class="b"><label for="nomB">Prénom 2</label><input id="nomB" placeholder="Prénom">
-          <div class="genre" role="group" aria-label="Genre de la deuxième personne. Facultatif. Ne change rien au calcul : sert seulement à l'étude, si vous l'acceptez à la fin." title="Facultatif. Ne change rien au calcul : sert seulement à l'étude, si vous l'acceptez à la fin." data-genre="B">
+          <div class="genre" role="group" aria-label="Genre de la deuxième personne. Facultatif. Ne change rien au calcul : sert seulement à l'étude anonyme." title="Facultatif. Ne change rien au calcul : sert seulement à l'étude anonyme." data-genre="B">
             <button type="button" class="g" value="f" aria-pressed="false" title="Femme"><span class="sym" aria-hidden="true">&#9792;</span><span class="sr">Femme</span></button>
             <button type="button" class="g" value="h" aria-pressed="false" title="Homme"><span class="sym" aria-hidden="true">&#9794;</span><span class="sr">Homme</span></button>
             <button type="button" class="g" value="x" aria-pressed="false" title="Ne se prononce pas"><span aria-hidden="true">nc</span><span class="sr">Ne se prononce pas</span></button>
@@ -456,7 +459,7 @@
       <details><summary>Qu'est-ce que la charge mentale ?</summary><p>Le travail constant de gestion, d'organisation et de planification de la bonne marche de la maison, selon la définition de Nicole Brais. Concrètement : remarquer qu'il faut faire quelque chose, planifier, vérifier que c'est fait, même quand quelqu'un d'autre exécute. Le terme vient de la sociologue Monique Haicault (1984). Allison Daminger (2019) a montré que l'anticipation et le suivi restent presque toujours portés par la même personne du couple, alors que les décisions se prennent à deux.</p></details>
       <details><summary>Comment le compte est-il calculé ?</summary><p>Pour chaque tâche, vous dites qui s'en occupe et qui y pense. Les heures par jour se calculent sur « qui s'en occupe » : nombre de fois par période, multiplié par la durée, ramené à la journée. La charge mentale se compte en nombre de tâches à garder en tête, pas en heures : aucune enquête sérieuse ne convertit la pensée en minutes. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE (2010) et du jeu de cartes Fair Play (Eve Rodsky, 2019). Vous les corrigez ensuite avec votre réalité.</p></details>
       <details><summary>D'où viennent les chiffres cités ?</summary><p>INSEE, enquête Emploi du temps 2010 : 4 h 01 par jour de travail domestique pour les femmes, 2 h 13 pour les hommes, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP publiée en 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens interrogés : 86 % de temps en plus passé à penser aux tâches qu'à les faire. Les libellés des tâches suivent la nomenclature INSEE, complétée par les cent cartes Fair Play.</p></details>
-      <details><summary>Mes réponses sont-elles envoyées quelque part ?</summary><p>Seulement si vous le demandez. Tout se calcule dans votre navigateur, il n'y a ni compte ni serveur : vos réponses sont encodées dans l'adresse de la page, c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur. Une seule exception, et elle vous est posée en face : avant d'afficher le compte, nous vous demandons si vous acceptez d'en verser une copie anonyme à une étude sur la répartition domestique. Sans prénoms, sans adresse, sans rien qui permette de remonter jusqu'à vous. Si vous refusez, rien ne part et le compte s'affiche pareil. Les polices sont hébergées avec le site. Une mesure d'audience (Google Analytics) compte les visites, seulement si vous l'acceptez dans le bandeau, et sans jamais recevoir vos réponses.</p></details>
+      <details><summary>Mes réponses sont-elles envoyées quelque part ?</summary><p>Une copie anonymisée, oui, et c'est annoncé avant le résultat. Tout se calcule dans votre navigateur, il n'y a pas de compte à créer : vos réponses sont encodées dans l'adresse de la page, c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur. Pour afficher le compte, le site en conserve une copie anonymisée, destinée à une étude sur la répartition domestique : ni prénoms, ni adresse, ni e-mail, ni adresse IP, rien qui permette de remonter jusqu'à vous. C'est la contrepartie d'un outil gratuit et sans publicité. Les polices sont hébergées avec le site. Une mesure d'audience (Google Analytics) compte les visites, seulement si vous l'acceptez dans le bandeau, et sans jamais recevoir vos réponses.</p></details>
       <details><summary>Combien de temps ça prend, et à combien ?</summary><p>Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, et le nombre d'enfants. Les tâches vont du plus courant au plus rare : on peut s'arrêter à mi-parcours et voir le compte, puis y revenir.</p></details>
     </section>
 
@@ -596,11 +599,11 @@
 <div class="modale" id="etude" role="dialog" aria-modal="true" aria-labelledby="etude-titre" hidden>
   <div class="modale-boite etude-boite">
     <h2 id="etude-titre">Important, avant d'afficher votre compte</h2>
-    <p>Donnez-vous votre accord pour que vos réponses soient stockées de façon <strong class="souligne">anonymisée</strong>, dans le but de faire une grande étude sur la répartition des tâches et de la charge mentale dans les foyers ?</p>
-    <p class="small muted">Ce qui part, si vous acceptez : vos réponses, les durées que vous avez réglées, le nombre d'enfants, le genre que chacun a bien voulu indiquer, les tâches que vous avez ajoutées vous-même. Jamais vos prénoms, jamais d'adresse, rien qui permette de remonter jusqu'à vous. Quel que soit votre choix, le compte s'affiche juste après.</p>
+    <p>Pour afficher le résultat, nous conservons une copie <strong class="souligne">anonymisée</strong> de vos réponses, afin de mener une grande étude sur la répartition des tâches et de la charge mentale dans les foyers.</p>
+    <p class="small muted">Ce qui est conservé : vos réponses, les durées que vous avez réglées, le nombre d'enfants, le genre indiqué, les tâches que vous avez ajoutées vous-même. Jamais vos prénoms, ni adresse, ni e-mail, ni adresse IP : rien qui permette de remonter jusqu'à vous. C'est la contrepartie d'un outil gratuit et sans publicité.</p>
     <div class="etude-actions">
-      <button class="btn secondary" type="button" id="etude-non">Refuser</button>
-      <button class="btn" type="button" id="etude-oui">Approuver</button>
+      <button class="ajout-lien etude-retour" type="button" id="etude-retour">Revenir à la liste</button>
+      <button class="btn" type="button" id="etude-oui">Accepter et voir le compte</button>
     </div>
   </div>
 </div>
@@ -621,7 +624,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260923c"></script>
+<script src="catalogue.js?v=20260923d"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -1039,10 +1042,12 @@
   }
 
 
-  /* ---------- étude : accord demandé avant d'afficher le compte ----------
-     Rien ne part sans un clic sur « Approuver ». Ce qui part alors ne contient ni les prénoms ni de quoi
-     revenir à un foyer : les réponses tâche par tâche, les réglages, les tâches ajoutées, les totaux calculés.
-     La réponse est gardée six mois dans le navigateur, on ne repose pas la question à chaque compte. */
+  /* ---------- étude : condition d'accès au compte (23/09/2026) ----------
+     Plus de question oui / non : afficher le compte suppose d'accepter qu'une copie anonymisée parte vers
+     l'étude. Il n'y a donc pas de « Refuser » ; « Revenir à la liste » referme sans rien envoyer ni afficher.
+     La copie ne contient ni les prénoms ni de quoi revenir à un foyer : réponses tâche par tâche, réglages,
+     tâches ajoutées, totaux calculés. Côté n8n, les exécutions ne sont pas conservées, donc l'adresse IP de la
+     requête non plus. L'acceptation est gardée six mois dans le navigateur. */
   const etude = (function () {
     const CLE = "consent-etude", SIX_MOIS = 1000 * 60 * 60 * 24 * 182;
     let envoye = false;
@@ -1069,23 +1074,21 @@
       });
       try { fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true }).catch(() => {}); } catch (e) {}
     }
-    function repondre(ok) {
-      ecrire(ok); fermerModale(m);
-      if (ok) envoyer();
-      if (window.__ga) gtag("event", "etude_consentement", { accord: ok ? "oui" : "non" });
+    function accepter() {
+      ecrire(true); fermerModale(m); envoyer();
+      if (window.__ga) gtag("event", "etude_acceptee");
       show(3);
     }
-    const m = document.getElementById("etude"), non = document.getElementById("etude-non");
-    document.getElementById("etude-oui").addEventListener("click", () => repondre(true));
-    non.addEventListener("click", () => repondre(false));
-    document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });   // échap : on referme sans rien décider, on reste sur la liste
-    return { choix, envoyer, demander: () => ouvrirModale(m, non) };
+    const m = document.getElementById("etude"), oui = document.getElementById("etude-oui");
+    oui.addEventListener("click", accepter);
+    document.getElementById("etude-retour").addEventListener("click", () => fermerModale(m));
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });   // échap : on referme, on reste sur la liste
+    return { accepte: () => choix() === true, envoyer, demander: () => ouvrirModale(m, oui) };
   })();
   // Trois chemins mènent au compte : le bouton de bas de liste, la barre de suivi, le palier « l'essentiel est fait ».
   function voirCompte() {
-    const rep = etude.choix();
-    if (rep === null) return etude.demander();   // la modale appelle show(3) dans les deux cas
-    if (rep) etude.envoyer();
+    if (!etude.accepte()) return etude.demander();   // un ancien « Refuser » gardé en mémoire ne suffit plus : on redemande
+    etude.envoyer();
     show(3);
   }
 
