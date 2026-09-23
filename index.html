@@ -42,7 +42,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260923a">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -258,6 +258,9 @@
   .affiner .eq { color: var(--muted); margin-right: .35rem; font-weight: 600; }
   .affiner td .aide { display: block; font-size: .78rem; color: var(--muted); line-height: 1.25; margin-top: .1rem; }
   .affiner .qui-cell { white-space: nowrap; }
+  .avert-5050 { margin-top: 1rem; padding: .9rem 1rem; background: var(--bg-2); border-left: 3px solid var(--b); border-radius: 0 var(--r) var(--r) 0; font-size: .92rem; }
+  .avert-5050 strong { display: block; margin-bottom: .15rem; }
+  .avert-5050 a { color: var(--a); text-decoration: underline; text-underline-offset: 3px; }
   .pastille { display: inline-block; width: 10px; height: 10px; border-radius: 50%; vertical-align: middle; margin-right: .3rem; }
   .pastille.a { background: var(--a); } .pastille.b { background: var(--b); } .pastille.both { background: var(--ink); } .pastille.other { background: var(--muted); }
 
@@ -504,6 +507,7 @@
       <div class="affiner">
         <h2>Affinez le temps</h2>
         <p class="muted">Les valeurs proposées viennent d'enquêtes sur le temps domestique. Pour chaque tâche : combien de fois par jour, semaine, mois ou an, et combien de minutes à chaque fois (pas au total). Le total par jour se recalcule tout seul. Exemple : les courses 2 fois par semaine, 90 minutes à chaque fois, font 26 minutes par jour.</p>
+        <p class="avert-5050"><strong>Un mot avant de compter à la minute.</strong> Chercher l'équilibre exact ligne par ligne épuise les couples autant que le déséquilibre lui-même. Le 50/50 est une unité de mesure, pas un objectif : <a href="blog/egalitarisme-a-tout-prix.html?utm_source=quiypense&amp;utm_medium=compte&amp;utm_campaign=affiner">pourquoi l'égalitarisme à tout prix se retourne contre vous</a>.</p>
         <table id="table-affiner"></table>
       </div>
 
@@ -617,7 +621,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js"></script>
+<script src="catalogue.js?v=20260923a"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -701,6 +705,9 @@
   function hj(st) { return (st.n * st.d / 60) / J[st.p]; }
   function fmt(x, dec = 1) { return x.toFixed(dec).replace(".", ","); }
   function hm(h, gros) { if (gros) return Math.round(h) + " h"; const m = Math.round(h * 60); if (m < 60) return m + " min"; const hh = Math.floor(m / 60), mm = m % 60; return mm ? `${hh} h ${String(mm).padStart(2, "0")}` : `${hh} h`; }
+  // Les deux gros chiffres du haut sont arrondis au quart d'heure : « 5 h 38 » donnait une précision que la méthode n'a pas.
+  function quart(h) { return Math.round(h * 4) / 4; }
+  function hmQuart(h) { const q = quart(h); return (q === 0 && h > 0) ? "moins de 15 min" : hm(q); }
   function nomA() { return S.nomA.trim() || "Prénom 1"; }
   function nomB() { return S.nomB.trim() || "Prénom 2"; }
   function label(k) { return k === "a" ? nomA() : k === "b" ? nomB() : k === "both" ? "les deux" : "pas nous"; }
@@ -822,7 +829,7 @@
     const cartes = document.getElementById("cartes");
     const n0 = v => fmt(v, v % 1 ? 1 : 0);
     cartes.innerHTML = `<tr><th></th><th class="a">${nomA()}</th><th class="b">${nomB()}</th></tr>
-      <tr><td class="lbl">Temps à faire</td><td><strong>${hm(r.a.h)}</strong><small>par jour, soit ${hm(r.a.h * 7, true)} par semaine</small></td><td><strong>${hm(r.b.h)}</strong><small>par jour, soit ${hm(r.b.h * 7, true)} par semaine</small></td></tr>
+      <tr><td class="lbl">Temps à faire</td><td><strong>${hmQuart(r.a.h)}</strong><small>par jour, soit ${hm(quart(r.a.h) * 7, true)} par semaine</small></td><td><strong>${hmQuart(r.b.h)}</strong><small>par jour, soit ${hm(quart(r.b.h) * 7, true)} par semaine</small></td></tr>
       <tr><td class="lbl">Tâches faites</td><td><strong>${n0(r.a.nFait)}</strong></td><td><strong>${n0(r.b.nFait)}</strong></td></tr>
       <tr><td class="lbl">Tâches à garder en tête</td><td><strong>${n0(r.a.nPense)}</strong></td><td><strong>${n0(r.b.nPense)}</strong></td></tr>`;
 
