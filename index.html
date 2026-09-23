@@ -46,7 +46,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260923g">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260923h">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -349,6 +349,8 @@
   .etude-boite { max-width: 620px; }
   .etude-boite h2 { padding-right: 0; }
   .etude-boite .small { margin-top: .7rem; }
+  .etude-boite .turnstile { margin-top: 1rem; min-height: 0; }
+  .etude-boite .etude-etat:empty { display: none; }
   .souligne { text-decoration: underline; text-underline-offset: 3px; }
   .etude-actions { display: flex; gap: 1rem; margin-top: 1.4rem; align-items: center; justify-content: flex-end; }
   .etude-actions .btn { flex: 0 1 auto; text-align: center; }
@@ -605,6 +607,8 @@
     <h2 id="etude-titre">Important, avant d'afficher votre compte</h2>
     <p>Pour afficher le résultat, nous conservons une copie <strong class="souligne">anonymisée</strong> de vos réponses, afin de mener une grande étude sur la répartition des tâches et de la charge mentale dans les foyers.</p>
     <p class="small muted">Ce qui est conservé : vos réponses, les durées que vous avez réglées, le nombre d'enfants, le genre indiqué, les tâches que vous avez ajoutées vous-même. Jamais vos prénoms, ni adresse, ni e-mail, ni adresse IP : rien qui permette de remonter jusqu'à vous. C'est la contrepartie d'un outil gratuit et sans publicité.</p>
+    <div class="turnstile" id="cf-etude"></div>
+    <p class="small muted etude-etat" id="etude-etat" aria-live="polite">Vérification anti-robot en cours…</p>
     <div class="etude-actions">
       <button class="ajout-lien etude-retour" type="button" id="etude-retour">Revenir à la liste</button>
       <button class="btn" type="button" id="etude-oui">Accepter et voir le compte</button>
@@ -628,7 +632,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260923g"></script>
+<script src="catalogue.js?v=20260923h"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -1061,23 +1065,44 @@
   }
 
 
+  /* ---------- Turnstile : un seul chargement du script Cloudflare pour les deux modales qui s'en servent ----------
+     (étude et vote sur la sauvegarde en ligne). Le script ne se charge qu'à l'ouverture de la première des deux :
+     personne d'autre ne télécharge quoi que ce soit chez Cloudflare. Ne pas nommer un conteneur « turnstile » :
+     un id devient une propriété de window et masquerait l'API. */
+  const turnstilePret = () => window.turnstile && typeof window.turnstile.render === "function";
+  const enAttenteTurnstile = [];
+  let turnstileEchec = false;
+  function avecTurnstile(fn) {
+    if (turnstilePret()) return fn();
+    if (turnstileEchec) return fn(new Error("chargement"));
+    enAttenteTurnstile.push(fn);
+    if (document.getElementById("cf-turnstile")) return;
+    window.__turnstileReady = () => { while (enAttenteTurnstile.length) enAttenteTurnstile.shift()(); };
+    const sc = document.createElement("script"); sc.id = "cf-turnstile"; sc.async = true; sc.defer = true;
+    sc.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__turnstileReady&render=explicit";
+    sc.onerror = () => { turnstileEchec = true; while (enAttenteTurnstile.length) enAttenteTurnstile.shift()(new Error("chargement")); };
+    document.head.appendChild(sc);
+  }
+
   /* ---------- étude : condition d'accès au compte (23/09/2026) ----------
      Plus de question oui / non : afficher le compte suppose d'accepter qu'une copie anonymisée parte vers
      l'étude. Il n'y a donc pas de « Refuser » ; « Revenir à la liste » referme sans rien envoyer ni afficher.
      La copie ne contient ni les prénoms ni de quoi revenir à un foyer : réponses tâche par tâche, réglages,
      tâches ajoutées, totaux calculés. Côté n8n, les exécutions ne sont pas conservées, donc l'adresse IP de la
-     requête non plus. L'acceptation est gardée six mois dans le navigateur. */
+     requête non plus.
+     Turnstile (24/09/2026) : « Accepter et voir le compte » attend le jeton anti-robot, qui part avec la copie ;
+     n8n le vérifie auprès de Cloudflare avant d'écrire quoi que ce soit. Un jeton ne sert qu'une fois, d'où la
+     modale une fois par onglet (au lieu d'un accord gardé six mois) : chaque compte envoyé a le sien. Si le script
+     Cloudflare ne se charge pas (bloqueur, réseau filtré), le compte s'affiche quand même mais rien n'est envoyé :
+     un humain n'est jamais privé de son résultat, et un envoi sans jeton serait de toute façon refusé. */
   const etude = (function () {
-    const CLE = "consent-etude", SIX_MOIS = 1000 * 60 * 60 * 24 * 182;
-    let envoye = false;
-    function choix() { try { const v = JSON.parse(localStorage.getItem(CLE) || "null"); return v && Date.now() - v.t < SIX_MOIS ? v.ok : null; } catch (e) { return null; } }
-    function ecrire(ok) { try { localStorage.setItem(CLE, JSON.stringify({ ok, t: Date.now() })); } catch (e) {} }
+    let envoye = false, passe = false, jetonTs = null, widget = null;
     function jeton() {
       const neuf = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
       try { let v = sessionStorage.getItem("etude-sid"); if (!v) { v = neuf(); sessionStorage.setItem("etude-sid", v); } return v; } catch (e) { return neuf(); }
     }
     function envoyer() {
-      if (envoye || !ETUDE_URL) return;
+      if (envoye || !ETUDE_URL || !jetonTs) return;
       envoye = true;
       const r = compute(), champs = encode().split("~");   // 5 = réponses, 6 = réglages ; les prénoms (1 et 2) ne sont pas repris
       const pct = (x, y) => (x + y) ? String(Math.round(100 * x / (x + y))) : "";
@@ -1089,27 +1114,54 @@
         faites_a: r.a.nFait, faites_b: r.b.nFait, tete_a: r.a.nPense, tete_b: r.b.nPense, part_tete_a: pct(r.a.nPense, r.b.nPense),
         reponses: champs[5] || "", reglages: champs[6] || "",
         ajouts: S.custom.map(c => c.nom).join(" | ").slice(0, 600),
-        page: location.origin + location.pathname, source: new URLSearchParams(location.search).get("utm_source") || ""
+        page: location.origin + location.pathname, source: new URLSearchParams(location.search).get("utm_source") || "",
+        "cf-turnstile-response": jetonTs
       });
+      jetonTs = null;   // un jeton ne sert qu'une fois
       try { fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true }).catch(() => {}); } catch (e) {}
     }
+    const m = document.getElementById("etude"), oui = document.getElementById("etude-oui"), etat = document.getElementById("etude-etat");
+    let ouverture = 0;
+    function pret(ok, message) { oui.disabled = !ok; etat.textContent = message || ""; }
+    function panne(raison) {
+      // Cloudflare injoignable : on laisse voir le compte, sans rien envoyer.
+      jetonTs = null; pret(true, "La vérification anti-robot n'a pas pu se charger. Votre compte s'affiche quand même, sans être ajouté à l'étude.");
+      if (window.__ga) gtag("event", "turnstile_erreur", { raison });
+    }
+    function verifier() {
+      if (widget !== null) return;
+      pret(false, "Vérification anti-robot en cours…");
+      const essai = ++ouverture, delai = setTimeout(() => { if (essai === ouverture && !jetonTs && oui.disabled) panne("delai"); }, 12000);
+      avecTurnstile(err => {
+        if (err) { clearTimeout(delai); return panne("chargement"); }
+        if (widget !== null) return;
+        widget = window.turnstile.render("#cf-etude", {
+          sitekey: TURNSTILE_SITEKEY, action: "etude", language: "fr", theme: "light", size: "flexible",
+          callback: t => { clearTimeout(delai); jetonTs = t; pret(true); },
+          "expired-callback": () => { jetonTs = null; pret(false, "Vérification expirée, elle se relance…"); },
+          "error-callback": () => { clearTimeout(delai); panne("widget"); return true; }
+        });
+      });
+    }
     function accepter() {
-      ecrire(true); fermerModale(m); envoyer();
-      if (window.__ga) gtag("event", "etude_acceptee");
+      if (oui.disabled) return;
+      passe = true; fermerModale(m); envoyer();
+      if (window.__ga) gtag("event", "etude_acceptee", { verifie: envoye ? "oui" : "non" });
       show(3);
     }
-    const m = document.getElementById("etude"), oui = document.getElementById("etude-oui");
     oui.addEventListener("click", accepter);
     document.getElementById("etude-retour").addEventListener("click", () => fermerModale(m));
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });   // échap : on referme, on reste sur la liste
-    return { accepte: () => choix() === true, envoyer, demander: () => { ouvrirModale(m, oui); if (window.__ga) gtag("event", "etude_demandee"); } };
+    return {
+      dejaPasse: () => passe,   // accepté dans cet onglet, envoi fait ou impossible : on ne redemande pas
+      demander: () => { ouvrirModale(m, oui); verifier(); if (window.__ga) gtag("event", "etude_demandee"); }
+    };
   })();
   // Trois chemins mènent au compte : le bouton de bas de liste, la barre de suivi, le palier « l'essentiel est fait ».
   function voirCompte(e) {
     const id = e && e.currentTarget && e.currentTarget.id;
     if (window.__ga) gtag("event", "voir_compte_clic", { origine: id === "go3" ? "bas_de_liste" : id === "suiviBtn" ? "barre" : "palier", taches_renseignees: compute().renseignees });
-    if (!etude.accepte()) return etude.demander();   // un ancien « Refuser » gardé en mémoire ne suffit plus : on redemande
-    etude.envoyer();
+    if (!etude.dejaPasse()) return etude.demander();   // une fois par onglet : chaque compte envoyé porte son propre jeton Turnstile
     show(3);
   }
 
@@ -1180,14 +1232,7 @@
     const m = document.getElementById("intention"), form = document.getElementById("intention-form"), ok = document.getElementById("intention-ok");
     let widget = null;
     function turnstile() {
-      // Le script Cloudflare ne se charge qu'à l'ouverture de la modale : personne d'autre ne le télécharge.
-      // Ne pas nommer le conteneur « turnstile » : un id devient une propriété de window et masquerait l'API.
-      const pret = () => window.turnstile && typeof window.turnstile.render === "function";
-      const rendre = () => { if (widget === null && pret()) widget = window.turnstile.render("#cf-widget", { sitekey: TURNSTILE_SITEKEY, language: "fr", theme: "light", size: "flexible" }); };
-      if (pret()) return rendre();
-      if (document.getElementById("cf-turnstile")) return;
-      const sc = document.createElement("script"); sc.id = "cf-turnstile"; sc.async = true; sc.defer = true;
-      sc.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__turnstileReady"; window.__turnstileReady = rendre; document.head.appendChild(sc);
+      avecTurnstile(err => { if (!err && widget === null) widget = window.turnstile.render("#cf-widget", { sitekey: TURNSTILE_SITEKEY, language: "fr", theme: "light", size: "flexible" }); });
     }
     const ouvrir = () => { m.hidden = false; document.body.classList.add("modale-ouverte"); form.querySelector("input").focus(); turnstile(); if (window.__ga) gtag("event", "intention_ouverte"); };
     const fermer = () => { m.hidden = true; document.body.classList.remove("modale-ouverte"); };
