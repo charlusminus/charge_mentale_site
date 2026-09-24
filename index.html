@@ -273,6 +273,8 @@
      à la liste) ; sur mobile les deux colonnes sont masquées, les choix passent sous le libellé */
   .affiner select.qui { max-width: 9.5rem; }
   .affiner tr.qui-ligne { display: none; }
+  /* description de la tâche : visible sur ordinateur, derrière un (i) sur mobile (retour Charles 24/09 : illisible) */
+  .affiner .info { display: none; }
   .affiner tr.pas-nous input, .affiner tr.pas-nous select[data-k="p"], .affiner tr.pas-nous .hj { opacity: .45; }
   .avert-5050 { margin-top: 1rem; padding: .9rem 1rem; background: var(--bg-2); border-left: 3px solid var(--b); border-radius: 0 var(--r) var(--r) 0; font-size: .92rem; }
   .avert-5050 strong { display: block; margin-bottom: .15rem; }
@@ -389,7 +391,15 @@
     .affiner input { width: 2.9rem; }
     .affiner select[data-k="p"] { max-width: 4.6rem; padding-right: 0; }
     .affiner .eq { margin-right: .15rem; }
-    .affiner tr.tache-l td:first-child { hyphens: auto; overflow-wrap: anywhere; }
+    .affiner tr.tache-l td:first-child { hyphens: auto; position: relative; }
+    .affiner tr.tache-l td .aide { display: none; }
+    .affiner .info { display: inline-grid; place-items: center; width: 1.15rem; height: 1.15rem; margin-left: .3rem; padding: 0;
+      border: 1px solid var(--muted); border-radius: 50%; background: none; color: var(--muted); cursor: pointer;
+      font: italic 600 .72rem/1 var(--serif); vertical-align: .1em; }
+    .affiner .info[aria-expanded="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+    .affiner tr.tache-l td.info-ouverte .aide { display: block; position: absolute; left: .15rem; top: calc(100% - .2rem); z-index: 5;
+      width: min(15rem, 80vw); margin: 0; padding: .55rem .7rem; border-radius: 8px; background: var(--ink); color: var(--bg);
+      font-size: .8rem; line-height: 1.35; box-shadow: 0 6px 18px rgba(42, 33, 24, .18); }
     .affiner tr.qui-ligne { display: table-row; }
     .affiner tr.tache-l td { border-bottom: 0; padding-bottom: .15rem; }
     .affiner tr.qui-ligne td { padding-top: 0; }
@@ -922,6 +932,13 @@
     L.textContent = txt;
   }
 
+  // Une seule bulle (i) ouverte à la fois ; un clic ailleurs ou Échap la referme.
+  function fermerInfos() {
+    document.querySelectorAll(".affiner .info-ouverte").forEach(td => { td.classList.remove("info-ouverte"); td.querySelector(".info").setAttribute("aria-expanded", "false"); });
+  }
+  document.addEventListener("click", e => { if (!e.target.closest(".affiner .info")) fermerInfos(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") fermerInfos(); });
+
   function renderAffiner() {
     const tb = document.getElementById("table-affiner");
     // Toutes les tâches répondues, « pas nous » compris : on y corrige qui y pense, et on peut la réattribuer.
@@ -939,7 +956,7 @@
         const pCell = t.mental ? `<span class="muted small" title="Pour cette tâche, s'en occuper, c'est y penser">idem</span>` : `<i class="pastille ${pv}" data-p="pense"></i>${choix(pv, "pense", "")}`;
         // Sur mobile, les deux colonnes sont masquées : les mêmes choix passent sur une ligne pleine largeur sous la tâche.
         const mob = `<tr class="qui-ligne" data-ligne="${t.id}"><td colspan="7"><span class="qui-mobile"><label>s'en occupe ${choix(st.fait, "fait", "")}</label>${pMob}</span></td></tr>`;
-        html += `<tr data-id="${t.id}" class="tache-l${st.fait === "other" ? " pas-nous" : ""}"><td title="${(t.aide || "").replace(/"/g, "&quot;")}"><span class="nom">${t.nom}</span>${t.aide ? `<span class="aide">${t.aide}</span>` : ""}</td>
+        html += `<tr data-id="${t.id}" class="tache-l${st.fait === "other" ? " pas-nous" : ""}"><td title="${(t.aide || "").replace(/"/g, "&quot;")}"><span class="nom">${t.nom}</span>${t.aide ? `<button type="button" class="info" aria-expanded="false" aria-label="Ce que recouvre la tâche">i</button><span class="aide">${t.aide}</span>` : ""}</td>
           <td class="cache qui-cell"><i class="pastille ${st.fait}" data-p="fait"></i>${choix(st.fait, "fait", "")}</td>
           <td class="cache qui-cell">${pCell}</td>
           <td><input type="number" min="0" step="1" value="${st.n}" data-k="n" aria-label="Nombre de fois"></td>
@@ -949,6 +966,12 @@
       }
     }
     tb.innerHTML = html;
+    tb.querySelectorAll(".info").forEach(b => b.addEventListener("click", e => {
+      e.stopPropagation();
+      const td = b.closest("td"), ouvrir = !td.classList.contains("info-ouverte");
+      fermerInfos();
+      if (ouvrir) { td.classList.add("info-ouverte"); b.setAttribute("aria-expanded", "true"); }
+    }));
     tb.querySelectorAll("tr[data-id]").forEach(tr => {
       const st = S.t[tr.dataset.id], sous = tr.nextElementSibling;
       const champs = [...tr.querySelectorAll("input, select"), ...sous.querySelectorAll("select")];
