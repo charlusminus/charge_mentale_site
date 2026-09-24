@@ -46,7 +46,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260924d">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260924e">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -269,6 +269,11 @@
   .affiner .eq { color: var(--muted); margin-right: .35rem; font-weight: 600; }
   .affiner td .aide { display: block; font-size: .78rem; color: var(--muted); line-height: 1.25; margin-top: .1rem; }
   .affiner .qui-cell { white-space: nowrap; }
+  /* qui s'en occupe et qui y pense, modifiables ici (retour Charles 24/09 : tout se corrige sur le compte, sans revenir
+     à la liste) ; sur mobile les deux colonnes sont masquées, les choix passent sous le libellé */
+  .affiner select.qui { max-width: 9.5rem; }
+  .affiner tr.qui-ligne { display: none; }
+  .affiner tr.pas-nous input, .affiner tr.pas-nous select[data-k="p"], .affiner tr.pas-nous .hj { opacity: .45; }
   .avert-5050 { margin-top: 1rem; padding: .9rem 1rem; background: var(--bg-2); border-left: 3px solid var(--b); border-radius: 0 var(--r) var(--r) 0; font-size: .92rem; }
   .avert-5050 strong { display: block; margin-bottom: .15rem; }
   .avert-5050 a { color: var(--a); text-decoration: underline; text-underline-offset: 3px; }
@@ -380,6 +385,12 @@
     .barre > span:first-child { grid-column: 1 / -1; }
     .legende dl { grid-template-columns: 1fr; }
     .affiner .cache { display: none; }
+    .affiner tr.qui-ligne { display: table-row; }
+    .affiner tr.tache-l td { border-bottom: 0; padding-bottom: .15rem; }
+    .affiner tr.qui-ligne td { padding-top: 0; }
+    .affiner .qui-mobile { display: flex; flex-wrap: wrap; gap: .3rem .9rem; font-size: .78rem; color: var(--muted); }
+    .affiner .qui-mobile label { display: inline-flex; align-items: center; gap: .3rem; }
+    .affiner .qui-mobile select { font-size: .8rem; padding: .15rem .3rem; color: var(--ink); }
     .affiner { overflow-x: auto; }   /* sous 380 px le tableau déborde légèrement : il défile dans son cadre, pas la page */
     .affiner table { font-size: .85rem; }
     .affiner th { font-size: .72rem; padding: .4rem .15rem; }
@@ -529,8 +540,8 @@
       <div class="parcat" id="parcat"></div>
       <div class="lecture" id="lecture"></div>
       <div class="affiner">
-        <h2>Affinez le temps</h2>
-        <p class="muted">Les valeurs proposées viennent d'enquêtes sur le temps domestique. Pour chaque tâche : combien de fois par jour, semaine, mois ou an, et combien de minutes à chaque fois (pas au total). Le total par jour se recalcule tout seul. Exemple : les courses 2 fois par semaine, 90 minutes à chaque fois, font 26 minutes par jour.</p>
+        <h2>Affinez le compte</h2>
+        <p class="muted">Tout se corrige ici, sans revenir à la liste : qui s'en occupe, qui y pense, et le temps. Les valeurs proposées viennent d'enquêtes sur le temps domestique. Pour chaque tâche : combien de fois par jour, semaine, mois ou an, et combien de minutes à chaque fois (pas au total). Le total par jour se recalcule tout seul. Exemple : les courses 2 fois par semaine, 90 minutes à chaque fois, font 26 minutes par jour.</p>
         <p class="avert-5050"><strong>Un mot avant de compter à la minute.</strong> Chercher l'équilibre exact ligne par ligne épuise les couples autant que le déséquilibre lui-même. Un écart n'est pas un problème tant qu'il est choisi, dit et réversible : <a href="blog/desequilibre-assume-couple.html?utm_source=quiypense&amp;utm_medium=compte&amp;utm_campaign=affiner" target="_blank" rel="noopener">un déséquilibre choisi n'est pas une injustice</a>.</p>
         <table id="table-affiner"></table>
       </div>
@@ -647,7 +658,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260924d"></script>
+<script src="catalogue.js?v=20260924e"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -908,26 +919,48 @@
 
   function renderAffiner() {
     const tb = document.getElementById("table-affiner");
-    let html = `<tr><th>Tâche</th><th class="cache">S'en occupe</th><th>Combien de fois</th><th>par</th><th>Minutes à chaque fois</th><th class="hj">= par jour</th></tr>`;
+    // Toutes les tâches répondues, « pas nous » compris : on y corrige qui y pense, et on peut la réattribuer.
+    // Le temps d'une tâche « pas nous » ne compte pour personne, ses champs sont atténués mais restent saisissables.
+    let html = `<tr><th>Tâche</th><th class="cache">S'en occupe</th><th class="cache">Y pense</th><th>Combien de fois</th><th>par</th><th>Minutes à chaque fois</th><th class="hj">= par jour</th></tr>`;
+    const choix = (v, k, cls, id) => `<select class="qui ${cls}" data-k="${k}"${id ? ` id="${id}"` : ""} aria-label="${k === "fait" ? "Qui s'en occupe" : "Qui y pense"}">${WHO.map(w => `<option value="${w}" ${w === v ? "selected" : ""}>${label(w)}</option>`).join("")}</select>`;
     for (const cat of visibleCats()) {
-      const rows = visibleTasks(cat).filter(t => S.t[t.id].fait && S.t[t.id].fait !== "other");
+      const rows = visibleTasks(cat).filter(t => S.t[t.id].fait);
       if (!rows.length) continue;
-      html += `<tr class="cat"><td colspan="6">${cat.nom}</td></tr>`;
+      html += `<tr class="cat"><td colspan="7">${cat.nom}</td></tr>`;
       for (const t of rows) {
-        const st = S.t[t.id];
-        html += `<tr data-id="${t.id}"><td title="${(t.aide || "").replace(/"/g, "&quot;")}"><span class="nom">${t.nom}</span>${t.aide ? `<span class="aide">${t.aide}</span>` : ""}</td><td class="cache qui-cell"><i class="pastille ${st.fait}"></i>${label(st.fait)}</td>
+        const st = S.t[t.id], pv = penseOf(st, t);
+        // Tâche « de tête » (t.mental) : s'en occuper, c'est y penser, pas de second choix.
+        const pMob = t.mental ? "" : `<label>y pense ${choix(pv, "pense", "")}</label>`;
+        const pCell = t.mental ? `<span class="muted small" title="Pour cette tâche, s'en occuper, c'est y penser">idem</span>` : `<i class="pastille ${pv}" data-p="pense"></i>${choix(pv, "pense", "")}`;
+        // Sur mobile, les deux colonnes sont masquées : les mêmes choix passent sur une ligne pleine largeur sous la tâche.
+        const mob = `<tr class="qui-ligne" data-ligne="${t.id}"><td colspan="7"><span class="qui-mobile"><label>s'en occupe ${choix(st.fait, "fait", "")}</label>${pMob}</span></td></tr>`;
+        html += `<tr data-id="${t.id}" class="tache-l${st.fait === "other" ? " pas-nous" : ""}"><td title="${(t.aide || "").replace(/"/g, "&quot;")}"><span class="nom">${t.nom}</span>${t.aide ? `<span class="aide">${t.aide}</span>` : ""}</td>
+          <td class="cache qui-cell"><i class="pastille ${st.fait}" data-p="fait"></i>${choix(st.fait, "fait", "")}</td>
+          <td class="cache qui-cell">${pCell}</td>
           <td><input type="number" min="0" step="1" value="${st.n}" data-k="n" aria-label="Nombre de fois"></td>
           <td><select data-k="p" aria-label="Période">${Object.keys(J).map(p => `<option value="${p}" ${p === st.p ? "selected" : ""}>${p}</option>`).join("")}</select></td>
           <td><input type="number" min="0" step="5" value="${st.d}" data-k="d" aria-label="Minutes"></td>
-          <td class="hj"><span class="eq">=</span>${hm(hj(st))}</td></tr>`;
+          <td class="hj"><span class="eq">=</span>${hm(hj(st))}</td></tr>${mob}`;
       }
     }
     tb.innerHTML = html;
     tb.querySelectorAll("tr[data-id]").forEach(tr => {
-      const st = S.t[tr.dataset.id];
-      tr.querySelectorAll("input, select").forEach(inp => inp.addEventListener("input", () => {
-        st[inp.dataset.k] = inp.dataset.k === "p" ? inp.value : (+inp.value || 0);
-        tr.querySelector(".hj").textContent = hm(hj(st));
+      const st = S.t[tr.dataset.id], sous = tr.nextElementSibling;
+      const champs = [...tr.querySelectorAll("input, select"), ...sous.querySelectorAll("select")];
+      champs.forEach(inp => inp.addEventListener("input", () => {
+        const k = inp.dataset.k, qui = k === "fait" || k === "pense";
+        st[k] = k === "p" || qui ? inp.value : (+inp.value || 0);
+        if (qui) {   // les sélecteurs bureau et mobile de la même donnée, et sa pastille, suivent
+          const peindre = (kk, v) => {
+            champs.filter(x => x.dataset.k === kk).forEach(x => { x.value = v; });
+            const pa = tr.querySelector(`.pastille[data-p="${kk}"]`); if (pa) pa.className = "pastille " + v;
+          };
+          peindre(k, inp.value);
+          if (k === "fait" && st.pense === null) peindre("pense", inp.value);   // comme à l'écran 2 : « y pense » suit tant qu'il n'a pas été choisi
+          tr.classList.toggle("pas-nous", st.fait === "other");
+          if (window.__ga) gtag("event", "compte_modifie", { champ: k });
+        }
+        tr.querySelector(".hj").innerHTML = `<span class="eq">=</span>${hm(hj(st))}`;
         update();
       }));
     });
