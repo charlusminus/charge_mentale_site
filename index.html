@@ -271,7 +271,13 @@
   .affiner .qui-cell { white-space: nowrap; }
   /* qui s'en occupe et qui y pense, modifiables ici (retour Charles 24/09 : tout se corrige sur le compte, sans revenir
      à la liste) ; sur mobile les deux colonnes sont masquées, les choix passent sous le libellé */
-  .affiner select.qui { max-width: 9.5rem; }
+  .affiner select.qui { max-width: 9.5rem; font-weight: 600; }
+  /* couleur de la personne choisie, comme partout ailleurs : A vert, B terracotta, les deux encre, pas nous gris */
+  .affiner select.qui.v-a { color: var(--a); border-color: var(--a); }
+  .affiner select.qui.v-b { color: var(--b); border-color: var(--b); }
+  .affiner select.qui.v-both { color: var(--ink); border-color: var(--ink); }
+  .affiner select.qui.v-other { color: var(--muted); font-weight: 400; }
+  .affiner select.qui option { color: var(--ink); font-weight: 400; }
   .affiner tr.qui-ligne { display: none; }
   /* description de la tâche : visible sur ordinateur, derrière un (i) sur mobile (retour Charles 24/09 : illisible) */
   .affiner .info { display: none; }
@@ -944,7 +950,7 @@
     // Toutes les tâches répondues, « pas nous » compris : on y corrige qui y pense, et on peut la réattribuer.
     // Le temps d'une tâche « pas nous » ne compte pour personne, ses champs sont atténués mais restent saisissables.
     let html = `<tr><th>Tâche</th><th class="cache">S'en occupe</th><th class="cache">Y pense</th><th>Combien de fois</th><th>par</th><th>Minutes à chaque fois</th><th class="hj">= par jour</th></tr>`;
-    const choix = (v, k, cls, id) => `<select class="qui ${cls}" data-k="${k}"${id ? ` id="${id}"` : ""} aria-label="${k === "fait" ? "Qui s'en occupe" : "Qui y pense"}">${WHO.map(w => `<option value="${w}" ${w === v ? "selected" : ""}>${label(w)}</option>`).join("")}</select>`;
+    const choix = (v, k, cls, id) => `<select class="qui v-${v} ${cls}" data-k="${k}"${id ? ` id="${id}"` : ""} aria-label="${k === "fait" ? "Qui s'en occupe" : "Qui y pense"}">${WHO.map(w => `<option value="${w}" ${w === v ? "selected" : ""}>${label(w)}</option>`).join("")}</select>`;
     for (const cat of visibleCats()) {
       const rows = visibleTasks(cat).filter(t => S.t[t.id].fait);
       if (!rows.length) continue;
@@ -980,7 +986,7 @@
         st[k] = k === "p" || qui ? inp.value : (+inp.value || 0);
         if (qui) {   // les sélecteurs bureau et mobile de la même donnée, et sa pastille, suivent
           const peindre = (kk, v) => {
-            champs.filter(x => x.dataset.k === kk).forEach(x => { x.value = v; });
+            champs.filter(x => x.dataset.k === kk).forEach(x => { x.value = v; x.classList.remove("v-a", "v-b", "v-both", "v-other"); x.classList.add("v-" + v); });
             const pa = tr.querySelector(`.pastille[data-p="${kk}"]`); if (pa) pa.className = "pastille " + v;
           };
           peindre(k, inp.value);
