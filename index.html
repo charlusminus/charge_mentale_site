@@ -377,7 +377,8 @@
   .visuel input:checked ~ span { font-weight: 600; }
   .lien-discret { background: none; border: 0; padding: 0; margin-top: .7rem; font: inherit; font-size: .9rem; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
   .partage-boite .rs { margin-top: .2rem; }
-  .partage-note { margin-top: .9rem; }
+  .partage-note { margin: 1rem 0 0; padding: .8rem 1rem; background: var(--bg-2); border-radius: var(--r); font-size: .95rem; }
+  .partage-note a { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
   .partage-note:empty { display: none; }
   /* modales Ko-fi et sortie */
   .kofi-cadre { min-height: 200px; margin-top: .8rem; }
@@ -670,7 +671,7 @@
       <legend>Où le partager</legend>
       <div class="rs" id="partage-canaux"></div>
     </fieldset>
-    <p class="small muted partage-note" id="partage-note" aria-live="polite"></p>
+    <p class="partage-note" id="partage-note" aria-live="polite"></p>
   </div>
 </div>
 
@@ -1486,24 +1487,50 @@
       a.href = url; a.download = "qui-y-pense.png"; document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 2000);
     }
+    // Sur ordinateur, aucune plateforme ne reçoit une image par lien. L'image part donc dans le presse-papiers : la
+    // plateforme s'ouvre avec le texte et le lien, il reste à coller (WhatsApp, Facebook, LinkedIn et X acceptent
+    // une image collée). Si la copie échoue (navigateur ancien, permission refusée), l'image se télécharge.
     const CANAUX = [
-      ["instagram", "Instagram", null, "Image téléchargée. Instagram ne publie que depuis l'application : envoyez-la sur votre téléphone, publiez-la en story et ajoutez le sticker « Lien » vers quiypense.org."],
-      ["whatsapp", "WhatsApp", c => `https://wa.me/?text=${encodeURIComponent(TEXTE + lien(c))}`, "Image téléchargée : ajoutez-la dans la conversation WhatsApp qui vient de s'ouvrir."],
-      ["facebook", "Facebook", c => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(lien(c))}`, "Image téléchargée : ajoutez-la à la publication Facebook qui vient de s'ouvrir."],
-      ["linkedin", "LinkedIn", c => `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(TEXTE + lien(c))}`, "Image téléchargée : ajoutez-la au post LinkedIn qui vient de s'ouvrir."],
-      ["x", "X", c => `https://twitter.com/intent/tweet?text=${encodeURIComponent(TEXTE)}&url=${encodeURIComponent(lien(c))}`, "Image téléchargée : ajoutez-la au message qui vient de s'ouvrir."],
-      ["telecharger", "Télécharger", null, "Image téléchargée."]
+      ["instagram", "Instagram", null, "la story"],
+      ["whatsapp", "WhatsApp", c => `https://wa.me/?text=${encodeURIComponent(TEXTE + lien(c))}`, "la conversation WhatsApp"],
+      ["facebook", "Facebook", c => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(lien(c))}`, "la publication Facebook"],
+      ["linkedin", "LinkedIn", c => `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(TEXTE + lien(c))}`, "le post LinkedIn"],
+      ["x", "X", c => `https://twitter.com/intent/tweet?text=${encodeURIComponent(TEXTE)}&url=${encodeURIComponent(lien(c))}`, "le message X"],
+      ["telecharger", "Télécharger", null, ""]
     ];
+    const COLLER = /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘ + V" : "Ctrl + V";
+    async function copierImage() {
+      try { await navigator.clipboard.write([new ClipboardItem({ "image/png": blobs[visuel()] })]); return true; } catch (e) { return false; }
+    }
+    // La note porte toujours un lien vers la plateforme : si le navigateur a bloqué l'ouverture, un clic suffit.
+    function noter(txt, c, nom, adresse) {
+      note.textContent = txt;
+      if (adresse) { const a = document.createElement("a"); a.href = adresse; a.target = "_blank"; a.rel = "noopener"; a.textContent = `Ouvrir ${nom}`; note.append(" ", a, "."); }
+    }
     const boite = document.getElementById("partage-canaux");
     boite.innerHTML = CANAUX.map(([c, nom]) => `<button type="button" data-canal="${c}"><svg aria-hidden="true"><use href="#i-${c}"/></svg>${nom}</button>`).join("");
-    boite.addEventListener("click", e => {
+    boite.addEventListener("click", async e => {
       const btn = e.target.closest("button"); if (!btn || !blobs[visuel()]) return;
-      const [c, , url, message] = CANAUX.find(x => x[0] === btn.dataset.canal);
-      if (window.__ga) gtag("event", "partage", { canal: c, campagne: "image", visuel: visuel() });
+      const [c, nom, url, ou] = CANAUX.find(x => x[0] === btn.dataset.canal);
       note.textContent = "";
-      if (natif && c !== "telecharger") { navigator.share({ files: [fichier()], text: TEXTE + lien(c) }).catch(() => {}); return; }
-      telecharger(); note.textContent = message;   // le téléchargement d'abord : une fois l'onglet ouvert, la page perd le focus et Chrome bloque le fichier
-      if (url) window.open(url(c), "_blank", "noopener");
+      if (natif && c !== "telecharger") {
+        if (window.__ga) gtag("event", "partage", { canal: c, campagne: "image", visuel: visuel(), mode: "natif" });
+        navigator.share({ files: [fichier()], text: TEXTE + lien(c) }).catch(() => {}); return;
+      }
+      if (c === "telecharger" || c === "instagram") {
+        telecharger();
+        noter(c === "instagram" ? "Image téléchargée. Instagram ne publie une story que depuis l'application : envoyez l'image sur votre téléphone, publiez-la en story et ajoutez le sticker « Lien » vers quiypense.org." : "Image téléchargée.");
+        if (window.__ga) gtag("event", "partage", { canal: c, campagne: "image", visuel: visuel(), mode: "telechargement" });
+        return;
+      }
+      // copie d'abord, tant que la page a le focus ; l'onglet de la plateforme s'ouvre ensuite
+      const copie = await copierImage();
+      if (!copie) telecharger();
+      const adresse = url(c), w = window.open(adresse, "_blank");
+      if (w) w.opener = null;
+      noter(copie ? `Image copiée. Dans ${ou} qui vient de s'ouvrir, collez-la (${COLLER}) avant d'envoyer.`
+                  : `Image téléchargée : ajoutez-la dans ${ou} qui vient de s'ouvrir.`, c, nom, adresse);
+      if (window.__ga) gtag("event", "partage", { canal: c, campagne: "image", visuel: visuel(), mode: copie ? "presse_papiers" : "telechargement" });
     });
     async function ouvrir() {
       try { await Promise.all([serif(80), sans(36), sans(36, 500), sans(46, 600)].map(f => document.fonts.load(f))); } catch (e) {}
