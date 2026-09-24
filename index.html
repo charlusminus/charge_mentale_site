@@ -46,7 +46,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=20260924a">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260924b">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -647,7 +647,7 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 
-<script src="catalogue.js?v=20260924a"></script>
+<script src="catalogue.js?v=20260924b"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -667,7 +667,7 @@
   window.__pageEtape = pageEtape;
   const SITE = "https://quiypense.org/";
   const INTENTIONS_URL = "https://charlusminus.app.n8n.cloud/webhook/quiypense-intentions";   // workflow n8n « Qui y pense, Intentions », cf n8n/README.md
-  const ETUDE_URL = "https://charlusminus.app.n8n.cloud/webhook/quiypense-etude";   // workflow n8n « Qui y pense, Étude », cf n8n/README.md
+  const ETUDE_URL = "https://script.google.com/macros/s/AKfycbxt9lW4rnzDCCOVihBaE4jjRzdarc7Eeb3dC-jsJgiMnBTWcMkt6hGotCkiBWZvMqH6/exec";   // Apps Script lié à la feuille de l'étude, cf apps-script/README.md
   const TURNSTILE_SITEKEY = "0x4AAAAAAE-qa9jJxGWCyc5B";   // clé publique Cloudflare Turnstile (la secrète vit dans n8n)
   const WHO = ["a", "b", "both", "other"];   // « other » = pas nous : quelqu'un d'autre s'en occupe, ou la tâche n'existe pas chez eux
   const FAMILLES_ENFANTS = new Set(["enfants-quotidien", "enfants-suivi"]);
@@ -1145,7 +1145,7 @@
       const r = compute(), champs = encode().split("~");   // 5 = réponses, 6 = réglages ; les prénoms (1 et 2) ne sont pas repris
       const pct = (x, y) => (x + y) ? String(Math.round(100 * x / (x + y))) : "";
       const data = new URLSearchParams({
-        sid: jeton(), date: new Date().toISOString(), catalogue: C.version || "", format: champs[0],
+        session: jeton(), date: new Date().toISOString(), catalogue: C.version || "", format: champs[0],
         enfants: S.enfants, animaux: S.animaux ? 1 : 0, genre_a: S.genreA, genre_b: S.genreB, saisie: (() => { try { return sessionStorage.getItem("saisie") || ""; } catch (e) { return ""; } })(),
         taches_total: r.total, taches_renseignees: r.renseignees,
         heures_a: r.a.h.toFixed(3), heures_b: r.b.h.toFixed(3), part_temps_a: pct(r.a.h, r.b.h),
@@ -1156,7 +1156,8 @@
         "cf-turnstile-response": jetonTs
       });
       jetonTs = null;   // un jeton ne sert qu'une fois
-      try { fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true }).catch(() => {}); } catch (e) {}
+      // no-cors : Apps Script répond par une redirection sans en-tête CORS ; la réponse opaque suffit.
+      try { fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true, mode: "no-cors" }).catch(() => {}); } catch (e) {}
     }
     const m = document.getElementById("etude"), oui = document.getElementById("etude-oui"), etat = document.getElementById("etude-etat");
     let ouverture = 0;
