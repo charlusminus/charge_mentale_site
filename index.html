@@ -959,11 +959,11 @@
         const st = S.t[t.id], pv = penseOf(st, t);
         // Tâche « de tête » (t.mental) : s'en occuper, c'est y penser, pas de second choix.
         const pMob = t.mental ? "" : `<label>y pense ${choix(pv, "pense", "")}</label>`;
-        const pCell = t.mental ? `<span class="muted small" title="Pour cette tâche, s'en occuper, c'est y penser">idem</span>` : `<i class="pastille ${pv}" data-p="pense"></i>${choix(pv, "pense", "")}`;
+        const pCell = t.mental ? `<span class="muted small" title="Pour cette tâche, s'en occuper, c'est y penser">idem</span>` : choix(pv, "pense", "");
         // Sur mobile, les deux colonnes sont masquées : les mêmes choix passent sur une ligne pleine largeur sous la tâche.
         const mob = `<tr class="qui-ligne" data-ligne="${t.id}"><td colspan="7"><span class="qui-mobile"><label>s'en occupe ${choix(st.fait, "fait", "")}</label>${pMob}</span></td></tr>`;
         html += `<tr data-id="${t.id}" class="tache-l${st.fait === "other" ? " pas-nous" : ""}"><td title="${(t.aide || "").replace(/"/g, "&quot;")}"><span class="nom">${t.nom}</span>${t.aide ? `<button type="button" class="info" aria-expanded="false" aria-label="Ce que recouvre la tâche">i</button><span class="aide">${t.aide}</span>` : ""}</td>
-          <td class="cache qui-cell"><i class="pastille ${st.fait}" data-p="fait"></i>${choix(st.fait, "fait", "")}</td>
+          <td class="cache qui-cell">${choix(st.fait, "fait", "")}</td>
           <td class="cache qui-cell">${pCell}</td>
           <td><input type="number" min="0" step="1" value="${st.n}" data-k="n" aria-label="Nombre de fois"></td>
           <td><select data-k="p" aria-label="Période">${Object.keys(J).map(p => `<option value="${p}" ${p === st.p ? "selected" : ""}>${p}</option>`).join("")}</select></td>
@@ -984,10 +984,9 @@
       champs.forEach(inp => inp.addEventListener("input", () => {
         const k = inp.dataset.k, qui = k === "fait" || k === "pense";
         st[k] = k === "p" || qui ? inp.value : (+inp.value || 0);
-        if (qui) {   // les sélecteurs bureau et mobile de la même donnée, et sa pastille, suivent
+        if (qui) {   // les sélecteurs bureau et mobile de la même donnée suivent, couleur comprise
           const peindre = (kk, v) => {
             champs.filter(x => x.dataset.k === kk).forEach(x => { x.value = v; x.classList.remove("v-a", "v-b", "v-both", "v-other"); x.classList.add("v-" + v); });
-            const pa = tr.querySelector(`.pastille[data-p="${kk}"]`); if (pa) pa.className = "pastille " + v;
           };
           peindre(k, inp.value);
           if (k === "fait" && st.pense === null) peindre("pense", inp.value);   // comme à l'écran 2 : « y pense » suit tant qu'il n'a pas été choisi
