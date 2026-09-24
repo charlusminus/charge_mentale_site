@@ -360,6 +360,25 @@
   .connaitre { margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1.5px solid var(--ink); }
   .connaitre h2 { margin-bottom: .3rem; }
   .garde-note { margin: .8rem 0 0; }
+  /* bandeau de partage, en bas de l'écran du compte : même vocabulaire que la barre de suivi de l'étape 2 */
+  .barre-partage .texte { font-family: var(--serif); font-weight: 600; font-size: 1.05rem; font-variation-settings: "opsz" 40; line-height: 1.25; }
+  @media (max-width: 420px) { .barre-partage .texte { font-size: .95rem; } }
+  /* modale de partage : choix du visuel (deux aperçus du canvas 1080 x 1920) puis de la plateforme */
+  .partage-boite { max-width: 640px; }
+  .partage-boite fieldset { margin-top: 1.2rem; }
+  .visuels { display: grid; grid-template-columns: repeat(2, minmax(0, 180px)); gap: 20px; }
+  .modale .visuel { position: relative; display: block; cursor: pointer; padding: 0; }
+  .visuel input { position: absolute; opacity: 0; pointer-events: none; }
+  .visuel canvas { display: block; width: 100%; height: auto; border-radius: var(--r); box-shadow: 0 0 0 1.5px var(--line); }
+  .visuel input:checked + canvas { box-shadow: 0 0 0 3px var(--ink); }
+  .visuel input:focus-visible + canvas { outline: 2px solid var(--a); outline-offset: 5px; }
+  .visuel input:disabled + canvas { opacity: .35; }
+  .visuel span { display: block; margin-top: .5rem; font-size: .92rem; }
+  .visuel input:checked ~ span { font-weight: 600; }
+  .lien-discret { background: none; border: 0; padding: 0; margin-top: .7rem; font: inherit; font-size: .9rem; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .partage-boite .rs { margin-top: .2rem; }
+  .partage-note { margin-top: .9rem; }
+  .partage-note:empty { display: none; }
   /* modales Ko-fi et sortie */
   .kofi-cadre { min-height: 200px; margin-top: .8rem; }
   .kofi-cadre iframe { display: block; width: 100%; height: 712px; border: 0; border-radius: var(--r); background: var(--paper); }
@@ -447,6 +466,8 @@
   <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></symbol>
   <symbol id="i-mail" viewBox="0 0 24 24"><path d="M2 4h20a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm1 2.8V18h18V6.8l-9 6.3-9-6.3zM4.4 6l7.6 5.3L19.6 6H4.4z"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM17.5 5.3a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></symbol>
+  <symbol id="i-telecharger" viewBox="0 0 24 24"><path d="M11 3h2v9.6l3.3-3.3 1.4 1.4-5.7 5.7-5.7-5.7 1.4-1.4 3.3 3.3V3zM4 18h16v2H4z"/></symbol>
   <symbol id="i-lien" viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4l3.5-3.5a3 3 0 0 1 4.3 4.3l-1.6 1.6a1 1 0 1 1-1.4-1.4l1.6-1.6a1 1 0 0 0-1.5-1.5L12 13.4a1 1 0 0 1-1.4 0zm2.8-2.8a1 1 0 0 1 0 1.4l-3.5 3.5a3 3 0 0 1-4.3-4.3l1.6-1.6a1 1 0 1 1 1.4 1.4l-1.6 1.6a1 1 0 0 0 1.5 1.5L12 10.6a1 1 0 0 1 1.4 0z"/></symbol>
   <symbol id="i-partager" viewBox="0 0 24 24"><path d="M18 16.1a3 3 0 0 0-2 .8l-7.1-4.1a3 3 0 0 0 0-1.6L16 7.1a3 3 0 1 0-1-1.7L7.9 9.5a3 3 0 1 0 0 5l7.1 4.1a3 3 0 1 0 3-2.5z"/></symbol>
 </svg>
@@ -632,6 +653,27 @@
   </div>
 </div>
 
+<div class="modale" id="partage" role="dialog" aria-modal="true" aria-labelledby="partage-titre" hidden>
+  <div class="modale-boite partage-boite">
+    <button class="modale-fermer" type="button" id="partage-fermer" aria-label="Fermer">Fermer</button>
+    <h2 id="partage-titre">Partager Qui y pense ?</h2>
+    <p class="muted">Une image au format story, dessinée dans votre navigateur : rien ne part tant que vous ne la publiez pas.</p>
+    <fieldset>
+      <legend>Le visuel</legend>
+      <div class="visuels">
+        <label class="visuel"><input type="radio" name="visuel" value="resultats" checked><canvas id="visuel-resultats" width="1080" height="1920" role="img" aria-label="Aperçu avec vos prénoms et votre répartition"></canvas><span>Avec nos résultats</span></label>
+        <label class="visuel"><input type="radio" name="visuel" value="generique"><canvas id="visuel-generique" width="1080" height="1920" role="img" aria-label="Aperçu sans vos résultats"></canvas><span>Sans nos résultats</span></label>
+      </div>
+      <button class="lien-discret" type="button" id="partage-phrase">Une autre phrase</button>
+    </fieldset>
+    <fieldset>
+      <legend>Où le partager</legend>
+      <div class="rs" id="partage-canaux"></div>
+    </fieldset>
+    <p class="small muted partage-note" id="partage-note" aria-live="polite"></p>
+  </div>
+</div>
+
 <div class="modale" id="kofi" role="dialog" aria-modal="true" aria-labelledby="kofi-titre" hidden>
   <div class="modale-boite kofi-boite">
     <button class="modale-fermer" type="button" id="kofi-fermer" aria-label="Fermer">Fermer</button>
@@ -684,6 +726,10 @@
 <div class="suivi" id="suivi"><span class="prog"><i id="prog" style="width:0%"></i></span><div>
   <span id="nTaches"></span>
   <button class="btn" id="suiviBtn">Voir le compte</button>
+</div></div>
+<div class="suivi barre-partage" id="barre-partage"><div>
+  <span class="texte">Et chez vos amis, qui y pense&nbsp;?</span>
+  <button class="btn" type="button" id="barre-partager">Partager</button>
 </div></div>
 
 <script src="catalogue.js?v=20260924e"></script>
@@ -813,6 +859,7 @@
     document.querySelectorAll(".ecran").forEach((e, i) => e.classList.toggle("actif", i + 1 === n));
     document.querySelectorAll("#fil span").forEach((s, i) => { s.classList.toggle("on", i + 1 === n); s.classList.toggle("fait", i + 1 < n); if (i + 1 === n) s.setAttribute("aria-current", "step"); else s.removeAttribute("aria-current"); });
     document.getElementById("suivi").classList.toggle("on", n === 2);
+    document.getElementById("barre-partage").classList.toggle("on", n === 3);
     if (n === 2) renderCatalogue();
     if (n === 3) renderAffiner();
     update();
@@ -1142,7 +1189,7 @@
     return compte ? location.origin + location.pathname + q + location.hash : SITE + q;
   }
   function renderPartage() {
-    document.querySelectorAll(".rs").forEach(box => {
+    document.querySelectorAll(".rs[data-partage]").forEach(box => {
       const compte = box.dataset.partage === "compte", pied = box.classList.contains("rs-pied");
       const campagne = compte ? "compte" : pied ? "pied" : "site";
       const L = src => lienPartage(compte, src);
@@ -1334,6 +1381,138 @@
     document.getElementById("sortie-sauver").addEventListener("click", () => { fermerModale(m); if (window.__ga) gtag("event", "sortie_action", { action: "sauvegarde_en_ligne", contexte }); window.__ouvrirIntention(); });
     document.getElementById("sortie-soutenir").addEventListener("click", () => { fermerModale(m); if (window.__ga) gtag("event", "sortie_action", { action: "soutenir", contexte }); window.__ouvrirKofi(contexte); });
     document.getElementById("sortie-fermer").addEventListener("click", () => fermerModale(m));
+    m.addEventListener("click", e => { if (e.target === m) fermerModale(m); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });
+  })();
+
+
+  /* ---------- partage en image (bandeau du compte) ----------
+     Le bandeau collant de l'écran 3 ouvre une modale : choix du visuel (avec ou sans les résultats), puis de la
+     plateforme. L'image est dessinée dans un canvas, dans le navigateur : rien ne part tant que la personne ne la
+     publie pas elle-même. Couleurs et polices lues dans les jetons :root (charte), aucune valeur en dur.
+     Format story 1080 x 1920 : Instagram recouvre environ 250 px en haut et 340 px en bas, le contenu reste entre.
+     Sur mobile, chaque plateforme passe par le partage natif avec le fichier (seule façon d'atteindre Instagram) ;
+     sur ordinateur, l'image se télécharge et la plateforme s'ouvre avec le texte et le lien.
+     Le ton reste celui du site : on rit du compte, jamais de l'autre. */
+  (function partageImage() {
+    const m = document.getElementById("partage"), note = document.getElementById("partage-note");
+    const cvRes = document.getElementById("visuel-resultats"), cvGen = document.getElementById("visuel-generique");
+    const radioRes = m.querySelector('input[value="resultats"]'), radioGen = m.querySelector('input[value="generique"]');
+    const PHRASES = [
+      "On vient de compter qui pense à quoi à la maison. Le couple va bien, merci.",
+      "Ce soir, pas de série\u00a0: on a compté qui pense aux chaussettes.",
+      "Test de la charge mentale\u00a0: fait. Dispute\u00a0: aucune. Liste de courses\u00a0: toujours en cours.",
+      "On a fait le compte à deux. Le lave-vaisselle, lui, attend toujours.",
+      "Dix minutes à deux pour savoir qui y pense. On a même ri.",
+      "On sait enfin qui pense à racheter du papier toilette."
+    ];
+    let phrase = Math.floor(Math.random() * PHRASES.length);
+    const blobs = {};
+    const W = 1080, H = 1920, X = 96, LARG = W - 2 * X;
+    const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+    const serif = px => `600 ${px}px ${tok("--serif")}`, sans = (px, g = 400) => `${g} ${px}px ${tok("--sans")}`;
+
+    function lignes(ctx, txt, max) {
+      const out = []; let l = "";
+      for (const mot of txt.split(" ")) { const t = l ? l + " " + mot : mot; if (ctx.measureText(t).width > max && l) { out.push(l); l = mot; } else l = t; }
+      if (l) out.push(l); return out;
+    }
+    // Plus grand corps (entre gmin et gmax) pour que le texte tienne en au plus n lignes.
+    function ajuste(ctx, txt, n, gmax, gmin) {
+      for (let g = gmax; g >= gmin; g -= 4) { ctx.font = serif(g); if (lignes(ctx, txt, LARG).length <= n) return g; }
+      return gmin;
+    }
+    function texte(ctx, t, x, y, font, couleur, align = "left") { ctx.font = font; ctx.fillStyle = couleur; ctx.textAlign = align; ctx.fillText(t, x, y); }
+    // Une barre à deux couleurs, le prénom et le pourcentage de chaque côté, réduits si deux prénoms longs se touchent.
+    function repartition(ctx, y, titre, pa, detailA, detailB) {
+      const ca = tok("--a"), cb = tok("--b");
+      texte(ctx, titre, X, y, sans(36, 500), tok("--muted"));
+      const yb = y + 34, hb = 26, wa = Math.round(LARG * pa / 100);
+      ctx.fillStyle = cb; ctx.beginPath(); ctx.roundRect(X, yb, LARG, hb, 8); ctx.fill();
+      if (wa > 0) { ctx.fillStyle = ca; ctx.beginPath(); ctx.roundRect(X, yb, wa, hb, wa < LARG ? [8, 0, 0, 8] : 8); ctx.fill(); }
+      if (pa > 0 && pa < 100) { ctx.fillStyle = tok("--bg"); ctx.fillRect(X + wa - 3, yb, 6, hb); }
+      const gA = `${nomA()} ${pa}\u00a0%`, gB = `${100 - pa}\u00a0% ${nomB()}`;
+      let g = 64; ctx.font = serif(g);
+      while (g > 36 && ctx.measureText(gA).width + ctx.measureText(gB).width > LARG - 40) { g -= 4; ctx.font = serif(g); }
+      const yn = yb + hb + 24 + Math.round(g * .8);
+      texte(ctx, gA, X, yn, serif(g), ca);
+      texte(ctx, gB, W - X, yn, serif(g), cb, "right");
+      texte(ctx, detailA, X, yn + 50, sans(32), tok("--ink"));
+      texte(ctx, detailB, W - X, yn + 50, sans(32), tok("--ink"), "right");
+      return yn + 50;
+    }
+    function dessiner(cv, avec) {
+      const ctx = cv.getContext("2d"), r = compute(), ink = tok("--ink"), muted = tok("--muted");
+      ctx.fillStyle = tok("--bg"); ctx.fillRect(0, 0, W, H);
+      // en-tête : la marque et un filet d'encre, comme les titres de famille du site
+      texte(ctx, "Qui y pense\u00a0?", X, 300, serif(46), ink);
+      texte(ctx, "Qui fait quoi à la maison", W - X, 300, sans(30), muted, "right");
+      ctx.fillStyle = ink; ctx.fillRect(X, 330, LARG, 3);
+      const p = PHRASES[phrase], g = avec ? ajuste(ctx, p, 3, 76, 56) : ajuste(ctx, p, 6, 112, 76);
+      ctx.font = serif(g); const ls = lignes(ctx, p, LARG), inter = Math.round(g * 1.14);
+      let y = avec ? 400 + g : Math.round(815 - (ls.length * inter) / 2 + g * .75);
+      for (const l of ls) { texte(ctx, l, X, y, serif(g), ink); y += inter; }
+      if (avec) {
+        const tot = r.a.h + r.b.h, pa = Math.round(100 * r.a.h / tot);
+        const totP = r.a.nPense + r.b.nPense, qa = totP ? Math.round(100 * r.a.nPense / totP) : 50;
+        const n0 = v => fmt(v, v % 1 ? 1 : 0), choses = v => `${n0(v)} ${v > 1 ? "choses" : "chose"} en tête`;
+        let yr = 760;
+        ctx.fillStyle = tok("--line"); ctx.fillRect(X, yr - 70, LARG, 2);
+        yr = repartition(ctx, yr, "Le temps à faire", pa, `${hmQuart(r.a.h)} par jour`, `${hmQuart(r.b.h)} par jour`);
+        if (totP) repartition(ctx, yr + 80, "La charge mentale", qa, choses(r.a.nPense), choses(r.b.nPense));
+      }
+      // pied : l'invitation et l'adresse, au-dessus de la zone que recouvre Instagram
+      ctx.fillStyle = ink; ctx.fillRect(X, 1300, LARG, 3);
+      texte(ctx, "Et chez vous, qui y pense\u00a0?", X, 1396, serif(62), ink);
+      texte(ctx, "quiypense.org", X, 1472, sans(46, 600), ink);
+      texte(ctx, "Gratuit, sans compte, dix minutes à deux.", X, 1528, sans(32), muted);
+      // blob prêt d'avance : le clic sur une plateforme reste synchrone (partage natif et fenêtres exigent le geste)
+      cv.toBlob(b => { blobs[avec ? "resultats" : "generique"] = b; }, "image/png");
+    }
+    function toutDessiner() {
+      const r = compute(), possible = (r.a.h + r.b.h) > 0;
+      radioRes.disabled = !possible; if (!possible) radioGen.checked = true;
+      dessiner(cvRes, possible); dessiner(cvGen, false);
+    }
+    const visuel = () => radioRes.checked ? "resultats" : "generique";
+    const fichier = () => blobs[visuel()] && new File([blobs[visuel()]], "qui-y-pense.png", { type: "image/png" });
+    const lien = canal => SITE + `?utm_source=${canal}&utm_medium=partage`;
+    const TEXTE = "On a fait le compte : qui fait quoi à la maison, et surtout qui y pense. Et chez vous ? ";
+    // Partage natif réservé au tactile : sur ordinateur, Chrome et Safari l'offrent aussi, mais la feuille du système ne
+    // propose ni Instagram ni WhatsApp Web ; mieux vaut ouvrir la plateforme choisie.
+    const natif = matchMedia("(pointer: coarse)").matches && !!(navigator.canShare && navigator.canShare({ files: [new File([""], "x.png", { type: "image/png" })] }));
+    function telecharger() {
+      const url = URL.createObjectURL(blobs[visuel()]), a = document.createElement("a");
+      a.href = url; a.download = "qui-y-pense.png"; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+    }
+    const CANAUX = [
+      ["instagram", "Instagram", null, "Image téléchargée. Instagram ne publie que depuis l'application : envoyez-la sur votre téléphone, publiez-la en story et ajoutez le sticker « Lien » vers quiypense.org."],
+      ["whatsapp", "WhatsApp", c => `https://wa.me/?text=${encodeURIComponent(TEXTE + lien(c))}`, "Image téléchargée : ajoutez-la dans la conversation WhatsApp qui vient de s'ouvrir."],
+      ["facebook", "Facebook", c => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(lien(c))}`, "Image téléchargée : ajoutez-la à la publication Facebook qui vient de s'ouvrir."],
+      ["linkedin", "LinkedIn", c => `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(TEXTE + lien(c))}`, "Image téléchargée : ajoutez-la au post LinkedIn qui vient de s'ouvrir."],
+      ["x", "X", c => `https://twitter.com/intent/tweet?text=${encodeURIComponent(TEXTE)}&url=${encodeURIComponent(lien(c))}`, "Image téléchargée : ajoutez-la au message qui vient de s'ouvrir."],
+      ["telecharger", "Télécharger", null, "Image téléchargée."]
+    ];
+    const boite = document.getElementById("partage-canaux");
+    boite.innerHTML = CANAUX.map(([c, nom]) => `<button type="button" data-canal="${c}"><svg aria-hidden="true"><use href="#i-${c}"/></svg>${nom}</button>`).join("");
+    boite.addEventListener("click", e => {
+      const btn = e.target.closest("button"); if (!btn || !blobs[visuel()]) return;
+      const [c, , url, message] = CANAUX.find(x => x[0] === btn.dataset.canal);
+      if (window.__ga) gtag("event", "partage", { canal: c, campagne: "image", visuel: visuel() });
+      note.textContent = "";
+      if (natif && c !== "telecharger") { navigator.share({ files: [fichier()], text: TEXTE + lien(c) }).catch(() => {}); return; }
+      telecharger(); note.textContent = message;   // le téléchargement d'abord : une fois l'onglet ouvert, la page perd le focus et Chrome bloque le fichier
+      if (url) window.open(url(c), "_blank", "noopener");
+    });
+    async function ouvrir() {
+      try { await Promise.all([serif(80), sans(36), sans(36, 500), sans(46, 600)].map(f => document.fonts.load(f))); } catch (e) {}
+      note.textContent = ""; toutDessiner(); ouvrirModale(m);
+      if (window.__ga) gtag("event", "partage_ouvert", { origine: "bandeau" });
+    }
+    document.getElementById("barre-partager").addEventListener("click", ouvrir);
+    document.getElementById("partage-phrase").addEventListener("click", () => { phrase = (phrase + 1) % PHRASES.length; toutDessiner(); });
+    document.getElementById("partage-fermer").addEventListener("click", () => fermerModale(m));
     m.addEventListener("click", e => { if (e.target === m) fermerModale(m); });
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });
   })();
