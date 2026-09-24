@@ -363,7 +363,7 @@
   /* bandeau de partage, en bas de l'écran du compte : même vocabulaire que la barre de suivi de l'étape 2 */
   .barre-partage .texte { font-family: var(--serif); font-weight: 600; font-size: 1.05rem; font-variation-settings: "opsz" 40; line-height: 1.25; }
   @media (max-width: 420px) { .barre-partage .texte { font-size: .95rem; } }
-  /* modale de partage : choix du visuel (deux aperçus du canvas 1080 x 1920) puis de la plateforme */
+  /* modale de partage : choix du visuel (deux aperçus du canvas carré 1080 x 1080) puis de la plateforme */
   .partage-boite { max-width: 640px; }
   .partage-boite fieldset { margin-top: 1.2rem; }
   .visuels { display: grid; grid-template-columns: repeat(2, minmax(0, 180px)); gap: 20px; }
@@ -658,12 +658,12 @@
   <div class="modale-boite partage-boite">
     <button class="modale-fermer" type="button" id="partage-fermer" aria-label="Fermer">Fermer</button>
     <h2 id="partage-titre">Partager Qui y pense ?</h2>
-    <p class="muted">Une image au format story, dessinée dans votre navigateur : rien ne part tant que vous ne la publiez pas.</p>
+    <p class="muted">Une image carrée, dessinée dans votre navigateur : rien ne part tant que vous ne la publiez pas.</p>
     <fieldset>
       <legend>Le visuel</legend>
       <div class="visuels">
-        <label class="visuel"><input type="radio" name="visuel" value="resultats" checked><canvas id="visuel-resultats" width="1080" height="1920" role="img" aria-label="Aperçu avec vos prénoms et votre répartition"></canvas><span>Avec nos résultats</span></label>
-        <label class="visuel"><input type="radio" name="visuel" value="generique"><canvas id="visuel-generique" width="1080" height="1920" role="img" aria-label="Aperçu sans vos résultats"></canvas><span>Sans nos résultats</span></label>
+        <label class="visuel"><input type="radio" name="visuel" value="resultats" checked><canvas id="visuel-resultats" width="1080" height="1080" role="img" aria-label="Aperçu avec vos prénoms et votre répartition"></canvas><span>Avec nos résultats</span></label>
+        <label class="visuel"><input type="radio" name="visuel" value="generique"><canvas id="visuel-generique" width="1080" height="1080" role="img" aria-label="Aperçu sans vos résultats"></canvas><span>Sans nos résultats</span></label>
       </div>
       <button class="lien-discret" type="button" id="partage-phrase">Une autre phrase</button>
     </fieldset>
@@ -1391,7 +1391,7 @@
      Le bandeau collant de l'écran 3 ouvre une modale : choix du visuel (avec ou sans les résultats), puis de la
      plateforme. L'image est dessinée dans un canvas, dans le navigateur : rien ne part tant que la personne ne la
      publie pas elle-même. Couleurs et polices lues dans les jetons :root (charte), aucune valeur en dur.
-     Format story 1080 x 1920 : Instagram recouvre environ 250 px en haut et 340 px en bas, le contenu reste entre.
+     Format carré 1080 x 1080 : passe partout (conversation, publication, story), sans zone recouverte à ménager.
      Sur mobile, chaque plateforme passe par le partage natif avec le fichier (seule façon d'atteindre Instagram) ;
      sur ordinateur, l'image se télécharge et la plateforme s'ouvre avec le texte et le lien.
      Le ton reste celui du site : on rit du compte, jamais de l'autre. */
@@ -1409,7 +1409,7 @@
     ];
     let phrase = Math.floor(Math.random() * PHRASES.length);
     const blobs = {};
-    const W = 1080, H = 1920, X = 96, LARG = W - 2 * X;
+    const W = 1080, H = 1080, X = 80, LARG = W - 2 * X;
     const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
     const serif = px => `600 ${px}px ${tok("--serif")}`, sans = (px, g = 400) => `${g} ${px}px ${tok("--sans")}`;
 
@@ -1427,46 +1427,46 @@
     // Une barre à deux couleurs, le prénom et le pourcentage de chaque côté, réduits si deux prénoms longs se touchent.
     function repartition(ctx, y, titre, pa, detailA, detailB) {
       const ca = tok("--a"), cb = tok("--b");
-      texte(ctx, titre, X, y, sans(36, 500), tok("--muted"));
-      const yb = y + 34, hb = 26, wa = Math.round(LARG * pa / 100);
+      texte(ctx, titre, X, y, sans(28, 500), tok("--muted"));
+      const yb = y + 26, hb = 20, wa = Math.round(LARG * pa / 100);
       ctx.fillStyle = cb; ctx.beginPath(); ctx.roundRect(X, yb, LARG, hb, 8); ctx.fill();
       if (wa > 0) { ctx.fillStyle = ca; ctx.beginPath(); ctx.roundRect(X, yb, wa, hb, wa < LARG ? [8, 0, 0, 8] : 8); ctx.fill(); }
       if (pa > 0 && pa < 100) { ctx.fillStyle = tok("--bg"); ctx.fillRect(X + wa - 3, yb, 6, hb); }
-      const gA = `${nomA()} ${pa}\u00a0%`, gB = `${100 - pa}\u00a0% ${nomB()}`;
-      let g = 64; ctx.font = serif(g);
-      while (g > 36 && ctx.measureText(gA).width + ctx.measureText(gB).width > LARG - 40) { g -= 4; ctx.font = serif(g); }
-      const yn = yb + hb + 24 + Math.round(g * .8);
+      const gA = `${nomA()} ${pa} %`, gB = `${100 - pa} % ${nomB()}`;
+      let g = 52; ctx.font = serif(g);
+      while (g > 32 && ctx.measureText(gA).width + ctx.measureText(gB).width > LARG - 40) { g -= 4; ctx.font = serif(g); }
+      const yn = yb + hb + 18 + Math.round(g * .8);
       texte(ctx, gA, X, yn, serif(g), ca);
       texte(ctx, gB, W - X, yn, serif(g), cb, "right");
-      texte(ctx, detailA, X, yn + 50, sans(32), tok("--ink"));
-      texte(ctx, detailB, W - X, yn + 50, sans(32), tok("--ink"), "right");
-      return yn + 50;
+      texte(ctx, detailA, X, yn + 40, sans(28), tok("--ink"));
+      texte(ctx, detailB, W - X, yn + 40, sans(28), tok("--ink"), "right");
+      return yn + 40;
     }
     function dessiner(cv, avec) {
       const ctx = cv.getContext("2d"), r = compute(), ink = tok("--ink"), muted = tok("--muted");
       ctx.fillStyle = tok("--bg"); ctx.fillRect(0, 0, W, H);
       // en-tête : la marque et un filet d'encre, comme les titres de famille du site
-      texte(ctx, "Qui y pense\u00a0?", X, 300, serif(46), ink);
-      texte(ctx, "Qui fait quoi à la maison", W - X, 300, sans(30), muted, "right");
-      ctx.fillStyle = ink; ctx.fillRect(X, 330, LARG, 3);
-      const p = PHRASES[phrase], g = avec ? ajuste(ctx, p, 3, 76, 56) : ajuste(ctx, p, 6, 112, 76);
+      texte(ctx, "Qui y pense ?", X, 132, serif(40), ink);
+      texte(ctx, "Qui fait quoi à la maison", W - X, 132, sans(26), muted, "right");
+      ctx.fillStyle = ink; ctx.fillRect(X, 158, LARG, 3);
+      const p = PHRASES[phrase], g = avec ? ajuste(ctx, p, 3, 56, 44) : ajuste(ctx, p, 5, 100, 64);
       ctx.font = serif(g); const ls = lignes(ctx, p, LARG), inter = Math.round(g * 1.14);
-      let y = avec ? 400 + g : Math.round(815 - (ls.length * inter) / 2 + g * .75);
+      // avec résultats : la phrase en haut ; sans : centrée entre les deux filets (158 et 900)
+      let y = avec ? 206 + g : Math.round(529 - (ls.length * inter) / 2 + g * .75);
       for (const l of ls) { texte(ctx, l, X, y, serif(g), ink); y += inter; }
       if (avec) {
         const tot = r.a.h + r.b.h, pa = Math.round(100 * r.a.h / tot);
         const totP = r.a.nPense + r.b.nPense, qa = totP ? Math.round(100 * r.a.nPense / totP) : 50;
         const n0 = v => fmt(v, v % 1 ? 1 : 0), choses = v => `${n0(v)} ${v > 1 ? "choses" : "chose"} en tête`;
-        let yr = 760;
-        ctx.fillStyle = tok("--line"); ctx.fillRect(X, yr - 70, LARG, 2);
-        yr = repartition(ctx, yr, "Le temps à faire", pa, `${hmQuart(r.a.h)} par jour`, `${hmQuart(r.b.h)} par jour`);
-        if (totP) repartition(ctx, yr + 80, "La charge mentale", qa, choses(r.a.nPense), choses(r.b.nPense));
+        ctx.fillStyle = tok("--line"); ctx.fillRect(X, 430, LARG, 2);
+        const yr = repartition(ctx, 480, "Le temps à faire", pa, `${hmQuart(r.a.h)} par jour`, `${hmQuart(r.b.h)} par jour`);
+        if (totP) repartition(ctx, yr + 64, "La charge mentale", qa, choses(r.a.nPense), choses(r.b.nPense));
       }
-      // pied : l'invitation et l'adresse, au-dessus de la zone que recouvre Instagram
-      ctx.fillStyle = ink; ctx.fillRect(X, 1300, LARG, 3);
-      texte(ctx, "Et chez vous, qui y pense\u00a0?", X, 1396, serif(62), ink);
-      texte(ctx, "quiypense.org", X, 1472, sans(46, 600), ink);
-      texte(ctx, "Gratuit, sans compte, dix minutes à deux.", X, 1528, sans(32), muted);
+      // pied : l'invitation et l'adresse
+      ctx.fillStyle = ink; ctx.fillRect(X, 900, LARG, 3);
+      texte(ctx, "Et chez vous, qui y pense ?", X, 966, serif(48), ink);
+      texte(ctx, "quiypense.org", X, 1020, sans(34, 600), ink);
+      texte(ctx, "Gratuit, sans compte, dix minutes à deux.", W - X, 1020, sans(26), muted, "right");
       // blob prêt d'avance : le clic sur une plateforme reste synchrone (partage natif et fenêtres exigent le geste)
       cv.toBlob(b => { blobs[avec ? "resultats" : "generique"] = b; }, "image/png");
     }
@@ -1491,7 +1491,7 @@
     // plateforme s'ouvre avec le texte et le lien, il reste à coller (WhatsApp, Facebook, LinkedIn et X acceptent
     // une image collée). Si la copie échoue (navigateur ancien, permission refusée), l'image se télécharge.
     const CANAUX = [
-      ["instagram", "Instagram", null, "la story"],
+      ["instagram", "Instagram", null, "la publication"],
       ["whatsapp", "WhatsApp", c => `https://wa.me/?text=${encodeURIComponent(TEXTE + lien(c))}`, "la conversation WhatsApp"],
       ["facebook", "Facebook", c => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(lien(c))}`, "la publication Facebook"],
       ["linkedin", "LinkedIn", c => `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(TEXTE + lien(c))}`, "le post LinkedIn"],
@@ -1519,7 +1519,7 @@
       }
       if (c === "telecharger" || c === "instagram") {
         telecharger();
-        noter(c === "instagram" ? "Image téléchargée. Instagram ne publie une story que depuis l'application : envoyez l'image sur votre téléphone, publiez-la en story et ajoutez le sticker « Lien » vers quiypense.org." : "Image téléchargée.");
+        noter(c === "instagram" ? "Image téléchargée. Instagram publie depuis l'application : envoyez l'image sur votre téléphone, puis publiez-la en post ou en story (avec le sticker « Lien » vers quiypense.org)." : "Image téléchargée.");
         if (window.__ga) gtag("event", "partage", { canal: c, campagne: "image", visuel: visuel(), mode: "telechargement" });
         return;
       }
