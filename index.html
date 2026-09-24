@@ -385,6 +385,11 @@
     .barre > span:first-child { grid-column: 1 / -1; }
     .legende dl { grid-template-columns: 1fr; }
     .affiner .cache { display: none; }
+    /* le tableau débordait de 15 px à 390 px de large (colonnes Tâche, fois, période, minutes, par jour) */
+    .affiner input { width: 2.9rem; }
+    .affiner select[data-k="p"] { max-width: 4.6rem; padding-right: 0; }
+    .affiner .eq { margin-right: .15rem; }
+    .affiner tr.tache-l td:first-child { hyphens: auto; overflow-wrap: anywhere; }
     .affiner tr.qui-ligne { display: table-row; }
     .affiner tr.tache-l td { border-bottom: 0; padding-bottom: .15rem; }
     .affiner tr.qui-ligne td { padding-top: 0; }
