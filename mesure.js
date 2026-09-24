@@ -27,7 +27,7 @@
     boite.innerHTML =
       '<div class="consent-boite">' +
       '<h2 id="consent-titre">Une mesure d\'audience, avec votre accord</h2>' +
-      '<p>Ce site utilise Google Analytics pour compter les visites et comprendre ce qui est utile. Ça dépose un cookie et envoie des données de navigation à Google. Vos réponses au questionnaire ne sont jamais envoyées à Google, quel que soit votre choix.</p>' +
+      '<p>Ce site utilise Google Analytics pour compter les visites et comprendre ce qui est utile. Ça dépose un cookie et envoie à Google des données de navigation, qui ne disent pas qui vous êtes. Vos réponses au questionnaire ne sont jamais envoyées à Google, quel que soit votre choix.</p>' +
       '<div class="consent-actions">' +
       '<button class="btn secondary" type="button" data-choix="non">Refuser</button>' +
       '<button class="btn secondary" type="button" data-choix="oui">Accepter</button>' +
