@@ -949,7 +949,7 @@
     const tb = document.getElementById("table-affiner");
     // Toutes les tâches répondues, « pas nous » compris : on y corrige qui y pense, et on peut la réattribuer.
     // Le temps d'une tâche « pas nous » ne compte pour personne, ses champs sont atténués mais restent saisissables.
-    let html = `<tr><th>Tâche</th><th class="cache">S'en occupe</th><th class="cache">Y pense</th><th>Combien de fois</th><th>par</th><th>Minutes à chaque fois</th><th class="hj">= par jour</th></tr>`;
+    let html = `<tr><th>Tâche</th><th class="cache">S'en occupe</th><th class="cache">Y pense</th><th>Combien de fois</th><th>par</th><th>pendant (min)</th><th class="hj">= par jour</th></tr>`;
     const choix = (v, k, cls, id) => `<select class="qui v-${v} ${cls}" data-k="${k}"${id ? ` id="${id}"` : ""} aria-label="${k === "fait" ? "Qui s'en occupe" : "Qui y pense"}">${WHO.map(w => `<option value="${w}" ${w === v ? "selected" : ""}>${label(w)}</option>`).join("")}</select>`;
     for (const cat of visibleCats()) {
       const rows = visibleTasks(cat).filter(t => S.t[t.id].fait);
