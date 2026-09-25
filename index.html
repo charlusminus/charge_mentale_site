@@ -213,6 +213,19 @@
   .tache .txt { min-width: 0; padding-right: .6rem; }
   .tache .nom { font-weight: 500; }
   .tache .aide { color: var(--muted); font-size: .82rem; display: block; }
+  /* « les deux » : une réglette sous la tâche pour la part exacte de chacun, pleine largeur de la grille */
+  .repart { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: .2rem .7rem; align-items: center; margin: .45rem 0 .2rem; padding: .5rem .7rem; background: var(--bg-2); border-radius: var(--r); font-size: .85rem; }
+  .repart .q { grid-column: 1 / -1; color: var(--muted); }
+  .repart .pa { color: var(--a); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .repart .pb { color: var(--b); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .repart .d { text-align: right; }
+  /* la barre se lit comme la répartition : couleur de la personne de gauche jusqu'au curseur, de l'autre après */
+  .repart input { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; margin: 0; background: transparent; cursor: pointer; }
+  .repart input::-webkit-slider-runnable-track { height: 8px; border-radius: 4px; background: linear-gradient(to right, var(--cg, var(--a)) 0 var(--pa, 50%), var(--cd, var(--b)) var(--pa, 50%) 100%); }
+  .repart input::-moz-range-track { height: 8px; border-radius: 4px; background: linear-gradient(to right, var(--cg, var(--a)) 0 var(--pa, 50%), var(--cd, var(--b)) var(--pa, 50%) 100%); }
+  .repart input::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; margin-top: -8px; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink); }
+  .repart input::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink); }
+  .repart input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 4px; }
   .tache .sep { }
   .case { width: 28px; height: 28px; margin: 0 auto; border-radius: 6px; border: 1.5px solid var(--border); background: var(--paper); cursor: pointer; display: grid; place-items: center; color: var(--muted); font-size: .62rem; font-weight: 600; letter-spacing: -.02em; line-height: 1; padding: 0; }
   .case.g-a { color: var(--a); } .case.g-b { color: var(--b); } .case.g-both { color: var(--ink); }
@@ -793,7 +806,13 @@
       .map(t => { const st = S.t[t.id]; return [t.id, esc(st.n), PER.indexOf(st.p), esc(st.d)].join("_"); }).join(".");
     const ajouts = S.custom.map(c => { const st = S.t[c.id] || {}; return [c.id, c.cat, esc(c.nom), lettre(st), esc(st.n), PER.indexOf(st.p), esc(st.d)].join("_"); }).join(".");
     const genres = (S.genreA || "-") + (S.genreB || "-");   // champ ajouté en fin de chaîne : un lien sans lui se lit pareil
-    return ["6", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres].join("~");
+    // parts « les deux » (25/09/2026) : id_partFait_partPense, seulement quand elles s'écartent de 50
+    const partages = [...catTasks(), ...S.custom].map(t => {
+      const st = S.t[t.id]; if (!st) return "";
+      const f = st.fait === "both" && partA(st, "fait") !== 50 ? partA(st, "fait") : "", pn = st.pense === "both" && partA(st, "pense") !== 50 ? partA(st, "pense") : "";
+      return f === "" && pn === "" ? "" : [t.id, f, pn].join("_");
+    }).filter(Boolean).join(".");
+    return ["6", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages].join("~");
   }
   function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
@@ -807,6 +826,8 @@
       const [id, cat, nom, l, n, p, d] = o.split("_"); if (!id || !cat || !nom) continue;
       s.custom.push({ id, cat, nom: unesc(nom), aide: "" }); s.t[id] = { ...delettre(l), n: +unesc(n) || 1, p: PER[+p] || "semaine", d: +unesc(d) || 30 };
     }
+    const borne = v => v === "" || v === undefined || !isFinite(+v) ? undefined : Math.max(0, Math.min(100, Math.round(+v)));
+    if (f[10]) for (const o of f[10].split(".")) { const [id, pf, pp] = o.split("_"); if (s.t[id]) Object.assign(s.t[id], { pf: borne(pf), pp: borne(pp) }); }   // parts « les deux », 25/09/2026
     return s;
   }
   function load() {
@@ -837,7 +858,10 @@
   function nomB() { return S.nomB.trim() || "Prénom 2"; }
   function label(k) { return k === "a" ? nomA() : k === "b" ? nomB() : k === "both" ? "les deux" : "pas nous"; }
   function penseOf(st, t) { return (t && t.mental) || st.pense === null ? st.fait : st.pense; }
-  function parts(who) { return who === "a" || who === "b" ? [[who, 1]] : who === "both" ? [["a", .5], ["b", .5]] : []; }
+  // « les deux » : part de la personne 1 en %, réglée à la réglette (50 par défaut). « y pense » qui suit « s'en occupe »
+  // reprend la part de « s'en occupe ».
+  function partA(st, quoi) { const v = quoi === "pense" && st.pense !== null ? st.pp : st.pf; return v === undefined || v === null ? 50 : v; }
+  function parts(who, pa = 50) { return who === "a" || who === "b" ? [[who, 1]] : who === "both" ? [["a", pa / 100], ["b", 1 - pa / 100]] : []; }
 
   function compute() {
     const r = { a: { h: 0, nFait: 0, nPense: 0 }, b: { h: 0, nFait: 0, nPense: 0 }, cats: {}, renseignees: 0, total: 0 };
@@ -848,8 +872,8 @@
       const h = hj(st);
       const cat = r.cats[t.cat] || (r.cats[t.cat] = { nom: t.catNom, a: 0, b: 0, both: 0 });
       if (st.fait === "both") cat.both += h; else if (st.fait === "a" || st.fait === "b") cat[st.fait] += h;
-      for (const [who, k] of parts(st.fait)) { r[who].h += h * k; r[who].nFait += k; }
-      for (const [who, k] of parts(penseOf(st, t))) { r[who].nPense += k; }
+      for (const [who, k] of parts(st.fait, partA(st, "fait"))) { r[who].h += h * k; r[who].nFait += k; }
+      for (const [who, k] of parts(penseOf(st, t), partA(st, "pense"))) { r[who].nPense += k; }
     }
     return r;
   }
@@ -947,6 +971,36 @@
       c.textContent = cur === k ? "✓" : glyphe(k); c.classList.add("g-" + k); c.setAttribute("aria-label", "y pense : " + label(k)); c.title = "y pense : " + label(k);
       if (actif) c.addEventListener("click", () => { st.pense = (k === st.fait) ? null : k; el.replaceWith(renderTask(t)); update(); });
       el.appendChild(c);
+    }
+    // « les deux » : la part exacte de chacun, 50/50 tant qu'on n'y touche pas. Une seule réglette par tâche :
+    // sur « s'en occupe » (« y pense » la suit s'il n'a pas été changé), sinon sur « y pense ».
+    const quoi = st.fait === "both" ? "fait" : (!t.mental && st.fait && st.pense === "both") ? "pense" : null;
+    if (quoi) {
+      // Sept crans, départ au centre (retour de Charles du 25/09/2026) : 50/50, puis 60/40, 75/25, 90/10 de chaque côté.
+      // Couple femme-homme : la femme à gauche, quel que soit l'ordre des prénoms ; sinon la personne 1 à gauche.
+      const CRANS = [10, 25, 40, 50, 60, 75, 90];   // part de la personne de gauche, du cran 0 au cran 6
+      const gaucheB = S.genreA === "h" && S.genreB === "f";
+      const [ng, nd, cg, cd] = gaucheB ? [nomB(), nomA(), "pb", "pa"] : [nomA(), nomB(), "pa", "pb"];
+      const pg = () => gaucheB ? 100 - partA(st, quoi) : partA(st, quoi);
+      const cran = v => CRANS.reduce((m, c, i) => Math.abs(c - v) < Math.abs(CRANS[m] - v) ? i : m, 3);
+      const r = document.createElement("div"); r.className = "repart";
+      const q = quoi === "fait" ? (st.pense === null || t.mental ? "À deux, dans quelle proportion ?" : "À deux, qui en fait le plus ?") : "Vous y pensez à deux : dans quelle proportion ?";
+      r.innerHTML = `<span class="q">${q}</span><span class="${cg} g"></span><input type="range" min="0" max="6" step="1" aria-label="Part de ${ng}"><span class="${cd} d"></span>`;
+      r.style.setProperty("--cg", `var(--${gaucheB ? "b" : "a"})`); r.style.setProperty("--cd", `var(--${gaucheB ? "a" : "b"})`);
+      const inp = r.querySelector("input"), sg = r.querySelector(".g"), sd = r.querySelector(".d");
+      const peindre = i => {
+        const v = CRANS[i];
+        sg.textContent = `${ng} ${v}\u00a0%`; sd.textContent = `${100 - v}\u00a0% ${nd}`;
+        inp.style.setProperty("--pa", (i / 6 * 100) + "%");
+        inp.setAttribute("aria-valuetext", `${ng} ${v} %, ${nd} ${100 - v} %`);
+      };
+      inp.value = cran(pg()); peindre(+inp.value);
+      inp.addEventListener("input", () => {
+        const v = CRANS[+inp.value]; st[quoi === "fait" ? "pf" : "pp"] = gaucheB ? 100 - v : v;
+        peindre(+inp.value); update();
+      });
+      inp.addEventListener("change", () => { if (window.__ga) gtag("event", "repartition_reglee", { champ: quoi }); });
+      el.appendChild(r);
     }
     return el;
   }
@@ -1068,7 +1122,8 @@
     for (const t of allTasks()) {
       const st = S.t[t.id]; if (!st.fait) continue;
       const off = st.fait === "other";
-      rows.push([t.catNom, t.nom, label(st.fait), off ? "" : label(penseOf(st, t)), off ? "" : st.n, off ? "" : st.p, off ? "" : st.d, off ? "" : +hj(st).toFixed(3), off ? "" : +(hj(st) * 7).toFixed(2)]);
+      const lib = (k, quoi) => k === "both" && partA(st, quoi) !== 50 ? `les deux (${nomA()} ${partA(st, quoi)} %, ${nomB()} ${100 - partA(st, quoi)} %)` : label(k);
+      rows.push([t.catNom, t.nom, lib(st.fait, "fait"), off ? "" : lib(penseOf(st, t), "pense"), off ? "" : st.n, off ? "" : st.p, off ? "" : st.d, off ? "" : +hj(st).toFixed(3), off ? "" : +(hj(st) * 7).toFixed(2)]);
     }
     return rows;
   }
@@ -1271,7 +1326,7 @@
         taches_total: r.total, taches_renseignees: r.renseignees,
         heures_a: r.a.h.toFixed(3), heures_b: r.b.h.toFixed(3), part_temps_a: pct(r.a.h, r.b.h),
         faites_a: r.a.nFait, faites_b: r.b.nFait, tete_a: r.a.nPense, tete_b: r.b.nPense, part_tete_a: pct(r.a.nPense, r.b.nPense),
-        reponses: champs[5] || "", reglages: champs[6] || "",
+        reponses: champs[5] || "", reglages: champs[6] || "", partages: champs[10] || "",
         ajouts: S.custom.map(c => c.nom).join(" | ").slice(0, 600),
         page: location.origin + location.pathname, source: new URLSearchParams(location.search).get("utm_source") || "",
         "cf-turnstile-response": jetonTs
