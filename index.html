@@ -977,7 +977,7 @@
     if (quoi) {
       const pa = partA(st, quoi), r = document.createElement("div"); r.className = "repart";
       const q = quoi === "fait" ? (st.pense === null || t.mental ? "À deux, dans quelle proportion ?" : "À deux, qui en fait le plus ?") : "Vous y pensez à deux : dans quelle proportion ?";
-      r.innerHTML = `<span class="q">${q}</span><span class="pa"></span><input type="range" min="0" max="100" step="5" aria-label="Part de ${nomA()}, en pourcentage"><span class="pb"></span>`;
+      r.innerHTML = `<span class="q">${q}</span><span class="pa"></span><input type="range" min="0" max="100" step="10" aria-label="Part de ${nomA()}, en pourcentage"><span class="pb"></span>`;
       const inp = r.querySelector("input"), sa = r.querySelector(".pa"), sb = r.querySelector(".pb");
       // valeur = part de la personne 1 : le curseur coupe la barre là où s'arrête sa part
       const peindre = v => { sa.textContent = `${nomA()} ${v}\u00a0%`; sb.textContent = `${100 - v}\u00a0% ${nomB()}`; inp.style.setProperty("--pa", v + "%"); inp.setAttribute("aria-valuetext", `${nomA()} ${v} %, ${nomB()} ${100 - v} %`); };
