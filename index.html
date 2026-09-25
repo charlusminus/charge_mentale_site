@@ -217,11 +217,12 @@
   .repart { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: .2rem .7rem; align-items: center; margin: .45rem 0 .2rem; padding: .5rem .7rem; background: var(--bg-2); border-radius: var(--r); font-size: .85rem; }
   .repart .q { grid-column: 1 / -1; color: var(--muted); }
   .repart .pa { color: var(--a); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
-  .repart .pb { color: var(--b); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; text-align: right; }
-  /* la barre se lit comme la répartition : couleur de la personne 1 jusqu'au curseur, de la personne 2 après */
+  .repart .pb { color: var(--b); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .repart .d { text-align: right; }
+  /* la barre se lit comme la répartition : couleur de la personne de gauche jusqu'au curseur, de l'autre après */
   .repart input { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; margin: 0; background: transparent; cursor: pointer; }
-  .repart input::-webkit-slider-runnable-track { height: 8px; border-radius: 4px; background: linear-gradient(to right, var(--a) 0 var(--pa, 50%), var(--b) var(--pa, 50%) 100%); }
-  .repart input::-moz-range-track { height: 8px; border-radius: 4px; background: linear-gradient(to right, var(--a) 0 var(--pa, 50%), var(--b) var(--pa, 50%) 100%); }
+  .repart input::-webkit-slider-runnable-track { height: 8px; border-radius: 4px; background: linear-gradient(to right, var(--cg, var(--a)) 0 var(--pa, 50%), var(--cd, var(--b)) var(--pa, 50%) 100%); }
+  .repart input::-moz-range-track { height: 8px; border-radius: 4px; background: linear-gradient(to right, var(--cg, var(--a)) 0 var(--pa, 50%), var(--cd, var(--b)) var(--pa, 50%) 100%); }
   .repart input::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; margin-top: -8px; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink); }
   .repart input::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink); }
   .repart input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 4px; }
@@ -975,14 +976,29 @@
     // sur « s'en occupe » (« y pense » la suit s'il n'a pas été changé), sinon sur « y pense ».
     const quoi = st.fait === "both" ? "fait" : (!t.mental && st.fait && st.pense === "both") ? "pense" : null;
     if (quoi) {
-      const pa = partA(st, quoi), r = document.createElement("div"); r.className = "repart";
+      // Sept crans, départ au centre (retour de Charles du 25/09/2026) : 50/50, puis 60/40, 75/25, 90/10 de chaque côté.
+      // Couple femme-homme : la femme à gauche, quel que soit l'ordre des prénoms ; sinon la personne 1 à gauche.
+      const CRANS = [10, 25, 40, 50, 60, 75, 90];   // part de la personne de gauche, du cran 0 au cran 6
+      const gaucheB = S.genreA === "h" && S.genreB === "f";
+      const [ng, nd, cg, cd] = gaucheB ? [nomB(), nomA(), "pb", "pa"] : [nomA(), nomB(), "pa", "pb"];
+      const pg = () => gaucheB ? 100 - partA(st, quoi) : partA(st, quoi);
+      const cran = v => CRANS.reduce((m, c, i) => Math.abs(c - v) < Math.abs(CRANS[m] - v) ? i : m, 3);
+      const r = document.createElement("div"); r.className = "repart";
       const q = quoi === "fait" ? (st.pense === null || t.mental ? "À deux, dans quelle proportion ?" : "À deux, qui en fait le plus ?") : "Vous y pensez à deux : dans quelle proportion ?";
-      r.innerHTML = `<span class="q">${q}</span><span class="pa"></span><input type="range" min="0" max="100" step="10" aria-label="Part de ${nomA()}, en pourcentage"><span class="pb"></span>`;
-      const inp = r.querySelector("input"), sa = r.querySelector(".pa"), sb = r.querySelector(".pb");
-      // valeur = part de la personne 1 : le curseur coupe la barre là où s'arrête sa part
-      const peindre = v => { sa.textContent = `${nomA()} ${v}\u00a0%`; sb.textContent = `${100 - v}\u00a0% ${nomB()}`; inp.style.setProperty("--pa", v + "%"); inp.setAttribute("aria-valuetext", `${nomA()} ${v} %, ${nomB()} ${100 - v} %`); };
-      inp.value = pa; peindre(pa);
-      inp.addEventListener("input", () => { const v = +inp.value; st[quoi === "fait" ? "pf" : "pp"] = v; peindre(v); update(); });
+      r.innerHTML = `<span class="q">${q}</span><span class="${cg} g"></span><input type="range" min="0" max="6" step="1" aria-label="Part de ${ng}"><span class="${cd} d"></span>`;
+      r.style.setProperty("--cg", `var(--${gaucheB ? "b" : "a"})`); r.style.setProperty("--cd", `var(--${gaucheB ? "a" : "b"})`);
+      const inp = r.querySelector("input"), sg = r.querySelector(".g"), sd = r.querySelector(".d");
+      const peindre = i => {
+        const v = CRANS[i];
+        sg.textContent = `${ng} ${v}\u00a0%`; sd.textContent = `${100 - v}\u00a0% ${nd}`;
+        inp.style.setProperty("--pa", (i / 6 * 100) + "%");
+        inp.setAttribute("aria-valuetext", `${ng} ${v} %, ${nd} ${100 - v} %`);
+      };
+      inp.value = cran(pg()); peindre(+inp.value);
+      inp.addEventListener("input", () => {
+        const v = CRANS[+inp.value]; st[quoi === "fait" ? "pf" : "pp"] = gaucheB ? 100 - v : v;
+        peindre(+inp.value); update();
+      });
       inp.addEventListener("change", () => { if (window.__ga) gtag("event", "repartition_reglee", { champ: quoi }); });
       el.appendChild(r);
     }
