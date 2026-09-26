@@ -338,10 +338,10 @@
   .fin { margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1.5px solid var(--ink); }
   .fin .actions { margin-top: 1rem; gap: .6rem; }
   .fin .actions .btn { flex: 1 1 auto; text-align: center; padding: .8rem .9rem; font-size: .95rem; white-space: nowrap; }
-  .fin .actions .btn[aria-expanded="true"] { background: var(--bg-2); }
-  .partage { margin-top: 1.2rem; max-width: 64ch; }
-  .partage[hidden] { display: none; }
-  #partage-compte { margin-top: 1.8rem; }
+  /* envoi à l'autre : juste sous le résultat, avant « Affinez le compte » */
+  .envoi { margin-top: 1.4rem; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
+  .envoi p { margin: 0; flex: 1 1 22ch; }
+  .envoi-boite { max-width: 560px; }
   .rs { display: flex; gap: .6rem; flex-wrap: wrap; margin: .7rem 0 0; }
   .rs a, .rs button { display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .85rem .5rem .7rem; border-radius: 999px; border: 1.5px solid var(--border); background: var(--paper); color: var(--ink); text-decoration: none; font: inherit; font-size: .9rem; cursor: pointer; }
   .rs a:hover, .rs button:hover { border-color: var(--ink); }
@@ -602,6 +602,10 @@
       <table class="resultats" id="cartes"></table>
       <div class="parcat" id="parcat"></div>
       <div class="lecture" id="lecture"></div>
+      <div class="envoi">
+        <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce compte à l'autre</button>
+        <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce compte.</p>
+      </div>
       <div class="affiner">
         <h2>Affinez le compte</h2>
         <p class="muted">Tout se corrige ici, sans revenir à la liste : qui s'en occupe, qui y pense, et le temps. Les valeurs proposées viennent d'enquêtes sur le temps domestique. Pour chaque tâche : combien de fois par jour, semaine, mois ou an, et combien de minutes à chaque fois (pas au total). Le total par jour se recalcule tout seul. Exemple : les courses 2 fois par semaine, 90 minutes à chaque fois, font 26 minutes par jour.</p>
@@ -613,15 +617,10 @@
         <h2>Et maintenant</h2>
         <div class="actions">
           <button class="btn" id="sauver">Sauvegarder</button>
-          <button class="btn secondary" id="envoyer" aria-expanded="false" aria-controls="partage-compte">Envoyer ce compte à l'autre</button>
           <button class="btn secondary" id="xlsx">Télécharger en Excel</button>
           <button class="btn secondary" id="back2">Modifier qui y pense</button>
         </div>
         <p class="small muted garde-note">Ce compte n'est gardé pour vous nulle part : copiez le lien ou ajoutez la page aux favoris pour le retrouver.</p>
-        <div class="partage" id="partage-compte" hidden>
-          <p class="muted small">Le lien contient vos réponses, rien d'autre : la personne qui l'ouvre retrouve exactement ce compte.</p>
-          <div class="rs" data-partage="compte"></div>
-        </div>
         <p class="small"><a href="#" id="reset">Recommencer depuis le début</a></p>
       </div>
       <div class="connaitre" id="connaitre">
@@ -664,6 +663,15 @@
       <div class="modale-actions"><button class="btn" type="submit">Envoyer</button></div>
       <p class="small muted" id="intention-ok" aria-live="polite"></p>
     </form>
+  </div>
+</div>
+
+<div class="modale" id="envoi" role="dialog" aria-modal="true" aria-labelledby="envoi-titre" hidden>
+  <div class="modale-boite envoi-boite">
+    <button class="modale-fermer" type="button" id="envoi-fermer" aria-label="Fermer">Fermer</button>
+    <h2 id="envoi-titre">Envoyer ce compte à l'autre</h2>
+    <p class="muted">Le lien contient vos réponses, rien d'autre : la personne qui l'ouvre retrouve exactement ce compte.</p>
+    <div class="rs" data-partage="compte"></div>
   </div>
 </div>
 
@@ -1222,11 +1230,17 @@
   document.getElementById("suiviBtn").addEventListener("click", voirCompte);
   document.getElementById("back2").addEventListener("click", () => show(2));
   document.getElementById("xlsx").addEventListener("click", exportXlsx);
-  document.getElementById("envoyer").addEventListener("click", e => {
-    const p = document.getElementById("partage-compte"), ouvert = p.hidden;
-    p.hidden = !ouvert; e.currentTarget.setAttribute("aria-expanded", String(ouvert));
-    if (ouvert) { const a = p.querySelector("a"); if (a) a.focus(); }
-  });
+  // « Envoyer ce compte à l'autre », remonté sous le résultat (26/09/2026) : le choix du canal s'ouvre en modale.
+  (function envoi() {
+    const m = document.getElementById("envoi");
+    document.getElementById("envoyer").addEventListener("click", () => {
+      ouvrirModale(m, m.querySelector(".rs a"));
+      if (window.__ga) gtag("event", "envoi_ouvert");
+    });
+    document.getElementById("envoi-fermer").addEventListener("click", () => fermerModale(m));
+    m.addEventListener("click", e => { if (e.target === m) fermerModale(m); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });
+  })();
   document.getElementById("reset").addEventListener("click", (e) => {
     e.preventDefault();
     if (!confirm("Tout effacer et recommencer ?")) return;
