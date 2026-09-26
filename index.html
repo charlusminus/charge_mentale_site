@@ -352,6 +352,7 @@
   .connaitre .image-cta { margin-top: 1rem; }
   .affiner tr.repart-ligne td { padding: 0 0 .6rem; border: 0; }
   .affiner tr.repart-ligne .repart { margin-top: 0; max-width: 30rem; }
+  .affiner .repart input { width: 100%; padding: 0; border: 0; border-radius: 0; background: transparent; }   /* la réglette ne prend pas le gabarit des champs chiffrés */
   .rs { display: flex; gap: .6rem; flex-wrap: wrap; margin: .7rem 0 0; }
   .rs a, .rs button { display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .85rem .5rem .7rem; border-radius: 999px; border: 1.5px solid var(--border); background: var(--paper); color: var(--ink); text-decoration: none; font: inherit; font-size: .9rem; cursor: pointer; }
   .rs a:hover, .rs button:hover { border-color: var(--ink); }
@@ -470,6 +471,10 @@
       font-size: .8rem; font-weight: 400; line-height: 1.35; box-shadow: 0 6px 18px rgba(42, 33, 24, .18); }
     .affiner tr.qui-ligne { display: block; padding-bottom: .6rem; }
     .affiner tr.qui-ligne td { display: block; padding: 0; border: 0; }
+    .affiner tr.repart-ligne:not([hidden]), .affiner tr.repart-ligne td { display: block; }
+    /* réglette en pleine largeur, les deux parts au-dessus, de part et d'autre (retour de Charles du 26/09/2026 : trop serrée) */
+    .repart { grid-template-columns: 1fr 1fr; grid-template-areas: "q q" "g d" "s s"; row-gap: .15rem; }
+    .repart .q { grid-area: q; } .repart .g { grid-area: g; } .repart .d { grid-area: d; } .repart input { grid-area: s; }
     .affiner .qui-mobile { display: flex; flex-wrap: wrap; gap: .35rem .9rem; font-size: .8rem; color: var(--muted); }
     .affiner .qui-mobile label { display: inline-flex; align-items: center; gap: .3rem; }
     .affiner .qui-mobile select { font-size: .82rem; padding: .15rem .3rem; }
@@ -769,7 +774,7 @@
   <button class="btn" type="button" id="barre-envoyer" aria-haspopup="dialog">Partager à ma moitié</button>
 </div></div>
 
-<script src="catalogue.js?v=20260924e"></script>
+<script src="catalogue.js?v=20260926a"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -802,6 +807,9 @@
   // Format 3 (21/09/2026, apres-midi) : Courses devant Repas, sans le petit dejeuner. Format 4 : menage reordonne, draps dans Linge, deposer / recuperer separes.
   // Format 5 (21/09/2026, soir) : draps de retour dans Menage, Linge = machines, repasser, ranger le linge propre, gros linge, entretenir.
   // Format 6 (22/09/2026) : les impots rejoignent « Faire les demarches et les papiers », le catalogue passe de 51 a 50 taches.
+  // Format 7 (26/09/2026) : « Acheter ce qu'il faut pour la maison » fondu dans « S'occuper des courses », « S'occuper des nuits » ajouté
+  // après le coucher ; toujours 50 tâches. Un lien « 6~ » se lit avec ORDRE_V6, sa réponse sur les achats pour la maison est ignorée.
+  const ORDRE_V6 = ["courses", "produits-maison", "cuisiner", "vaisselle", "ranger", "poussiere", "sols", "poubelles", "cuisine-nettoyage", "sanitaires", "lits", "gros-nettoyage", "tri", "machines", "repassage", "ranger-linge", "gros-linge", "taches", "matin", "trajets", "recuperer", "gouter-devoirs", "bain", "coucher", "jouer", "garde", "malade", "ecole", "sante-enfants", "activites", "vetements-enfants", "mode-garde", "anniversaires-enfants", "ecrans-regles", "souvenirs", "factures", "papiers", "numerique", "employeur", "agenda", "amis", "cadeaux", "vacances", "parents-ages", "reparations", "plantes", "voiture", "chauffage", "animal-quotidien", "animal-suivi"];
   const ORDRE_V5 = ["courses", "produits-maison", "cuisiner", "vaisselle", "ranger", "poussiere", "sols", "poubelles", "cuisine-nettoyage", "sanitaires", "lits", "gros-nettoyage", "tri", "machines", "repassage", "ranger-linge", "gros-linge", "taches", "matin", "trajets", "recuperer", "gouter-devoirs", "bain", "coucher", "jouer", "garde", "malade", "ecole", "sante-enfants", "activites", "vetements-enfants", "mode-garde", "anniversaires-enfants", "ecrans-regles", "souvenirs", "factures", "papiers", "impots", "numerique", "employeur", "agenda", "amis", "cadeaux", "vacances", "parents-ages", "reparations", "plantes", "voiture", "chauffage", "animal-quotidien", "animal-suivi"];
   const ORDRE_V4 = ["courses", "produits-maison", "cuisiner", "vaisselle", "ranger", "poussiere", "sols", "poubelles", "cuisine-nettoyage", "sanitaires", "gros-nettoyage", "tri", "machines", "lits", "taches", "repassage", "gros-linge", "matin", "trajets", "recuperer", "gouter-devoirs", "bain", "coucher", "jouer", "garde", "malade", "ecole", "sante-enfants", "activites", "vetements-enfants", "mode-garde", "anniversaires-enfants", "ecrans-regles", "souvenirs", "factures", "papiers", "impots", "numerique", "employeur", "agenda", "amis", "cadeaux", "vacances", "parents-ages", "reparations", "plantes", "voiture", "chauffage", "animal-quotidien", "animal-suivi"];
   const ORDRE_V3 = ["courses", "produits-maison", "cuisiner", "vaisselle", "ranger", "cuisine-nettoyage", "sols", "sanitaires", "poubelles", "poussiere", "lits", "gros-nettoyage", "tri", "machines", "taches", "repassage", "gros-linge", "matin", "trajets", "gouter-devoirs", "coucher", "bain", "jouer", "garde", "malade", "ecole", "sante-enfants", "activites", "vetements-enfants", "mode-garde", "anniversaires-enfants", "ecrans-regles", "souvenirs", "factures", "papiers", "impots", "numerique", "employeur", "agenda", "amis", "cadeaux", "vacances", "parents-ages", "reparations", "plantes", "voiture", "chauffage", "animal-quotidien", "animal-suivi"];
@@ -835,7 +843,7 @@
       const f = st.fait === "both" && partA(st, "fait") !== 50 ? partA(st, "fait") : "", pn = st.pense === "both" && partA(st, "pense") !== 50 ? partA(st, "pense") : "";
       return f === "" && pn === "" ? "" : [t.id, f, pn].join("_");
     }).filter(Boolean).join(".");
-    return ["6", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages].join("~");
+    return ["7", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages].join("~");
   }
   function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
@@ -856,7 +864,8 @@
   function load() {
     try {
       const h = location.hash.slice(1); if (!h) return null;
-      if (h.startsWith("6~")) return decode2(h, catTasks().map(t => t.id));
+      if (h.startsWith("7~")) return decode2(h, catTasks().map(t => t.id));
+      if (h.startsWith("6~")) return decode2(h, ORDRE_V6);
       if (h.startsWith("5~")) return decode2(h, ORDRE_V5);
       if (h.startsWith("4~")) return decode2(h, ORDRE_V4);
       if (h.startsWith("3~")) return decode2(h, ORDRE_V3);
