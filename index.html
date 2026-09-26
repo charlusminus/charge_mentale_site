@@ -338,10 +338,11 @@
   .fin { margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1.5px solid var(--ink); }
   .fin .actions { margin-top: 1rem; gap: .6rem; }
   .fin .actions .btn { flex: 1 1 auto; text-align: center; padding: .8rem .9rem; font-size: .95rem; white-space: nowrap; }
-  .fin .actions .btn[aria-expanded="true"] { background: var(--bg-2); }
-  .partage { margin-top: 1.2rem; max-width: 64ch; }
-  .partage[hidden] { display: none; }
-  #partage-compte { margin-top: 1.8rem; }
+  /* envoi à l'autre : juste sous le résultat, avant « Affinez le compte » */
+  .envoi { margin-top: 1.4rem; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
+  .envoi p { margin: 0; flex: 1 1 22ch; }
+  .envoi-boite { max-width: 560px; }
+  .connaitre .image-cta { margin-top: 1rem; }
   .rs { display: flex; gap: .6rem; flex-wrap: wrap; margin: .7rem 0 0; }
   .rs a, .rs button { display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .85rem .5rem .7rem; border-radius: 999px; border: 1.5px solid var(--border); background: var(--paper); color: var(--ink); text-decoration: none; font: inherit; font-size: .9rem; cursor: pointer; }
   .rs a:hover, .rs button:hover { border-color: var(--ink); }
@@ -373,9 +374,10 @@
   .connaitre { margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1.5px solid var(--ink); }
   .connaitre h2 { margin-bottom: .3rem; }
   .garde-note { margin: .8rem 0 0; }
-  /* bandeau de partage, en bas de l'écran du compte : même vocabulaire que la barre de suivi de l'étape 2 */
+  /* bandeau « Partager à ma moitié », en bas de l'écran du compte : même vocabulaire que la barre de suivi de l'étape 2 */
   .barre-partage .texte { font-family: var(--serif); font-weight: 600; font-size: 1.05rem; font-variation-settings: "opsz" 40; line-height: 1.25; }
-  @media (max-width: 420px) { .barre-partage .texte { font-size: .95rem; } }
+  .barre-partage .btn { white-space: nowrap; }
+  @media (max-width: 420px) { .barre-partage .texte { font-size: .95rem; } .barre-partage .btn { padding: .5rem .8rem; } }
   /* modale de partage : choix du visuel (deux aperçus du canvas carré 1080 x 1080) puis de la plateforme */
   .partage-boite { max-width: 640px; }
   .partage-boite fieldset { margin-top: 1.2rem; }
@@ -602,6 +604,10 @@
       <table class="resultats" id="cartes"></table>
       <div class="parcat" id="parcat"></div>
       <div class="lecture" id="lecture"></div>
+      <div class="envoi">
+        <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce compte à l'autre</button>
+        <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce compte.</p>
+      </div>
       <div class="affiner">
         <h2>Affinez le compte</h2>
         <p class="muted">Tout se corrige ici, sans revenir à la liste : qui s'en occupe, qui y pense, et le temps. Les valeurs proposées viennent d'enquêtes sur le temps domestique. Pour chaque tâche : combien de fois par jour, semaine, mois ou an, et combien de minutes à chaque fois (pas au total). Le total par jour se recalcule tout seul. Exemple : les courses 2 fois par semaine, 90 minutes à chaque fois, font 26 minutes par jour.</p>
@@ -613,21 +619,17 @@
         <h2>Et maintenant</h2>
         <div class="actions">
           <button class="btn" id="sauver">Sauvegarder</button>
-          <button class="btn secondary" id="envoyer" aria-expanded="false" aria-controls="partage-compte">Envoyer ce compte à l'autre</button>
           <button class="btn secondary" id="xlsx">Télécharger en Excel</button>
           <button class="btn secondary" id="back2">Modifier qui y pense</button>
         </div>
         <p class="small muted garde-note">Ce compte n'est gardé pour vous nulle part : copiez le lien ou ajoutez la page aux favoris pour le retrouver.</p>
-        <div class="partage" id="partage-compte" hidden>
-          <p class="muted small">Le lien contient vos réponses, rien d'autre : la personne qui l'ouvre retrouve exactement ce compte.</p>
-          <div class="rs" data-partage="compte"></div>
-        </div>
         <p class="small"><a href="#" id="reset">Recommencer depuis le début</a></p>
       </div>
       <div class="connaitre" id="connaitre">
         <h2>Faire connaître Qui y pense ?</h2>
         <p class="muted">Un couple sur cinq se dit à égalité. Si le compte vous a été utile, envoyez le site à un couple qui en aurait besoin, ou partagez-le sur vos réseaux : c'est ce qui le fait vivre.</p>
         <div class="rs" data-partage="site"></div>
+        <button class="btn secondary image-cta" type="button" id="image-ouvrir" aria-haspopup="dialog">Créer une image à partager</button>
       </div>
       <p class="apropos">D'où viennent les durées par défaut : de l'enquête Emploi du temps de l'INSEE (2010), qui mesure le temps domestique au carnet, et du jeu de cartes Fair Play (Eve Rodsky, 2019) pour les tâches que le carnet ne voit pas. Un couple avec enfants qui garde toutes les valeurs par défaut totalise environ 8 heures et demie par jour, dans la fourchette haute de ce que l'INSEE observe. La distinction « y penser » et « s'en occuper » vient des travaux d'Allison Daminger (2019) : anticiper et vérifier, c'est du travail, même quand quelqu'un d'autre exécute.</p>
     </section>
@@ -664,6 +666,15 @@
       <div class="modale-actions"><button class="btn" type="submit">Envoyer</button></div>
       <p class="small muted" id="intention-ok" aria-live="polite"></p>
     </form>
+  </div>
+</div>
+
+<div class="modale" id="envoi" role="dialog" aria-modal="true" aria-labelledby="envoi-titre" hidden>
+  <div class="modale-boite envoi-boite">
+    <button class="modale-fermer" type="button" id="envoi-fermer" aria-label="Fermer">Fermer</button>
+    <h2 id="envoi-titre">Envoyer ce compte à l'autre</h2>
+    <p class="muted">Le lien contient vos réponses, rien d'autre : la personne qui l'ouvre retrouve exactement ce compte.</p>
+    <div class="rs" data-partage="compte"></div>
   </div>
 </div>
 
@@ -742,8 +753,8 @@
   <button class="btn" id="suiviBtn">Voir le compte</button>
 </div></div>
 <div class="suivi barre-partage" id="barre-partage"><div>
-  <span class="texte">Et chez vos amis, qui y pense&nbsp;?</span>
-  <button class="btn" type="button" id="barre-partager">Partager</button>
+  <span class="texte">Ce compte se lit à deux.</span>
+  <button class="btn" type="button" id="barre-envoyer" aria-haspopup="dialog">Partager à ma moitié</button>
 </div></div>
 
 <script src="catalogue.js?v=20260924e"></script>
@@ -1222,11 +1233,16 @@
   document.getElementById("suiviBtn").addEventListener("click", voirCompte);
   document.getElementById("back2").addEventListener("click", () => show(2));
   document.getElementById("xlsx").addEventListener("click", exportXlsx);
-  document.getElementById("envoyer").addEventListener("click", e => {
-    const p = document.getElementById("partage-compte"), ouvert = p.hidden;
-    p.hidden = !ouvert; e.currentTarget.setAttribute("aria-expanded", String(ouvert));
-    if (ouvert) { const a = p.querySelector("a"); if (a) a.focus(); }
-  });
+  // « Envoyer ce compte à l'autre », remonté sous le résultat (26/09/2026) : le choix du canal s'ouvre en modale.
+  (function envoi() {
+    const m = document.getElementById("envoi");
+    const ouvrir = origine => { ouvrirModale(m, m.querySelector(".rs a")); if (window.__ga) gtag("event", "envoi_ouvert", { origine }); };
+    document.getElementById("envoyer").addEventListener("click", () => ouvrir("resultat"));
+    document.getElementById("barre-envoyer").addEventListener("click", () => ouvrir("bandeau"));   // bandeau collant, 26/09/2026
+    document.getElementById("envoi-fermer").addEventListener("click", () => fermerModale(m));
+    m.addEventListener("click", e => { if (e.target === m) fermerModale(m); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });
+  })();
   document.getElementById("reset").addEventListener("click", (e) => {
     e.preventDefault();
     if (!confirm("Tout effacer et recommencer ?")) return;
@@ -1442,8 +1458,8 @@
   })();
 
 
-  /* ---------- partage en image (bandeau du compte) ----------
-     Le bandeau collant de l'écran 3 ouvre une modale : choix du visuel (avec ou sans les résultats), puis de la
+  /* ---------- partage en image (bouton de « Faire connaître ») ----------
+     Le bouton « Créer une image à partager » ouvre une modale : choix du visuel (avec ou sans les résultats), puis de la
      plateforme. L'image est dessinée dans un canvas, dans le navigateur : rien ne part tant que la personne ne la
      publie pas elle-même. Couleurs et polices lues dans les jetons :root (charte), aucune valeur en dur.
      Format carré 1080 x 1080 : passe partout (conversation, publication, story), sans zone recouverte à ménager.
@@ -1590,9 +1606,9 @@
     async function ouvrir() {
       try { await Promise.all([serif(80), sans(36), sans(36, 500), sans(46, 600)].map(f => document.fonts.load(f))); } catch (e) {}
       note.textContent = ""; toutDessiner(); ouvrirModale(m);
-      if (window.__ga) gtag("event", "partage_ouvert", { origine: "bandeau" });
+      if (window.__ga) gtag("event", "partage_ouvert", { origine: "connaitre" });
     }
-    document.getElementById("barre-partager").addEventListener("click", ouvrir);
+    document.getElementById("image-ouvrir").addEventListener("click", ouvrir);
     document.getElementById("partage-phrase").addEventListener("click", () => { phrase = (phrase + 1) % PHRASES.length; toutDessiner(); });
     document.getElementById("partage-fermer").addEventListener("click", () => fermerModale(m));
     m.addEventListener("click", e => { if (e.target === m) fermerModale(m); });
