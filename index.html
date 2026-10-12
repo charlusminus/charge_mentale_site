@@ -276,6 +276,20 @@
   .barre .track { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--bg-2); }
   .barre .fa { background: var(--a); } .barre .fb { background: var(--b); } .barre .fboth { background: var(--both); }
   .lecture { margin-top: 1.6rem; padding: 1rem 1.2rem; background: var(--bg-2); border-radius: 12px; }
+  /* revenus du foyer (12/10/2026) : donnée annexe, hors vignettes et hors étude */
+  .budget { margin-top: 2.4rem; }
+  .budget h3 { font-family: var(--serif); font-size: 1.3rem; margin-bottom: .3rem; }
+  .budget .repart { max-width: 34rem; margin-top: .8rem; }
+  .budget .repart.vide input::-webkit-slider-runnable-track { background: var(--line); }
+  .budget .repart.vide input::-moz-range-track { background: var(--line); }
+  .budget .repart.vide .g, .budget .repart.vide .d { color: var(--muted); font-weight: 400; }
+  .budget details { margin-top: .6rem; font-size: .88rem; }
+  .budget summary { cursor: pointer; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+  .budget .salaires { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; margin-top: .6rem; align-items: end; }
+  .budget .salaires label { display: grid; gap: .2rem; font-size: .82rem; color: var(--muted); }
+  .budget .salaires input { width: 9rem; }
+  .budget .budget-txt { margin-top: .9rem; max-width: 64ch; }
+  .budget .budget-txt p { margin: .4rem 0 0; }
   .actions { margin-top: 1.6rem; display: flex; gap: .7rem; flex-wrap: wrap; }
   .apropos { font-size: .9rem; color: var(--muted); max-width: 64ch; }
   /* affinage du temps */
@@ -633,6 +647,16 @@
         <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce compte à l'autre</button>
         <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce compte.</p>
       </div>
+      <div class="budget" id="budget">
+        <h3>Et les revenus du foyer ?</h3>
+        <p class="muted">Facultatif. Le temps donné à la maison et l'argent apporté au foyer se répondent souvent. Cette réglette ne change rien au compte et ne part pas dans l'étude : elle sert à garder l'écart de revenus en tête.</p>
+        <div class="repart vide" id="budget-reglette"><span class="q">Qui apporte quelle part des revenus du foyer ?</span><span class="g"></span><input type="range" min="0" max="20" step="1" value="10" id="budget-range"><span class="d"></span></div>
+        <details id="budget-details"><summary>Calculer à partir de vos revenus</summary>
+          <div class="salaires"><label><span id="budget-lA"></span><input type="number" min="0" step="50" inputmode="numeric" id="budget-sA" placeholder="€ net par mois"></label><label><span id="budget-lB"></span><input type="number" min="0" step="50" inputmode="numeric" id="budget-sB" placeholder="€ net par mois"></label></div>
+          <p class="small muted">Les montants restent sur cette page : seul le pourcentage est gardé dans le lien du compte.</p>
+        </details>
+        <div class="budget-txt" id="budget-txt"></div>
+      </div>
       <div class="affiner">
         <h2>Affinez le compte</h2>
         <p class="muted">Tout se corrige ici, sans revenir à la liste : qui s'en occupe, qui y pense, et le temps. Les valeurs proposées viennent d'enquêtes sur le temps domestique. Pour chaque tâche : combien de fois par jour, semaine, mois ou an, et combien de minutes à chaque fois (pas au total). Le total par jour se recalcule tout seul. Exemple : les courses 2 fois par semaine, 90 minutes à chaque fois, font 26 minutes par jour.</p>
@@ -827,7 +851,7 @@
   let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
 
   function fresh() {
-    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, ecran: 1, t: {}, custom: [] };   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
+    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, ecran: 1, t: {}, custom: [], revA: null };   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
     for (const cat of C.categories) for (const t of cat.taches) s.t[t.id] = { fait: null, pense: null, n: t.n, p: t.periode, d: t.duree };
     return s;
   }
@@ -851,7 +875,9 @@
       const f = st.fait === "both" && partA(st, "fait") !== 50 ? partA(st, "fait") : "", pn = st.pense === "both" && partA(st, "pense") !== 50 ? partA(st, "pense") : "";
       return f === "" && pn === "" ? "" : [t.id, f, pn].join("_");
     }).filter(Boolean).join(".");
-    return ["7", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages].join("~");
+    // revenus (12/10/2026) : part de la personne 1 en %, champ 11 ajouté en fin de chaîne, vide tant que la réglette n'est pas réglée
+    const rev = S.revA === null || S.revA === undefined ? "" : S.revA;
+    return ["7", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev].join("~").replace(/~+$/, "");
   }
   function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
@@ -867,6 +893,7 @@
     }
     const borne = v => v === "" || v === undefined || !isFinite(+v) ? undefined : Math.max(0, Math.min(100, Math.round(+v)));
     if (f[10]) for (const o of f[10].split(".")) { const [id, pf, pp] = o.split("_"); if (s.t[id]) Object.assign(s.t[id], { pf: borne(pf), pp: borne(pp) }); }   // parts « les deux », 25/09/2026
+    const rv = borne(f[11]); s.revA = rv === undefined ? null : rv;   // revenus du foyer, 12/10/2026
     return s;
   }
   function load() {
@@ -1093,6 +1120,57 @@
     }
     txt += " Un point de départ pour en parler.";
     L.textContent = txt;
+    renderBudget(r);
+  }
+
+  // Revenus du foyer (demande de Charles du 12/10/2026) : une donnée annexe, affichée sur la page du compte seulement
+  // (ni dans les images à partager, ni dans l'étude). La règle proposée pour le budget commun est la participation
+  // au prorata des revenus : la part de chacun dans les dépenses communes est sa part dans les revenus du foyer.
+  // Réglette de 0 à 100 % par pas de 5 ; couple femme-homme : la femme à gauche, comme les réglettes « les deux ».
+  function renderBudget(r) {
+    const gaucheB = S.genreA === "h" && S.genreB === "f";
+    const [ng, nd, cg, cd] = gaucheB ? [nomB(), nomA(), "pb", "pa"] : [nomA(), nomB(), "pa", "pb"];
+    const box = document.getElementById("budget-reglette"), inp = document.getElementById("budget-range");
+    const sg = box.querySelector(".g"), sd = box.querySelector(".d"), txt = document.getElementById("budget-txt");
+    sg.className = cg + " g"; sd.className = cd + " d";
+    box.style.setProperty("--cg", `var(--${gaucheB ? "b" : "a"})`); box.style.setProperty("--cd", `var(--${gaucheB ? "a" : "b"})`);
+    inp.setAttribute("aria-label", `Part des revenus du foyer apportée par ${ng}`);
+    document.getElementById("budget-lA").textContent = nomA(); document.getElementById("budget-lB").textContent = nomB();
+    const vide = S.revA === null || S.revA === undefined;
+    box.classList.toggle("vide", vide);
+    if (vide) {
+      inp.value = 10; inp.style.setProperty("--pa", "50%");
+      sg.textContent = ng; sd.textContent = nd; inp.setAttribute("aria-valuetext", "pas encore réglée");
+      txt.innerHTML = "";
+      return;
+    }
+    const vg = gaucheB ? 100 - S.revA : S.revA;
+    inp.value = Math.round(vg / 5); inp.style.setProperty("--pa", vg + "%");
+    sg.textContent = `${ng} ${vg}\u00a0%`; sd.textContent = `${100 - vg}\u00a0% ${nd}`;
+    inp.setAttribute("aria-valuetext", `${ng} ${vg} %, ${nd} ${100 - vg} %`);
+    const ra = S.revA, rb = 100 - ra, eur = v => (v * 10).toLocaleString("fr-FR") + "\u00a0€";
+    let h = `<p>Au prorata des revenus, sur 1\u00a0000\u00a0€ de dépenses communes, <span class="pa">${nomA()}</span> en met ${eur(ra)} et <span class="pb">${nomB()}</span> ${eur(rb)}. Chacun garde ainsi pour soi la même part de ses revenus.</p>`;
+    const tot = r.a.h + r.b.h;
+    if (tot) {
+      const ta = Math.round(100 * r.a.h / tot);
+      h += `<p><span class="pa">${nomA()}</span> apporte ${ra}\u00a0% des revenus et porte ${ta}\u00a0% du temps à la maison ; <span class="pb">${nomB()}</span>, ${rb}\u00a0% des revenus et ${100 - ta}\u00a0% du temps.</p>`;
+    }
+    txt.innerHTML = h;
+  }
+  {
+    const inp = document.getElementById("budget-range");
+    inp.addEventListener("input", () => {
+      const vg = +inp.value * 5, gaucheB = S.genreA === "h" && S.genreB === "f";
+      S.revA = gaucheB ? 100 - vg : vg; renderBudget(compute()); save();
+    });
+    inp.addEventListener("change", () => { if (window.__ga) gtag("event", "revenus_regles"); });
+    const sA = document.getElementById("budget-sA"), sB = document.getElementById("budget-sB");
+    const calc = () => {
+      const a = Math.max(0, +sA.value || 0), b = Math.max(0, +sB.value || 0);
+      if (!(a + b)) return;
+      S.revA = Math.round(100 * a / (a + b)); renderBudget(compute()); save();
+    };
+    sA.addEventListener("input", calc); sB.addEventListener("input", calc);
   }
 
   // Une seule bulle (i) ouverte à la fois ; un clic ailleurs ou Échap la referme.
