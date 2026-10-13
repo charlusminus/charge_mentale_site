@@ -674,7 +674,7 @@
         <div class="pro-champs"><label><span class="n pa" data-nom="a"></span><span class="champ"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pro="a" id="pro-a-3" placeholder="0"> h / semaine</span></label><label><span class="n pb" data-nom="b"></span><span class="champ"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pro="b" id="pro-b-3" placeholder="0"> h / semaine</span></label></div>
         <div class="pro-txt" id="pro-txt"></div>
       </div>
-      <div class="budget" id="budget">
+      <div class="budget" id="budget" hidden>
         <h3>Et les revenus du foyer ?</h3>
         <p class="muted">Facultatif. Le temps donné à la maison et l'argent apporté au foyer se répondent souvent. Cette réglette ne change rien au compte et ne part pas dans l'étude : elle sert à garder l'écart de revenus en tête.</p>
         <div class="repart vide" id="budget-reglette"><span class="q">Qui apporte quelle part des revenus du foyer ?</span><span class="g"></span><input type="range" min="0" max="20" step="1" value="10" id="budget-range"><span class="d"></span></div>
@@ -1192,6 +1192,10 @@
   // (ni dans les images à partager, ni dans l'étude). La règle proposée pour le budget commun est la participation
   // au prorata des revenus : la part de chacun dans les dépenses communes est sa part dans les revenus du foyer.
   // Réglette de 0 à 100 % par pas de 5 ; couple femme-homme : la femme à gauche, comme les réglettes « les deux ».
+  // Masqué le 13/10/2026 (demande de Charles) : le bloc reste dans la page avec l'attribut hidden ; pour le remettre,
+  // passer AFFICHER_REVENUS à true. Le champ 11 du lien continue d'être lu et écrit.
+  const AFFICHER_REVENUS = false;
+  document.getElementById("budget").hidden = !AFFICHER_REVENUS;
   function renderBudget(r) {
     const gaucheB = S.genreA === "h" && S.genreB === "f";
     const [ng, nd, cg, cd] = gaucheB ? [nomB(), nomA(), "pb", "pa"] : [nomA(), nomB(), "pa", "pb"];
