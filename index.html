@@ -276,6 +276,22 @@
   .barre .track { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--bg-2); }
   .barre .fa { background: var(--a); } .barre .fb { background: var(--b); } .barre .fboth { background: var(--both); }
   .lecture { margin-top: 1.6rem; padding: 1rem 1.2rem; background: var(--bg-2); border-radius: 12px; }
+  /* travail rémunéré (13/10/2026) : facultatif, affiché à côté du compte sans le changer */
+  .pro-saisie { margin-top: 2rem; padding: 1rem 1.2rem; background: var(--bg-2); border-radius: 12px; }
+  .pro-saisie h3, .pro h3 { font-family: var(--serif); font-size: 1.3rem; margin: 0 0 .3rem; }
+  .pro { margin-top: 2.4rem; }
+  .pro-champs { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; margin-top: .7rem; align-items: end; }
+  .pro-champs label { display: grid; gap: .2rem; font-size: .85rem; color: var(--muted); }
+  .pro-champs label span.n { font-weight: 600; }
+  .pro-champs .champ { display: inline-flex; align-items: center; gap: .4rem; color: var(--ink); }
+  .pro-champs input { width: 5.5rem; }
+  .pro-txt { margin-top: .9rem; max-width: 64ch; }
+  .pro-tab { border-collapse: collapse; margin-top: .9rem; font-size: .92rem; font-variant-numeric: tabular-nums; }
+  .pro-tab th, .pro-tab td { padding: .35rem .9rem .35rem 0; text-align: right; border-bottom: 1px solid var(--line); }
+  .pro-tab th:first-child, .pro-tab td:first-child { text-align: left; }
+  .pro-tab th { font-size: .8rem; color: var(--muted); font-weight: 600; }
+  .pro-tab tr.tot td { font-weight: 700; border-bottom: 0; }
+  .pro .pa, .pro-saisie .pa { color: var(--a); } .pro .pb, .pro-saisie .pb { color: var(--b); }
   /* revenus du foyer (12/10/2026) : donnée annexe, hors vignettes et hors étude */
   .budget { margin-top: 2.4rem; }
   .budget h3 { font-family: var(--serif); font-size: 1.3rem; margin-bottom: .3rem; }
@@ -630,6 +646,11 @@
         </dl>
       </details>
       <div id="catalogue"></div>
+      <div class="pro-saisie" id="pro-saisie">
+        <h3>Et le travail rémunéré ?</h3>
+        <p class="small muted">Facultatif. Le temps de travail payé de chacun par semaine, trajets compris. Il s'affiche à côté du compte pour voir la charge totale, sans changer le compte. Laissez vide si vous préférez.</p>
+        <div class="pro-champs"><label><span class="n pa" data-nom="a"></span><span class="champ"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pro="a" id="pro-a" placeholder="0"> h / semaine</span></label><label><span class="n pb" data-nom="b"></span><span class="champ"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pro="b" id="pro-b" placeholder="0"> h / semaine</span></label></div>
+      </div>
       <div class="nav"><button class="btn secondary" id="back1">Retour</button><button class="btn" id="go3">Voir le compte</button><span class="small muted" id="hint2"></span></div>
     </section>
   </div>
@@ -646,6 +667,12 @@
       <div class="envoi">
         <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce compte à l'autre</button>
         <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce compte.</p>
+      </div>
+      <div class="pro" id="pro">
+        <h3>Et le travail rémunéré ?</h3>
+        <p class="muted">Facultatif. Le compte ne regarde que la maison&nbsp;; le travail payé pèse aussi. En l'ajoutant, vous voyez la charge totale de chacun, sans que le compte change.</p>
+        <div class="pro-champs"><label><span class="n pa" data-nom="a"></span><span class="champ"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pro="a" id="pro-a-3" placeholder="0"> h / semaine</span></label><label><span class="n pb" data-nom="b"></span><span class="champ"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pro="b" id="pro-b-3" placeholder="0"> h / semaine</span></label></div>
+        <div class="pro-txt" id="pro-txt"></div>
       </div>
       <div class="budget" id="budget">
         <h3>Et les revenus du foyer ?</h3>
@@ -776,7 +803,7 @@
   <div class="modale-boite etude-boite">
     <h2 id="etude-titre">Important, avant d'afficher votre compte</h2>
     <p>Pour afficher le résultat, nous conservons une copie <strong class="souligne">anonymisée</strong> de vos réponses, afin de mener une grande étude sur la répartition des tâches et de la charge mentale dans les foyers.</p>
-    <p class="small muted">Ce qui est conservé : vos réponses, les durées que vous avez réglées, le nombre d'enfants, le genre indiqué, qui a rempli le questionnaire, les tâches que vous avez ajoutées vous-même. Jamais vos prénoms, ni adresse, ni e-mail, ni adresse IP : rien qui permette de remonter jusqu'à vous. C'est la contrepartie d'un outil gratuit et sans publicité.</p>
+    <p class="small muted">Ce qui est conservé : vos réponses, les durées que vous avez réglées, le nombre d'enfants, le genre indiqué, qui a rempli le questionnaire, les tâches que vous avez ajoutées vous-même, et les heures de travail rémunéré si vous les avez indiquées. Jamais vos prénoms, ni adresse, ni e-mail, ni adresse IP : rien qui permette de remonter jusqu'à vous. C'est la contrepartie d'un outil gratuit et sans publicité.</p>
     <div class="turnstile" id="cf-etude"></div>
     <p class="small muted etude-etat" id="etude-etat" aria-live="polite">Vérification anti-robot en cours…</p>
     <div class="etude-actions">
@@ -851,7 +878,7 @@
   let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
 
   function fresh() {
-    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, ecran: 1, t: {}, custom: [], revA: null };   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
+    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null };   // proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
     for (const cat of C.categories) for (const t of cat.taches) s.t[t.id] = { fait: null, pense: null, n: t.n, p: t.periode, d: t.duree };
     return s;
   }
@@ -877,7 +904,9 @@
     }).filter(Boolean).join(".");
     // revenus (12/10/2026) : part de la personne 1 en %, champ 11 ajouté en fin de chaîne, vide tant que la réglette n'est pas réglée
     const rev = S.revA === null || S.revA === undefined ? "" : S.revA;
-    return ["7", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev].join("~").replace(/~+$/, "");
+    // travail rémunéré (13/10/2026) : champ 12, « heuresA_heuresB » par semaine, vide si aucune n'est indiquée
+    const vh = v => v === null || v === undefined ? "" : v, pro = vh(S.proA) === "" && vh(S.proB) === "" ? "" : vh(S.proA) + "_" + vh(S.proB);
+    return ["7", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro].join("~").replace(/~+$/, "");
   }
   function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
@@ -894,6 +923,7 @@
     const borne = v => v === "" || v === undefined || !isFinite(+v) ? undefined : Math.max(0, Math.min(100, Math.round(+v)));
     if (f[10]) for (const o of f[10].split(".")) { const [id, pf, pp] = o.split("_"); if (s.t[id]) Object.assign(s.t[id], { pf: borne(pf), pp: borne(pp) }); }   // parts « les deux », 25/09/2026
     const rv = borne(f[11]); s.revA = rv === undefined ? null : rv;   // revenus du foyer, 12/10/2026
+    if (f[12]) { const [pa, pb] = f[12].split("_").map(borne); s.proA = pa === undefined ? null : pa; s.proB = pb === undefined ? null : pb; }   // travail rémunéré, 13/10/2026
     return s;
   }
   function load() {
@@ -1120,8 +1150,43 @@
     }
     txt += " Un point de départ pour en parler.";
     L.textContent = txt;
+    renderPro(r);
     renderBudget(r);
   }
+
+  // Travail rémunéré (demande de Charles du 13/10/2026, après les commentaires « et le travail ? ») : facultatif,
+  // saisi en fin d'étape 2 (il part alors avec la copie de l'étude) ou sur la page du compte (affichage seulement).
+  // Il ne change ni le compte ni le verdict : il pose à côté la charge totale par semaine, travail payé plus maison,
+  // comme l'enquête Emploi du temps de l'INSEE. Ni dans les images à partager, ni dans l'Excel.
+  function renderPro(r) {
+    document.querySelectorAll("[data-nom=a]").forEach(e => e.textContent = nomA());
+    document.querySelectorAll("[data-nom=b]").forEach(e => e.textContent = nomB());
+    document.querySelectorAll("input[data-pro]").forEach(i => {
+      if (document.activeElement === i) return;
+      const v = i.dataset.pro === "a" ? S.proA : S.proB; i.value = v === null || v === undefined ? "" : v;
+    });
+    const txt = document.getElementById("pro-txt"); if (!txt || !r) return;
+    const okA = S.proA !== null && S.proA !== undefined, okB = S.proB !== null && S.proB !== undefined;
+    if (!okA || !okB) { txt.innerHTML = ""; return; }
+    const ma = Math.round(quart(r.a.h) * 7), mb = Math.round(quart(r.b.h) * 7);
+    const ta = S.proA + ma, tb = S.proB + mb;
+    let h = `<table class="pro-tab"><tr><th>Par semaine</th><th class="pa">${nomA()}</th><th class="pb">${nomB()}</th></tr>
+      <tr><td>Travail payé</td><td>${S.proA} h</td><td>${S.proB} h</td></tr>
+      <tr><td>Maison</td><td>${ma} h</td><td>${mb} h</td></tr>
+      <tr class="tot"><td>Total</td><td>${ta} h</td><td>${tb} h</td></tr></table>`;
+    const ecart = Math.abs(ta - tb);
+    h += ecart <= 3
+      ? `<p>Une charge totale proche, travail payé et maison compris. Reste à voir si la façon de vous la répartir vous convient à tous les deux.</p>`
+      : `<p>${ta > tb ? nomA() : nomB()} a ${ecart} h de plus par semaine, travail payé et maison compris. Si c'est un choix, tant mieux\u00a0; sinon, c'est un point de départ pour en parler.</p>`;
+    txt.innerHTML = h;
+  }
+  document.querySelectorAll("input[data-pro]").forEach(i => i.addEventListener("input", () => {
+    const v = i.value.trim() === "" ? null : Math.max(0, Math.min(100, Math.round(+i.value) || 0));
+    if (i.dataset.pro === "a") S.proA = v; else S.proB = v;
+    document.querySelectorAll(`input[data-pro=${i.dataset.pro}]`).forEach(j => { if (j !== i) j.value = v === null ? "" : v; });
+    if (S.ecran === 3) renderPro(compute()); save();
+  }));
+  document.querySelectorAll("input[data-pro]").forEach(i => i.addEventListener("change", () => { if (window.__ga) gtag("event", "travail_paye_indique", { champ: S.ecran === 3 ? "compte" : "liste" }); }));
 
   // Revenus du foyer (demande de Charles du 12/10/2026) : une donnée annexe, affichée sur la page du compte seulement
   // (ni dans les images à partager, ni dans l'étude). La règle proposée pour le budget commun est la participation
@@ -1153,7 +1218,7 @@
     const tot = r.a.h + r.b.h;
     if (tot) {
       const ta = Math.round(100 * r.a.h / tot);
-      h += `<p><span class="pa">${nomA()}</span> apporte ${ra}\u00a0% des revenus et porte ${ta}\u00a0% du temps à la maison ; <span class="pb">${nomB()}</span>, ${rb}\u00a0% des revenus et ${100 - ta}\u00a0% du temps.</p>`;
+      h += `<p><span class="pa">${nomA()}</span> apporte ${ra}\u00a0% des revenus et porte ${ta}\u00a0% du temps à la maison\u00a0; <span class="pb">${nomB()}</span>, ${rb}\u00a0% des revenus et ${100 - ta}\u00a0% du temps.</p>`;
     }
     txt.innerHTML = h;
   }
@@ -1312,7 +1377,7 @@
     document.getElementById("nTaches").textContent = `${r.renseignees} / ${r.total}`;
     document.getElementById("prog").style.width = (100 * r.renseignees / Math.max(1, r.total)) + "%";
     document.getElementById("hint2").textContent = r.renseignees < r.total ? `${r.total - r.renseignees} tâche${r.total - r.renseignees > 1 ? "s" : ""} sans réponse seront ignorées` : "";
-    if (S.ecran === 3) renderResults(r);
+    if (S.ecran === 3) renderResults(r); else renderPro(null);   // prénoms des champs « travail rémunéré » de l'étape 2
     save();
     renderPartage();
   }
@@ -1486,6 +1551,7 @@
         heures_a: r.a.h.toFixed(3), heures_b: r.b.h.toFixed(3), part_temps_a: pct(r.a.h, r.b.h),
         faites_a: r.a.nFait, faites_b: r.b.nFait, tete_a: r.a.nPense, tete_b: r.b.nPense, part_tete_a: pct(r.a.nPense, r.b.nPense),
         reponses: champs[5] || "", reglages: champs[6] || "", partages: champs[10] || "",
+        pro_a: S.proA ?? "", pro_b: S.proB ?? "",   // heures de travail payé par semaine, si indiquées avant le compte (13/10/2026)
         ajouts: S.custom.map(c => c.nom).join(" | ").slice(0, 600),
         page: location.origin + location.pathname, source: new URLSearchParams(location.search).get("utm_source") || "",
         "cf-turnstile-response": jetonTs
