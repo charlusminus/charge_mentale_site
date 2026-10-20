@@ -276,6 +276,31 @@
   .barre .track { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--bg-2); }
   .barre .fa { background: var(--a); } .barre .fb { background: var(--b); } .barre .fboth { background: var(--both); }
   .lecture { margin-top: 1.6rem; padding: 1rem 1.2rem; background: var(--bg-2); border-radius: 12px; }
+  /* « Et les autres couples ? » (20/10/2026) : repères agrégés de l'étude, sans jugement */
+  .comparer { margin-top: 2.4rem; }
+  .comparer h3 { font-family: var(--serif); font-size: 1.3rem; margin: 0 0 .3rem; }
+  .comparer .filtres { display: flex; flex-wrap: wrap; gap: .5rem; margin: .9rem 0 .4rem; }
+  .comparer .puce { display: inline-flex; align-items: center; padding: .35rem .8rem; border-radius: 999px; border: 1.5px solid var(--border); background: var(--paper); font: inherit; font-size: .88rem; color: var(--ink); }
+  .comparer .puce.on { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .comparer .puce.off { color: var(--muted); border-style: dashed; background: transparent; }
+  .comparer button.puce { cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .comparer .carte { background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem 1.1rem; margin-top: 1rem; }
+  .comparer .carte h4 { margin: 0; font-size: 1rem; font-weight: 600; }
+  .comparer .graphe { position: relative; height: 120px; margin: 1.8rem 0 .3rem; }
+  .comparer .barres { position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 3px; padding: 0 1px; }
+  .comparer .barres i { flex: 1; background: var(--line); border-radius: 3px 3px 0 0; min-height: 1px; }
+  .comparer .barres i.mil { background: #B9AA92; }
+  .comparer .barres i.ici { background: var(--c, var(--a)); }
+  .comparer .moitie { position: absolute; top: 0; bottom: 0; left: 50%; border-left: 1.5px dashed var(--border); }
+  .comparer .vous { position: absolute; top: -1.6rem; bottom: 0; border-left: 2.5px solid var(--c, var(--a)); }
+  .comparer .vous span { position: absolute; top: -.15rem; left: 6px; white-space: nowrap; font-weight: 700; color: var(--c, var(--a)); font-size: .9rem; }
+  .comparer .vous.droite span { left: auto; right: 6px; }
+  .comparer .axe { display: flex; justify-content: space-between; font-size: .78rem; color: var(--muted); border-top: 1.5px solid var(--ink); padding-top: .3rem; }
+  .comparer .legende { display: flex; gap: .4rem 1rem; flex-wrap: wrap; font-size: .8rem; color: var(--muted); margin-top: .5rem; }
+  .comparer .legende i { display: inline-block; width: .8rem; height: .8rem; border-radius: 2px; margin-right: .35rem; vertical-align: -1px; }
+  .comparer .phrase { margin: .7rem 0 0; font-size: .95rem; }
+  .comparer .phrase b { font-variant-numeric: tabular-nums; }
+  .comparer .pa { color: var(--a); } .comparer .pb { color: var(--b); }
   /* travail rémunéré (13/10/2026) : facultatif, affiché à côté du compte sans le changer */
   .pro-saisie { margin-top: 2rem; padding: 1rem 1.2rem; background: var(--bg-2); border-radius: 12px; }
   .pro-saisie h3, .pro h3 { font-family: var(--serif); font-size: 1.3rem; margin: 0 0 .3rem; }
@@ -664,6 +689,7 @@
       <table class="resultats" id="cartes"></table>
       <div class="parcat" id="parcat"></div>
       <div class="lecture" id="lecture"></div>
+      <div class="comparer" id="comparer" hidden></div>
       <div class="envoi">
         <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce compte à l'autre</button>
         <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce compte.</p>
@@ -834,6 +860,7 @@
 </div></div>
 
 <script src="catalogue.js?v=20260926a"></script>
+<script src="reperes.js?v=20261020"></script>
 <script>
 (function () {
   const C = window.CATALOGUE;
@@ -1150,8 +1177,67 @@
     }
     txt += " Un point de départ pour en parler.";
     L.textContent = txt;
+    renderComparer(r);
     renderPro(r);
     renderBudget(r);
+  }
+
+  // « Et les autres couples ? » (demande de Charles du 20/10/2026) : le compte à côté de ceux des couples qui partagent
+  // les mêmes critères (nombre d'enfants, puis heures de travail si indiquées). Les repères sont agrégés chaque semaine
+  // depuis la feuille de l'étude par charge_mentale/tools/reperes.py (reperes.js : histogrammes et quartiles par groupe,
+  // groupes de 30 couples au moins, aucune ligne individuelle). Rien ne part du navigateur. Couples femme-homme seulement :
+  // l'axe est la part portée par elle. Aucun mot de classement, seulement la position du couple dans la répartition.
+  const TRAVAIL = { "deux-tp": "Deux temps pleins", "lui-plus": "Lui, plus d'heures de travail", "elle-plus": "Elle, plus d'heures de travail", "proches": "Heures de travail proches" };
+  const ENFANTS = ["Sans enfant", "Un enfant", "Deux enfants", "Trois enfants et plus"];
+  function travailCat(pf, ph) {   // mêmes règles que tools/reperes.py
+    if (pf === null || pf === undefined || ph === null || ph === undefined) return null;
+    if (pf >= 30 && ph >= 30) return "deux-tp";
+    if (ph - pf > 5) return "lui-plus";
+    if (pf - ph > 5) return "elle-plus";
+    return "proches";
+  }
+  function renderComparer(r) {
+    const box = document.getElementById("comparer"), R = window.REPERES;
+    if (!box || !R || !R.groupes) { if (box) box.hidden = true; return; }
+    const fh = (S.genreA === "f" && S.genreB === "h") ? "a" : (S.genreA === "h" && S.genreB === "f") ? "b" : null;
+    if (!S.genreA || !S.genreB) { box.hidden = true; return; }
+    box.hidden = false;
+    if (!fh) { box.innerHTML = `<h3>Et les autres couples ?</h3><p class="muted">La comparaison porte pour l'instant sur les couples femme et homme, les plus nombreux à avoir fait le compte. Elle s'ouvrira aux autres couples quand ils seront assez nombreux.</p>`; return; }
+    const elle = fh, nom = elle === "a" ? nomA() : nomB(), cls = elle === "a" ? "pa" : "pb";
+    const totH = r.a.h + r.b.h, totP = r.a.nPense + r.b.nPense;
+    if (!totH || !totP) { box.hidden = true; return; }
+    const tete = Math.round(100 * r[elle].nPense / totP), temps = Math.round(100 * r[elle].h / totH);
+    const e = Math.min(3, S.enfants || 0);
+    const pf = elle === "a" ? S.proA : S.proB, ph = elle === "a" ? S.proB : S.proA, t = travailCat(pf, ph);
+    let cle = `e${e}`, note = "";
+    if (t && R.groupes[`e${e}-${t}`]) cle = `e${e}-${t}`;
+    else if (t) note = ` Avec les mêmes heures de travail, ils ne sont pas encore ${R.min} : la comparaison se fait sur le nombre d'enfants.`;
+    if (!R.groupes[cle]) { cle = "tous"; note = ` Pas encore ${R.min} couples avec le même nombre d'enfants : la comparaison se fait sur tous les couples.`; }
+    const g = R.groupes[cle];
+    const puces = [cle === "tous" ? `<span class="puce on">Tous les couples</span>` : `<span class="puce on">${ENFANTS[e]}</span>`, `<span class="puce on">Femme et homme</span>`];
+    if (cle.includes("-")) puces.push(`<span class="puce on">${TRAVAIL[t]}</span>`);
+    else if (t) puces.push(`<span class="puce off">Mêmes heures de travail : pas encore assez de couples</span>`);
+    else puces.push(`<button type="button" class="puce off" data-aller="pro">Heures de travail : à indiquer plus bas</button>`);
+    const carte = (titre, v, res, verbe, legende) => {
+      const max = Math.max(...res.hist, 1), ici = Math.min(9, Math.floor(v / 10)), [q1, , q3] = res.q;
+      const barres = res.hist.map((n, i) => { const c = i * 10 + 5; return `<i class="${i === ici ? "ici" : (c >= q1 && c <= q3 ? "mil" : "")}" style="height:${Math.round(100 * n / max)}%"></i>`; }).join("");
+      return `<div class="carte"><h4>${titre} <span class="${cls}">${nom}</span></h4>
+        <div class="graphe" role="img" aria-label="${nom} : ${v} %. Chez la moitié de ces couples, entre ${q1} et ${q3} %."><div class="barres">${barres}</div><div class="moitie"></div>
+        <div class="vous${v > 62 ? " droite" : ""}" style="left:${v}%"><span>${nom}, ${v}\u00a0%</span></div></div>
+        <div class="axe"><span>0\u00a0%</span><span>à parts égales</span><span>100\u00a0%</span></div>
+        ${legende ? `<div class="legende"><span><i style="background:var(--c)"></i>votre tranche</span><span><i style="background:#B9AA92"></i>la moitié des couples du milieu</span><span><i style="background:var(--line)"></i>les autres</span></div>` : ""}
+        <p class="phrase">Chez la moitié de ces couples, elle en ${verbe} entre <b>${q1}</b> et <b>${q3}\u00a0%</b>. Chez vous, <b>${v}\u00a0%</b>.</p></div>`;
+    };
+    box.style.setProperty("--c", `var(--${elle})`);
+    box.innerHTML = `<h3>Et les autres couples ?</h3>
+      <p class="muted">Votre compte, à côté de ceux des couples qui vous ressemblent. Un repère pour en parler, pas une note.</p>
+      <div class="filtres">${puces.join("")}</div>
+      <p class="small muted">${g.n.toLocaleString("fr-FR")} couples comparables ont fait le compte.${note}</p>
+      ${carte("Part de la charge mentale portée par", tete, g.tete, "porte", true)}
+      ${carte("Part du temps à la maison fait par", temps, g.temps, "fait", false)}
+      <p class="small muted">Repères calculés à partir des copies anonymisées de l'étude, mis à jour chaque semaine (dernière mise à jour : ${new Date(R.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}). Ils sont déjà dans la page : rien de plus ne part de votre navigateur.</p>`;
+    const aller = box.querySelector("[data-aller=pro]");
+    if (aller) aller.addEventListener("click", () => document.getElementById("pro").scrollIntoView({ behavior: "smooth", block: "start" }));
   }
 
   // Travail rémunéré (demande de Charles du 13/10/2026, après les commentaires « et le travail ? ») : facultatif,
@@ -1184,7 +1270,7 @@
     const v = i.value.trim() === "" ? null : Math.max(0, Math.min(100, Math.round(+i.value) || 0));
     if (i.dataset.pro === "a") S.proA = v; else S.proB = v;
     document.querySelectorAll(`input[data-pro=${i.dataset.pro}]`).forEach(j => { if (j !== i) j.value = v === null ? "" : v; });
-    if (S.ecran === 3) renderPro(compute()); save();
+    if (S.ecran === 3) { const r = compute(); renderPro(r); renderComparer(r); } save();
   }));
   document.querySelectorAll("input[data-pro]").forEach(i => i.addEventListener("change", () => { if (window.__ga) gtag("event", "travail_paye_indique", { champ: S.ecran === 3 ? "compte" : "liste" }); }));
 
