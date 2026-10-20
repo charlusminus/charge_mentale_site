@@ -2,7 +2,7 @@
 :root {
   --bg: #FAF6EF; --bg-2: #F1EBDF; --paper: #FFFDF9; --ink: #2A2118; --muted: #6B5F53; --line: #D3C8B6; --border: #8A7E70;
   --a: #1F6F6B; --b: #B5502A; --r: 8px;
-  --serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --serif: "Fraunces", "Fraunces repli", Georgia, "Times New Roman", serif;
   --sans: "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
 }
 * { box-sizing: border-box; }
