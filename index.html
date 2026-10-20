@@ -692,16 +692,16 @@
       <table class="resultats" id="cartes"></table>
       <div class="parcat" id="parcat"></div>
       <div class="lecture" id="lecture"></div>
-      <div class="comparer" id="comparer" hidden></div>
-      <div class="envoi">
-        <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce compte à l'autre</button>
-        <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce compte.</p>
-      </div>
       <div class="pro" id="pro">
         <h3>Et le travail rémunéré ?</h3>
         <p class="muted">Facultatif. Le compte ne regarde que la maison&nbsp;; le travail payé pèse aussi. En l'ajoutant, vous voyez la charge totale de chacun, sans que le compte change.</p>
         <div class="pro-champs"><label><span class="n pa" data-nom="a"></span><span class="champ"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pro="a" id="pro-a-3" placeholder="0"> h / semaine</span></label><label><span class="n pb" data-nom="b"></span><span class="champ"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pro="b" id="pro-b-3" placeholder="0"> h / semaine</span></label></div>
         <div class="pro-txt" id="pro-txt"></div>
+      </div>
+      <div class="comparer" id="comparer" hidden></div>
+      <div class="envoi">
+        <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce compte à l'autre</button>
+        <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce compte.</p>
       </div>
       <div class="budget" id="budget" hidden>
         <h3>Et les revenus du foyer ?</h3>
@@ -1230,7 +1230,7 @@
     const puces = [cle === "tous" ? `<span class="puce on">Tous les couples</span>` : `<span class="puce on">${ENFANTS[e]}</span>`, `<span class="puce on">Femme et homme</span>`];
     if (cle.includes("-")) puces.push(`<span class="puce on">${TRAVAIL[t]}</span>`);
     else if (t) puces.push(`<span class="puce off">Mêmes heures de travail : pas encore assez de couples</span>`);
-    else puces.push(`<button type="button" class="puce off" data-aller="pro">Heures de travail : à indiquer plus bas</button>`);
+    else puces.push(`<button type="button" class="puce off" data-aller="pro">Heures de travail : à indiquer plus haut</button>`);
     const carte = (titre, v, res, verbe, legende) => {
       const max = Math.max(...res.hist, 1), ici = Math.min(9, Math.floor(v / 10)), [q1, , q3] = res.q;
       const barres = res.hist.map((n, i) => { const c = i * 10 + 5; return `<i class="${i === ici ? "ici" : (c >= q1 && c <= q3 ? "mil" : "")}" style="height:${Math.round(100 * n / max)}%"></i>`; }).join("");
