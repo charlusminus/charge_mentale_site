@@ -164,6 +164,69 @@
   .blog-cartes .desc { display: block; color: var(--muted); font-size: .95rem; }
   .demarrer { margin-top: 40px; padding: 32px; background: var(--bg-2); border-radius: var(--r); }
   .demarrer .nav { margin: 1.4rem 0 0; }
+  /* accueil en chapitres (maquette du 20/10/2026, inspirée d'ownthepatch.co.uk) */
+  html { overflow-x: clip; }
+  #e1 header.hero h1 { max-width: none; font-size: clamp(2.6rem, 7vw, 4.2rem); line-height: 1.02; }
+  #e1 header.hero .sur { font-size: 1.05rem; font-family: var(--sans); font-weight: 600; letter-spacing: .02em; color: var(--muted); margin-bottom: 1rem; }
+  .chapitre { margin: 0 calc(50% - 50vw); padding: 80px calc(50vw - 50%); }
+  .chapitre > h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 1.2rem; max-width: 20ch; }
+  .chapitre.sable { background: var(--bg-2); }
+  .chapitre.sombre { background: var(--ink); color: var(--bg); }
+  .chiffres-cles { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 72px; padding-top: 56px; padding-bottom: 56px; }
+  .chiffres-cles div { padding: 0 1.2rem; border-left: 1px solid #5A4D40; }
+  .chiffres-cles div:first-child { border-left: 0; padding-left: 0; }
+  .chiffres-cles strong { font-variant-numeric: lining-nums; display: block; font-family: var(--serif); font-variation-settings: "opsz" 144; font-size: clamp(3rem, 6vw, 4.4rem); line-height: 1; }
+  .chiffres-cles .u { display: block; font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin: .6rem 0 .5rem; }
+  .chiffres-cles span:not(.u) { display: block; color: #D6CBBB; font-size: .9rem; line-height: 1.4; }
+  .deux-charges .intro { font-family: var(--serif); font-size: 1.3rem; margin: 0 0 1.4rem; }
+  .colonnes { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem; }
+  .colonnes .col { background: var(--paper); border-radius: 12px; padding: 1.4rem 1.5rem; border: 1.5px solid var(--line); }
+  .colonnes .penser { border-color: var(--ink); }
+  .colonnes .etiq { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; margin: 0 0 .6rem; }
+  .colonnes ul { margin: 0 0 1rem; padding-left: 1.1rem; }
+  .colonnes li { margin-bottom: .3rem; }
+  .colonnes .mesure { border-top: 1px solid var(--line); padding-top: .8rem; margin: 0; font-weight: 600; }
+  .colonnes .mesure span { display: block; font-weight: 400; color: var(--muted); }
+  .etapes-accueil ol { list-style: none; padding: 0; margin: 0; border-top: 1.5px solid var(--ink); }
+  .etapes-accueil li { display: grid; grid-template-columns: 4rem 14rem 1fr; gap: 1rem; align-items: baseline; padding: 1.3rem 0; border-bottom: 1px solid var(--line); }
+  .etapes-accueil .num { font-variant-numeric: lining-nums; font-family: var(--serif); font-variation-settings: "opsz" 144; font-size: 2.6rem; line-height: 1; color: var(--muted); }
+  .etapes-accueil strong { font-family: var(--serif); font-size: 1.25rem; font-variation-settings: "opsz" 40; }
+  .etapes-accueil li > span:last-child { color: var(--muted); }
+  .apercu-reperes > p:first-of-type { font-family: var(--serif); font-size: 1.3rem; max-width: 34ch; }
+  .histo { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; align-items: end; height: 140px; margin: 1.6rem 0 .3rem; border-bottom: 1.5px solid var(--ink); }
+  .histo i { display: block; background: var(--border); border-radius: 3px 3px 0 0; }
+  .histo i.q { background: var(--b); }
+  .histo-axe { display: flex; justify-content: space-between; font-size: .8rem; color: var(--muted); margin-bottom: 1rem; }
+  .enquetes .stats { margin: 0; }
+  .origine { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .origine h2 { margin-bottom: 1rem; }
+  .origine p { color: #D6CBBB; }
+  .tableur { margin: 0; background: var(--paper); color: var(--ink); border-radius: 6px; padding: 0 0 .6rem; transform: rotate(-1.2deg); font-size: .85rem; }
+  .tableur .t-titre { background: #FFE58F; font-weight: 700; padding: .45rem .8rem; border-radius: 6px 6px 0 0; letter-spacing: .03em; }
+  .tableur table { width: 100%; border-collapse: collapse; }
+  .tableur th, .tableur td { text-align: left; padding: .4rem .8rem; border-bottom: 1px solid #E4DCCF; }
+  .tableur th { font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+  .tableur figcaption { font-size: .75rem; color: var(--muted); padding: .5rem .8rem 0; }
+  #e1 .faq { max-width: none; margin-top: 0; counter-reset: q; }
+  #e1 .faq details { counter-increment: q; padding: 1rem 0; }
+  #e1 .faq summary { display: grid; column-gap: .6rem; grid-template-columns: 3rem 1fr auto; align-items: baseline; list-style: none; font-family: var(--serif); font-size: 1.25rem; font-weight: 600; font-variation-settings: "opsz" 40; }
+  #e1 .faq summary::-webkit-details-marker { display: none; }
+  #e1 .faq summary::before { content: counter(q, decimal-leading-zero); font-family: var(--sans); font-size: .8rem; font-weight: 600; color: var(--muted); }
+  #e1 .faq summary::after { content: "+"; font-family: var(--sans); font-weight: 400; font-size: 1.4rem; line-height: 1; }
+  #e1 .faq details[open] summary::after { content: "\2212"; }
+  #e1 .faq details p { margin-left: 3rem; max-width: 62ch; }
+  #e1 .blog-accueil { margin-top: 0; padding-top: 72px; }
+  @media (max-width: 720px) {
+    .chapitre { padding-top: 56px; padding-bottom: 56px; }
+    .chiffres-cles { grid-template-columns: 1fr 1fr; row-gap: 2rem; }
+    .chiffres-cles div:nth-child(3) { border-left: 0; padding-left: 0; }
+    .colonnes, .origine { grid-template-columns: 1fr; }
+    .origine { gap: 2rem; }
+    .etapes-accueil li { grid-template-columns: 3rem 1fr; }
+    .etapes-accueil li > span:last-child { grid-column: 2; }
+    #e1 .faq summary { grid-template-columns: 2rem 1fr auto; font-size: 1.1rem; }
+    #e1 .faq details p { margin-left: 2.6rem; }
+  }
   .prenoms { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 520px; margin-top: .8rem; }
   .prenoms.foyer { margin-top: 1rem; }
   .foyer .enfants { margin-top: 0; max-width: none; }
@@ -580,10 +643,10 @@
   <!-- ÉCRAN 1 : accueil -->
   <div class="ecran" id="e1">
     <header class="hero">
-      <p class="sur">Qui fait quoi à la maison ?</p>
-      <h1>Qui y pense ?</h1>
-      <p class="lead">Faites le compte à deux, en dix minutes. Les tâches sont déjà listées : pour chacune, dites qui s'en occupe, et qui y pense. Vous lisez ensuite le résultat pour chacun : les heures par jour, et le nombre de choses à garder en tête.</p>
-      </header>
+      <p class="sur">Qui y pense&nbsp;? Le test de charge mentale du couple</p>
+      <h1>Tout le monde en parle.<br> Personne ne la compte.</h1>
+      <p class="lead">Faites le compte à deux, en dix minutes. Pour chacune des 50 tâches de la maison&nbsp;: qui s'en occupe, et qui y pense.</p>
+    </header>
 
     <div class="demarrer">
       <h2>On commence</h2>
@@ -622,20 +685,79 @@
       <div class="nav"><button class="btn" id="go2">Commencer</button><span class="small muted" id="hint1">Gratuit, sans compte. Tout se calcule dans votre navigateur.</span></div>
     </div>
 
-    <div class="stats">
-      <div class="stat"><strong>20 %</strong><span>des couples où les deux travaillent décrivent un partage égal des tâches</span><small>INED, enquête FAMEMP, 2025</small></div>
-      <div class="stat"><strong>4 h 01 contre 2 h 13</strong><span>de travail domestique par jour, femmes et hommes de 15 à 60 ans. Côté hommes, inchangé depuis 1999</span><small>INSEE, Emploi du temps, 2010</small></div>
-      <div class="stat"><strong>86 %</strong><span>de temps en plus passé à penser aux tâches qu'à les faire</span><small>Invisible Load Index, 6 000 Européens, 2024</small></div>
-    </div>
+    <section class="chapitre sombre chiffres-cles" aria-label="En bref">
+      <div><strong>10</strong><span class="u">minutes</span><span>à deux, et on peut s'arrêter en route</span></div>
+      <div><strong>50</strong><span class="u">tâches</span><span>déjà listées, de la plus courante à la plus rare</span></div>
+      <div><strong>2</strong><span class="u">questions</span><span>par tâche&nbsp;: qui le fait, qui y pense</span></div>
+      <div><strong>0</strong><span class="u">compte</span><span>à créer, ni e-mail, ni prénom envoyé</span></div>
+    </section>
 
-    <div class="pourquoi">
-      <h2>Pourquoi faire l'exercice</h2>
-      <p>La plupart des couples n'ont jamais listé ce qu'il y a à faire. Chacun voit ce qu'il fait, et une partie de ce que l'autre fait. Le reste est invisible : remarquer qu'il n'y a plus de lessive, savoir quand tombe le rendez-vous chez le dentiste, vérifier que le sac de piscine est prêt. Ce travail-là ne prend pas d'heures, il prend de la place dans la tête.</p>
-      <p>Cette page ne juge rien. Elle met des chiffres à la place des impressions, pour que la conversation parte de quelque chose de concret. Chez nous, la première version a surtout révélé les tâches que personne ne voyait.</p>
-    </div>
+    <section class="chapitre sable deux-charges" aria-labelledby="deux-titre">
+      <h2 id="deux-titre">Une tâche, deux charges.</h2>
+      <p class="intro">Prenez le linge. Il y a ce qui se voit, et ce qui ne se voit pas.</p>
+      <div class="colonnes">
+        <div class="col faire">
+          <p class="etiq">Le faire</p>
+          <ul><li>Lancer la machine</li><li>Étendre, plier, ranger</li></ul>
+          <p class="mesure">20 minutes, trois fois par semaine. <span>Ça se compte en heures.</span></p>
+        </div>
+        <div class="col penser">
+          <p class="etiq">Y penser</p>
+          <ul><li>Voir que la lessive baisse</li><li>Savoir que le kimono du judo doit être sec mercredi</li><li>Changer les draps tous les quinze jours</li></ul>
+          <p class="mesure">Pas de durée, mais de la place dans la tête. <span>Ça se compte en choses à garder en tête.</span></p>
+        </div>
+      </div>
+      <p class="muted">Le site compte les deux, tâche par tâche, pour chacun de vous.</p>
+    </section>
 
-    <section class="faq" id="faq" aria-labelledby="faq-titre">
-      <h2 id="faq-titre">Questions fréquentes</h2>
+    <section class="chapitre etapes-accueil" aria-labelledby="etapes-titre">
+      <h2 id="etapes-titre">Comment ça se passe</h2>
+      <ol>
+        <li><span class="num">1</span><strong>Vous répondez à deux</strong><span>Un clic par tâche&nbsp;: l'un, l'autre, les deux, ou personne chez vous.</span></li>
+        <li><span class="num">2</span><strong>Vous lisez le compte</strong><span>Pour chacun, les heures par jour et le nombre de choses à garder en tête.</span></li>
+        <li><span class="num">3</span><strong>Vous en parlez</strong><span>Le compte se partage par un lien, et se corrige ensemble. Il ne juge rien.</span></li>
+      </ol>
+    </section>
+
+    <section class="chapitre sable apercu-reperes" aria-labelledby="reperes-titre">
+      <h2 id="reperes-titre">Et chez les autres couples&nbsp;?</h2>
+      <p id="reperes-phrase">Chez la moitié des couples qui ont fait le compte, elle porte entre 50 et 69&nbsp;% de la charge mentale.</p>
+      <div class="histo" id="histo-accueil" aria-hidden="true"></div>
+      <div class="histo-axe" aria-hidden="true"><span>0&nbsp;%</span><span>50&nbsp;%</span><span>100&nbsp;%</span></div>
+      <p class="small muted">Part de la charge mentale portée par elle, 1&nbsp;236 couples femme-homme, octobre 2026. Un repère, pas une norme&nbsp;: à la fin du compte, vous vous situez parmi les couples qui vous ressemblent.</p>
+    </section>
+
+    <section class="chapitre enquetes" aria-labelledby="enquetes-titre">
+      <h2 id="enquetes-titre">Ce que disent les enquêtes</h2>
+      <div class="stats">
+        <div class="stat"><strong>20 %</strong><span>des couples où les deux travaillent décrivent un partage égal des tâches</span><small>INED, enquête FAMEMP, 2025</small></div>
+        <div class="stat"><strong>4 h 01 contre 2 h 13</strong><span>de travail domestique par jour, femmes et hommes de 15 à 60 ans. Côté hommes, inchangé depuis 1999</span><small>INSEE, Emploi du temps, 2010</small></div>
+        <div class="stat"><strong>86 %</strong><span>de temps en plus passé à penser aux tâches qu'à les faire</span><small>Invisible Load Index, 6 000 Européens, 2024</small></div>
+      </div>
+    </section>
+
+    <section class="chapitre sombre origine" aria-labelledby="origine-titre">
+      <div class="texte">
+        <h2 id="origine-titre">Né d'un tableur tenu à deux</h2>
+        <p>Chez nous, tout a commencé par un tableur&nbsp;: la liste de ce qu'il y a à faire, qui le fait, qui y pense. La première version a surtout révélé les tâches que personne ne voyait.</p>
+        <p>Ce site en est la version pour tous. Il ne juge rien&nbsp;: il met des chiffres à la place des impressions, pour que la conversation parte de quelque chose de concret.</p>
+      </div>
+      <figure class="tableur">
+        <div class="t-titre">BIENVEILLANCE&nbsp;! :)</div>
+        <table>
+          <tr><th>Tâche</th><th>Fait</th><th>Y pense</th></tr>
+          <tr><td>Courses de la semaine</td><td>A</td><td>B</td></tr>
+          <tr><td>Rendez-vous médicaux</td><td>B</td><td>B</td></tr>
+          <tr><td>Linge</td><td>A et B</td><td>B</td></tr>
+          <tr><td>Poubelles</td><td>A</td><td>A</td></tr>
+          <tr><td>Cadeaux d'anniversaire</td><td>B</td><td>B</td></tr>
+        </table>
+        <figcaption>Le tableur d'origine, extrait réécrit.</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapitre faq" id="faq" aria-labelledby="faq-titre">
+      <h2 id="faq-titre">Réponses franches</h2>
       <details><summary>Qu'est-ce que la charge mentale ?</summary><p>Le travail constant de gestion, d'organisation et de planification de la bonne marche de la maison, selon la définition de Nicole Brais. Concrètement : remarquer qu'il faut faire quelque chose, planifier, vérifier que c'est fait, même quand quelqu'un d'autre exécute. Le terme vient de la sociologue Monique Haicault (1984). Allison Daminger (2019) a montré que l'anticipation et le suivi restent presque toujours portés par la même personne du couple, alors que les décisions se prennent à deux.</p></details>
       <details><summary>Comment le compte est-il calculé ?</summary><p>Pour chaque tâche, vous dites qui s'en occupe et qui y pense. Les heures par jour se calculent sur « qui s'en occupe » : nombre de fois par période, multiplié par la durée, ramené à la journée. La charge mentale se compte en nombre de tâches à garder en tête, pas en heures : aucune enquête sérieuse ne convertit la pensée en minutes. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE (2010) et du jeu de cartes Fair Play (Eve Rodsky, 2019). Vous les corrigez ensuite avec votre réalité.</p></details>
       <details><summary>D'où viennent les chiffres cités ?</summary><p>INSEE, enquête Emploi du temps 2010 : 4 h 01 par jour de travail domestique pour les femmes, 2 h 13 pour les hommes, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP publiée en 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens interrogés : 86 % de temps en plus passé à penser aux tâches qu'à les faire. Les libellés des tâches suivent la nomenclature INSEE, complétée par les cent cartes Fair Play.</p></details>
@@ -864,6 +986,16 @@
 
 <script src="catalogue.js?v=20260926a"></script>
 <script src="reperes.js?v=20261020"></script>
+<script>
+  // aperçu des repères sur l'accueil : histogramme « tous », la moitié centrale (q1 à q3) en couleur
+  (function () {
+    const g = window.REPERES && REPERES.groupes && REPERES.groupes.tous, h = document.getElementById("histo-accueil");
+    if (!g || !h) return;
+    const t = g.tete, max = Math.max(...t.hist);
+    h.innerHTML = t.hist.map((v, i) => `<i style="height:${Math.max(2, v / max * 100)}%"${i * 10 + 10 > t.q[0] && i * 10 < t.q[2] ? ' class="q"' : ""}></i>`).join("");
+    document.getElementById("reperes-phrase").innerHTML = `Chez la moitié des couples qui ont fait le compte, elle porte entre ${t.q[0]} et ${t.q[2]}&nbsp;% de la charge mentale.`;
+  })();
+</script>
 <script>
 (function () {
   const C = window.CATALOGUE;
