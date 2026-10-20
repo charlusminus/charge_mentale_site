@@ -1672,7 +1672,7 @@
       data.set("cf-turnstile-response", jetonTs);
       jetonTs = null;   // un jeton ne sert qu'une fois
       // no-cors : Apps Script répond par une redirection sans en-tête CORS ; la réponse opaque suffit.
-      try { fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true, mode: "no-cors" }).catch(() => {}); } catch (e) {}
+      try { fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true, mode: "no-cors", credentials: "omit" }).catch(() => {}); } catch (e) {}
     }
     // Mise à jour (demande de Charles du 20/10/2026) : ce qui est corrigé après coup sur la page du compte (heures de
     // travail, durées, qui s'en occupe, genres) complète la copie. Envoyée quand on quitte la page ou change d'onglet,
@@ -1684,7 +1684,9 @@
       if (e === m.dernier) return;
       data.set("session", m.sid); data.set("cle", m.cle); data.set("maj", "1");
       try { m.dernier = e; sessionStorage.setItem("etude-maj", JSON.stringify(m)); } catch (err) {}
-      try { if (!(navigator.sendBeacon && navigator.sendBeacon(ETUDE_URL, data))) fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true, mode: "no-cors" }).catch(() => {}); } catch (err) {}
+      // Pas de sendBeacon : il envoie les cookies du navigateur, et un visiteur connecté à Google voit alors sa requête
+      // détournée avant d'atteindre le script (constaté le 20/10/2026). fetch keepalive, sans cookies, comme la première copie.
+      try { fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true, mode: "no-cors", credentials: "omit" }).catch(() => {}); } catch (err) {}
     }
     document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") maj(); });
     window.addEventListener("pagehide", maj);
