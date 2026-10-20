@@ -832,7 +832,7 @@
   <div class="modale-boite etude-boite">
     <h2 id="etude-titre">Important, avant d'afficher votre compte</h2>
     <p>Pour afficher le résultat, nous conservons une copie <strong class="souligne">anonymisée</strong> de vos réponses, afin de mener une grande étude sur la répartition des tâches et de la charge mentale dans les foyers.</p>
-    <p class="small muted">Ce qui est conservé : vos réponses, les durées que vous avez réglées, le nombre d'enfants, le genre indiqué, qui a rempli le questionnaire, les tâches que vous avez ajoutées vous-même, et les heures de travail rémunéré si vous les avez indiquées. Jamais vos prénoms, ni adresse, ni e-mail, ni adresse IP : rien qui permette de remonter jusqu'à vous. C'est la contrepartie d'un outil gratuit et sans publicité.</p>
+    <p class="small muted">Ce qui est conservé : vos réponses, les durées que vous avez réglées, le nombre d'enfants, le genre indiqué, qui a rempli le questionnaire, les tâches que vous avez ajoutées vous-même, et les heures de travail rémunéré si vous les avez indiquées. Si vous corrigez votre compte ensuite, la copie est mise à jour pendant 24 heures. Jamais vos prénoms, ni adresse, ni e-mail, ni adresse IP : rien qui permette de remonter jusqu'à vous. C'est la contrepartie d'un outil gratuit et sans publicité.</p>
     <div class="turnstile" id="cf-etude"></div>
     <p class="small muted etude-etat" id="etude-etat" aria-live="polite">Vérification anti-robot en cours…</p>
     <div class="etude-actions">
@@ -1642,9 +1642,8 @@
       const neuf = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
       try { let v = sessionStorage.getItem("etude-sid"); if (!v) { v = neuf(); sessionStorage.setItem("etude-sid", v); } return v; } catch (e) { return neuf(); }
     }
-    function envoyer() {
-      if (envoye || !ETUDE_URL || !jetonTs) return;
-      envoye = true;
+    // La copie, telle qu'envoyée à l'accord puis à chaque mise à jour (21/10/2026).
+    function copie() {
       const r = compute(), champs = encode().split("~");   // 5 = réponses, 6 = réglages ; les prénoms (1 et 2) ne sont pas repris
       const pct = (x, y) => (x + y) ? String(Math.round(100 * x / (x + y))) : "";
       const data = new URLSearchParams({
@@ -1656,13 +1655,39 @@
         reponses: champs[5] || "", reglages: champs[6] || "", partages: champs[10] || "",
         pro_a: S.proA ?? "", pro_b: S.proB ?? "",   // heures de travail payé par semaine, si indiquées avant le compte (13/10/2026)
         ajouts: S.custom.map(c => c.nom).join(" | ").slice(0, 600),
-        page: location.origin + location.pathname, source: new URLSearchParams(location.search).get("utm_source") || "",
-        "cf-turnstile-response": jetonTs
+        page: location.origin + location.pathname, source: new URLSearchParams(location.search).get("utm_source") || ""
       });
+      return data;
+    }
+    // Empreinte de ce qui peut changer après coup (réponses, durées, parts, heures de travail, genres) : sans la date ni la session.
+    function empreinte(d) { const c = new URLSearchParams(d); c.delete("date"); c.delete("session"); return c.toString(); }
+    function envoyer() {
+      if (envoye || !ETUDE_URL || !jetonTs) return;
+      envoye = true;
+      const data = copie();
+      // Clé tirée au hasard, gardée dans l'onglet : elle seule permet de mettre à jour cette ligne, pendant 24 h.
+      const cle = Array.from(crypto.getRandomValues(new Uint8Array(16)), x => x.toString(16).padStart(2, "0")).join("");
+      data.set("cle", cle);
+      try { sessionStorage.setItem("etude-maj", JSON.stringify({ sid: data.get("session"), cle, t: Date.now(), dernier: empreinte(copie()) })); } catch (e) {}
+      data.set("cf-turnstile-response", jetonTs);
       jetonTs = null;   // un jeton ne sert qu'une fois
       // no-cors : Apps Script répond par une redirection sans en-tête CORS ; la réponse opaque suffit.
       try { fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true, mode: "no-cors" }).catch(() => {}); } catch (e) {}
     }
+    // Mise à jour (demande de Charles du 20/10/2026) : ce qui est corrigé après coup sur la page du compte (heures de
+    // travail, durées, qui s'en occupe, genres) complète la copie. Envoyée quand on quitte la page ou change d'onglet,
+    // seulement si quelque chose a changé, pendant 24 h, avec la clé de la première copie (l'Apps Script la vérifie).
+    function maj() {
+      let m; try { m = JSON.parse(sessionStorage.getItem("etude-maj") || "null"); } catch (e) { return; }
+      if (!m || !ETUDE_URL || Date.now() - m.t > 864e5 || S.ecran !== 3) return;
+      const data = copie(), e = empreinte(data);
+      if (e === m.dernier) return;
+      data.set("session", m.sid); data.set("cle", m.cle); data.set("maj", "1");
+      try { m.dernier = e; sessionStorage.setItem("etude-maj", JSON.stringify(m)); } catch (err) {}
+      try { if (!(navigator.sendBeacon && navigator.sendBeacon(ETUDE_URL, data))) fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true, mode: "no-cors" }).catch(() => {}); } catch (err) {}
+    }
+    document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") maj(); });
+    window.addEventListener("pagehide", maj);
     const m = document.getElementById("etude"), oui = document.getElementById("etude-oui"), etat = document.getElementById("etude-etat");
     let ouverture = 0;
     function pret(ok, message) { oui.disabled = !ok; etat.textContent = message || ""; }
