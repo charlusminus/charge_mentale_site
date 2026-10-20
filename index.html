@@ -301,6 +301,9 @@
   .comparer .phrase { margin: .7rem 0 0; font-size: .95rem; }
   .comparer .phrase b { font-variant-numeric: tabular-nums; }
   .comparer .pa { color: var(--a); } .comparer .pb { color: var(--b); }
+  .comparer .genres-cmp { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; margin-top: .8rem; }
+  .comparer .genres-cmp label { display: grid; gap: .2rem; font-size: .85rem; color: var(--muted); }
+  .comparer .genres-cmp select { font: inherit; font-size: .95rem; padding: .35rem .5rem; width: auto; }
   /* travail rémunéré (13/10/2026) : facultatif, affiché à côté du compte sans le changer */
   .pro-saisie { margin-top: 2rem; padding: 1rem 1.2rem; background: var(--bg-2); border-radius: 12px; }
   .pro-saisie h3, .pro h3 { font-family: var(--serif); font-size: 1.3rem; margin: 0 0 .3rem; }
@@ -1200,8 +1203,18 @@
     const box = document.getElementById("comparer"), R = window.REPERES;
     if (!box || !R || !R.groupes) { if (box) box.hidden = true; return; }
     const fh = (S.genreA === "f" && S.genreB === "h") ? "a" : (S.genreA === "h" && S.genreB === "f") ? "b" : null;
-    if (!S.genreA || !S.genreB) { box.hidden = true; return; }
     box.hidden = false;
+    if (!S.genreA || !S.genreB) {
+      // Lien antérieur au genre (22/09/2026) ou genre laissé vide : on le demande ici plutôt que de masquer le bloc.
+      const choix = (k, nom) => `<label><span>${nom}</span><select data-genre-cmp="${k}"><option value="">choisir</option><option value="f">femme</option><option value="h">homme</option><option value="x">ne se prononce pas</option></select></label>`;
+      box.innerHTML = `<h3>Et les autres couples ?</h3><p class="muted">Pour vous comparer aux couples qui vous ressemblent, indiquez le genre de chacun.</p>
+        <div class="genres-cmp">${choix("A", nomA())}${choix("B", nomB())}</div>`;
+      box.querySelectorAll("select[data-genre-cmp]").forEach(sel => {
+        sel.value = S["genre" + sel.dataset.genreCmp] || "";
+        sel.addEventListener("change", () => { S["genre" + sel.dataset.genreCmp] = sel.value; update(); });
+      });
+      return;
+    }
     if (!fh) { box.innerHTML = `<h3>Et les autres couples ?</h3><p class="muted">La comparaison porte pour l'instant sur les couples femme et homme, les plus nombreux à avoir fait le compte. Elle s'ouvrira aux autres couples quand ils seront assez nombreux.</p>`; return; }
     const elle = fh, nom = elle === "a" ? nomA() : nomB(), cls = elle === "a" ? "pa" : "pb";
     const totH = r.a.h + r.b.h, totP = r.a.nPense + r.b.nPense;
