@@ -164,6 +164,16 @@
   .blog-cartes .desc { display: block; color: var(--muted); font-size: .95rem; }
   .demarrer { margin-top: 40px; padding: 32px; background: var(--bg-2); border-radius: var(--r); }
   .demarrer .nav { margin: 1.4rem 0 0; }
+  /* bouton collant de l'accueil : apparaît quand le formulaire est passé au-dessus de l'écran, y ramène */
+  .cta-collant { position: fixed; z-index: 30; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom)); transform: translate(-50%, 160%);
+    opacity: 0; pointer-events: none; box-shadow: 0 6px 18px rgba(42, 33, 24, .22); transition: transform .25s ease, opacity .25s ease; }
+  .cta-collant.on { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
+  #e1 .demarrer { scroll-margin-top: 16px; }
+  @media (max-width: 720px) {
+    .cta-collant { left: 16px; right: 16px; bottom: calc(14px + env(safe-area-inset-bottom)); transform: translateY(160%); text-align: center; }
+    .cta-collant.on { transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) { .cta-collant { transition: none; } }
   /* accueil en chapitres (maquette du 20/10/2026, inspirée d'ownthepatch.co.uk) */
   html { overflow-x: clip; }
   #e1 header.hero h1 { max-width: none; font-size: clamp(2.6rem, 7vw, 4rem); line-height: 1.02; text-wrap: balance; }
@@ -749,6 +759,7 @@
     </section>
 
 
+    <button type="button" class="btn cta-collant" id="cta-collant" tabindex="-1" aria-hidden="true">Faire le compte</button>
   </div>
 
   <!-- ÉCRAN 2 : qui y pense -->
@@ -955,6 +966,22 @@
 
 <script src="catalogue.js?v=20260926a"></script>
 <script src="reperes.js?v=20261020"></script>
+<script>
+  // bouton collant « Faire le compte » : visible dès que le formulaire est sorti de l'écran par le haut
+  (function () {
+    const f = document.querySelector("#e1 .demarrer"), b = document.getElementById("cta-collant");
+    if (!f || !b || !("IntersectionObserver" in window)) return;
+    const montrer = v => { b.classList.toggle("on", v); b.tabIndex = v ? 0 : -1; b.setAttribute("aria-hidden", v ? "false" : "true"); };
+    new IntersectionObserver(([e]) => montrer(!e.isIntersecting && e.boundingClientRect.top < 0)).observe(f);
+    b.addEventListener("click", () => {
+      const doux = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+      f.scrollIntoView({ behavior: doux ? "smooth" : "auto", block: "start" });
+      const cible = ["nomA", "nomB"].map(id => document.getElementById(id)).find(i => i && !i.value.trim()) || document.getElementById("go2");
+      if (cible) cible.focus({ preventScroll: true });
+      if (window.__ga) gtag("event", "cta_collant");
+    });
+  })();
+</script>
 <script>
   // aperçu des repères sur l'accueil : histogramme « tous », la moitié centrale (q1 à q3) en couleur
   (function () {
