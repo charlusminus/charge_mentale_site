@@ -329,6 +329,7 @@
   .pro-tab th:first-child, .pro-tab td:first-child { text-align: left; }
   .pro-tab th { font-size: .8rem; color: var(--muted); font-weight: 600; }
   .pro-tab tr.tot td { font-weight: 700; border-bottom: 0; }
+  .pro-tab tr td.a-indiquer { color: var(--muted); font-weight: 400; font-style: italic; }
   .pro .pa, .pro-saisie .pa { color: var(--a); } .pro .pb, .pro-saisie .pb { color: var(--b); }
   /* revenus du foyer (12/10/2026) : donnée annexe, hors vignettes et hors étude */
   .budget { margin-top: 2.4rem; }
@@ -1302,8 +1303,16 @@
     });
     const txt = document.getElementById("pro-txt"); if (!txt || !r) return;
     const pr = proRetenu();
-    if (!pr) { txt.innerHTML = ""; return; }
     const ma = Math.round(quart(r.a.h) * 7), mb = Math.round(quart(r.b.h) * 7);
+    if (!pr) {   // rien de saisi : le tableau s'affiche quand même, la maison par semaine et des cases à compléter (22/10/2026)
+      const vide = `<td class="a-indiquer">à indiquer</td>`;
+      txt.innerHTML = `<table class="pro-tab"><tr><th>Par semaine</th><th class="pa">${nomA()}</th><th class="pb">${nomB()}</th></tr>
+      <tr><td>Travail payé</td>${vide}${vide}</tr>
+      <tr><td>Maison</td><td>${ma} h</td><td>${mb} h</td></tr>
+      <tr class="tot"><td>Total</td>${vide}${vide}</tr></table>
+      <p class="small muted">Indiquez les heures de travail payé plus haut pour voir la charge totale de chacun.</p>`;
+      return;
+    }
     const ta = pr.a + ma, tb = pr.b + mb;
     let h = `<table class="pro-tab"><tr><th>Par semaine</th><th class="pa">${nomA()}</th><th class="pb">${nomB()}</th></tr>
       <tr><td>Travail payé</td><td>${pr.a} h</td><td>${pr.b} h</td></tr>
