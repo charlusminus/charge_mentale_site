@@ -329,6 +329,7 @@
   .pro-tab th:first-child, .pro-tab td:first-child { text-align: left; }
   .pro-tab th { font-size: .8rem; color: var(--muted); font-weight: 600; }
   .pro-tab tr.tot td { font-weight: 700; border-bottom: 0; }
+  .pro-tab tr td.a-indiquer { color: var(--muted); font-weight: 400; font-style: italic; }
   .pro .pa, .pro-saisie .pa { color: var(--a); } .pro .pb, .pro-saisie .pb { color: var(--b); }
   /* revenus du foyer (12/10/2026) : donnée annexe, hors vignettes et hors étude */
   .budget { margin-top: 2.4rem; }
@@ -1008,6 +1009,7 @@
   // Les deux gros chiffres du haut sont arrondis au quart d'heure : « 5 h 38 » donnait une précision que la méthode n'a pas.
   function quart(h) { return Math.round(h * 4) / 4; }
   function hmQuart(h) { const q = quart(h); return (q === 0 && h > 0) ? "moins de 15 min" : hm(q); }
+  function hm5(h) { const c = Math.round(h * 12) / 12; return (c === 0 && h > 0) ? "moins de 5 min" : hm(c); }   // familles de tâches : à 5 min près (22/10/2026)
   function nomA() { return S.nomA.trim() || "Prénom 1"; }
   function nomB() { return S.nomB.trim() || "Prénom 2"; }
   function label(k) { return k === "a" ? nomA() : k === "b" ? nomB() : k === "both" ? "les deux" : "pas nous"; }
@@ -1184,7 +1186,7 @@
       const tot = c.a + c.b + c.both;
       const w = 100 * tot / maxTot;
       return `<div class="barre"><span>${c.nom}</span>
-        <div class="track" style="width:${w}%"><div class="fa" style="width:${100 * c.a / tot}%"></div><div class="fboth" style="width:${100 * c.both / tot}%"></div><div class="fb" style="width:${100 * c.b / tot}%"></div></div><span class="val">${hm(tot)}</span></div>`;
+        <div class="track" style="width:${w}%"><div class="fa" style="width:${100 * c.a / tot}%"></div><div class="fboth" style="width:${100 * c.both / tot}%"></div><div class="fb" style="width:${100 * c.b / tot}%"></div></div><span class="val">${hm5(tot)}</span></div>`;
     }).join("") : "";
 
     const L = document.getElementById("lecture"), V = document.getElementById("verdict");
@@ -1198,7 +1200,7 @@
     V.innerHTML = gros[0] === tete[0]
       ? `<span class="${gros[0]}">${gros[1]}</span> porte ${gros[2]} % du temps et ${tete[2]} % de la charge mentale.`
       : `<span class="${gros[0]}">${gros[1]}</span> porte ${gros[2]} % du temps, <span class="${tete[0]}">${tete[1]}</span> ${tete[2]} % de la charge mentale.`;
-    let txt = `${hm(tot)} par jour à faire en tout.`;
+    let txt = `${hm(quart(r.a.h) + quart(r.b.h))} par jour à faire en tout.`;   // somme des deux durées arrondies affichées plus haut
     if (totP) {
       if (Math.abs(qa - pa) >= 15) {
         const who = (qa > pa) ? nomA() : nomB();
@@ -1219,6 +1221,14 @@
   // l'axe est la part portée par elle. Aucun mot de classement, seulement la position du couple dans la répartition.
   const TRAVAIL = { "deux-tp": "Deux temps pleins", "lui-plus": "Lui, plus d'heures de travail", "elle-plus": "Elle, plus d'heures de travail", "proches": "Heures de travail proches" };
   const ENFANTS = ["Sans enfant", "Un enfant", "Deux enfants", "Trois enfants et plus"];
+  // Heures de travail payé retenues pour l'affichage : si une seule personne en a indiqué, l'autre est prise à 0 h
+  // (retour du 22/10/2026 : 16 h saisies d'un côté, rien de l'autre, et aucun total affiché). La copie de l'étude garde
+  // la saisie brute, case vide comprise.
+  function proRetenu() {
+    const vide = v => v === null || v === undefined;
+    if (vide(S.proA) && vide(S.proB)) return null;
+    return { a: vide(S.proA) ? 0 : S.proA, b: vide(S.proB) ? 0 : S.proB, zeroA: vide(S.proA), zeroB: vide(S.proB) };
+  }
   function travailCat(pf, ph) {   // mêmes règles que tools/reperes.py
     if (pf === null || pf === undefined || ph === null || ph === undefined) return null;
     if (pf >= 30 && ph >= 30) return "deux-tp";
@@ -1248,7 +1258,7 @@
     if (!totH || !totP) { box.hidden = true; return; }
     const tete = Math.round(100 * r[elle].nPense / totP), temps = Math.round(100 * r[elle].h / totH);
     const e = Math.min(3, S.enfants || 0);
-    const pf = elle === "a" ? S.proA : S.proB, ph = elle === "a" ? S.proB : S.proA, t = travailCat(pf, ph);
+    const pr = proRetenu(), pf = pr ? (elle === "a" ? pr.a : pr.b) : null, ph = pr ? (elle === "a" ? pr.b : pr.a) : null, t = travailCat(pf, ph);
     let cle = `e${e}`, note = "";
     if (t && R.groupes[`e${e}-${t}`]) cle = `e${e}-${t}`;
     else if (t) note = ` Avec les mêmes heures de travail, ils ne sont pas encore ${R.min} : la comparaison se fait sur le nombre d'enfants.`;
@@ -1292,18 +1302,27 @@
       const v = i.dataset.pro === "a" ? S.proA : S.proB; i.value = v === null || v === undefined ? "" : v;
     });
     const txt = document.getElementById("pro-txt"); if (!txt || !r) return;
-    const okA = S.proA !== null && S.proA !== undefined, okB = S.proB !== null && S.proB !== undefined;
-    if (!okA || !okB) { txt.innerHTML = ""; return; }
+    const pr = proRetenu();
     const ma = Math.round(quart(r.a.h) * 7), mb = Math.round(quart(r.b.h) * 7);
-    const ta = S.proA + ma, tb = S.proB + mb;
+    if (!pr) {   // rien de saisi : le tableau s'affiche quand même, la maison par semaine et des cases à compléter (22/10/2026)
+      const vide = `<td class="a-indiquer">à indiquer</td>`;
+      txt.innerHTML = `<table class="pro-tab"><tr><th>Par semaine</th><th class="pa">${nomA()}</th><th class="pb">${nomB()}</th></tr>
+      <tr><td>Travail payé</td>${vide}${vide}</tr>
+      <tr><td>Maison</td><td>${ma} h</td><td>${mb} h</td></tr>
+      <tr class="tot"><td>Total</td>${vide}${vide}</tr></table>
+      <p class="small muted">Indiquez les heures de travail payé plus haut pour voir la charge totale de chacun.</p>`;
+      return;
+    }
+    const ta = pr.a + ma, tb = pr.b + mb;
     let h = `<table class="pro-tab"><tr><th>Par semaine</th><th class="pa">${nomA()}</th><th class="pb">${nomB()}</th></tr>
-      <tr><td>Travail payé</td><td>${S.proA} h</td><td>${S.proB} h</td></tr>
+      <tr><td>Travail payé</td><td>${pr.a} h</td><td>${pr.b} h</td></tr>
       <tr><td>Maison</td><td>${ma} h</td><td>${mb} h</td></tr>
       <tr class="tot"><td>Total</td><td>${ta} h</td><td>${tb} h</td></tr></table>`;
     const ecart = Math.abs(ta - tb);
     h += ecart <= 3
       ? `<p>Une charge totale proche, travail payé et maison compris. Reste à voir si la façon de vous la répartir vous convient à tous les deux.</p>`
       : `<p>${ta > tb ? nomA() : nomB()} a ${ecart} h de plus par semaine, travail payé et maison compris. Si c'est un choix, tant mieux\u00a0; sinon, c'est un point de départ pour en parler.</p>`;
+    if (pr.zeroA || pr.zeroB) h += `<p class="small muted">Pas d'heures indiquées pour ${pr.zeroA ? nomA() : nomB()} : prises à 0 h. Corrigez plus haut si besoin.</p>`;
     txt.innerHTML = h;
   }
   document.querySelectorAll("input[data-pro]").forEach(i => i.addEventListener("input", () => {
