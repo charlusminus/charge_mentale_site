@@ -1219,6 +1219,14 @@
   // l'axe est la part portée par elle. Aucun mot de classement, seulement la position du couple dans la répartition.
   const TRAVAIL = { "deux-tp": "Deux temps pleins", "lui-plus": "Lui, plus d'heures de travail", "elle-plus": "Elle, plus d'heures de travail", "proches": "Heures de travail proches" };
   const ENFANTS = ["Sans enfant", "Un enfant", "Deux enfants", "Trois enfants et plus"];
+  // Heures de travail payé retenues pour l'affichage : si une seule personne en a indiqué, l'autre est prise à 0 h
+  // (retour du 22/10/2026 : 16 h saisies d'un côté, rien de l'autre, et aucun total affiché). La copie de l'étude garde
+  // la saisie brute, case vide comprise.
+  function proRetenu() {
+    const vide = v => v === null || v === undefined;
+    if (vide(S.proA) && vide(S.proB)) return null;
+    return { a: vide(S.proA) ? 0 : S.proA, b: vide(S.proB) ? 0 : S.proB, zeroA: vide(S.proA), zeroB: vide(S.proB) };
+  }
   function travailCat(pf, ph) {   // mêmes règles que tools/reperes.py
     if (pf === null || pf === undefined || ph === null || ph === undefined) return null;
     if (pf >= 30 && ph >= 30) return "deux-tp";
@@ -1248,7 +1256,7 @@
     if (!totH || !totP) { box.hidden = true; return; }
     const tete = Math.round(100 * r[elle].nPense / totP), temps = Math.round(100 * r[elle].h / totH);
     const e = Math.min(3, S.enfants || 0);
-    const pf = elle === "a" ? S.proA : S.proB, ph = elle === "a" ? S.proB : S.proA, t = travailCat(pf, ph);
+    const pr = proRetenu(), pf = pr ? (elle === "a" ? pr.a : pr.b) : null, ph = pr ? (elle === "a" ? pr.b : pr.a) : null, t = travailCat(pf, ph);
     let cle = `e${e}`, note = "";
     if (t && R.groupes[`e${e}-${t}`]) cle = `e${e}-${t}`;
     else if (t) note = ` Avec les mêmes heures de travail, ils ne sont pas encore ${R.min} : la comparaison se fait sur le nombre d'enfants.`;
@@ -1292,18 +1300,19 @@
       const v = i.dataset.pro === "a" ? S.proA : S.proB; i.value = v === null || v === undefined ? "" : v;
     });
     const txt = document.getElementById("pro-txt"); if (!txt || !r) return;
-    const okA = S.proA !== null && S.proA !== undefined, okB = S.proB !== null && S.proB !== undefined;
-    if (!okA || !okB) { txt.innerHTML = ""; return; }
+    const pr = proRetenu();
+    if (!pr) { txt.innerHTML = ""; return; }
     const ma = Math.round(quart(r.a.h) * 7), mb = Math.round(quart(r.b.h) * 7);
-    const ta = S.proA + ma, tb = S.proB + mb;
+    const ta = pr.a + ma, tb = pr.b + mb;
     let h = `<table class="pro-tab"><tr><th>Par semaine</th><th class="pa">${nomA()}</th><th class="pb">${nomB()}</th></tr>
-      <tr><td>Travail payé</td><td>${S.proA} h</td><td>${S.proB} h</td></tr>
+      <tr><td>Travail payé</td><td>${pr.a} h</td><td>${pr.b} h</td></tr>
       <tr><td>Maison</td><td>${ma} h</td><td>${mb} h</td></tr>
       <tr class="tot"><td>Total</td><td>${ta} h</td><td>${tb} h</td></tr></table>`;
     const ecart = Math.abs(ta - tb);
     h += ecart <= 3
       ? `<p>Une charge totale proche, travail payé et maison compris. Reste à voir si la façon de vous la répartir vous convient à tous les deux.</p>`
       : `<p>${ta > tb ? nomA() : nomB()} a ${ecart} h de plus par semaine, travail payé et maison compris. Si c'est un choix, tant mieux\u00a0; sinon, c'est un point de départ pour en parler.</p>`;
+    if (pr.zeroA || pr.zeroB) h += `<p class="small muted">Pas d'heures indiquées pour ${pr.zeroA ? nomA() : nomB()} : prises à 0 h. Corrigez plus haut si besoin.</p>`;
     txt.innerHTML = h;
   }
   document.querySelectorAll("input[data-pro]").forEach(i => i.addEventListener("input", () => {
