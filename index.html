@@ -1008,6 +1008,7 @@
   // Les deux gros chiffres du haut sont arrondis au quart d'heure : « 5 h 38 » donnait une précision que la méthode n'a pas.
   function quart(h) { return Math.round(h * 4) / 4; }
   function hmQuart(h) { const q = quart(h); return (q === 0 && h > 0) ? "moins de 15 min" : hm(q); }
+  function hm5(h) { const c = Math.round(h * 12) / 12; return (c === 0 && h > 0) ? "moins de 5 min" : hm(c); }   // familles de tâches : à 5 min près (22/10/2026)
   function nomA() { return S.nomA.trim() || "Prénom 1"; }
   function nomB() { return S.nomB.trim() || "Prénom 2"; }
   function label(k) { return k === "a" ? nomA() : k === "b" ? nomB() : k === "both" ? "les deux" : "pas nous"; }
@@ -1184,7 +1185,7 @@
       const tot = c.a + c.b + c.both;
       const w = 100 * tot / maxTot;
       return `<div class="barre"><span>${c.nom}</span>
-        <div class="track" style="width:${w}%"><div class="fa" style="width:${100 * c.a / tot}%"></div><div class="fboth" style="width:${100 * c.both / tot}%"></div><div class="fb" style="width:${100 * c.b / tot}%"></div></div><span class="val">${hm(tot)}</span></div>`;
+        <div class="track" style="width:${w}%"><div class="fa" style="width:${100 * c.a / tot}%"></div><div class="fboth" style="width:${100 * c.both / tot}%"></div><div class="fb" style="width:${100 * c.b / tot}%"></div></div><span class="val">${hm5(tot)}</span></div>`;
     }).join("") : "";
 
     const L = document.getElementById("lecture"), V = document.getElementById("verdict");
@@ -1198,7 +1199,7 @@
     V.innerHTML = gros[0] === tete[0]
       ? `<span class="${gros[0]}">${gros[1]}</span> porte ${gros[2]} % du temps et ${tete[2]} % de la charge mentale.`
       : `<span class="${gros[0]}">${gros[1]}</span> porte ${gros[2]} % du temps, <span class="${tete[0]}">${tete[1]}</span> ${tete[2]} % de la charge mentale.`;
-    let txt = `${hm(tot)} par jour à faire en tout.`;
+    let txt = `${hm(quart(r.a.h) + quart(r.b.h))} par jour à faire en tout.`;   // somme des deux durées arrondies affichées plus haut
     if (totP) {
       if (Math.abs(qa - pa) >= 15) {
         const who = (qa > pa) ? nomA() : nomB();
