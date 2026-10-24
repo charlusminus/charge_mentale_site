@@ -1,0 +1,32 @@
+# Qui y pense ?
+
+> Site gratuit, sans inscription et sans publicité, pour faire le point à deux sur la répartition des tâches de la maison et de la charge mentale. Pour chacune des 50 tâches, deux questions : qui s'en occupe (le temps, en heures) et qui y pense (la charge mentale, en nombre de choses à garder en tête). Le calcul se fait dans le navigateur. Le site ne juge pas et ne compare à aucune norme.
+
+Pour afficher le résultat, une copie anonymisée des réponses (sans prénoms ni adresse IP) part vers une étude ouverte sur la répartition domestique. Les repères publiés sont toujours agrégés.
+
+## Pages
+- [Faire le point](https://quiypense.org/) : l'outil, en trois étapes (le foyer, qui y pense, le résultat)
+- [Charte](https://quiypense.org/charte/) : gratuit, sans publicité, aucune donnée vendue, aucun partenaire qui décide de ce que dit le site
+- [Presse](https://quiypense.org/presse/) : premiers résultats de l'étude, chiffres sourcés, dossier de presse
+- [Blog](https://quiypense.org/blog/) : ce que disent les enquêtes, et comment en parler à deux
+
+## Articles
+- [Un déséquilibre choisi n'est pas une injustice : à quelles conditions](https://quiypense.org/blog/desequilibre-assume-couple.html)
+- [La charge mentale, c'est quoi exactement ? Le mot a quarante ans](https://quiypense.org/blog/charge-mentale-definition.html)
+- [Qui fait quoi à la maison en France : les chiffres, sans commentaire](https://quiypense.org/blog/repartition-taches-chiffres-france.html)
+- [Quarante ans de partage des tâches : ce qui a bougé, ce qui n'a pas bougé](https://quiypense.org/blog/evolution-partage-taches-quarante-ans.html)
+- [Le 50/50 n'est pas un objectif, c'est une unité de mesure](https://quiypense.org/blog/egalitarisme-a-tout-prix.html)
+- [Déléguer une tâche sans lâcher le « y penser » n'allège rien](https://quiypense.org/blog/y-penser-ou-faire.html)
+- [La charge mentale des hommes existe, elle ne pèse pas au même endroit](https://quiypense.org/blog/charge-mentale-hommes.html)
+- [Les enfants aussi : ce qu'ils font à la maison à 10 ans, et pourquoi le compter](https://quiypense.org/blog/enfants-participation-taches.html)
+- [Comment parler du partage des tâches sans que ça finisse en dispute](https://quiypense.org/blog/parler-repartition-couple.html)
+- [Ce que la charge mentale fait à la santé, d'après les études](https://quiypense.org/blog/charge-mentale-sante.html)
+- [Le congé de paternité à 25 jours : ce que ça change, et ce que ça ne change pas](https://quiypense.org/blog/conge-paternite-partage.html)
+- [Comment on mesure le temps domestique, et pourquoi on le sous-estime de moitié](https://quiypense.org/blog/mesurer-temps-domestique.html)
+- [Charge mentale : où trouver des chiffres, des outils et de l'aide](https://quiypense.org/blog/ressources-charge-mentale.html)
+
+## Contact
+- contact@quiypense.org
+
+## Réalisation
+- Site réalisé par Paktiz : https://paktiz.fr/
