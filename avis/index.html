@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Votre avis | Qui y pense ?</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Donnez votre avis sur Qui y pense ? : une note et un mot, anonymes.">
+<link rel="canonical" href="https://quiypense.org/avis/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Qui y pense ?">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Qui y pense ? Votre avis">
+<meta property="og:description" content="Une note et un mot, anonymes.">
+<meta property="og:url" content="https://quiypense.org/avis/">
+<meta property="og:image" content="https://quiypense.org/img/apercu.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/img/icon-96.png" sizes="96x96" type="image/png">
+<link rel="apple-touch-icon" href="/img/icon-180.png">
+<link rel="preload" href="/fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/blog/blog.css">
+<script src="/mesure.js" defer></script>
+<style>
+  .note { display: grid; grid-template-columns: repeat(11, 1fr); gap: .3rem; margin: .6rem 0 .25rem; }
+  .note button { padding: .55rem 0; border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper); color: var(--ink);
+    cursor: pointer; font: inherit; font-variant-numeric: tabular-nums; }
+  .note button:hover { border-color: var(--border); }
+  .note button[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+  .bornes { display: flex; justify-content: space-between; font-size: .8rem; color: var(--muted); }
+  fieldset { border: 0; margin: 1.4rem 0 0; padding: 0; min-width: 0; }
+  legend { padding: 0; font-weight: 600; }
+  label.mot { display: block; margin-top: 1.4rem; font-weight: 600; }
+  label.mot span { font-weight: 400; color: var(--muted); }
+  textarea { display: block; width: 100%; margin-top: .5rem; padding: .6rem .75rem; border: 1.5px solid var(--border); border-radius: var(--r);
+    background: var(--paper); font: inherit; resize: vertical; }
+  .envoi { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin-top: 1.2rem; }
+  .envoi button { padding: .8rem 1.4rem; border-radius: var(--r); border: 1.5px solid var(--ink); background: var(--ink); color: var(--bg);
+    font: inherit; font-weight: 600; cursor: pointer; }
+  .envoi button[disabled] { opacity: .5; cursor: default; }
+  .etat { font-size: .9rem; color: var(--muted); }
+  .merci { font-family: var(--serif); font-size: 1.2rem; margin-top: 1.4rem; }
+  .date { font-size: .9rem; color: var(--muted); margin-top: 1.6rem; }
+  @media (max-width: 480px) { .note button { font-size: .85rem; padding: .5rem 0; } }
+</style>
+</head>
+<body>
+<header class="haut">
+  <a class="marque" href="/">Qui y pense&nbsp;?</a>
+  <nav aria-label="Navigation"><a href="/blog/">Blog</a><a class="btn petit" href="/">Faire le point</a></nav>
+</header>
+
+<main class="article">
+  <p class="fil"><a href="/">Qui y pense&nbsp;?</a> › Votre avis</p>
+  <h1>Votre avis</h1>
+  <p class="chapo">Une note, et un mot si vous voulez. C'est anonyme, et ça nous aide à améliorer le site.</p>
+
+  <form id="avis-form" novalidate>
+    <fieldset>
+      <legend>Recommanderiez-vous Qui y pense&nbsp;? à un couple autour de vous&nbsp;?</legend>
+      <div class="note" id="note" role="group" aria-label="Note de 0 à 10"></div>
+      <div class="bornes" aria-hidden="true"><span>0 : pas du tout</span><span>10 : tout à fait</span></div>
+    </fieldset>
+    <label class="mot">Un mot, une idée, ce qui manque <span>(facultatif, pas de prénom, merci)</span>
+      <textarea id="mot" maxlength="600" rows="5"></textarea></label>
+    <div id="cf-avis"></div>
+    <div class="envoi"><button type="submit" id="envoyer">Envoyer mon avis</button><span class="etat" id="etat" aria-live="polite"></span></div>
+  </form>
+  <p class="date">Ce qui est gardé&nbsp;: la note, le mot (adresses e-mail et numéros de téléphone retirés) et la date. Ni prénom, ni adresse
+    IP. Voir <a href="/charte/">la charte</a>.</p>
+</main>
+
+<footer class="pied">
+  <p>Qui y pense&nbsp;? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. <a href="/">Faire le point</a> · <a href="/blog/">Blog</a> · <a href="/presse/">Presse</a> · <a href="/charte/">Charte</a> · <a href="/avis/">Votre avis</a> · <a href="mailto:contact@quiypense.org">contact@quiypense.org</a> · <a href="#cookies" data-cookies>Cookies</a></p>
+  <p class="credit">Réalisation : <a href="https://paktiz.fr/?utm_source=quiypense&amp;utm_medium=referral&amp;utm_campaign=credit" target="_blank" rel="noopener">Paktiz</a></p>
+</footer>
+<script>
+  // Page « Votre avis » (01/11/2026), ouverte depuis le pied de page : même envoi que l'avis de la page du résultat
+  // (Apps Script de l'étude, type « avis », contexte « page »), sans lien avec un résultat.
+  (function () {
+    const ETUDE_URL = "https://script.google.com/macros/s/AKfycbyk8TDF1GhBwTm6lantMqRlig0cPWCFl3j2yC4ow_5Qknlxvd0Jmf-F_4dTEJqneFlJ/exec";
+    const SITEKEY = "0x4AAAAAAE-qa9jJxGWCyc5B";
+    const form = document.getElementById("avis-form"), notes = document.getElementById("note"), mot = document.getElementById("mot");
+    const bouton = document.getElementById("envoyer"), etat = document.getElementById("etat");
+    let note = "", jeton = null, attend = false, charge = false;
+    for (let i = 0; i <= 10; i++) {
+      const b = document.createElement("button"); b.type = "button"; b.value = String(i); b.textContent = i; b.setAttribute("aria-pressed", "false");
+      notes.appendChild(b);
+    }
+    function turnstile() {
+      if (charge) return; charge = true;
+      window.__avisPret = () => {
+        window.turnstile.render("#cf-avis", { sitekey: SITEKEY, action: "avis", language: "fr", theme: "light", size: "flexible", appearance: "interaction-only",
+          callback: t => { jeton = t; if (attend) { attend = false; envoyer(); } },
+          "expired-callback": () => { jeton = null; },
+          "error-callback": () => { if (attend) { attend = false; bouton.disabled = false; etat.textContent = "Envoi impossible pour l'instant. Réessayez plus tard."; } return true; } });
+      };
+      const sc = document.createElement("script"); sc.async = true;
+      sc.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__avisPret&render=explicit";
+      sc.onerror = () => { charge = false; if (attend) { attend = false; bouton.disabled = false; etat.textContent = "Envoi impossible pour l'instant (vérification anti-robot bloquée)."; } };
+      document.head.appendChild(sc);
+    }
+    notes.addEventListener("click", e => {
+      const b = e.target.closest("button"); if (!b) return;
+      note = b.value; notes.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); turnstile();
+    });
+    mot.addEventListener("focus", turnstile);
+    function envoyer() {
+      const data = new URLSearchParams({ type: "avis", contexte: "page", note, aide: "", texte: mot.value.trim().slice(0, 600), foyer: "",
+        source: new URLSearchParams(location.search).get("utm_source") || "", page: location.origin + location.pathname, "cf-turnstile-response": jeton });
+      jeton = null;
+      try { fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true, mode: "no-cors", credentials: "omit" }).catch(() => {}); } catch (e) {}
+      if (window.__ga) gtag("event", "avis_envoye", { contexte: "page", note: note === "" ? "aucune" : note, aide: "aucune" });
+      form.outerHTML = '<p class="merci">Merci pour votre avis.</p>';
+    }
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      if (note === "" && !mot.value.trim()) { etat.textContent = "Choisissez une note ou écrivez un mot."; return; }
+      if (!jeton) { attend = true; bouton.disabled = true; etat.textContent = "Vérification anti-robot…"; turnstile(); return; }
+      envoyer();
+    });
+  })();
+</script>
+</body>
+</html>
