@@ -431,6 +431,32 @@
   .fin .actions { margin-top: 1rem; gap: .6rem; }
   .fin .actions .btn { flex: 1 1 auto; text-align: center; padding: .8rem .9rem; font-size: .95rem; white-space: nowrap; }
   /* envoi à l'autre : juste sous le résultat, avant « Affinez le résultat » */
+  /* avis (01/11/2026) : encart non bloquant et bloc à demeure sur la page du résultat */
+  .avis { margin-top: 2rem; padding: 1.2rem 1.3rem; background: var(--bg-2); border-radius: var(--r); }
+  .avis h3 { margin-bottom: .2rem; }
+  .avis-form fieldset { border: 0; margin: .8rem 0 0; padding: 0; min-width: 0; }
+  .avis-form legend { padding: 0; font-weight: 600; font-size: .95rem; }
+  .avis-note { display: grid; grid-template-columns: repeat(11, 1fr); gap: .25rem; margin-top: .45rem; }
+  .avis-note .g { padding: .45rem 0; border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper); color: var(--ink);
+    cursor: pointer; font: inherit; font-size: .9rem; font-variant-numeric: tabular-nums; }
+  .avis-note .g:hover { border-color: var(--border); }
+  .avis-note .g[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+  .avis-bornes { display: flex; justify-content: space-between; font-size: .78rem; color: var(--muted); margin-top: .25rem; }
+  .avis-suite[hidden] { display: none; }
+  .avis-form label.avis-mot { display: block; margin-top: .8rem; font-weight: 600; font-size: .95rem; }
+  .avis-form label.avis-mot span { font-weight: 400; color: var(--muted); }
+  .avis-form textarea { display: block; width: 100%; margin-top: .4rem; padding: .55rem .7rem; border: 1.5px solid var(--border); border-radius: var(--r);
+    background: var(--paper); font: inherit; font-size: .95rem; resize: vertical; }
+  .avis-form .nav { margin: .9rem 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
+  .avis-merci { margin: .6rem 0 0; font-weight: 600; }
+  .avis-encart { position: fixed; z-index: 30; right: 16px; bottom: calc(84px + env(safe-area-inset-bottom)); width: min(420px, calc(100vw - 32px));
+    max-height: calc(100vh - 120px); overflow: auto; background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(42, 33, 24, .18); padding: 1rem 1.1rem 1.1rem; }
+  .avis-encart[hidden] { display: none; }
+  .avis-encart h3 { margin: 0 4.5rem .1rem 0; font-size: 1.05rem; }
+  .avis-encart .modale-fermer { top: 12px; right: 12px; }
+  @media (max-width: 720px) { .avis-encart { right: 8px; left: 8px; width: auto; bottom: calc(76px + env(safe-area-inset-bottom)); } .avis-note .g { font-size: .82rem; } }
+  @media print { .avis, .avis-encart { display: none; } }
   .envoi { margin-top: 1.4rem; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
   .envoi p { margin: 0; flex: 1 1 22ch; }
   .envoi-boite { max-width: 560px; }
@@ -723,6 +749,11 @@
         <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce résultat à l'autre</button>
         <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce résultat.</p>
       </div>
+      <section class="avis" id="avis" aria-labelledby="avis-titre">
+        <h3 id="avis-titre">Votre avis</h3>
+        <p class="small muted">Deux clics pour nous dire si l'outil vous a servi. Facultatif et anonyme.</p>
+        <div class="avis-place"></div>
+      </section>
       <div class="budget" id="budget" hidden>
         <h3>Et les revenus du foyer ?</h3>
         <p class="muted">Facultatif. Le temps donné à la maison et l'argent apporté au foyer se répondent souvent. Cette réglette ne change rien au résultat et ne part pas dans l'étude : elle sert à garder l'écart de revenus en tête.</p>
@@ -761,13 +792,36 @@
   </div>
 
   <footer>
-    <nav class="pied-nav" aria-label="Pied de page"><a href="blog/">Blog</a><a href="presse/">Presse</a><a href="charte/">Charte</a><button type="button" id="pied-soutenir"><img class="kofi-logo" src="img/kofi.png" alt="" width="141" height="109">Soutenir</button><button type="button" id="pied-partager" aria-expanded="false" aria-controls="pied-partage"><svg aria-hidden="true"><use href="#i-partager"/></svg>Partager le site</button></nav>
+    <nav class="pied-nav" aria-label="Pied de page"><a href="blog/">Blog</a><a href="presse/">Presse</a><a href="charte/">Charte</a><a href="avis/">Votre avis</a><button type="button" id="pied-soutenir"><img class="kofi-logo" src="img/kofi.png" alt="" width="141" height="109">Soutenir</button><button type="button" id="pied-partager" aria-expanded="false" aria-controls="pied-partage"><svg aria-hidden="true"><use href="#i-partager"/></svg>Partager le site</button></nav>
     <div class="rs rs-pied" id="pied-partage" data-partage="site" hidden></div>
     <p>Qui y pense ? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. Le lien de partage contient vos réponses, rien d'autre. Une question, une idée : <a href="mailto:contact@quiypense.org">contact@quiypense.org</a>. <a href="#" id="consent-lien">Cookies</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>.</p>
   </footer>
   <noscript><p style="padding:16px;background:#F1EBDF">Ce site calcule tout dans votre navigateur : il a besoin de JavaScript pour fonctionner.</p></noscript>
 </main>
 
+<template id="avis-modele">
+  <form class="avis-form" novalidate>
+    <fieldset>
+      <legend>Recommanderiez-vous Qui y pense&nbsp;? à un couple autour de vous&nbsp;?</legend>
+      <div class="avis-note" role="group" aria-label="Note de 0 à 10"></div>
+      <div class="avis-bornes" aria-hidden="true"><span>0 : pas du tout</span><span>10 : tout à fait</span></div>
+    </fieldset>
+    <div class="avis-suite" hidden>
+      <fieldset class="avis-aide-q">
+        <legend>Est-ce que ça vous a aidés à en parler&nbsp;?</legend>
+        <div class="choix"><button type="button" class="g" value="oui" aria-pressed="false">Oui</button><button type="button" class="g" value="un-peu" aria-pressed="false">Un peu</button><button type="button" class="g" value="pas-vraiment" aria-pressed="false">Pas vraiment</button></div>
+      </fieldset>
+      <label class="avis-mot">Un mot, une idée, ce qui manque <span>(facultatif, pas de prénom, merci)</span><textarea maxlength="600" rows="3"></textarea></label>
+      <div class="cf-avis"></div>
+      <div class="nav"><button class="btn" type="submit">Envoyer mon avis</button><span class="small muted avis-etat" aria-live="polite"></span></div>
+    </div>
+  </form>
+</template>
+<aside class="avis-encart" id="avis-encart" aria-labelledby="avis-encart-titre" hidden>
+  <button class="modale-fermer" type="button" id="avis-encart-fermer">Fermer</button>
+  <h3 id="avis-encart-titre">Votre avis, en deux clics</h3>
+  <div class="avis-place"></div>
+</aside>
 <div class="modale" id="intention" role="dialog" aria-modal="true" aria-labelledby="intention-titre" hidden>
   <div class="modale-boite">
     <button class="modale-fermer" type="button" id="intention-fermer" aria-label="Fermer">Fermer</button>
@@ -2056,6 +2110,103 @@
         form.querySelector("button[type=submit]").disabled = false;
         if (window.turnstile && widget !== null) window.turnstile.reset(widget);
       }
+    });
+  })();
+
+  /* ---------- avis sur la page du résultat (01/11/2026) ----------
+     Pas de fenêtre bloquante : un encart qui glisse en bas de l'écran, une seule fois par foyer, quand la personne a
+     lu son résultat (45 s sur la page et défilement jusqu'au travail rémunéré), jamais par-dessus une autre fenêtre ;
+     le même formulaire reste à demeure plus bas dans la page. Envoi au même Apps Script que l'étude (type « avis »,
+     jeton Turnstile d'action « avis ») ; onglet « Avis » de la feuille. Cf charge_mentale/docs/propositions/avis-resultat.md. */
+  (function avis() {
+    const modele = document.getElementById("avis-modele"), encart = document.getElementById("avis-encart"), bloc = document.getElementById("avis");
+    if (!modele || !encart || !bloc) return;
+    const cle = () => "avis:" + (S.foyer || "sans-numero");
+    const etat = () => { try { return localStorage.getItem(cle()) || ""; } catch (e) { return ""; } };
+    const noter = v => { try { localStorage.setItem(cle(), v); } catch (e) {} };
+    const formulaires = [];
+
+    function monter(place, contexte) {
+      const f = modele.content.firstElementChild.cloneNode(true);
+      const notes = f.querySelector(".avis-note"), suite = f.querySelector(".avis-suite"), mot = f.querySelector("textarea");
+      const envoi = f.querySelector('button[type="submit"]'), msg = f.querySelector(".avis-etat"), cf = f.querySelector(".cf-avis");
+      const o = { f, contexte, note: "", aide: "", jeton: null, widget: null, attend: false, envoye: false };
+      for (let i = 0; i <= 10; i++) {
+        const b = document.createElement("button"); b.type = "button"; b.className = "g"; b.value = String(i); b.textContent = i; b.setAttribute("aria-pressed", "false");
+        notes.appendChild(b);
+      }
+      notes.addEventListener("click", e => {
+        const b = e.target.closest("button.g"); if (!b) return;
+        o.note = b.value; notes.querySelectorAll(".g").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+        suite.hidden = false; jeton(o);
+      });
+      f.querySelector(".avis-aide-q .choix").addEventListener("click", e => {
+        const b = e.target.closest("button.g"); if (!b) return;
+        o.aide = o.aide === b.value ? "" : b.value;
+        b.parentNode.querySelectorAll(".g").forEach(x => x.setAttribute("aria-pressed", String(x.value === o.aide)));
+      });
+      f.addEventListener("submit", e => {
+        e.preventDefault();
+        if (o.envoye) return;
+        if (o.note === "" && !o.aide && !mot.value.trim()) { msg.textContent = "Choisissez au moins une réponse."; return; }
+        if (!o.jeton) { o.attend = true; envoi.disabled = true; msg.textContent = "Vérification anti-robot…"; jeton(o); return; }
+        envoyer(o, mot.value, msg, envoi);
+      });
+      o.mot = mot; o.msg = msg; o.envoi = envoi; o.cf = cf;
+      place.appendChild(f); formulaires.push(o);
+      return o;
+    }
+    function jeton(o) {
+      if (o.widget !== null || o.jeton) return;
+      o.widget = "en-cours";
+      avecTurnstile(err => {
+        if (err) { o.widget = null; if (o.attend) { o.attend = false; o.envoi.disabled = false; o.msg.textContent = "Envoi impossible pour l'instant (vérification anti-robot bloquée). Réessayez plus tard."; } return; }
+        o.widget = window.turnstile.render(o.cf, {
+          sitekey: TURNSTILE_SITEKEY, action: "avis", language: "fr", theme: "light", size: "flexible", appearance: "interaction-only",
+          callback: t => { o.jeton = t; if (o.attend) { o.attend = false; envoyer(o, o.mot.value, o.msg, o.envoi); } },
+          "expired-callback": () => { o.jeton = null; },
+          "error-callback": () => { if (o.attend) { o.attend = false; o.envoi.disabled = false; o.msg.textContent = "Envoi impossible pour l'instant. Réessayez plus tard."; } return true; }
+        });
+      });
+    }
+    function envoyer(o, texte, msg, bouton) {
+      const data = new URLSearchParams({
+        type: "avis", contexte: o.contexte, note: o.note, aide: o.aide, texte: texte.trim().slice(0, 600), foyer: S.foyer || "",
+        source: new URLSearchParams(location.search).get("utm_source") || "", page: location.origin + location.pathname,
+        "cf-turnstile-response": o.jeton
+      });
+      o.jeton = null; o.envoye = true;
+      try { fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true, mode: "no-cors", credentials: "omit" }).catch(() => {}); } catch (e) {}
+      if (window.__ga) gtag("event", "avis_envoye", { contexte: o.contexte, note: o.note === "" ? "aucune" : o.note, aide: o.aide || "aucune" });
+      noter("envoye");
+      formulaires.forEach(x => { x.envoye = true; x.f.innerHTML = `<p class="avis-merci">Merci pour votre avis.</p>`; });
+      if (o.contexte === "encart") setTimeout(() => { encart.hidden = true; }, 2500);
+    }
+
+    monter(bloc.querySelector(".avis-place"), "bloc");
+    // L'encart : 45 s de lecture sur la page du résultat, le travail rémunéré atteint, aucune autre fenêtre ouverte,
+    // le bloc à demeure hors de l'écran, et rien déjà répondu ou refusé pour ce foyer.
+    let secondes = 0, lu = false, blocVu = false, montre = false, dejaVu = false;
+    const pro = document.getElementById("pro");
+    if ("IntersectionObserver" in window) {
+      if (pro) new IntersectionObserver(([e]) => { if (e.isIntersecting) lu = true; }).observe(pro);
+      new IntersectionObserver(([e]) => { blocVu = e.isIntersecting; }).observe(bloc);
+    } else lu = true;
+    const autreFenetre = () => !!document.querySelector(".modale:not([hidden]), .consent:not([hidden])");
+    setInterval(() => {
+      if (S.ecran !== 3 || document.visibilityState !== "visible") return;
+      if (!dejaVu && etat() === "envoye") { dejaVu = true; formulaires.forEach(x => { x.envoye = true; x.f.innerHTML = `<p class="avis-merci">Merci, vous avez déjà donné votre avis.</p>`; }); }
+      dejaVu = true;
+      secondes += 2;
+      if (montre || !lu || secondes < 45 || blocVu || autreFenetre() || etat()) return;
+      montre = true;
+      monter(encart.querySelector(".avis-place"), "encart");
+      encart.hidden = false;
+      if (window.__ga) gtag("event", "avis_affiche");
+    }, 2000);
+    document.getElementById("avis-encart-fermer").addEventListener("click", () => {
+      encart.hidden = true;
+      if (etat() !== "envoye") { noter("ferme"); if (window.__ga) gtag("event", "avis_ferme"); }
     });
   })();
 
