@@ -1,6 +1,6 @@
 # Qui y pense ?
 
-> Site gratuit, sans inscription et sans publicité, pour faire le point à deux sur la répartition des tâches de la maison et de la charge mentale. Pour chacune des 50 tâches, deux questions : qui s'en occupe (le temps, en heures) et qui y pense (la charge mentale, en nombre de choses à garder en tête). Le calcul se fait dans le navigateur. Le site ne juge pas et ne compare à aucune norme.
+> Site gratuit, sans inscription et sans publicité, pour faire le point à deux sur la répartition des tâches de la maison et de la charge mentale. Pour chacune des 51 tâches, deux questions : qui s'en occupe (le temps, en heures) et qui y pense (la charge mentale, en nombre de choses à garder en tête). Le calcul se fait dans le navigateur. Le site ne juge pas et ne compare à aucune norme.
 
 Pour afficher le résultat, une copie anonymisée des réponses (sans prénoms ni adresse IP) part vers une étude ouverte sur la répartition domestique. Les repères publiés sont toujours agrégés.
 
