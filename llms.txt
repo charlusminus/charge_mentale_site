@@ -30,4 +30,3 @@ Pour afficher le résultat, une copie anonymisée des réponses (sans prénoms n
 - contact@quiypense.org
 
 ## Réalisation
-- Site réalisé par Paktiz : https://paktiz.fr/

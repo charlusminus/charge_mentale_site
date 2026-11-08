@@ -1,6 +1,6 @@
 # Process de release : Qui fait quoi à la maison (front public)
 
-`charge_mentale_site` est **public** et déployé sur GitHub Pages : **tout push sur `main` = prod**. Cf paktiz `release-discipline`.
+`charge_mentale_site` est **public** et déployé sur GitHub Pages : **tout push sur `main` = prod**.
 
 ## Règle d'or
 Jamais de commit/push direct sur `main`. Toute modif → branche + PR. `main` protégée (PR requise).
