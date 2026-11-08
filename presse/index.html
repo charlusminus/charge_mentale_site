@@ -47,10 +47,16 @@
   .paire ul { margin: 0; font-size: .95rem; }
   .citation { margin: 0 0 1rem; padding-left: 1.1rem; border-left: 3px solid var(--b);
     font-family: var(--serif); font-size: 1.15rem; line-height: 1.35; }
-  .parution { margin: 0 0 2rem; padding: 1rem 1.2rem; border: 1.5px solid var(--line); border-radius: 12px; background: var(--paper); }
-  .parution .media { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 600; }
-  .parution a.titre { display: block; font-family: var(--serif); font-weight: 600; font-size: 1.15rem; line-height: 1.3; margin: .3rem 0 .4rem; }
-  .parution p { margin: 0; font-size: .95rem; color: var(--muted); }
+  .presse-ref { display: flex; flex-direction: column; gap: 10px; padding: 18px 22px; border: 1.5px solid var(--line);
+    border-radius: 12px; background: var(--paper); color: inherit; text-decoration: none; max-width: 30rem; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .presse-ref-label { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .presse-ref-tete { display: flex; align-items: center; gap: 12px; }
+  .presse-ref-tete img { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); }
+  .presse-ref-media { font-size: 1rem; font-weight: 600; }
+  .presse-ref-titre { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; line-height: 1.3; }
+  .presse-ref-lire { font-size: .95rem; color: var(--muted); }
+  .presse-ref:hover .presse-ref-lire, .presse-ref:focus-visible .presse-ref-lire { text-decoration: underline; text-underline-offset: 4px; }
   .faq-presse p { margin-bottom: .8rem; }
   .note-methode { font-size: .88rem; color: var(--muted); margin-top: -1rem; }
   .faq-presse .q { font-weight: 600; }
@@ -88,11 +94,12 @@
   </div>
 
   <h2>Ils en parlent</h2>
-  <div class="parution">
-    <span class="media">Marie Claire · 7 novembre 2026</span>
-    <a class="titre" href="https://www.marieclaire.fr/charge-mentale-couple-outil-calcul-temps-repartition-taches,1522721.asp" target="_blank" rel="noopener">Charge mentale&nbsp;: en seulement 10 minutes, cet outil gratuit révèle la vraie répartition des tâches dans votre couple</a>
-    <p>Par Gwendoline Beauchet, rubrique Psycho. «&nbsp;Il ne s'agit pas d'un sondage déclaratif, mais d'une mesure, tâche par tâche.&nbsp;»</p>
-  </div>
+  <a class="presse-ref" href="https://www.marieclaire.fr/charge-mentale-couple-outil-calcul-temps-repartition-taches,1522721.asp" target="_blank" rel="noopener">
+      <span class="presse-ref-label">Vu dans la presse</span>
+      <span class="presse-ref-tete"><img src="/img/presse/marie-claire.png" alt="Marie Claire" width="128" height="128" loading="lazy" decoding="async"><span class="presse-ref-media">Marie Claire · 7 novembre 2026</span></span>
+      <span class="presse-ref-titre">« Charge mentale&nbsp;: en seulement 10 minutes, cet outil gratuit révèle la vraie répartition des tâches dans votre couple&nbsp;»</span>
+      <span class="presse-ref-lire">Lire l'article<span aria-hidden="true"> ↗</span><span class="sr"> (nouvel onglet)</span></span>
+    </a>
 
   <h2>Premiers résultats de l'étude</h2>
   <p>Pour afficher le résultat, chaque couple accepte qu'une copie anonymisée rejoigne une étude. Au 8 novembre 2026,
