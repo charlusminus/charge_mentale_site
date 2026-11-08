@@ -7,6 +7,7 @@ Pour afficher le résultat, une copie anonymisée des réponses (sans prénoms n
 ## Pages
 - [Faire le point](https://quiypense.org/) : l'outil, en trois étapes (le foyer, qui y pense, le résultat)
 - [Charte](https://quiypense.org/charte/) : gratuit, sans publicité, aucune donnée vendue, aucun partenaire qui décide de ce que dit le site
+- [Soutenir](https://quiypense.org/soutenir/) : à quoi sert un don, ce que le site ne fera pas (ni publicité, ni vente de données)
 - [Presse](https://quiypense.org/presse/) : premiers résultats de l'étude, chiffres sourcés, dossier de presse
 - [Blog](https://quiypense.org/blog/) : ce que disent les enquêtes, et comment en parler à deux
 
