@@ -194,6 +194,11 @@
   .prenoms .a input { border-color: var(--a); }
   .prenoms .b input { border-color: var(--b); }
   .enfants { margin-top: 1rem; max-width: 250px; }
+  /* suivi médical d'un enfant (09/11/2026) : visible dès qu'il y a un enfant, majore « Suivre la santé des enfants » */
+  .suivi-med { display: flex; gap: .6rem; align-items: flex-start; max-width: 520px; margin-top: .8rem; font-size: .92rem; cursor: pointer; }
+  .suivi-med[hidden] { display: none; }
+  .suivi-med input { width: 1.15rem; height: 1.15rem; margin-top: .15rem; flex: none; accent-color: var(--ink); }
+  .suivi-med small { display: block; color: var(--muted); font-size: .82rem; margin-top: .2rem; }
   /* genre : trois pastilles, aucune cochée au départ, à choisir avant de commencer (nc possible), sans incidence sur le calcul */
   .genre, .choix { display: flex; gap: .35rem; margin-top: .45rem; }
   .genre .g, .choix .g { flex: 1; padding: .35rem 0; border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper);
@@ -679,6 +684,9 @@
           <select id="animaux"><option value="0">Aucun</option><option value="1">Oui</option></select>
         </div>
       </div>
+      <label class="suivi-med" id="suiviMedBox" hidden><input type="checkbox" id="suiviMed">
+        <span>Un enfant a besoin d'un suivi médical ou d'un accompagnement particulier (handicap, maladie chronique)
+        <small>Le temps prévu pour suivre sa santé passe à 6 h par semaine, à ajuster ensuite. Cette case reste dans votre navigateur : elle n'est pas transmise à l'étude.</small></span></label>
       <div class="remplit">
         <span class="lbl" id="remplit-lbl">Qui remplit le questionnaire ?</span>
         <div class="choix" id="remplit" role="group" aria-labelledby="remplit-lbl" title="Sert seulement à l'étude anonyme, ne change rien au calcul.">
@@ -1039,13 +1047,15 @@
   let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
 
   function fresh() {
-    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null, foyer: "" };   // foyer : numéro tiré au hasard au premier résultat (30/10/2026) ; proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
+    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, suivi: 0, ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null, foyer: "" };   // foyer : numéro tiré au hasard au premier résultat (30/10/2026) ; proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
     for (const cat of C.categories) for (const t of cat.taches) s.t[t.id] = { fait: null, pense: null, n: t.n, p: t.periode, d: t.duree };
     return s;
   }
   // Lien de partage compact (format 2, 21/09/2026) : le JSON en base64 faisait 3 000 caractères, WhatsApp le coupait.
   // « 2~nomA~nomB~enfants~ecran~réponses~réglages~ajouts » : une lettre par tâche du catalogue (fait × pense, 25 combinaisons),
   // les durées seulement si elles ont été modifiées, les tâches ajoutées en clair. Environ 100 caractères. Rien ne quitte le navigateur.
+  const SANTE_MAJ = { n: 3, p: "semaine", d: 120 };   // suivi médical d'un enfant, 09/11/2026
+  function santeDefaut() { for (const cat of C.categories) for (const t of cat.taches) if (t.id === "sante-enfants") return { n: t.n, p: t.periode, d: t.duree }; return SANTE_MAJ; }
   function catTasks() { const out = []; for (const cat of C.categories) for (const t of cat.taches) out.push(t); return out; }
   function esc(x) { return encodeURIComponent(String(x)).replace(/[.~_]/g, c => "%" + c.charCodeAt(0).toString(16).toUpperCase()); }
   function unesc(x) { try { return decodeURIComponent(x); } catch (e) { return ""; } }
@@ -1068,7 +1078,8 @@
     // travail rémunéré (13/10/2026) : champ 12, « heuresA_heuresB » par semaine, vide si aucune n'est indiquée
     const vh = v => v === null || v === undefined ? "" : v, pro = vh(S.proA) === "" && vh(S.proB) === "" ? "" : vh(S.proA) + "_" + vh(S.proB);
     // numéro de foyer (30/10/2026) : champ 13, 32 caractères hexadécimaux tirés au hasard, relie les passages d'un même foyer dans l'étude
-    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || ""].join("~").replace(/~+$/, "");
+    // suivi médical d'un enfant (09/11/2026) : champ 14, « 1 » si la case est cochée ; jamais repris dans la copie de l'étude
+    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : ""].join("~").replace(/~+$/, "");
   }
   function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
@@ -1087,6 +1098,7 @@
     const rv = borne(f[11]); s.revA = rv === undefined ? null : rv;   // revenus du foyer, 12/10/2026
     if (f[12]) { const [pa, pb] = f[12].split("_").map(borne); s.proA = pa === undefined ? null : pa; s.proB = pb === undefined ? null : pb; }   // travail rémunéré, 13/10/2026
     if (/^[0-9a-f]{32}$/.test(f[13] || "")) s.foyer = f[13];   // numéro de foyer, 30/10/2026
+    s.suivi = f[14] === "1" ? 1 : 0;   // suivi médical d'un enfant, 09/11/2026
     return s;
   }
   // Lien au format 7 (avant le 08/11/2026) : l'ancienne tâche « S'occuper des courses » comprenait la liste. La liste reprend
@@ -1670,7 +1682,19 @@
     }));
     peindre();
   });
-  iE.addEventListener("change", () => { S.enfants = +iE.value; update(); });
+  // Suivi médical d'un enfant (avis du 09/11/2026) : « Suivre la santé des enfants » passe de 1 h par mois à 3 fois 2 h
+  // par semaine, soit les six heures hebdomadaires de l'enquête FFDys et Poppins 2024 (cf revue-litterature.md, point 10).
+  // La case ne touche la tâche que si sa durée n'a pas été réglée à la main ; décochée, la valeur par défaut revient.
+  const iSm = document.getElementById("suiviMed"), boxSm = document.getElementById("suiviMedBox");
+  const peindreSuivi = () => { boxSm.hidden = !(S.enfants > 0); iSm.checked = !!S.suivi; };
+  iSm.addEventListener("change", () => {
+    S.suivi = iSm.checked ? 1 : 0;
+    const st = S.t["sante-enfants"], def = santeDefaut(), de = S.suivi ? def : SANTE_MAJ, vers = S.suivi ? SANTE_MAJ : def;
+    if (st && st.n === de.n && st.p === de.p && st.d === de.d) Object.assign(st, vers);
+    update();
+  });
+  iE.addEventListener("change", () => { S.enfants = +iE.value; peindreSuivi(); update(); });
+  peindreSuivi();
   // Qui remplit : pour l'étude seulement, mesurer si la personne qui saisit se crédite davantage. Hors du lien de
   // partage (l'autre qui l'ouvre n'a pas rempli) : gardé pour l'onglet, a, b ou 2 (les deux ensemble).
   const remplit = document.getElementById("remplit");
@@ -1822,7 +1846,11 @@
     }
     // La copie, telle qu'envoyée à l'accord puis à chaque mise à jour (21/10/2026).
     function copie() {
+      // Suivi médical coché (09/11/2026) : donnée de santé, l'étude reçoit la tâche à sa durée par défaut, sans la case.
+      const st = S.t["sante-enfants"], maj = S.suivi && st && st.n === SANTE_MAJ.n && st.p === SANTE_MAJ.p && st.d === SANTE_MAJ.d, sauve = maj && { n: st.n, p: st.p, d: st.d };
+      if (maj) Object.assign(st, santeDefaut());
       const r = compute(), champs = encode().split("~");   // 5 = réponses, 6 = réglages ; les prénoms (1 et 2) ne sont pas repris
+      if (maj) Object.assign(st, sauve);
       const pct = (x, y) => (x + y) ? String(Math.round(100 * x / (x + y))) : "";
       const data = new URLSearchParams({
         session: jeton(), date: new Date().toISOString(), catalogue: C.version || "", format: champs[0],
