@@ -537,14 +537,11 @@
   .etude-boite .small { margin-top: .7rem; }
   .etude-boite .turnstile { margin-top: 1rem; min-height: 0; }
   .etude-boite .etude-etat:empty { display: none; }
+  .etude-boite .small a { color: var(--ink); text-underline-offset: 2px; }
   /* questions facultatives pour affiner l'étude (prototype du 09/11/2026) : repliées, sous le texte d'accord */
   .profil { margin-top: 1rem; border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper); }
-  .profil summary { cursor: pointer; padding: .7rem .9rem; font-weight: 600; list-style: none; display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .5rem; }
-  .profil summary::-webkit-details-marker { display: none; }
-  .profil summary::before { content: "+"; font-weight: 600; width: 1rem; color: var(--muted); }
-  .profil[open] summary::before { content: "−"; }
+  .profil-titre { margin: 0; padding: .75rem .9rem .5rem; font-weight: 600; }
   .profil-fac { font-weight: 400; color: var(--muted); font-size: .9rem; }
-  .profil > .small { margin: 0 .9rem .6rem; }
   .profil-grille { display: grid; grid-template-columns: auto 1fr 1fr; gap: .45rem .6rem; align-items: center; padding: 0 .9rem .9rem; }
   .profil-nom { font-size: .85rem; font-weight: 600; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .profil-lab { font-size: .9rem; }
@@ -933,10 +930,8 @@
   <div class="modale-boite etude-boite">
     <h2 id="etude-titre">Important, avant d'afficher votre résultat</h2>
     <p>Pour afficher le résultat, nous conservons une copie <strong class="souligne">anonymisée</strong> de vos réponses, afin de mener une grande étude sur la répartition des tâches et de la charge mentale dans les foyers.</p>
-    <p class="small muted">Ce qui est conservé : vos réponses, les durées que vous avez réglées, le nombre d'enfants, le genre indiqué, qui a rempli le questionnaire, les tâches que vous avez ajoutées vous-même, les heures de travail rémunéré si vous les avez indiquées, et l'âge, l'activité et le département si vous les renseignez ci-dessous. Si vous corrigez votre résultat ensuite, la copie est mise à jour pendant 24 heures. Un numéro tiré au hasard, gardé dans votre lien, relie vos copies si vous refaites le point plus tard ou si l'autre ouvre le lien : il ne dit rien de vous. Jamais vos prénoms, ni adresse, ni e-mail, ni adresse IP : rien qui permette de remonter jusqu'à vous. C'est la contrepartie d'un outil gratuit et sans publicité.</p>
-    <details class="profil" id="profil" open>
-      <summary><span>Pour affiner l'étude</span> <span class="profil-fac">trois questions facultatives</span></summary>
-      <p class="small muted">L'âge, le métier et la région changent beaucoup la répartition des tâches. Vous pouvez laisser vide : le résultat s'affiche pareil.</p>
+    <div class="profil" id="profil">
+      <p class="profil-titre">Pour affiner l'étude <span class="profil-fac">(facultatif)</span></p>
       <div class="profil-grille">
         <span></span><span class="profil-nom" data-profil-nom="a">Prénom 1</span><span class="profil-nom" data-profil-nom="b">Prénom 2</span>
         <label class="profil-lab" for="profil-age-a">Âge</label>
@@ -948,7 +943,8 @@
         <label class="profil-lab" for="profil-dept">Département</label>
         <select id="profil-dept" data-profil="dept" class="profil-large"></select>
       </div>
-    </details>
+    </div>
+    <p class="small muted">Jamais vos prénoms, ni e-mail, ni adresse IP. <a href="confidentialite/" target="_blank" rel="noopener">Ce qui est conservé</a></p>
     <div class="turnstile" id="cf-etude"></div>
     <p class="small muted etude-etat" id="etude-etat" aria-live="polite">Vérification anti-robot en cours…</p>
     <div class="etude-actions">
