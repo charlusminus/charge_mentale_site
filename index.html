@@ -226,7 +226,7 @@
   .entete, .tache { display: grid; grid-template-columns: minmax(0, 1fr) repeat(4, 34px) 20px repeat(4, 34px); gap: 0 .2rem; align-items: center; }
   .entete { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: .5rem 0 .35rem; border-bottom: 1.5px solid var(--ink); font-size: .7rem; color: var(--muted); text-align: center; line-height: 1.15; align-items: end; margin-top: 1.2rem; }
   .entete span { overflow: hidden; overflow-wrap: anywhere; }
-  /* légende des prénoms : sur deux rangées, calée à droite contre les colonnes, centrée verticalement (retour Charles 21/09) */
+  /* légende des prénoms : sur deux rangées, calée à droite contre les colonnes, centrée verticalement (retour du 21/09) */
   .entete .leg { grid-column: 1; grid-row: 1 / span 2; justify-self: end; align-self: center; text-align: right; font-size: .85rem; padding: 0 1.1rem 0 0; display: flex; flex-direction: column; align-items: flex-end; gap: .3rem; overflow: visible; }
   .entete .leg .qui { display: inline-flex; align-items: center; gap: .4rem; white-space: nowrap; }
   .sw { display: inline-grid; place-items: center; min-width: 16px; width: auto; padding: 0 3px; height: 16px; border-radius: 4px; font-style: normal; font-size: .6rem; font-weight: 700; color: var(--paper); line-height: 1; }
@@ -374,7 +374,7 @@
   .affiner .eq { color: var(--muted); margin-right: .35rem; font-weight: 600; }
   .affiner td .aide { display: block; font-size: .78rem; color: var(--muted); line-height: 1.25; margin-top: .1rem; }
   .affiner .qui-cell { white-space: nowrap; }
-  /* qui s'en occupe et qui y pense, modifiables ici (retour Charles 24/09 : tout se corrige sur le compte, sans revenir
+  /* qui s'en occupe et qui y pense, modifiables ici (retour du 24/09 : tout se corrige sur le compte, sans revenir
      à la liste) ; sur mobile les deux colonnes sont masquées, les choix passent sous le libellé */
   .affiner select.qui { max-width: 9.5rem; font-weight: 600; }
   /* couleur de la personne choisie, comme partout ailleurs : A vert, B terracotta, les deux encre, pas nous gris */
@@ -384,7 +384,7 @@
   .affiner select.qui.v-other { color: var(--muted); font-weight: 400; }
   .affiner select.qui option { color: var(--ink); font-weight: 400; }
   .affiner tr.qui-ligne { display: none; }
-  /* description de la tâche : visible sur ordinateur, derrière un (i) sur mobile (retour Charles 24/09 : illisible) */
+  /* description de la tâche : visible sur ordinateur, derrière un (i) sur mobile (retour du 24/09 : illisible) */
   .affiner .info, .affiner .pre, .affiner .pj { display: none; }
   /* la ligne se lit comme une phrase : faite 2 fois par semaine pendant 90 min */
   .affiner .avec-unite { white-space: nowrap; }
@@ -589,7 +589,7 @@
     .affiner tr.qui-ligne { display: block; padding-bottom: .6rem; }
     .affiner tr.qui-ligne td { display: block; padding: 0; border: 0; }
     .affiner tr.repart-ligne:not([hidden]), .affiner tr.repart-ligne td { display: block; }
-    /* réglette en pleine largeur, les deux parts au-dessus, de part et d'autre (retour de Charles du 26/09/2026 : trop serrée) */
+    /* réglette en pleine largeur, les deux parts au-dessus, de part et d'autre (retour du 26/09/2026 : trop serrée) */
     .repart { grid-template-columns: 1fr 1fr; grid-template-areas: "q q" "g d" "s s"; row-gap: .15rem; }
     .repart .q { grid-area: q; } .repart .g { grid-area: g; } .repart .d { grid-area: d; } .repart input { grid-area: s; }
     .affiner .qui-mobile { display: flex; flex-wrap: wrap; gap: .35rem .9rem; font-size: .8rem; color: var(--muted); }
@@ -1102,7 +1102,7 @@
   function nomA() { return S.nomA.trim() || "Prénom 1"; }
   function nomB() { return S.nomB.trim() || "Prénom 2"; }
   function label(k) { return k === "a" ? nomA() : k === "b" ? nomB() : k === "both" ? "les deux" : "pas nous"; }
-  // Toutes les tâches posent « y pense », celles « de tête » (t.mental) comprises depuis le 26/09/2026 (demande de Charles) :
+  // Toutes les tâches posent « y pense », celles « de tête » (t.mental) comprises depuis le 26/09/2026 (décision interne) :
   // tant qu'on n'y touche pas, « y pense » suit « s'en occupe », donc les anciens liens se lisent pareil.
   function penseOf(st) { return st.pense === null ? st.fait : st.pense; }
   // « les deux » : part de la personne 1 en %, réglée à la réglette (50 par défaut). « y pense » qui suit « s'en occupe »
@@ -1180,7 +1180,7 @@
 
   // Repère dans chaque case vide (retour testeur du 21/09 : « je galère à comprendre ce que veut dire chaque coche ») :
   // initiale de chaque prénom, les deux initiales pour « les deux », une croix pour « pas nous ».
-  // Repères des deux prénoms : l'initiale, ou le plus court préfixe qui les distingue (Charles / Christelle → Cha / Chr), 3 lettres au plus.
+  // Repères des deux prénoms : l'initiale, ou le plus court préfixe qui les distingue (Clément / Claire → Clé / Cla), 3 lettres au plus.
   function reperes() {
     const A = (S.nomA || "").trim(), B = (S.nomB || "").trim();
     if (!A || !B) return [A ? A[0].toUpperCase() : "1", B ? B[0].toUpperCase() : "2"];
@@ -1201,7 +1201,7 @@
     const quoi = st.fait === "both" ? "fait" : (st.fait && st.pense === "both") ? "pense" : null;
     if (!quoi) return null;
     {
-      // Sept crans, départ au centre (retour de Charles du 25/09/2026) : 50/50, puis 60/40, 75/25, 90/10 de chaque côté.
+      // Sept crans, départ au centre (retour du 25/09/2026) : 50/50, puis 60/40, 75/25, 90/10 de chaque côté.
       // Couple femme-homme : la femme à gauche, quel que soit l'ordre des prénoms ; sinon la personne 1 à gauche.
       const CRANS = [10, 25, 40, 50, 60, 75, 90];   // part de la personne de gauche, du cran 0 au cran 6
       const gaucheB = S.genreA === "h" && S.genreB === "f";
@@ -1299,7 +1299,7 @@
     renderBudget(r);
   }
 
-  // « Et les autres couples ? » (demande de Charles du 20/10/2026) : le compte à côté de ceux des couples qui partagent
+  // « Et les autres couples ? » (demande du 20/10/2026) : le compte à côté de ceux des couples qui partagent
   // les mêmes critères (nombre d'enfants, puis heures de travail si indiquées). Les repères sont agrégés chaque semaine
   // depuis la feuille de l'étude par charge_mentale/tools/reperes.py (reperes.js : histogrammes et quartiles par groupe,
   // groupes de 30 couples au moins, aucune ligne individuelle). Rien ne part du navigateur. Couples femme-homme seulement :
@@ -1375,7 +1375,7 @@
     if (aller) aller.addEventListener("click", () => document.getElementById("pro").scrollIntoView({ behavior: "smooth", block: "start" }));
   }
 
-  // Travail rémunéré (demande de Charles du 13/10/2026, après les commentaires « et le travail ? ») : facultatif,
+  // Travail rémunéré (demande du 13/10/2026, après les commentaires « et le travail ? ») : facultatif,
   // saisi en fin d'étape 2 (il part alors avec la copie de l'étude) ou sur la page du compte (affichage seulement).
   // Il ne change ni le compte ni le verdict : il pose à côté la charge totale par semaine, travail payé plus maison,
   // comme l'enquête Emploi du temps de l'INSEE. Ni dans les images à partager, ni dans l'Excel.
@@ -1418,11 +1418,11 @@
   }));
   document.querySelectorAll("input[data-pro]").forEach(i => i.addEventListener("change", () => { if (window.__ga) gtag("event", "travail_paye_indique", { champ: S.ecran === 3 ? "compte" : "liste" }); }));
 
-  // Revenus du foyer (demande de Charles du 12/10/2026) : une donnée annexe, affichée sur la page du compte seulement
+  // Revenus du foyer (demande du 12/10/2026) : une donnée annexe, affichée sur la page du compte seulement
   // (ni dans les images à partager, ni dans l'étude). La règle proposée pour le budget commun est la participation
   // au prorata des revenus : la part de chacun dans les dépenses communes est sa part dans les revenus du foyer.
   // Réglette de 0 à 100 % par pas de 5 ; couple femme-homme : la femme à gauche, comme les réglettes « les deux ».
-  // Masqué le 13/10/2026 (demande de Charles) : le bloc reste dans la page avec l'attribut hidden ; pour le remettre,
+  // Masqué le 13/10/2026 (décision interne) : le bloc reste dans la page avec l'attribut hidden ; pour le remettre,
   // passer AFFICHER_REVENUS à true. Le champ 11 du lien continue d'être lu et écrit.
   const AFFICHER_REVENUS = false;
   document.getElementById("budget").hidden = !AFFICHER_REVENUS;
@@ -1484,7 +1484,7 @@
     const tb = document.getElementById("table-affiner");
     // Toutes les tâches répondues, « pas nous » compris : on y corrige qui y pense, et on peut la réattribuer.
     // Le temps d'une tâche « pas nous » ne compte pour personne, ses champs sont atténués mais restent saisissables.
-    // Une famille par <tbody>, repliée par défaut pour garder la page courte (demande de Charles du 26/09/2026) ;
+    // Une famille par <tbody>, repliée par défaut pour garder la page courte (demande du 26/09/2026) ;
     // l'en-tête de famille donne le nombre de tâches et le temps par jour, et se déplie au clic.
     let html = `<thead><tr class="entete-aff"><th>Tâche</th><th class="cache">S'en occupe</th><th class="cache">Y pense</th><th>faite</th><th>par</th><th>pendant</th><th class="hj">= par jour</th></tr></thead>`;
     const choix = (v, k, cls, id) => `<select class="qui v-${v} ${cls}" data-k="${k}"${id ? ` id="${id}"` : ""} aria-label="${k === "fait" ? "Qui s'en occupe" : "Qui y pense"}">${WHO.map(w => `<option value="${w}" ${w === v ? "selected" : ""}>${label(w)}</option>`).join("")}</select>`;
@@ -1807,7 +1807,7 @@
       // no-cors : Apps Script répond par une redirection sans en-tête CORS ; la réponse opaque suffit.
       try { fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true, mode: "no-cors", credentials: "omit" }).catch(() => {}); } catch (e) {}
     }
-    // Mise à jour (demande de Charles du 20/10/2026) : ce qui est corrigé après coup sur la page du compte (heures de
+    // Mise à jour (demande du 20/10/2026) : ce qui est corrigé après coup sur la page du compte (heures de
     // travail, durées, qui s'en occupe, genres) complète la copie. Envoyée quand on quitte la page ou change d'onglet,
     // seulement si quelque chose a changé, pendant 24 h, avec la clé de la première copie (l'Apps Script la vérifie).
     function maj() {
