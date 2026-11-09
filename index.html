@@ -537,6 +537,20 @@
   .etude-boite .small { margin-top: .7rem; }
   .etude-boite .turnstile { margin-top: 1rem; min-height: 0; }
   .etude-boite .etude-etat:empty { display: none; }
+  /* questions facultatives pour affiner l'étude (prototype du 09/11/2026) : repliées, sous le texte d'accord */
+  .profil { margin-top: 1rem; border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper); }
+  .profil summary { cursor: pointer; padding: .7rem .9rem; font-weight: 600; list-style: none; display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .5rem; }
+  .profil summary::-webkit-details-marker { display: none; }
+  .profil summary::before { content: "+"; font-weight: 600; width: 1rem; color: var(--muted); }
+  .profil[open] summary::before { content: "−"; }
+  .profil-fac { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  .profil > .small { margin: 0 .9rem .6rem; }
+  .profil-grille { display: grid; grid-template-columns: auto 1fr 1fr; gap: .45rem .6rem; align-items: center; padding: 0 .9rem .9rem; }
+  .profil-nom { font-size: .85rem; font-weight: 600; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .profil-lab { font-size: .9rem; }
+  .profil select { width: 100%; min-width: 0; font: inherit; font-size: .9rem; padding: .4rem .45rem; border: 1.5px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); }
+  .profil .profil-large { grid-column: 2 / 4; }
+  @media (max-width: 520px) { .profil-grille { grid-template-columns: 1fr 1fr; } .profil-grille > span:first-child { display: none; } .profil-lab { grid-column: 1 / 3; margin-top: .3rem; } .profil .profil-large { grid-column: 1 / 3; } }
   .souligne { text-decoration: underline; text-underline-offset: 3px; }
   .etude-actions { display: flex; gap: 1rem; margin-top: 1.4rem; align-items: center; justify-content: flex-end; }
   .etude-actions .btn { flex: 0 1 auto; text-align: center; }
@@ -919,7 +933,22 @@
   <div class="modale-boite etude-boite">
     <h2 id="etude-titre">Important, avant d'afficher votre résultat</h2>
     <p>Pour afficher le résultat, nous conservons une copie <strong class="souligne">anonymisée</strong> de vos réponses, afin de mener une grande étude sur la répartition des tâches et de la charge mentale dans les foyers.</p>
-    <p class="small muted">Ce qui est conservé : vos réponses, les durées que vous avez réglées, le nombre d'enfants, le genre indiqué, qui a rempli le questionnaire, les tâches que vous avez ajoutées vous-même, et les heures de travail rémunéré si vous les avez indiquées. Si vous corrigez votre résultat ensuite, la copie est mise à jour pendant 24 heures. Un numéro tiré au hasard, gardé dans votre lien, relie vos copies si vous refaites le point plus tard ou si l'autre ouvre le lien : il ne dit rien de vous. Jamais vos prénoms, ni adresse, ni e-mail, ni adresse IP : rien qui permette de remonter jusqu'à vous. C'est la contrepartie d'un outil gratuit et sans publicité.</p>
+    <p class="small muted">Ce qui est conservé : vos réponses, les durées que vous avez réglées, le nombre d'enfants, le genre indiqué, qui a rempli le questionnaire, les tâches que vous avez ajoutées vous-même, les heures de travail rémunéré si vous les avez indiquées, et l'âge, l'activité et le département si vous les renseignez ci-dessous. Si vous corrigez votre résultat ensuite, la copie est mise à jour pendant 24 heures. Un numéro tiré au hasard, gardé dans votre lien, relie vos copies si vous refaites le point plus tard ou si l'autre ouvre le lien : il ne dit rien de vous. Jamais vos prénoms, ni adresse, ni e-mail, ni adresse IP : rien qui permette de remonter jusqu'à vous. C'est la contrepartie d'un outil gratuit et sans publicité.</p>
+    <details class="profil" id="profil" open>
+      <summary><span>Pour affiner l'étude</span> <span class="profil-fac">trois questions facultatives</span></summary>
+      <p class="small muted">L'âge, le métier et la région changent beaucoup la répartition des tâches. Vous pouvez laisser vide : le résultat s'affiche pareil.</p>
+      <div class="profil-grille">
+        <span></span><span class="profil-nom" data-profil-nom="a">Prénom 1</span><span class="profil-nom" data-profil-nom="b">Prénom 2</span>
+        <label class="profil-lab" for="profil-age-a">Âge</label>
+        <select id="profil-age-a" data-profil="age_a" aria-label="Âge, personne 1"></select>
+        <select id="profil-age-b" data-profil="age_b" aria-label="Âge, personne 2"></select>
+        <label class="profil-lab" for="profil-csp-a">Activité</label>
+        <select id="profil-csp-a" data-profil="csp_a" aria-label="Activité, personne 1"></select>
+        <select id="profil-csp-b" data-profil="csp_b" aria-label="Activité, personne 2"></select>
+        <label class="profil-lab" for="profil-dept">Département</label>
+        <select id="profil-dept" data-profil="dept" class="profil-large"></select>
+      </div>
+    </details>
     <div class="turnstile" id="cf-etude"></div>
     <p class="small muted etude-etat" id="etude-etat" aria-live="polite">Vérification anti-robot en cours…</p>
     <div class="etude-actions">
@@ -1773,6 +1802,26 @@
       const neuf = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
       try { let v = sessionStorage.getItem("etude-sid"); if (!v) { v = neuf(); sessionStorage.setItem("etude-sid", v); } return v; } catch (e) { return neuf(); }
     }
+    // Questions facultatives pour affiner l'étude (prototype du 09/11/2026) : tranches d'âge et catégorie
+    // socioprofessionnelle de chacun (groupes de l'INSEE ; « Artisan, commerçant » couvre aussi les chefs d'entreprise), département du foyer. Rien n'est obligatoire,
+    // rien n'entre dans le lien de partage ; seul ce qui est choisi part avec la copie.
+    const PROFIL = {
+      age: [["", "Non précisé"], ["-25", "Moins de 25 ans"], ["25-34", "25 à 34 ans"], ["35-44", "35 à 44 ans"], ["45-54", "45 à 54 ans"], ["55-64", "55 à 64 ans"], ["65+", "65 ans et plus"]],
+      csp: [["", "Non précisé"], ["cadre", "Cadre, prof. libérale"], ["inter", "Profession intermédiaire"], ["employe", "Employé(e)"], ["ouvrier", "Ouvrier(ère)"],
+        ["independant", "Artisan, commerçant"], ["agri", "Agriculteur(trice)"], ["retraite", "Retraité(e)"], ["etudes", "Étudiant(e)"], ["sans", "Sans emploi, au foyer"]],
+      dept: [["", "Non précisé"], ...["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","2A","2B","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","971","972","973","974","976"].map(d => [d, d]), ["etranger", "Hors de France"]],
+    };
+    (function remplirProfil() {
+      document.querySelectorAll("#profil select[data-profil]").forEach(sel => {
+        const liste = PROFIL[sel.dataset.profil.split("_")[0]];
+        sel.innerHTML = liste.map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
+      });
+    })();
+    function profil() {
+      const o = {};
+      document.querySelectorAll("#profil select[data-profil]").forEach(sel => { o[sel.dataset.profil] = sel.value; });
+      return o;
+    }
     // La copie, telle qu'envoyée à l'accord puis à chaque mise à jour (21/10/2026).
     function copie() {
       const r = compute(), champs = encode().split("~");   // 5 = réponses, 6 = réglages ; les prénoms (1 et 2) ne sont pas repris
@@ -1784,7 +1833,8 @@
         heures_a: r.a.h.toFixed(3), heures_b: r.b.h.toFixed(3), part_temps_a: pct(r.a.h, r.b.h),
         faites_a: r.a.nFait, faites_b: r.b.nFait, tete_a: r.a.nPense, tete_b: r.b.nPense, part_tete_a: pct(r.a.nPense, r.b.nPense),
         reponses: champs[5] || "", reglages: champs[6] || "", partages: champs[10] || "",
-        pro_a: S.proA ?? "", pro_b: S.proB ?? "",   // heures de travail payé par semaine, si indiquées avant le compte (13/10/2026)
+        pro_a: S.proA ?? "", pro_b: S.proB ?? "",
+        ...profil(),   // âge, activité, département : facultatifs, saisis dans la modale (prototype du 09/11/2026)   // heures de travail payé par semaine, si indiquées avant le compte (13/10/2026)
         foyer: S.foyer || "",   // numéro de foyer tiré au hasard (30/10/2026) : la feuille n'en garde que l'empreinte
         ajouts: S.custom.map(c => c.nom).join(" | ").slice(0, 600),
         page: location.origin + location.pathname, source: new URLSearchParams(location.search).get("utm_source") || ""
@@ -1802,6 +1852,7 @@
       const cle = Array.from(crypto.getRandomValues(new Uint8Array(16)), x => x.toString(16).padStart(2, "0")).join("");
       data.set("cle", cle);
       try { sessionStorage.setItem("etude-maj", JSON.stringify({ sid: data.get("session"), cle, t: Date.now(), dernier: empreinte(copie()) })); } catch (e) {}
+      if (window.__ga) gtag("event", "profil_etude", { remplis: Object.values(profil()).filter(Boolean).length });   // prototype : combien de champs facultatifs sont remplis
       data.set("cf-turnstile-response", jetonTs);
       jetonTs = null;   // un jeton ne sert qu'une fois
       // no-cors : Apps Script répond par une redirection sans en-tête CORS ; la réponse opaque suffit.
@@ -1857,7 +1908,10 @@
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });   // échap : on referme, on reste sur la liste
     return {
       dejaPasse: () => passe,   // accepté dans cet onglet, envoi fait ou impossible : on ne redemande pas
-      demander: () => { ouvrirModale(m, oui); verifier(); if (window.__ga) gtag("event", "etude_demandee"); }
+      demander: () => {
+        document.querySelectorAll("[data-profil-nom]").forEach(e => { const n = (e.dataset.profilNom === "a" ? S.nomA : S.nomB) || ""; e.textContent = n.trim() || (e.dataset.profilNom === "a" ? "Prénom 1" : "Prénom 2"); });
+        ouvrirModale(m, oui); verifier(); if (window.__ga) gtag("event", "etude_demandee");
+      }
     };
   })();
   // Deux chemins mènent au résultat : le bouton de bas de liste et la barre de suivi. Le palier « l'essentiel est fait »
