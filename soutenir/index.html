@@ -25,10 +25,6 @@
 <script src="/mesure.js" defer></script>
 <style>
   .cta { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.2rem; margin: 1.6rem 0 .4rem; }
-  .cta .kofi { display: inline-flex; align-items: center; gap: .6rem; padding: .85rem 1.4rem; border-radius: var(--r); border: 1.5px solid var(--ink);
-    background: var(--ink); color: var(--bg); font-weight: 600; text-decoration: none; }
-  .cta .kofi:hover { background: #3d3125; color: var(--bg); }
-  .cta .kofi img { height: 22px; width: auto; display: block; }
   .cta .note-paiement { font-size: .9rem; color: var(--muted); margin: 0; }
   .usages { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1rem 0 0; padding: 0; list-style: none; }
   .usages li { padding: 1.1rem 1.2rem; background: var(--bg-2); border-radius: 12px; }
@@ -52,7 +48,7 @@
     garder en ligne et à le faire grandir.</p>
 
   <div class="cta">
-    <a class="kofi" id="kofi" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=page-soutenir&amp;utm_campaign=soutenir" target="_blank" rel="noopener"><img src="/img/kofi.png" alt="" width="141" height="109">Offrir un café sur Ko-fi</a>
+    <a class="bmc" id="cafe" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=page-soutenir&amp;utm_campaign=soutenir" target="_blank" rel="noopener"><span class="bmc-emoji" aria-hidden="true">🙏</span><span>Soutenir</span></a>
     <p class="note-paiement">Le paiement se fait chez Ko-fi, par carte ou PayPal, sans créer de compte.</p>
   </div>
 
@@ -87,7 +83,7 @@
 </footer>
 <script>
   // Page « Soutenir » (08/11/2026) : le bouton du haut des pages et l'encart du résultat y mènent.
-  document.getElementById("kofi").addEventListener("click", function () {
+  document.getElementById("cafe").addEventListener("click", function () {
     if (window.__ga) gtag("event", "soutenir_clic", { origine: "page" });
   });
 </script>

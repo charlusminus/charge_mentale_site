@@ -28,9 +28,12 @@ strong { font-weight: 600; }
 .btn { display: inline-block; padding: .75rem 1.3rem; border-radius: var(--r); border: 1.5px solid var(--ink); background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 600; }
 .btn:hover { background: var(--muted); border-color: var(--muted); color: var(--paper); }
 .btn.petit { padding: .45rem .9rem; font-size: .9rem; }
-.soutenir { display: inline-flex; align-items: center; gap: .45rem; padding: .45rem .9rem .45rem .7rem; border-radius: 999px; border: 1.5px solid var(--ink); background: var(--paper); color: var(--ink); text-decoration: none; font-weight: 600; font-size: .9rem; }
-.soutenir:hover { background: var(--bg-2); color: var(--ink); }
-.kofi-logo { height: 18px; width: auto; display: block; }
+/* bouton Soutenir (09/11/2026, à l'image du bouton Buy Me a Coffee, avant : pilule à l'encre et logo Ko-fi), vers Ko-fi : terracotta,
+   texte blanc en Cookie (auto-hébergée), emoji. Aucun script tiers : un lien ou un bouton du site. */
+.soutenir, .bmc { display: inline-flex; align-items: center; gap: .4rem; padding: .28rem 1rem .34rem .8rem; border-radius: 999px; border: 1.5px solid var(--b); background: var(--b); color: #fff; font-family: 'Cookie', 'Brush Script MT', cursive; font-size: 1.45rem; font-weight: 400; line-height: 1.1; text-decoration: none; cursor: pointer; }
+.soutenir:hover, .bmc:hover { background: #9A4322; border-color: #9A4322; color: #fff; }
+.bmc { font-size: 1.75rem; padding: .4rem 1.3rem .46rem 1rem; }
+.bmc-emoji { font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif; font-size: .7em; line-height: 1; }
 
 main { max-width: 68ch; margin: 0 auto; padding: 32px 16px 48px; }
 .fil { font-size: .85rem; color: var(--muted); margin-bottom: .4rem; }
