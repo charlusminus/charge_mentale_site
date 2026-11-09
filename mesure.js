@@ -45,6 +45,8 @@
   function demarrer() {
     // Le lien « Cookies » du pied de page rouvre le bandeau pour changer d'avis.
     document.addEventListener("click", function (e) { var a = e.target.closest("[data-cookies]"); if (a) { e.preventDefault(); ouvrir(); } });
+    // Bouton « Soutenir » de l'en-tête, vers Ko-fi (09/11/2026) : un clic compté par page d'origine.
+    document.addEventListener("click", function (e) { var a = e.target.closest("[data-soutenir]"); if (a && window.__ga) gtag("event", "soutenir_clic", { origine: a.getAttribute("data-soutenir") }); });
     var choix = lire();
     if (choix === true) charger(); else if (choix === null) ouvrir();
   }

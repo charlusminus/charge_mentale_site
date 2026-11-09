@@ -28,7 +28,7 @@ strong { font-weight: 600; }
 .btn { display: inline-block; padding: .75rem 1.3rem; border-radius: var(--r); border: 1.5px solid var(--ink); background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 600; }
 .btn:hover { background: var(--muted); border-color: var(--muted); color: var(--paper); }
 .btn.petit { padding: .45rem .9rem; font-size: .9rem; }
-/* bouton Soutenir, à l'image du bouton Buy Me a Coffee (09/11/2026, avant : pilule à l'encre et logo Ko-fi) : terracotta,
+/* bouton Soutenir (09/11/2026, à l'image du bouton Buy Me a Coffee, avant : pilule à l'encre et logo Ko-fi), vers Ko-fi : terracotta,
    texte blanc en Cookie (auto-hébergée), emoji. Aucun script tiers : un lien ou un bouton du site. */
 .soutenir, .bmc { display: inline-flex; align-items: center; gap: .4rem; padding: .28rem 1rem .34rem .8rem; border-radius: 999px; border: 1.5px solid var(--b); background: var(--b); color: #fff; font-family: 'Cookie', 'Brush Script MT', cursive; font-size: 1.45rem; font-weight: 400; line-height: 1.1; text-decoration: none; cursor: pointer; }
 .soutenir:hover, .bmc:hover { background: #9A4322; border-color: #9A4322; color: #fff; }

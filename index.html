@@ -488,7 +488,7 @@
   .haut { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 14px 0 0; }
   .marque { font-family: var(--serif); font-weight: 600; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
   .haut nav { display: flex; align-items: center; gap: 1rem; font-size: .95rem; }
-  /* bouton Soutenir, à l'image du bouton Buy Me a Coffee (09/11/2026, avant : pilule à l'encre et logo Ko-fi) : terracotta,
+  /* bouton Soutenir (09/11/2026, à l'image du bouton Buy Me a Coffee, avant : pilule à l'encre et logo Ko-fi), vers Ko-fi : terracotta,
      texte blanc en Cookie (auto-hébergée), emoji. Aucun script tiers : un lien ou un bouton du site. */
   .soutenir, .bmc { display: inline-flex; align-items: center; gap: .4rem; padding: .28rem 1rem .34rem .8rem; border-radius: 999px; border: 1.5px solid var(--b); background: var(--b); color: #fff; font-family: 'Cookie', 'Brush Script MT', cursive; font-size: 1.45rem; font-weight: 400; line-height: 1.1; text-decoration: none; cursor: pointer; }
   .soutenir:hover, .bmc:hover { background: #9A4322; border-color: #9A4322; color: #fff; }
@@ -525,9 +525,7 @@
   .partage-note { margin: 1rem 0 0; padding: .8rem 1rem; background: var(--bg-2); border-radius: var(--r); font-size: .95rem; }
   .partage-note a { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
   .partage-note:empty { display: none; }
-  /* modales soutien et sortie */
-  .cafe-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.2rem; margin-top: 1.1rem; }
-  .cafe-actions a:not(.bmc) { color: var(--ink); font-weight: 600; text-underline-offset: 3px; }
+  /* modale de sortie */
   .sortie-actions { display: grid; gap: .6rem; margin-top: 1.2rem; }
   .sortie-actions .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; text-align: center; }
   .sortie-actions .btn svg { width: 18px; height: 18px; fill: currentColor; }
@@ -626,7 +624,7 @@
 <main>
   <header class="haut">
     <a class="marque" href="./">Qui y pense&nbsp;?</a>
-    <nav aria-label="Site"><button type="button" class="soutenir" id="soutenir"><span class="bmc-emoji" aria-hidden="true">🙏</span>Soutenir</button></nav>
+    <nav aria-label="Site"><a class="soutenir" id="soutenir" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=entete&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="entete"><span class="bmc-emoji" aria-hidden="true">🙏</span>Soutenir</a></nav>
   </header>
   <nav class="fil" id="fil" aria-label="Étapes"><span data-n="1">Vous</span><span data-n="2">Qui y pense</span><span data-n="3">Le résultat</span></nav>
 
@@ -806,7 +804,7 @@
         <h2 id="soutien-titre">Ce point vous a servi&nbsp;?</h2>
         <p class="muted">Qui y pense&nbsp;? est gratuit, sans inscription ni publicité, et fait sur du temps libre. Un café aide à le garder en ligne et à préparer la suite&nbsp;: refaire le point dans six mois, une sauvegarde en ligne.</p>
         <div class="soutien-actions">
-          <button class="bmc" type="button" id="soutien-cafe"><span class="bmc-emoji" aria-hidden="true">🙏</span><span>Soutenir</span></button>
+          <a class="bmc" id="soutien-cafe" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="resultat"><span class="bmc-emoji" aria-hidden="true">🙏</span><span>Soutenir</span></a>
           <a href="soutenir/?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir">À quoi sert votre soutien</a>
         </div>
       </section>
@@ -901,19 +899,6 @@
   </div>
 </div>
 
-<div class="modale" id="cafe" role="dialog" aria-modal="true" aria-labelledby="cafe-titre" hidden>
-  <div class="modale-boite cafe-boite">
-    <button class="modale-fermer" type="button" id="cafe-fermer" aria-label="Fermer">Fermer</button>
-    <h2 id="cafe-titre">Soutenir Qui y pense ?</h2>
-    <p>Le site est gratuit, sans inscription ni publicité. Si le site vous a servi, un café aide à le garder en ligne et à préparer la suite : sauvegarder, refaire le point dans six mois, comparer.</p>
-    <div class="cafe-actions">
-      <a class="bmc" href="https://buymeacoffee.com/quiypense?utm_source=quiypense&amp;utm_medium=modale&amp;utm_campaign=soutenir" target="_blank" rel="noopener" id="cafe-lien"><span class="bmc-emoji" aria-hidden="true">🙏</span><span>Soutenir</span></a>
-      <a href="soutenir/?utm_source=quiypense&amp;utm_medium=modale&amp;utm_campaign=soutenir">À quoi sert votre soutien</a>
-    </div>
-    <p class="small muted">Le paiement se fait chez Buy Me a Coffee, dans un nouvel onglet, sans créer de compte.</p>
-  </div>
-</div>
-
 <div class="modale" id="sortie" role="dialog" aria-modal="true" aria-labelledby="sortie-titre" hidden>
   <div class="modale-boite">
     <button class="modale-fermer" type="button" id="sortie-fermer" aria-label="Fermer">Fermer</button>
@@ -923,7 +908,7 @@
       <button class="btn" type="button" id="sortie-copier"><svg aria-hidden="true"><use href="#i-lien"/></svg><span>Copier le lien de ce résultat</span></button>
       <p class="small muted" id="sortie-ok">Ou ajoutez la page aux favoris : Ctrl + D (⌘ + D sur Mac).</p>
       <button class="btn secondary" type="button" id="sortie-sauver">Une sauvegarde en ligne ? Dites-nous si ça vous intéresse</button>
-      <button class="btn secondary" type="button" id="sortie-soutenir"><span class="bmc-emoji" aria-hidden="true">🙏</span><span>Soutenir le projet</span></button>
+      <a class="btn secondary" id="sortie-soutenir" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=sortie&amp;utm_campaign=soutenir" target="_blank" rel="noopener"><span class="bmc-emoji" aria-hidden="true">🙏</span><span>Soutenir le projet</span></a>
     </div>
   </div>
 </div>
@@ -1892,27 +1877,19 @@
     show(3);
   }
 
-  /* ---------- modales génériques : soutien (café) et sortie (compte non sauvegardé) ---------- */
+  /* ---------- modales génériques : sortie (compte non sauvegardé) ---------- */
   function ouvrirModale(m, focus) { m.hidden = false; document.body.classList.add("modale-ouverte"); const f = focus || m.querySelector(".modale-fermer"); if (f) f.focus(); }
   function fermerModale(m) { m.hidden = true; document.body.classList.remove("modale-ouverte"); }
   function modaleOuverte() { return document.body.classList.contains("modale-ouverte") || document.body.classList.contains("consent-ouvert"); }
 
-  (function cafe() {
-    // Buy Me a Coffee (09/11/2026, avant : Ko-fi en iframe) : un simple lien, aucun script ni cadre tiers chargé
-    // sur le site ; la page de paiement s'ouvre dans un nouvel onglet.
-    const m = document.getElementById("cafe");
-    function ouvrir(origine) { ouvrirModale(m); if (window.__ga) gtag("event", "soutenir_clic", { origine }); }
-    document.getElementById("cafe-lien").addEventListener("click", () => { if (window.__ga) gtag("event", "soutenir_paiement", { origine: "modale" }); });
-    document.getElementById("soutenir").addEventListener("click", () => ouvrir("entete"));
-    document.getElementById("soutien-cafe").addEventListener("click", () => ouvrir("resultat"));
+  (function soutenir() {
+    // Soutenir (09/11/2026) : les boutons mènent droit à la page Ko-fi, dans un nouvel onglet (avant : une modale
+    // avec l'iframe Ko-fi). Rien de Ko-fi n'est chargé sur le site.
+    document.querySelectorAll("[data-soutenir]").forEach(a => a.addEventListener("click", () => { if (window.__ga) gtag("event", "soutenir_clic", { origine: a.dataset.soutenir }); }));
     document.getElementById("pied-partager").addEventListener("click", e => {
       const box = document.getElementById("pied-partage"), ouvert = box.hidden;
       box.hidden = !ouvert; e.currentTarget.setAttribute("aria-expanded", String(ouvert));
     });
-    document.getElementById("cafe-fermer").addEventListener("click", () => fermerModale(m));
-    m.addEventListener("click", e => { if (e.target === m) fermerModale(m); });
-    document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });
-    window.__ouvrirCafe = ouvrir;
   })();
 
   (function sortie() {
@@ -1946,7 +1923,7 @@
       catch (err) { prompt("Copiez ce lien :", url); }
     });
     document.getElementById("sortie-sauver").addEventListener("click", () => { fermerModale(m); if (window.__ga) gtag("event", "sortie_action", { action: "sauvegarde_en_ligne", contexte }); window.__ouvrirIntention(); });
-    document.getElementById("sortie-soutenir").addEventListener("click", () => { fermerModale(m); if (window.__ga) gtag("event", "sortie_action", { action: "soutenir", contexte }); window.__ouvrirCafe(contexte); });
+    document.getElementById("sortie-soutenir").addEventListener("click", () => { fermerModale(m); if (window.__ga) { gtag("event", "sortie_action", { action: "soutenir", contexte }); gtag("event", "soutenir_clic", { origine: "sortie" }); } });
     document.getElementById("sortie-fermer").addEventListener("click", () => fermerModale(m));
     m.addEventListener("click", e => { if (e.target === m) fermerModale(m); });
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });
