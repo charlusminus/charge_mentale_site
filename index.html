@@ -83,7 +83,7 @@
         { "@type": "Question", "name": "Comment le résultat est-il calculé ?", "acceptedAnswer": { "@type": "Answer", "text": "Pour chaque tâche, vous dites qui s'en occupe et qui y pense. Les heures par jour se calculent sur qui s'en occupe : nombre de fois par période multiplié par la durée, ramené à la journée. La charge mentale se mesure en nombre de tâches à garder en tête, pas en heures. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE (2010) et du jeu de cartes Fair Play (Eve Rodsky, 2019) ; vous les corrigez ensuite avec votre réalité." } },
         { "@type": "Question", "name": "D'où viennent les chiffres cités ?", "acceptedAnswer": { "@type": "Answer", "text": "INSEE, enquête Emploi du temps 2010 : les femmes consacrent 4 h 01 par jour au travail domestique, les hommes 2 h 13, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens : on passe 86 % de temps en plus à penser aux tâches qu'à les faire." } },
         { "@type": "Question", "name": "Mes réponses sont-elles envoyées quelque part ?", "acceptedAnswer": { "@type": "Answer", "text": "Une copie anonymisée, oui, et c'est annoncé avant le résultat. Tout se calcule dans votre navigateur, sans inscription : vos réponses sont encodées dans l'adresse de la page, et le fichier Excel se génère sur votre ordinateur. Pour afficher le résultat, le site en conserve une copie anonymisée, destinée à une étude sur la répartition domestique : ni prénoms, ni adresse, ni e-mail, ni adresse IP. C'est la contrepartie d'un outil gratuit et sans publicité." } },
-        { "@type": "Question", "name": "Combien de temps ça prend et à combien ?", "acceptedAnswer": { "@type": "Answer", "text": "Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, le genre de chacun, qui remplit, et le nombre d'enfants. Les tâches vont du plus courant au plus rare : on peut s'arrêter à mi-parcours et voir le résultat." } },
+        { "@type": "Question", "name": "Combien de temps ça prend et à combien ?", "acceptedAnswer": { "@type": "Answer", "text": "Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, le genre de chacun, qui remplit, et le nombre d'enfants. Les tâches vont du plus courant au plus rare, jusqu'à la maison, l'extérieur et les véhicules en fin de liste." } },
         { "@type": "Question", "name": "Peut-on faire le point depuis ChatGPT ou Claude ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui. Qui y pense ? existe aussi en serveur MCP, que l'on ajoute comme connecteur dans un assistant (Claude, ChatGPT, VS Code…) avec l'adresse https://quiypense-mcp.quiypense-mcp.workers.dev/mcp. L'assistant pose les mêmes questions que le site et donne le même résultat ; les prénoms restent dans la conversation et ne sont jamais transmis. La copie anonymisée pour l'étude est annoncée avant le résultat, comme ici." } }
       ]
     }
@@ -274,9 +274,6 @@
   .ajout input { flex: 1; min-width: 200px; padding: .5rem .7rem; border: 1.5px dashed var(--border); border-radius: var(--r); background: transparent; }
   .ajout button { padding: .5rem .9rem; border-radius: var(--r); border: 1.5px solid var(--ink); background: transparent; cursor: pointer; }
   .nav { margin: 2rem 0; display: flex; gap: .7rem; flex-wrap: wrap; align-items: center; }
-  .jalon { margin-top: 2.4rem; padding: 1.4rem 1.6rem; background: var(--bg-2); border-radius: 12px; }
-  .jalon p { max-width: 60ch; }
-  .jalon .nav { margin: 1rem 0 0; }
 
   /* résultats */
   .verdict { font-family: var(--serif); font-size: 1.65rem; line-height: 1.3; margin: 1.2rem 0 0; }
@@ -697,7 +694,7 @@
       <details><summary>Comment le résultat est-il calculé ?</summary><p>Pour chaque tâche, vous dites qui s'en occupe et qui y pense. Les heures par jour se calculent sur « qui s'en occupe » : nombre de fois par période, multiplié par la durée, ramené à la journée. La charge mentale se mesure en nombre de tâches à garder en tête, pas en heures : aucune enquête sérieuse ne convertit la pensée en minutes. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE (2010) et du jeu de cartes Fair Play (Eve Rodsky, 2019). Vous les corrigez ensuite avec votre réalité.</p></details>
       <details><summary>D'où viennent les chiffres cités ?</summary><p>INSEE, enquête Emploi du temps 2010 : 4 h 01 par jour de travail domestique pour les femmes, 2 h 13 pour les hommes, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP publiée en 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens interrogés : 86 % de temps en plus passé à penser aux tâches qu'à les faire. Les libellés des tâches suivent la nomenclature INSEE, complétée par les cent cartes Fair Play.</p></details>
       <details><summary>Mes réponses sont-elles envoyées quelque part ?</summary><p>Une copie anonymisée, oui, et c'est annoncé avant le résultat. Tout se calcule dans votre navigateur, il n'y a aucune inscription : vos réponses sont encodées dans l'adresse de la page, c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur. Pour afficher le résultat, le site en conserve une copie anonymisée, destinée à une étude sur la répartition domestique : ni prénoms, ni adresse, ni e-mail, ni adresse IP, rien qui permette de remonter jusqu'à vous. C'est la contrepartie d'un outil gratuit et sans publicité. Les polices sont hébergées avec le site. Une mesure d'audience (Google Analytics) mesure la fréquentation, seulement si vous l'acceptez dans le bandeau, et sans jamais recevoir vos réponses.</p></details>
-      <details><summary>Combien de temps ça prend, et à combien ?</summary><p>Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, le genre de chacun, qui remplit, et le nombre d'enfants. Les tâches vont du plus courant au plus rare : on peut s'arrêter à mi-parcours et voir le résultat, puis y revenir.</p></details>
+      <details><summary>Combien de temps ça prend, et à combien ?</summary><p>Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, le genre de chacun, qui remplit, et le nombre d'enfants. Les tâches vont du plus courant au plus rare, jusqu'à la maison, l'extérieur et les véhicules en fin de liste.</p></details>
       <details><summary>Peut-on faire le point depuis ChatGPT ou Claude&nbsp;?</summary><p>Oui. Qui y pense&nbsp;? existe aussi en serveur MCP, que l'on ajoute comme connecteur dans un assistant (Claude, ChatGPT, VS Code…) avec l'adresse <code>https://quiypense-mcp.quiypense-mcp.workers.dev/mcp</code>. L'assistant pose les mêmes questions que le site et donne le même résultat&nbsp;; les prénoms restent dans la conversation et ne sont jamais transmis. La copie anonymisée pour l'étude est annoncée avant le résultat, comme ici.</p></details>
     </section>
 
@@ -723,7 +720,7 @@
   <div class="ecran" id="e2">
     <section>
       <h2>Qui y pense ?</h2>
-      <p class="muted">Pour chaque tâche, deux questions : à gauche, qui s'en occupe ; à droite, qui y pense. Une case par personne, une pour les deux, une croix si ce n'est pas vous. Un clic à gauche suffit, la droite suit ; ne la corrigez que si c'est différent. Les tâches vont du plus courant au plus rare : si vous vous arrêtez en route, vous aurez répondu à l'essentiel.</p>
+      <p class="muted">Pour chaque tâche, deux questions : à gauche, qui s'en occupe ; à droite, qui y pense. Une case par personne, une pour les deux, une croix si ce n'est pas vous. Un clic à gauche suffit, la droite suit ; ne la corrigez que si c'est différent. Les tâches vont du plus courant au plus rare : allez jusqu'au bout, la maison, l'extérieur et les véhicules sont en fin de liste.</p>
       <details class="legende"><summary>Les quatre réponses, et ce que veut dire « y pense »</summary>
         <dl>
           <dt>Prénom 1, Prénom 2</dt><dd>la personne qui fait la tâche. C'est ce qui donne les heures.</dd>
@@ -1149,7 +1146,6 @@
     const root = document.getElementById("catalogue");
     root.innerHTML = "";
     const cats = visibleCats();
-    const derniereEssentielle = cats.filter(c => c.essentiel).slice(-1)[0];
     const entete = document.createElement("div"); entete.className = "entete";
     const ia = initiale(S.nomA, "1"), ib = initiale(S.nomB, "2");
     const sw = `<span class="qui"><i class="sw a">${ia}</i><span class="ca">${nomA()}</span></span><span class="qui"><i class="sw b">${ib}</i><span class="cb">${nomB()}</span></span>`;
@@ -1174,16 +1170,6 @@
       });
       box.appendChild(lien); box.appendChild(add);
       root.appendChild(box);
-      if (cat === derniereEssentielle) {
-        const j = document.createElement("div"); j.className = "jalon";
-        const reste = cats.filter(c => !c.essentiel).map(c => c.nom.toLowerCase()).join(", ");
-        j.innerHTML = `<h3>L'essentiel est fait</h3><p>Vous pouvez voir le résultat maintenant. Le reste (${reste}) affine le résultat : c'est là que se cache souvent le « y penser ».</p>
-          <div class="nav"><button class="btn" type="button">Voir le résultat</button><button class="btn secondary" type="button">Continuer</button></div>`;
-        const [voir, cont] = j.querySelectorAll("button");
-        voir.addEventListener("click", voirCompte);
-        cont.addEventListener("click", () => j.nextElementSibling && j.nextElementSibling.scrollIntoView({ behavior: "smooth", block: "start" }));
-        root.appendChild(j);
-      }
     }
   }
 
@@ -1869,10 +1855,11 @@
       demander: () => { ouvrirModale(m, oui); verifier(); if (window.__ga) gtag("event", "etude_demandee"); }
     };
   })();
-  // Trois chemins mènent au compte : le bouton de bas de liste, la barre de suivi, le palier « l'essentiel est fait ».
+  // Deux chemins mènent au résultat : le bouton de bas de liste et la barre de suivi. Le palier « l'essentiel est fait »
+  // (après la dernière famille essentielle) est retiré le 09/11/2026 : 37 % s'y arrêtaient sans voir maison, extérieur, véhicules.
   function voirCompte(e) {
     const id = e && e.currentTarget && e.currentTarget.id;
-    if (window.__ga) gtag("event", "voir_compte_clic", { origine: id === "go3" ? "bas_de_liste" : id === "suiviBtn" ? "barre" : "palier", taches_renseignees: compute().renseignees });
+    if (window.__ga) gtag("event", "voir_compte_clic", { origine: id === "go3" ? "bas_de_liste" : id === "suiviBtn" ? "barre" : "autre", taches_renseignees: compute().renseignees });
     if (!etude.dejaPasse()) return etude.demander();   // une fois par onglet : chaque compte envoyé porte son propre jeton Turnstile
     show(3);
   }
