@@ -11,6 +11,8 @@ Outils : afficher_questionnaire (le questionnaire dans la conversation, pour les
 ## Pages
 - [Faire le point](https://quiypense.org/) : l'outil, en trois étapes (le foyer, qui y pense, le résultat)
 - [Charte](https://quiypense.org/charte/) : gratuit, sans publicité, aucune donnée vendue, aucun partenaire qui décide de ce que dit le site
+- [Confidentialité](https://quiypense.org/confidentialite/) : ce qui est collecté (copie anonymisée pour l'étude, avis, audience avec accord), pourquoi, vos droits
+- [Conditions d'utilisation](https://quiypense.org/conditions/) : usage, limites du résultat, mentions légales
 - [Soutenir](https://quiypense.org/soutenir/) : à quoi sert un don, ce que le site ne fera pas (ni publicité, ni vente de données)
 - [Presse](https://quiypense.org/presse/) : premiers résultats de l'étude, chiffres sourcés, dossier de presse
 - [Blog](https://quiypense.org/blog/) : ce que disent les enquêtes, et comment en parler à deux
