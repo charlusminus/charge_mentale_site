@@ -4,6 +4,10 @@
 
 Pour afficher le résultat, une copie anonymisée des réponses (sans prénoms ni adresse IP) part vers une étude ouverte sur la répartition domestique. Les repères publiés sont toujours agrégés.
 
+## Pour les assistants IA
+Serveur MCP (Streamable HTTP, sans compte) : https://quiypense-mcp.quiypense-mcp.workers.dev/mcp
+Outils : lister_taches (le catalogue adapté au foyer), calculer_compte (le résultat, et la copie anonymisée pour l'étude, à annoncer avant). Les prénoms ne doivent jamais être transmis aux outils.
+
 ## Pages
 - [Faire le point](https://quiypense.org/) : l'outil, en trois étapes (le foyer, qui y pense, le résultat)
 - [Charte](https://quiypense.org/charte/) : gratuit, sans publicité, aucune donnée vendue, aucun partenaire qui décide de ce que dit le site
