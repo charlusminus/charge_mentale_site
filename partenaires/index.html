@@ -59,6 +59,16 @@
     .chiffres, .formules, .paire { grid-template-columns: 1fr; }
     table.faits td:first-child { white-space: normal; width: 6.5rem; }
   }
+  .presse-ref { display: flex; flex-direction: column; gap: 10px; padding: 18px 22px; border: 1.5px solid var(--line);
+    border-radius: 12px; background: var(--paper); color: inherit; text-decoration: none; max-width: 30rem; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .presse-ref-label { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .presse-ref-tete { display: flex; align-items: center; gap: 12px; }
+  .presse-ref-tete img { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); }
+  .presse-ref-media { font-size: 1rem; font-weight: 600; }
+  .presse-ref-titre { font-family: var(--serif); font-weight: 400; font-size: 1.15rem; line-height: 1.3; }
+  .presse-ref-lire { font-size: .95rem; color: var(--muted); }
+  .presse-ref:hover .presse-ref-lire, .presse-ref:focus-visible .presse-ref-lire { text-decoration: underline; text-underline-offset: 4px; }
 </style>
 </head>
 <body>
@@ -71,22 +81,29 @@
   <p class="fil"><a href="/">Qui y pense&nbsp;?</a> › Partenaires</p>
   <h1>Soutenir le baromètre 2027</h1>
   <p class="chapo">Le 8 mars 2027, Qui y pense&nbsp;? publiera le premier baromètre de la charge mentale dans le couple,
-    mesurée tâche par tâche auprès de 2&nbsp;000 à 3&nbsp;000 couples. Nous cherchons des partenaires pour le financer,
+    mesurée tâche par tâche auprès de plus de 10&nbsp;000 foyers. Nous cherchons des partenaires pour le financer,
     sans qu'ils en écrivent une ligne.</p>
 
   <h2>Où en est l'étude</h2>
   <div class="chiffres">
-    <div class="a"><span class="val">1&nbsp;400</span><span class="lab">foyers ont fait le point depuis le lancement, en septembre 2026</span></div>
-    <div class="b"><span class="val">59&nbsp;%</span><span class="lab">de la charge mentale portée par elle, en moyenne, dans les couples femme-homme</span></div>
+    <div class="a"><span class="val">10&nbsp;086</span><span class="lab">foyers ont fait le point au 9 novembre 2026, dont plus de 8&nbsp;000 en deux jours après un article de Marie Claire</span></div>
+    <div class="b"><span class="val">62&nbsp;%</span><span class="lab">de la charge mentale portée par elle quand le couple remplit à deux (1&nbsp;517 couples femme-homme)</span></div>
     <div><span class="val">100</span><span class="lab">mesures par couple&nbsp;: 50 tâches, et pour chacune, qui s'en occupe et qui y pense</span></div>
   </div>
-  <p>Les premiers résultats sont sur la <a href="/presse/">page presse</a>. Le baromètre les consolide sur un échantillon
-    plus large, redressé, et relu par un regard scientifique indépendant.</p>
+  <p>La part de la charge mentale qu'on se donne dépend de qui remplit&nbsp;: les résultats sont donc présentés selon qui
+    remplit, sur la <a href="/presse/">page presse</a>. Le baromètre les consolidera sur un échantillon redressé, relu par
+    un regard scientifique indépendant.</p>
+  <a class="presse-ref" href="https://www.marieclaire.fr/charge-mentale-couple-outil-calcul-temps-repartition-taches,1522721.asp" target="_blank" rel="noopener">
+      <span class="presse-ref-label">Vu dans la presse</span>
+      <span class="presse-ref-tete"><img src="/img/presse/marie-claire.png" alt="Marie Claire" width="128" height="128" loading="lazy" decoding="async"><span class="presse-ref-media">Marie Claire · 7 novembre 2026</span></span>
+      <span class="presse-ref-titre">« Charge mentale&nbsp;: en seulement 10 minutes, cet outil gratuit révèle la vraie répartition des tâches dans votre couple&nbsp;»</span>
+      <span class="presse-ref-lire">Lire l'article<span aria-hidden="true"> ↗</span><span class="sr"> (nouvel onglet)</span></span>
+    </a>
 
   <h2>Le baromètre 2027</h2>
   <table class="faits">
     <tr><td>Publication</td><td>8 mars 2027, journée internationale des droits des femmes</td></tr>
-    <tr><td>Échantillon</td><td>2&nbsp;000 à 3&nbsp;000 couples, enquête en janvier et février 2027</td></tr>
+    <tr><td>Échantillon</td><td>Plus de 10&nbsp;000 foyers à ce jour, collecte jusqu'en février 2027</td></tr>
     <tr><td>Méthode</td><td>Le questionnaire Qui y pense&nbsp;?, 50 tâches de la nomenclature INSEE, résultats pondérés sur la
       population (âge, enfants, région)</td></tr>
     <tr><td>Livrables</td><td>Rapport public, chiffres agrégés en accès libre, dossier de presse</td></tr>
