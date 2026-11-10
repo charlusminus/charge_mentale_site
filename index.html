@@ -309,6 +309,8 @@
   .comparer .puce.on { background: var(--ink); border-color: var(--ink); color: var(--bg); }
   .comparer .puce.off { color: var(--muted); border-style: dashed; background: transparent; }
   .comparer button.puce { cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .comparer .puce-age { padding: 0 .4rem; }
+  .comparer .puce-age select { border: 0; background: transparent; font: inherit; font-size: inherit; color: inherit; padding: .35rem .2rem; cursor: pointer; }
   .comparer .carte { background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem 1.1rem; margin-top: 1rem; }
   .comparer .carte h4 { margin: 0; font-size: 1rem; font-weight: 600; }
   .comparer .graphe { position: relative; height: 120px; margin: 1.8rem 0 .3rem; }
@@ -316,7 +318,6 @@
   .comparer .barres i { flex: 1; background: var(--line); border-radius: 3px 3px 0 0; min-height: 1px; }
   .comparer .barres i.mil { background: #B9AA92; }
   .comparer .barres i.ici { background: var(--c, var(--a)); }
-  .comparer .moitie { position: absolute; top: 0; bottom: 0; left: 50%; border-left: 1.5px dashed var(--border); }
   .comparer .vous { position: absolute; top: -1.6rem; bottom: 0; border-left: 2.5px solid var(--c, var(--a)); }
   .comparer .vous span { position: absolute; top: -.15rem; left: 6px; white-space: nowrap; font-weight: 700; color: var(--c, var(--a)); font-size: .9rem; }
   .comparer .vous.droite span { left: auto; right: 6px; }
@@ -1374,6 +1375,7 @@
     if (pf - ph > 5) return "elle-plus";
     return "proches";
   }
+  let cmpPar = null, cmpAge = "";   // critère choisi dans « Et les autres couples ? » (heures de travail ou âge), âge saisi sur place
   function renderComparer(r) {
     const box = document.getElementById("comparer"), R = window.REPERES;
     if (!box || !R || !R.groupes) { if (box) box.hidden = true; return; }
@@ -1400,23 +1402,26 @@
     // Âge (10/11/2026) : celui d'elle, sinon de lui, saisi dans la fenêtre d'accord ; pris quand les heures de travail
     // ne donnent pas de groupe. Pas d'activité ni de lieu : trop peu de couples par case.
     const ageDe = k => (document.getElementById(`profil-age-${k}`) || {}).value || "";
-    const age = ageDe(elle) || ageDe(elle === "a" ? "b" : "a"), ka = AGES[age] ? `e${e}-a${age}` : null;
+    // Les deux critères ne se croisent pas (trop peu de couples) : quand les deux donnent un groupe, on choisit d'un clic.
+    const age = cmpAge || ageDe(elle) || ageDe(elle === "a" ? "b" : "a");
+    const kt = t ? `e${e}-${t}` : null, ka = AGES[age] ? `e${e}-a${age}` : null, okT = !!(kt && R.groupes[kt]), okA = !!(ka && R.groupes[ka]);
     let cle = `e${e}`, note = "";
-    if (t && R.groupes[`e${e}-${t}`]) cle = `e${e}-${t}`;
-    else if (ka && R.groupes[ka]) cle = ka;
-    if (t && cle !== `e${e}-${t}`) note = ` Avec les mêmes heures de travail, ils ne sont pas encore ${R.min} : la comparaison se fait sur le nombre d'enfants${cle === ka ? " et l'âge" : ""}.`;
+    if (okT && okA) cle = cmpPar === "age" ? ka : kt; else if (okT) cle = kt; else if (okA) cle = ka;
+    if (t && !okT) note = ` Avec les mêmes heures de travail, ils ne sont pas encore ${R.min}.`;
+    if (age && !okA) note += ` Avec le même âge, ils ne sont pas encore ${R.min}.`;
     if (!R.groupes[cle]) { cle = "tous"; note = ` Pas encore ${R.min} couples avec le même nombre d'enfants : la comparaison se fait sur tous les couples.`; }
     const g = R.groupes[cle];
     const puces = [cle === "tous" ? `<span class="puce on">Tous les couples</span>` : `<span class="puce on">${ENFANTS[e]}</span>`, `<span class="puce on">Femme et homme</span>`];
-    if (cle === ka) puces.push(`<span class="puce on">${AGES[age]}</span>`);
-    if (t && cle === `e${e}-${t}`) puces.push(`<span class="puce on">${TRAVAIL[t]}</span>`);
+    if (okT) puces.push(cle === kt ? `<span class="puce on">${TRAVAIL[t]}</span>` : `<button type="button" class="puce off" data-par="travail">${TRAVAIL[t]}</button>`);
     else if (t) puces.push(`<span class="puce off">Mêmes heures de travail : pas encore assez de couples</span>`);
     else puces.push(`<button type="button" class="puce off" data-aller="pro">Heures de travail : à indiquer plus haut</button>`);
+    if (okA) puces.push(cle === ka ? `<span class="puce on">${AGES[age]}</span>` : `<button type="button" class="puce off" data-par="age">${AGES[age]}</button>`);
+    else puces.push(`<label class="puce off puce-age"><select data-age-cmp aria-label="Âge d'elle"><option value="">Âge d'elle : choisir</option>${Object.entries(AGES).map(([k, v]) => `<option value="${k}"${k === age ? " selected" : ""}>${v}</option>`).join("")}</select></label>`);
     const carte = (titre, v, res, verbe, legende) => {
       const max = Math.max(...res.hist, 1), ici = Math.min(9, Math.floor(v / 10)), [q1, , q3] = res.q;
       const barres = res.hist.map((n, i) => { const c = i * 10 + 5; return `<i class="${i === ici ? "ici" : (c >= q1 && c <= q3 ? "mil" : "")}" style="height:${Math.round(100 * n / max)}%"></i>`; }).join("");
       return `<div class="carte"><h4>${titre} <span class="${cls}">${nom}</span></h4>
-        <div class="graphe" role="img" aria-label="${nom} : ${v} %. Chez la moitié de ces couples, entre ${q1} et ${q3} %."><div class="barres">${barres}</div><div class="moitie"></div>
+        <div class="graphe" role="img" aria-label="${nom} : ${v} %. Chez la moitié de ces couples, entre ${q1} et ${q3} %."><div class="barres">${barres}</div>
         <div class="vous${v > 62 ? " droite" : ""}" style="left:${v}%"><span>${nom}, ${v}\u00a0%</span></div></div>
         <div class="axe"><span>0\u00a0%</span><span>à parts égales</span><span>100\u00a0%</span></div>
         ${legende ? `<div class="legende"><span><i style="background:var(--c)"></i>votre tranche</span><span><i style="background:#B9AA92"></i>la moitié des couples du milieu</span><span><i style="background:var(--line)"></i>les autres</span></div>` : ""}
@@ -1430,6 +1435,9 @@
       ${carte("Part de la charge mentale portée par", tete, g.tete, "porte", true)}
       ${carte("Part du temps à la maison fait par", temps, g.temps, "fait", false)}
       <p class="small muted">Repères calculés à partir des copies anonymisées de l'étude, mis à jour chaque semaine (dernière mise à jour : ${new Date(R.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}). Ils sont déjà dans la page : rien de plus ne part de votre navigateur.</p>`;
+    box.querySelectorAll("[data-par]").forEach(b => b.addEventListener("click", () => { cmpPar = b.dataset.par; renderComparer(r); }));
+    const sa = box.querySelector("[data-age-cmp]");
+    if (sa) sa.addEventListener("change", () => { cmpAge = sa.value; cmpPar = "age"; renderComparer(r); });
     const aller = box.querySelector("[data-aller=pro]");
     if (aller) aller.addEventListener("click", () => document.getElementById("pro").scrollIntoView({ behavior: "smooth", block: "start" }));
   }
