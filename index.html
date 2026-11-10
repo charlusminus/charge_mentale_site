@@ -83,7 +83,7 @@
         { "@type": "Question", "name": "Comment le résultat est-il calculé ?", "acceptedAnswer": { "@type": "Answer", "text": "Pour chaque tâche, vous dites qui s'en occupe et qui y pense (y penser, c'est aussi devoir demander ou rappeler). Les heures par jour se calculent sur qui s'en occupe : nombre de fois par période multiplié par la durée, ramené à la journée. La charge mentale se mesure en nombre de tâches à garder en tête, pas en heures. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE (2010) et du jeu de cartes Fair Play (Eve Rodsky, 2019) ; vous les corrigez ensuite avec votre réalité." } },
         { "@type": "Question", "name": "D'où viennent les chiffres cités ?", "acceptedAnswer": { "@type": "Answer", "text": "INSEE, enquête Emploi du temps 2010 : les femmes consacrent 4 h 01 par jour au travail domestique, les hommes 2 h 13, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens : on passe 86 % de temps en plus à penser aux tâches qu'à les faire." } },
         { "@type": "Question", "name": "Mes réponses sont-elles envoyées quelque part ?", "acceptedAnswer": { "@type": "Answer", "text": "Une copie anonymisée, oui, et c'est annoncé avant le résultat. Tout se calcule dans votre navigateur, sans inscription : vos réponses sont encodées dans l'adresse de la page, et le fichier Excel se génère sur votre ordinateur. Pour afficher le résultat, le site en conserve une copie anonymisée, destinée à une étude sur la répartition domestique : ni prénoms, ni adresse, ni e-mail, ni adresse IP. C'est la contrepartie d'un outil gratuit et sans publicité." } },
-        { "@type": "Question", "name": "Combien de temps ça prend et à combien ?", "acceptedAnswer": { "@type": "Answer", "text": "Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, le genre de chacun, qui remplit, et le nombre d'enfants. Les tâches vont de la plus fréquente à la plus rare, jusqu'à la maison, l'extérieur et les véhicules en fin de liste ; les durées s'affinent après coup, sous le résultat." } },
+        { "@type": "Question", "name": "Combien de temps ça prend et à combien ?", "acceptedAnswer": { "@type": "Answer", "text": "Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, le genre de chacun, qui remplit, et le nombre d'enfants à charge. Les tâches vont de la plus fréquente à la plus rare, jusqu'à la maison, l'extérieur et les véhicules en fin de liste ; les durées s'affinent après coup, sous le résultat." } },
         { "@type": "Question", "name": "Peut-on faire le point depuis ChatGPT ou Claude ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui. Qui y pense ? existe aussi en serveur MCP, que l'on ajoute comme connecteur dans un assistant (Claude, ChatGPT, VS Code…) avec l'adresse https://quiypense-mcp.quiypense-mcp.workers.dev/mcp. L'assistant affiche le questionnaire dans la conversation (ou pose les mêmes questions que le site) et donne le même résultat ; les prénoms restent dans la conversation et ne sont jamais transmis. La copie anonymisée pour l'étude est annoncée avant le résultat, comme ici." } }
       ]
     }
@@ -198,11 +198,22 @@
   /* suivi médical d'un enfant (09/11/2026) : visible dès qu'il y a un enfant, majore « Suivre la santé des enfants » */
   .suivi-med { display: flex; gap: .6rem; align-items: flex-start; max-width: 520px; margin-top: .8rem; font-size: .92rem; cursor: pointer; }
   .suivi-med[hidden] { display: none; }
-  .garde { display: grid; gap: .3rem; max-width: 520px; margin-top: .9rem; }
-  .garde[hidden] { display: none; }
-  .garde label { font-size: .85rem; color: var(--muted); }
-  .garde select { padding: .7rem .8rem; border: 1.5px solid var(--border); border-radius: var(--r); background: var(--paper); font: inherit; color: var(--ink); width: 100%; }
-  .garde small { color: var(--muted); font-size: .82rem; }
+  .recompo { max-width: 520px; margin-top: .9rem; padding: .8rem .9rem .9rem; border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper); }
+  .recompo[hidden] { display: none; }
+  .recompo-titre { margin: 0 0 .5rem; font-weight: 600; font-size: .95rem; }
+  .recompo-grille { display: grid; grid-template-columns: 1fr 5.5rem 1.6fr; gap: .45rem .5rem; align-items: center; }
+  @media (max-width: 520px) {
+    .recompo-grille { grid-template-columns: 3.8rem 1fr; row-gap: .3rem; }
+    .recompo select { padding: .45rem .35rem; font-size: .85rem; }
+    .recompo { padding: .8rem .7rem .9rem; }
+    .recompo-grille > span:first-child, .recompo-tete { display: none; }
+    .recompo-qui { grid-column: 1 / -1; margin-top: .4rem; font-weight: 600; }
+  }
+  .recompo-tete { font-size: .8rem; color: var(--muted); }
+  .recompo-qui { font-size: .9rem; overflow: hidden; text-overflow: ellipsis; }
+  .recompo-fixe { font-size: .9rem; color: var(--muted); padding-left: .2rem; }
+  .recompo select { padding: .45rem .5rem; border: 1.5px solid var(--border); border-radius: 8px; background: var(--bg); font: inherit; font-size: .9rem; color: var(--ink); min-width: 0; width: 100%; }
+  .recompo small { display: block; margin-top: .6rem; color: var(--muted); font-size: .82rem; }
   .suivi-med input { width: 1.15rem; height: 1.15rem; margin-top: .15rem; flex: none; accent-color: var(--ink); }
   .suivi-med small { display: block; color: var(--muted); font-size: .82rem; margin-top: .2rem; }
   /* genre : trois pastilles, aucune cochée au départ, à choisir avant de commencer (nc possible), sans incidence sur le calcul */
@@ -695,18 +706,29 @@
       </div>
       <div class="prenoms foyer">
         <div class="enfants">
-          <label for="enfants">Enfants à la maison</label>
-          <select id="enfants"><option value="0">Aucun</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option></select>
+          <label for="enfants">Enfants à charge</label>
+          <select id="enfants"><option value="0">Aucun</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option><option value="r">Famille recomposée</option></select>
         </div>
         <div class="enfants">
           <label for="animaux">Animaux</label>
           <select id="animaux"><option value="0">Aucun</option><option value="1">Oui</option></select>
         </div>
       </div>
-      <div class="garde" id="gardeBox" hidden>
-        <label for="garde">Les enfants vivent ici</label>
-        <select id="garde"><option value="">Tout le temps</option><option value="2">Une semaine sur deux</option><option value="4">Un week-end sur deux</option></select>
-        <small>Garde alternée : leur temps compte pour moitié. Un week-end sur deux et la moitié des vacances : pour un quart. Ce que vous gardez en tête, lui, ne change pas.</small>
+      <div class="recompo" id="recompoBox" hidden>
+        <p class="recompo-titre">Enfants à charge de chacun</p>
+        <div class="recompo-grille">
+          <span></span><span class="recompo-tete">Nombre</span><span class="recompo-tete">Ils vivent ici</span>
+          <span class="recompo-qui" data-recompo-nom="a">Enfants de Prénom 1</span>
+          <select data-rc="aN" aria-label="Nombre d'enfants, personne 1"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option></select>
+          <select data-rc="aP" aria-label="Présence, enfants de la personne 1"><option value="1">Tout le temps</option><option value="2">Une semaine sur deux</option><option value="4">Un week-end sur deux</option></select>
+          <span class="recompo-qui" data-recompo-nom="b">Enfants de Prénom 2</span>
+          <select data-rc="bN" aria-label="Nombre d'enfants, personne 2"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option></select>
+          <select data-rc="bP" aria-label="Présence, enfants de la personne 2"><option value="1">Tout le temps</option><option value="2">Une semaine sur deux</option><option value="4">Un week-end sur deux</option></select>
+          <span class="recompo-qui">Enfants communs</span>
+          <select data-rc="cN" aria-label="Nombre d'enfants communs"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option></select>
+          <span class="recompo-fixe">Tout le temps</span>
+        </div>
+        <small id="recompo-txt">Le temps des tâches des enfants compte au prorata du temps où au moins un enfant est là. Ce que vous gardez en tête, lui, ne change pas.</small>
       </div>
       <label class="suivi-med" id="suiviMedBox" hidden><input type="checkbox" id="suiviMed">
         <span>Un enfant a besoin d'un suivi médical ou d'un accompagnement particulier (handicap, maladie chronique)
@@ -740,7 +762,7 @@
       <details><summary>Comment le résultat est-il calculé ?</summary><p>Pour chaque tâche, vous dites qui s'en occupe et qui y pense (y penser, c'est aussi devoir demander ou rappeler). Les heures par jour se calculent sur « qui s'en occupe » : nombre de fois par période, multiplié par la durée, ramené à la journée. La charge mentale se mesure en nombre de tâches à garder en tête, pas en heures : aucune enquête sérieuse ne convertit la pensée en minutes. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE (2010) et du jeu de cartes Fair Play (Eve Rodsky, 2019). Vous les corrigez ensuite avec votre réalité.</p></details>
       <details><summary>D'où viennent les chiffres cités ?</summary><p>INSEE, enquête Emploi du temps 2010 : 4 h 01 par jour de travail domestique pour les femmes, 2 h 13 pour les hommes, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP publiée en 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens interrogés : 86 % de temps en plus passé à penser aux tâches qu'à les faire. Les libellés des tâches suivent la nomenclature INSEE, complétée par les cent cartes Fair Play.</p></details>
       <details><summary>Mes réponses sont-elles envoyées quelque part ?</summary><p>Une copie anonymisée, oui, et c'est annoncé avant le résultat. Tout se calcule dans votre navigateur, il n'y a aucune inscription : vos réponses sont encodées dans l'adresse de la page, c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur. Pour afficher le résultat, le site en conserve une copie anonymisée, destinée à une étude sur la répartition domestique : ni prénoms, ni adresse, ni e-mail, ni adresse IP, rien qui permette de remonter jusqu'à vous. C'est la contrepartie d'un outil gratuit et sans publicité. Les polices sont hébergées avec le site. Une mesure d'audience (Google Analytics) mesure la fréquentation, seulement si vous l'acceptez dans le bandeau, et sans jamais recevoir vos réponses.</p></details>
-      <details><summary>Combien de temps ça prend, et à combien ?</summary><p>Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, le genre de chacun, qui remplit, et le nombre d'enfants. Les tâches vont de la plus fréquente à la plus rare, jusqu'à la maison, l'extérieur et les véhicules en fin de liste ; les durées s'affinent après coup, sous le résultat.</p></details>
+      <details><summary>Combien de temps ça prend, et à combien ?</summary><p>Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, le genre de chacun, qui remplit, et le nombre d'enfants à charge. Les tâches vont de la plus fréquente à la plus rare, jusqu'à la maison, l'extérieur et les véhicules en fin de liste ; les durées s'affinent après coup, sous le résultat.</p></details>
       <details><summary>Peut-on faire le point depuis ChatGPT ou Claude&nbsp;?</summary><p>Oui. Qui y pense&nbsp;? existe aussi en serveur MCP, que l'on ajoute comme connecteur dans un assistant (Claude, ChatGPT, VS Code…) avec l'adresse <code>https://quiypense-mcp.quiypense-mcp.workers.dev/mcp</code>. L'assistant affiche le questionnaire dans la conversation (ou pose les mêmes questions que le site) et donne le même résultat&nbsp;; les prénoms restent dans la conversation et ne sont jamais transmis. La copie anonymisée pour l'étude est annoncée avant le résultat, comme ici.</p></details>
     </section>
 
@@ -1071,7 +1093,7 @@
   let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
 
   function fresh() {
-    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, suivi: 0, garde: "", ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null, foyer: "" };   // foyer : numéro tiré au hasard au premier résultat (30/10/2026) ; proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
+    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, suivi: 0, recompo: null, ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null, foyer: "" };   // foyer : numéro tiré au hasard au premier résultat (30/10/2026) ; proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
     for (const cat of C.categories) for (const t of cat.taches) s.t[t.id] = { fait: null, pense: null, n: t.n, p: t.periode, d: t.duree };
     return s;
   }
@@ -1103,7 +1125,7 @@
     const vh = v => v === null || v === undefined ? "" : v, pro = vh(S.proA) === "" && vh(S.proB) === "" ? "" : vh(S.proA) + "_" + vh(S.proB);
     // numéro de foyer (30/10/2026) : champ 13, 32 caractères hexadécimaux tirés au hasard, relie les passages d'un même foyer dans l'étude
     // suivi médical d'un enfant (09/11/2026) : champ 14, « 1 » si la case est cochée ; jamais repris dans la copie de l'étude
-    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : "", S.garde || ""].join("~").replace(/~+$/, "");
+    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : "", S.recompo ? [S.recompo.aN, S.recompo.aP, S.recompo.bN, S.recompo.bP, S.recompo.cN].join("") : ""].join("~").replace(/~+$/, "");
   }
   function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
@@ -1123,7 +1145,7 @@
     if (f[12]) { const [pa, pb] = f[12].split("_").map(borne); s.proA = pa === undefined ? null : pa; s.proB = pb === undefined ? null : pb; }   // travail rémunéré, 13/10/2026
     if (/^[0-9a-f]{32}$/.test(f[13] || "")) s.foyer = f[13];   // numéro de foyer, 30/10/2026
     s.suivi = f[14] === "1" ? 1 : 0;   // suivi médical d'un enfant, 09/11/2026
-    s.garde = f[15] === "2" || f[15] === "4" ? f[15] : "";   // garde des enfants (prototype du 10/11/2026) : sans le champ, tout le temps
+    if (/^[0-3][124][0-3][124][0-3]$/.test(f[15] || "")) { const v = f[15]; s.recompo = { aN: +v[0], aP: +v[1], bN: +v[2], bP: +v[3], cN: +v[4] }; }   // famille recomposée (prototype du 10/11/2026)
     return s;
   }
   // Lien au format 7 (avant le 08/11/2026) : l'ancienne tâche « S'occuper des courses » comprenait la liste. La liste reprend
@@ -1156,11 +1178,18 @@
   function allTasks() { const out = []; for (const cat of visibleCats()) for (const t of visibleTasks(cat)) out.push({ ...t, cat: cat.id, catNom: cat.nom }); return out; }
   // Garde des enfants (prototype du 10/11/2026, avis des familles recomposées) : le temps des tâches des deux familles
   // « Enfants » est compté au prorata du temps où ils sont à la maison. Ce qu'on garde en tête ne change pas.
-  const GARDE = { "": 1, "2": 0.5, "4": 0.25 };
   const FAMILLE_DE = {}; for (const c of C.categories) for (const t of c.taches) FAMILLE_DE[t.id] = c.id;
   function prorata(id) {
     const fam = FAMILLE_DE[id] || (S.custom.find(c => c.id === id) || {}).cat;   // une tâche ajoutée dans une famille Enfants aussi
-    return FAMILLES_ENFANTS.has(fam) ? (GARDE[S.garde || ""] || 1) : 1;
+    return FAMILLES_ENFANTS.has(fam) ? presence() : 1;
+  }
+  // Famille recomposée (prototype du 10/11/2026) : enfants de chacun, avec leur présence (1, 1/2, 1/4), et enfants communs,
+  // toujours là. Part du temps où au moins un enfant est à la maison, gardes supposées indépendantes : 1 - produit des absences.
+  function presence() {
+    const r = S.recompo; if (!r) return 1;
+    if (r.cN > 0) return 1;
+    let abs = 1; for (const [n, p] of [[r.aN, r.aP], [r.bN, r.bP]]) if (n > 0) abs *= 1 - 1 / p;
+    return 1 - abs;
   }
   function hj(st, id) { return (st.n * st.d / 60) / J[st.p] * (id ? prorata(id) : 1); }
   function fmt(x, dec = 1) { return x.toFixed(dec).replace(".", ","); }
@@ -1435,7 +1464,7 @@
     if (okT && okA) cle = cmpPar === "age" ? ka : kt; else if (okT) cle = kt; else if (okA) cle = ka;
     if (t && !okT) note = ` Avec les mêmes heures de travail, ils ne sont pas encore ${R.min}.`;
     if (age && !okA) note += ` Avec le même âge, ils ne sont pas encore ${R.min}.`;
-    if (!R.groupes[cle]) { cle = "tous"; note = ` Pas encore ${R.min} couples avec le même nombre d'enfants : la comparaison se fait sur tous les couples.`; }
+    if (!R.groupes[cle]) { cle = "tous"; note = ` Pas encore ${R.min} couples avec le même nombre d'enfants à charge : la comparaison se fait sur tous les couples.`; }
     const g = R.groupes[cle];
     const puces = [cle === "tous" ? `<span class="puce on">Tous les couples</span>` : `<span class="puce on">${ENFANTS[e]}</span>`, `<span class="puce on">Femme et homme</span>`];
     if (okT) puces.push(cle === kt ? `<span class="puce on">${TRAVAIL[t]}</span>` : `<button type="button" class="puce off" data-par="travail">${TRAVAIL[t]}</button>`);
@@ -1694,7 +1723,7 @@
       ["Heures par semaine à faire", +(r.a.h * 7).toFixed(1), +(r.b.h * 7).toFixed(1)],
       ["Tâches faites", r.a.nFait, r.b.nFait],
       ["Tâches à garder en tête", r.a.nPense, r.b.nPense],
-      [], ["Enfants à la maison", S.enfants], ["Animaux", S.animaux ? "oui" : "non"], ["Généré le", new Date().toLocaleDateString("fr-FR")], ["Source", "quiypense.org, durées par défaut INSEE Emploi du temps 2010 et Fair Play"]];
+      [], ["Enfants à charge", S.enfants], ["Animaux", S.animaux ? "oui" : "non"], ["Généré le", new Date().toLocaleDateString("fr-FR")], ["Source", "quiypense.org, durées par défaut INSEE Emploi du temps 2010 et Fair Play"]];
     const nomFichier = `qui-y-pense-${(nomA() + "-" + nomB()).toLowerCase().replace(/[^a-z0-9-]+/g, "")}`;
     try {
       const X = await loadXlsx();
@@ -1711,8 +1740,9 @@
 
   /* ---------- mise à jour globale ---------- */
   function update() {
+    document.querySelectorAll("[data-recompo-nom]").forEach(e => { e.textContent = "Enfants de " + (e.dataset.recompoNom === "a" ? nomA() : nomB()); });
     const ng = document.getElementById("note-garde");
-    if (ng) ng.textContent = S.enfants > 0 && S.garde ? ` Les enfants vivent ici ${S.garde === "2" ? "une semaine sur deux" : "un week-end sur deux"} : le temps de leurs tâches compte ${S.garde === "2" ? "pour moitié" : "pour un quart"}.` : "";
+    if (ng) { const pr = presence(); ng.textContent = S.enfants > 0 && S.recompo && pr < 1 ? ` Famille recomposée : au moins un enfant est là environ ${Math.round(pr * 100)} % du temps, le temps des tâches des enfants compte d'autant.` : ""; }
     const r = compute();
     document.getElementById("nTaches").textContent = `${r.renseignees} / ${r.total}`;
     document.getElementById("prog").style.width = (100 * r.renseignees / Math.max(1, r.total)) + "%";
@@ -1755,16 +1785,29 @@
   // par semaine, soit les six heures hebdomadaires de l'enquête FFDys et Poppins 2024 (cf revue-litterature.md, point 10).
   // La case ne touche la tâche que si sa durée n'a pas été réglée à la main ; décochée, la valeur par défaut revient.
   const iSm = document.getElementById("suiviMed"), boxSm = document.getElementById("suiviMedBox");
-  const iG = document.getElementById("garde"), boxG = document.getElementById("gardeBox");
-  const peindreSuivi = () => { boxSm.hidden = !(S.enfants > 0); iSm.checked = !!S.suivi; boxG.hidden = !(S.enfants > 0); iG.value = S.garde || ""; };
-  iG.addEventListener("change", () => { S.garde = iG.value; update(); });
+  const boxR = document.getElementById("recompoBox");
+  const peindreSuivi = () => {
+    boxSm.hidden = !(S.enfants > 0); iSm.checked = !!S.suivi;
+    boxR.hidden = !S.recompo; iE.value = S.recompo ? "r" : String(S.enfants);
+    if (S.recompo) boxR.querySelectorAll("[data-rc]").forEach(sel => { sel.value = String(S.recompo[sel.dataset.rc]); });
+    boxR.querySelectorAll("[data-recompo-nom]").forEach(e => { e.textContent = "Enfants de " + (e.dataset.recompoNom === "a" ? nomA() : nomB()); });
+  };
+  boxR.querySelectorAll("[data-rc]").forEach(sel => sel.addEventListener("change", () => {
+    S.recompo[sel.dataset.rc] = +sel.value;
+    S.enfants = S.recompo.aN + S.recompo.bN + S.recompo.cN;
+    peindreSuivi(); update();
+  }));
   iSm.addEventListener("change", () => {
     S.suivi = iSm.checked ? 1 : 0;
     const st = S.t["sante-enfants"], def = santeDefaut(), de = S.suivi ? def : SANTE_MAJ, vers = S.suivi ? SANTE_MAJ : def;
     if (st && st.n === de.n && st.p === de.p && st.d === de.d) Object.assign(st, vers);
     update();
   });
-  iE.addEventListener("change", () => { S.enfants = +iE.value; peindreSuivi(); update(); });
+  iE.addEventListener("change", () => {
+    if (iE.value === "r") { S.recompo = S.recompo || { aN: 1, aP: 2, bN: 0, bP: 2, cN: 0 }; S.enfants = S.recompo.aN + S.recompo.bN + S.recompo.cN; }
+    else { S.recompo = null; S.enfants = +iE.value; }
+    peindreSuivi(); update();
+  });
   peindreSuivi();
   // Qui remplit : pour l'étude seulement, mesurer si la personne qui saisit se crédite davantage. Hors du lien de
   // partage (l'autre qui l'ouvre n'a pas rempli) : gardé pour l'onglet, a, b ou 2 (les deux ensemble).
