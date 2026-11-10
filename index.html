@@ -504,9 +504,11 @@
   .haut { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 14px 0 0; }
   .marque { font-family: var(--serif); font-weight: 600; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
   .haut nav { display: flex; align-items: center; gap: 1rem; font-size: .95rem; }
+  /* Bureau : le bouton Soutenir descend sur la ligne des étapes (10/11/2026), aligné à droite ; .fil fait 58 px sans sa bordure. */
+  @media (min-width: 700px) { .haut { position: relative; } .haut nav { position: absolute; right: 0; top: 100%; height: 58px; } }
   /* bouton Soutenir (09/11/2026), vers Ko-fi : terracotta (rétabli le 10/11/2026 après un essai en teal ; la deuxième personne est en violet), texte blanc dans la police du site (Instrument Sans 600, charte ;
      la Cookie du bouton Buy Me a Coffee n'était pas lisible), emoji. Aucun script tiers : un simple lien. */
-  .soutenir, .bmc { display: inline-flex; align-items: center; gap: .45rem; padding: .45rem .95rem .45rem .75rem; border-radius: 999px; border: 1.5px solid var(--alerte); background: var(--alerte); color: #fff; font-family: var(--sans); font-size: .9rem; font-weight: 600; line-height: 1.3; text-decoration: none; cursor: pointer; }
+  .soutenir, .bmc { display: inline-flex; align-items: center; gap: .45rem; padding: .62rem 1.15rem .62rem .95rem; border-radius: var(--r); border: 1.5px solid var(--alerte); background: var(--alerte); color: #fff; font-family: var(--sans); font-size: .9rem; font-weight: 600; line-height: 1.3; text-decoration: none; cursor: pointer; }
   .soutenir:hover, .bmc:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
   .bmc { font-size: 1rem; padding: .75rem 1.4rem .75rem 1.15rem; }
   .bmc-emoji { font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif; font-size: 1.05em; line-height: 1; }
