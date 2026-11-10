@@ -103,7 +103,7 @@
     --b: #645195;         /* couleur de la deuxième personne (violet, à mi-chemin du teal et de l'ancien terracotta) : blanc dessus 6,7:1 */
     --both: #6B5F53;      /* « les deux » et « pas nous » : pas de troisième couleur */
     --a-clair: #8FD3CF;   /* prénom 1 sur fond encre (bandeau) : 9,3:1 */
-    --alerte: #B5502A;    /* terracotta, réservé aux alertes et mises en avant (plus une personne) : 4,3:1 sur bg-2 */
+    --alerte: #B5502A;    /* terracotta : alertes, mises en avant et bouton Soutenir (plus une personne) : 4,3:1 sur bg-2 */
     --b-clair: #C2B1F8;   /* prénom 2 sur fond encre (bandeau) : 8,2:1 */
     --paper: #FFFFFF;     /* cartes et champs */
     --serif: "Fraunces", "Fraunces repli", Georgia, "Times New Roman", serif;
@@ -499,9 +499,9 @@
   .haut { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 14px 0 0; }
   .marque { font-family: var(--serif); font-weight: 600; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
   .haut nav { display: flex; align-items: center; gap: 1rem; font-size: .95rem; }
-  /* bouton Soutenir (09/11/2026), vers Ko-fi : teal (10/11/2026, avant terracotta : les appels à l'action secondaires prennent le teal), texte blanc dans la police du site (Instrument Sans 600, charte ;
+  /* bouton Soutenir (09/11/2026), vers Ko-fi : terracotta (rétabli le 10/11/2026 après un essai en teal ; la deuxième personne est en violet), texte blanc dans la police du site (Instrument Sans 600, charte ;
      la Cookie du bouton Buy Me a Coffee n'était pas lisible), emoji. Aucun script tiers : un simple lien. */
-  .soutenir, .bmc { display: inline-flex; align-items: center; gap: .45rem; padding: .45rem .95rem .45rem .75rem; border-radius: 999px; border: 1.5px solid var(--a); background: var(--a); color: #fff; font-family: var(--sans); font-size: .9rem; font-weight: 600; line-height: 1.3; text-decoration: none; cursor: pointer; }
+  .soutenir, .bmc { display: inline-flex; align-items: center; gap: .45rem; padding: .45rem .95rem .45rem .75rem; border-radius: 999px; border: 1.5px solid var(--alerte); background: var(--alerte); color: #fff; font-family: var(--sans); font-size: .9rem; font-weight: 600; line-height: 1.3; text-decoration: none; cursor: pointer; }
   .soutenir:hover, .bmc:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
   .bmc { font-size: 1rem; padding: .75rem 1.4rem .75rem 1.15rem; }
   .bmc-emoji { font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif; font-size: 1.05em; line-height: 1; }
