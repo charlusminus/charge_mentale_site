@@ -100,10 +100,11 @@
     --line: #D3C8B6;      /* séparateurs de lignes, décoratifs (1,5:1, assumé : ce n'est pas une bordure de composant) */
     --border: #8A7E70;    /* bordures de champs et de groupes de boutons : 3,3:1 sur bg-2 */
     --a: #1F6F6B;         /* couleur de la première personne (teal) : blanc dessus 5,9:1 */
-    --b: #B5502A;         /* couleur de la deuxième personne (terracotta) : blanc dessus 5,1:1 */
+    --b: #645195;         /* couleur de la deuxième personne (violet, à mi-chemin du teal et de l'ancien terracotta) : blanc dessus 6,7:1 */
     --both: #6B5F53;      /* « les deux » et « pas nous » : pas de troisième couleur */
     --a-clair: #8FD3CF;   /* prénom 1 sur fond encre (bandeau) : 9,3:1 */
-    --b-clair: #F2B08F;   /* prénom 2 sur fond encre (bandeau) : 8,6:1 */
+    --alerte: #B5502A;    /* terracotta, réservé aux alertes et mises en avant (plus une personne) : 4,3:1 sur bg-2 */
+    --b-clair: #C2B1F8;   /* prénom 2 sur fond encre (bandeau) : 8,2:1 */
     --paper: #FFFFFF;     /* cartes et champs */
     --serif: "Fraunces", "Fraunces repli", Georgia, "Times New Roman", serif;
     --sans: "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
@@ -214,7 +215,7 @@
   .choix .g { padding: .5rem .4rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .choix .g.a[aria-pressed="true"] { border-color: var(--a); background: var(--a); }
   .choix .g.b[aria-pressed="true"] { border-color: var(--b); background: var(--b); }
-  .genre.manque .g, .choix.manque .g { border-color: var(--b); }
+  .genre.manque .g, .choix.manque .g { border-color: var(--alerte); }
   .sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
   /* étape 2 */
@@ -403,7 +404,7 @@
   /* lien vers l'article « parler sans dispute », sous l'envoi (09/11/2026 : avis de dispute et de colère après le résultat) */
   .parler { margin-top: 1rem; padding: .9rem 1rem; background: var(--bg-2); border-left: 3px solid var(--a); border-radius: 0 var(--r) var(--r) 0; font-size: .92rem; }
   .parler a { color: var(--ink); font-weight: 600; text-underline-offset: 3px; }
-  .avert-5050 { margin-top: 1rem; padding: .9rem 1rem; background: var(--bg-2); border-left: 3px solid var(--b); border-radius: 0 var(--r) var(--r) 0; font-size: .92rem; }
+  .avert-5050 { margin-top: 1rem; padding: .9rem 1rem; background: var(--bg-2); border-left: 3px solid var(--alerte); border-radius: 0 var(--r) var(--r) 0; font-size: .92rem; }
   .avert-5050 strong { display: block; margin-bottom: .15rem; }
   .avert-5050 a { color: var(--a); text-decoration: underline; text-underline-offset: 3px; }
   .pastille { display: inline-block; width: 10px; height: 10px; border-radius: 50%; vertical-align: middle; margin-right: .3rem; }
