@@ -314,11 +314,11 @@
   .comparer .carte { background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem 1.1rem; margin-top: 1rem; }
   .comparer .carte h4 { margin: 0; font-size: 1rem; font-weight: 600; }
   .comparer .graphe { position: relative; height: 120px; margin: 1.8rem 0 .3rem; }
-  .comparer .barres { position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 3px; padding: 0 1px; }
+  .comparer .barres { position: absolute; inset: 0; z-index: 1; display: flex; align-items: flex-end; gap: 3px; padding: 0 1px; }
   .comparer .barres i { flex: 1; background: var(--line); border-radius: 3px 3px 0 0; min-height: 1px; }
   .comparer .barres i.mil { background: #B9AA92; }
   .comparer .barres i.ici { background: var(--c, var(--a)); }
-  .comparer .vous { position: absolute; top: -1.6rem; bottom: 0; border-left: 2.5px solid var(--c, var(--a)); }
+  .comparer .vous { position: absolute; top: -1.6rem; bottom: 0; border-left: 2px dashed var(--border); z-index: 0; }
   .comparer .vous span { position: absolute; top: -.15rem; left: 6px; white-space: nowrap; font-weight: 700; color: var(--c, var(--a)); font-size: .9rem; }
   .comparer .vous.droite span { left: auto; right: 6px; }
   .comparer .axe { display: flex; justify-content: space-between; font-size: .78rem; color: var(--muted); border-top: 1.5px solid var(--ink); padding-top: .3rem; }
