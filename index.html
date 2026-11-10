@@ -290,6 +290,7 @@
   .resultats td.lbl { color: var(--muted); font-size: .9rem; width: 34%; }
   .resultats td strong { font-family: var(--serif); font-weight: 600; font-size: 1.9rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .resultats td small { display: block; color: var(--muted); font-size: .82rem; }
+  .resultats td small a { color: inherit; text-underline-offset: 2px; }
   .parcat { margin-top: 2.4rem; }
   .parcat h3 { font-family: var(--serif); font-size: 1.3rem; }
   .legende-barres { display: flex; gap: 1.2rem; font-size: .82rem; color: var(--muted); margin: .4rem 0 .6rem; }
@@ -1292,11 +1293,20 @@
   }
 
   /* ---------- écran 3 ---------- */
+  // Total avec le travail payé (demande du 10/11/2026) : sous le temps à faire, dès le premier affichage, maison par
+  // semaine plus heures de travail payé ; une personne sans heures indiquées compte 0 h, avec un lien vers la saisie.
+  function ligneTotal(r) {
+    const pr = proRetenu() || { a: 0, b: 0, zeroA: true, zeroB: true };
+    const cel = (maison, pro, zero) => `<td><strong>${maison + pro} h</strong><small>par semaine, ${zero
+      ? `travail payé à 0 h, <a href="#pro" class="a-indiquer-lien">à indiquer</a>` : `dont ${pro} h de travail payé`}</small></td>`;
+    return `<td class="lbl">Avec le travail payé</td>${cel(Math.round(quart(r.a.h) * 7), pr.a, pr.zeroA)}${cel(Math.round(quart(r.b.h) * 7), pr.b, pr.zeroB)}`;
+  }
   function renderResults(r) {
     const cartes = document.getElementById("cartes");
     const n0 = v => fmt(v, v % 1 ? 1 : 0);
     cartes.innerHTML = `<tr><th></th><th class="a">${nomA()}</th><th class="b">${nomB()}</th></tr>
       <tr><td class="lbl">Temps à faire</td><td><strong>${hmQuart(r.a.h)}</strong><small>par jour, soit ${hm(quart(r.a.h) * 7, true)} par semaine</small></td><td><strong>${hmQuart(r.b.h)}</strong><small>par jour, soit ${hm(quart(r.b.h) * 7, true)} par semaine</small></td></tr>
+      <tr id="ligne-total">${ligneTotal(r)}</tr>
       <tr><td class="lbl">Tâches faites</td><td><strong>${n0(r.a.nFait)}</strong></td><td><strong>${n0(r.b.nFait)}</strong></td></tr>
       <tr><td class="lbl">Tâches à garder en tête</td><td><strong>${n0(r.a.nPense)}</strong></td><td><strong>${n0(r.b.nPense)}</strong></td></tr>`;
 
@@ -1451,7 +1461,7 @@
     const v = i.value.trim() === "" ? null : Math.max(0, Math.min(100, Math.round(+i.value) || 0));
     if (i.dataset.pro === "a") S.proA = v; else S.proB = v;
     document.querySelectorAll(`input[data-pro=${i.dataset.pro}]`).forEach(j => { if (j !== i) j.value = v === null ? "" : v; });
-    if (S.ecran === 3) { const r = compute(); renderPro(r); renderComparer(r); } save();
+    if (S.ecran === 3) { const r = compute(); renderPro(r); renderComparer(r); const lt = document.getElementById("ligne-total"); if (lt) lt.innerHTML = ligneTotal(r); } save();
   }));
   document.querySelectorAll("input[data-pro]").forEach(i => i.addEventListener("change", () => { if (window.__ga) gtag("event", "travail_paye_indique", { champ: S.ecran === 3 ? "compte" : "liste" }); }));
 
