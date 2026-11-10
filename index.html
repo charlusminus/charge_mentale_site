@@ -331,13 +331,17 @@
   /* travail rémunéré (13/10/2026) : facultatif, affiché à côté du compte sans le changer */
   .pro-saisie { margin-top: 2rem; padding: 1rem 1.2rem; background: var(--bg-2); border-radius: 12px; }
   .pro-saisie h3, .pro h3 { font-family: var(--serif); font-size: 1.3rem; margin: 0 0 .3rem; }
-  .pro { margin-top: 2.4rem; }
+  .pro { margin-top: 2.4rem; padding: 1.1rem 1.2rem 1.2rem; background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--r); }   /* même cadre que les questions de l'étude (10/11/2026) */
   .pro-champs { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; margin-top: .7rem; align-items: end; }
   .pro-champs label { display: grid; gap: .2rem; font-size: .85rem; color: var(--muted); }
   .pro-champs label span.n { font-weight: 600; }
   .pro-champs .champ { display: inline-flex; align-items: center; gap: .4rem; color: var(--ink); }
-  .pro-champs input { width: 5.5rem; }
-  .pro-txt { margin-top: .9rem; max-width: 64ch; }
+  .pro-champs input { width: 5.5rem; font: inherit; padding: .4rem .5rem; border: 1.5px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); }
+  .pro-champs input:focus { border-color: var(--ink); outline: none; }
+  .pro-txt { margin-top: .9rem; }
+  /* la conclusion du travail payé, le résultat le plus parlant du site : encadrée, en grand (10/11/2026) */
+  .pro-conclusion { margin: 1.1rem 0 0; font-family: var(--serif); font-size: 1.65rem; line-height: 1.3; font-variation-settings: "opsz" 40; }   /* même style que le verdict */
+  .pro-conclusion .pa { color: var(--a); } .pro-conclusion .pb { color: var(--b); }
   .pro-tab { border-collapse: collapse; margin-top: .9rem; font-size: .92rem; font-variant-numeric: tabular-nums; }
   .pro-tab th, .pro-tab td { padding: .35rem .9rem .35rem 0; text-align: right; border-bottom: 1px solid var(--line); }
   .pro-tab th:first-child, .pro-tab td:first-child { text-align: left; }
@@ -774,7 +778,7 @@
       <div class="lecture" id="lecture"></div>
       <div class="pro" id="pro">
         <h3>Et le travail rémunéré ?</h3>
-        <p class="muted">Facultatif. Le résultat ne regarde que la maison&nbsp;; le travail payé pèse aussi. En l'ajoutant, vous voyez la charge totale de chacun, sans que le résultat change.</p>
+        <p class="muted">Le résultat ne regarde que la maison&nbsp;; le travail payé pèse aussi. En l'ajoutant, vous voyez la charge totale de chacun, sans que le résultat change.</p>
         <div class="pro-champs"><label><span class="n pa" data-nom="a"></span><span class="champ"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pro="a" id="pro-a-3" placeholder="0"> h / semaine</span></label><label><span class="n pb" data-nom="b"></span><span class="champ"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pro="b" id="pro-b-3" placeholder="0"> h / semaine</span></label></div>
         <div class="pro-txt" id="pro-txt"></div>
       </div>
@@ -1313,7 +1317,7 @@
     const pc = document.getElementById("parcat");
     const cats = Object.values(r.cats).filter(c => c.a + c.b + c.both > 0);
     const maxTot = Math.max(...cats.map(c => c.a + c.b + c.both), 0.01);
-    pc.innerHTML = cats.length ? `<h3>Le temps par jour, par famille de tâches</h3>
+    pc.innerHTML = cats.length ? `<h3>Le temps par jour pour la maison, par famille de tâches</h3>
       <div class="legende-barres"><span><i style="background:var(--a)"></i>${nomA()}</span><span><i style="background:var(--both)"></i>les deux</span><span><i style="background:var(--b)"></i>${nomB()}</span></div>` + cats.map(c => {
       const tot = c.a + c.b + c.both;
       const w = 100 * tot / maxTot;
@@ -1330,8 +1334,8 @@
     const gros = pa >= 50 ? ["pa", nomA(), pa] : ["pb", nomB(), pb];
     const tete = qa >= 50 ? ["pa", nomA(), qa] : ["pb", nomB(), 100 - qa];
     V.innerHTML = gros[0] === tete[0]
-      ? `<span class="${gros[0]}">${gros[1]}</span> porte ${gros[2]} % du temps et ${tete[2]} % de la charge mentale.`
-      : `<span class="${gros[0]}">${gros[1]}</span> porte ${gros[2]} % du temps, <span class="${tete[0]}">${tete[1]}</span> ${tete[2]} % de la charge mentale.`;
+      ? `<span class="${gros[0]}">${gros[1]}</span> porte ${gros[2]} % du temps et ${tete[2]} % de la charge mentale de la maison.`
+      : `<span class="${gros[0]}">${gros[1]}</span> porte ${gros[2]} % du temps, <span class="${tete[0]}">${tete[1]}</span> ${tete[2]} % de la charge mentale de la maison.`;
     let txt = `${hm(quart(r.a.h) + quart(r.b.h))} par jour à faire en tout.`;   // somme des deux durées arrondies affichées plus haut
     if (totP) {
       if (Math.abs(qa - pa) >= 15) {
@@ -1452,8 +1456,8 @@
       <tr class="tot"><td>Total</td><td>${ta} h</td><td>${tb} h</td></tr></table>`;
     const ecart = Math.abs(ta - tb);
     h += ecart <= 3
-      ? `<p>Une charge totale proche, travail payé et maison compris. Reste à voir si la façon de vous la répartir vous convient à tous les deux.</p>`
-      : `<p>${ta > tb ? nomA() : nomB()} a ${ecart} h de plus par semaine, travail payé et maison compris. Si c'est un choix, tant mieux\u00a0; sinon, c'est un point de départ pour en parler.</p>`;
+      ? `<p class="pro-conclusion">Une charge totale proche, travail payé et maison compris. Reste à voir si la façon de vous la répartir vous convient à tous les deux.</p>`
+      : `<p class="pro-conclusion"><span class="${ta > tb ? "pa" : "pb"}">${ta > tb ? nomA() : nomB()}</span> a ${ecart} h de plus par semaine, travail payé et maison compris. Si c'est un choix, tant mieux\u00a0; sinon, c'est un point de départ pour en parler.</p>`;
     if (pr.zeroA || pr.zeroB) h += `<p class="small muted">Pas d'heures indiquées pour ${pr.zeroA ? nomA() : nomB()} : prises à 0 h. Corrigez plus haut si besoin.</p>`;
     txt.innerHTML = h;
   }
