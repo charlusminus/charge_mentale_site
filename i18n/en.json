@@ -1,7 +1,9 @@
 {
  "_lisezmoi": "Remplacements appliqués par tools/traduire.mjs (du plus long au plus court) ; « ignorer » : identifiants de code repérés à tort comme du français.",
  "ignorer": [
+  ">Français</a>",
   "ENFANTS[e]",
+  "Français",
   "Qui y pense ?",
   "S.enfants, S.ecran",
   "avec-unite",
@@ -539,8 +541,8 @@
    "<p class=\"apropos\">Where the default durations come from: the INSEE time-use survey in France (2010), which measures domestic time with diaries, and the Fair Play card deck (Eve Rodsky, 2019) for the tasks the diary does not capture. A couple with children who keeps all the default values totals about eight and a half hours a day, at the high end of what INSEE observes in France. The distinction between ‘thinking of it’ and ‘doing it’ comes from the work of Allison Daminger (2019): anticipating and checking is work, even when someone else carries it out.</p>"
   ],
   [
-   "<nav class=\"pied-nav\" aria-label=\"Pied de page\"><a href=\"blog/\">Blog</a><a href=\"presse/\">Presse</a><a href=\"charte/\">Charte</a><a href=\"avis/\">Votre avis</a><a href=\"soutenir/?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir\"><span class=\"bmc-emoji\" aria-hidden=\"true\">🙏</span>Soutenir</a><button type=\"button\" id=\"pied-partager\" aria-expanded=\"false\" aria-controls=\"pied-partage\"><svg aria-hidden=\"true\"><use href=\"#i-partager\"/></svg>Partager le site</button></nav>",
-   "<nav class=\"pied-nav\" aria-label=\"Footer\"><a href=\"https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir\" target=\"_blank\" rel=\"noopener\"><span class=\"bmc-emoji\" aria-hidden=\"true\">🙏</span>Support</a><button type=\"button\" id=\"pied-partager\" aria-expanded=\"false\" aria-controls=\"pied-partage\"><svg aria-hidden=\"true\"><use href=\"#i-partager\"/></svg>Share the site</button></nav>"
+   "<nav class=\"pied-nav\" aria-label=\"Pied de page\"><a href=\"en/\" hreflang=\"en-GB\" lang=\"en-GB\">English</a><a href=\"blog/\">Blog</a><a href=\"presse/\">Presse</a><a href=\"charte/\">Charte</a><a href=\"avis/\">Votre avis</a><a href=\"soutenir/?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir\"><span class=\"bmc-emoji\" aria-hidden=\"true\">🙏</span>Soutenir</a><button type=\"button\" id=\"pied-partager\" aria-expanded=\"false\" aria-controls=\"pied-partage\"><svg aria-hidden=\"true\"><use href=\"#i-partager\"/></svg>Partager le site</button></nav>",
+   "<nav class=\"pied-nav\" aria-label=\"Footer\"><a href=\"../\" hreflang=\"fr\" lang=\"fr\">Français</a><a href=\"https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir\" target=\"_blank\" rel=\"noopener\"><span class=\"bmc-emoji\" aria-hidden=\"true\">🙏</span>Support</a><button type=\"button\" id=\"pied-partager\" aria-expanded=\"false\" aria-controls=\"pied-partage\"><svg aria-hidden=\"true\"><use href=\"#i-partager\"/></svg>Share the site</button></nav>"
   ],
   [
    "<p>Qui y pense ? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. Le lien de partage contient vos réponses, rien d'autre. Une question, une idée : <a href=\"mailto:contact@quiypense.org\">contact@quiypense.org</a>. <a href=\"#\" id=\"consent-lien\">Cookies</a>. <a href=\"confidentialite/\">Confidentialité</a>, <a href=\"conditions/\">conditions d'utilisation</a>. Sources : <a href=\"https://www.insee.fr/fr/statistiques/2123967\">INSEE, Emploi du temps 2010</a>, <a href=\"https://www.ined.fr/fr/premiers-resultats-enquete-famemp\">INED, FAMEMP</a>, <a href=\"https://journals.sagepub.com/doi/10.1177/0003122419859007\">Daminger 2019</a>, <a href=\"https://www.fairplaylife.com/the-book\">Fair Play</a>.</p>",
@@ -1473,6 +1475,14 @@
   [
    "  const ETAPES = { 1: [\"/\", \"Accueil\"], 2: [\"/etape/qui-y-pense\", \"Étape 2, qui y pense\"], 3: [\"/etape/compte\", \"Étape 3, le résultat\"] };",
    "  const ETAPES = { 1: [\"/en/\", \"Home\"], 2: [\"/en/etape/qui-y-pense\", \"Step 2, who thinks of it\"], 3: [\"/en/etape/compte\", \"Step 3, results\"] };"
+  ],
+  [
+   "img/apercu-2026-11b.png",
+   "img/apercu-en-2026-11.png"
+  ],
+  [
+   "<link rel=\"manifest\" href=\"manifest.webmanifest\">",
+   "<link rel=\"manifest\" href=\"../manifest-en.webmanifest\">"
   ]
  ]
 }
