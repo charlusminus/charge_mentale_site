@@ -198,6 +198,22 @@
   /* suivi médical d'un enfant (09/11/2026) : visible dès qu'il y a un enfant, majore « Suivre la santé des enfants » */
   .suivi-med { display: flex; gap: .6rem; align-items: flex-start; max-width: 520px; margin-top: .8rem; font-size: .92rem; cursor: pointer; }
   .suivi-med[hidden] { display: none; }
+  .recompo { max-width: 520px; margin-top: .9rem; padding: .8rem .9rem .9rem; border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper); }
+  .recompo[hidden] { display: none; }
+  .recompo-titre { margin: 0 0 .5rem; font-weight: 600; font-size: .95rem; }
+  .recompo-grille { display: grid; grid-template-columns: 1fr 5.5rem 1.6fr; gap: .45rem .5rem; align-items: center; }
+  @media (max-width: 520px) {
+    .recompo-grille { grid-template-columns: 3.8rem 1fr; row-gap: .3rem; }
+    .recompo select { padding: .45rem .35rem; font-size: .85rem; }
+    .recompo { padding: .8rem .7rem .9rem; }
+    .recompo-grille > span:first-child, .recompo-tete { display: none; }
+    .recompo-qui { grid-column: 1 / -1; margin-top: .4rem; font-weight: 600; }
+  }
+  .recompo-tete { font-size: .8rem; color: var(--muted); }
+  .recompo-qui { font-size: .9rem; overflow: hidden; text-overflow: ellipsis; }
+  .recompo-fixe { font-size: .9rem; color: var(--muted); padding-left: .2rem; }
+  .recompo select { padding: .45rem .5rem; border: 1.5px solid var(--border); border-radius: 8px; background: var(--bg); font: inherit; font-size: .9rem; color: var(--ink); min-width: 0; width: 100%; }
+  .recompo small { display: block; margin-top: .6rem; color: var(--muted); font-size: .82rem; }
   .suivi-med input { width: 1.15rem; height: 1.15rem; margin-top: .15rem; flex: none; accent-color: var(--ink); }
   .suivi-med small { display: block; color: var(--muted); font-size: .82rem; margin-top: .2rem; }
   /* genre : trois pastilles, aucune cochée au départ, à choisir avant de commencer (nc possible), sans incidence sur le calcul */
@@ -691,12 +707,28 @@
       <div class="prenoms foyer">
         <div class="enfants">
           <label for="enfants">Enfants à la maison</label>
-          <select id="enfants"><option value="0">Aucun</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option></select>
+          <select id="enfants"><option value="0">Aucun</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option><option value="r">Famille recomposée</option></select>
         </div>
         <div class="enfants">
           <label for="animaux">Animaux</label>
           <select id="animaux"><option value="0">Aucun</option><option value="1">Oui</option></select>
         </div>
+      </div>
+      <div class="recompo" id="recompoBox" hidden>
+        <p class="recompo-titre">Les enfants de chacun</p>
+        <div class="recompo-grille">
+          <span></span><span class="recompo-tete">Nombre</span><span class="recompo-tete">Ils vivent ici</span>
+          <span class="recompo-qui" data-recompo-nom="a">Enfants de Prénom 1</span>
+          <select data-rc="aN" aria-label="Nombre d'enfants, personne 1"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option></select>
+          <select data-rc="aP" aria-label="Présence, enfants de la personne 1"><option value="1">Tout le temps</option><option value="2">Une semaine sur deux</option><option value="4">Un week-end sur deux</option></select>
+          <span class="recompo-qui" data-recompo-nom="b">Enfants de Prénom 2</span>
+          <select data-rc="bN" aria-label="Nombre d'enfants, personne 2"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option></select>
+          <select data-rc="bP" aria-label="Présence, enfants de la personne 2"><option value="1">Tout le temps</option><option value="2">Une semaine sur deux</option><option value="4">Un week-end sur deux</option></select>
+          <span class="recompo-qui">Enfants communs</span>
+          <select data-rc="cN" aria-label="Nombre d'enfants communs"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option></select>
+          <span class="recompo-fixe">Tout le temps</span>
+        </div>
+        <small id="recompo-txt">Le temps des tâches des enfants compte au prorata du temps où au moins un enfant est là. Ce que vous gardez en tête, lui, ne change pas.</small>
       </div>
       <label class="suivi-med" id="suiviMedBox" hidden><input type="checkbox" id="suiviMed">
         <span>Un enfant a besoin d'un suivi médical ou d'un accompagnement particulier (handicap, maladie chronique)
@@ -780,7 +812,7 @@
   <div class="ecran" id="e3">
     <section>
       <h2>Votre répartition</h2>
-      <p class="muted">Calculée avec des durées courantes pour chaque tâche. Corrigez-les plus bas si elles ne collent pas chez vous : le résultat se met à jour en direct.</p>
+      <p class="muted">Calculée avec des durées courantes pour chaque tâche. Corrigez-les plus bas si elles ne collent pas chez vous : le résultat se met à jour en direct.<span id="note-garde"></span></p>
       <p class="verdict" id="verdict"></p>
       <table class="resultats" id="cartes"></table>
       <div class="parcat" id="parcat"></div>
@@ -1061,7 +1093,7 @@
   let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
 
   function fresh() {
-    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, suivi: 0, ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null, foyer: "" };   // foyer : numéro tiré au hasard au premier résultat (30/10/2026) ; proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
+    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, suivi: 0, recompo: null, ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null, foyer: "" };   // foyer : numéro tiré au hasard au premier résultat (30/10/2026) ; proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
     for (const cat of C.categories) for (const t of cat.taches) s.t[t.id] = { fait: null, pense: null, n: t.n, p: t.periode, d: t.duree };
     return s;
   }
@@ -1093,7 +1125,7 @@
     const vh = v => v === null || v === undefined ? "" : v, pro = vh(S.proA) === "" && vh(S.proB) === "" ? "" : vh(S.proA) + "_" + vh(S.proB);
     // numéro de foyer (30/10/2026) : champ 13, 32 caractères hexadécimaux tirés au hasard, relie les passages d'un même foyer dans l'étude
     // suivi médical d'un enfant (09/11/2026) : champ 14, « 1 » si la case est cochée ; jamais repris dans la copie de l'étude
-    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : ""].join("~").replace(/~+$/, "");
+    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : "", S.recompo ? [S.recompo.aN, S.recompo.aP, S.recompo.bN, S.recompo.bP, S.recompo.cN].join("") : ""].join("~").replace(/~+$/, "");
   }
   function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
@@ -1113,6 +1145,7 @@
     if (f[12]) { const [pa, pb] = f[12].split("_").map(borne); s.proA = pa === undefined ? null : pa; s.proB = pb === undefined ? null : pb; }   // travail rémunéré, 13/10/2026
     if (/^[0-9a-f]{32}$/.test(f[13] || "")) s.foyer = f[13];   // numéro de foyer, 30/10/2026
     s.suivi = f[14] === "1" ? 1 : 0;   // suivi médical d'un enfant, 09/11/2026
+    if (/^[0-3][124][0-3][124][0-3]$/.test(f[15] || "")) { const v = f[15]; s.recompo = { aN: +v[0], aP: +v[1], bN: +v[2], bP: +v[3], cN: +v[4] }; }   // famille recomposée (prototype du 10/11/2026)
     return s;
   }
   // Lien au format 7 (avant le 08/11/2026) : l'ancienne tâche « S'occuper des courses » comprenait la liste. La liste reprend
@@ -1143,7 +1176,22 @@
   function visibleCats() { return C.categories.filter(c => (S.enfants > 0 || !FAMILLES_ENFANTS.has(c.id)) && (S.animaux > 0 || !FAMILLES_ANIMAUX.has(c.id))); }
   function visibleTasks(cat) { return [...cat.taches.filter(t => S.enfants > 0 || !TACHES_ENFANTS.has(t.id)), ...S.custom.filter(c => c.cat === cat.id)]; }
   function allTasks() { const out = []; for (const cat of visibleCats()) for (const t of visibleTasks(cat)) out.push({ ...t, cat: cat.id, catNom: cat.nom }); return out; }
-  function hj(st) { return (st.n * st.d / 60) / J[st.p]; }
+  // Garde des enfants (prototype du 10/11/2026, avis des familles recomposées) : le temps des tâches des deux familles
+  // « Enfants » est compté au prorata du temps où ils sont à la maison. Ce qu'on garde en tête ne change pas.
+  const FAMILLE_DE = {}; for (const c of C.categories) for (const t of c.taches) FAMILLE_DE[t.id] = c.id;
+  function prorata(id) {
+    const fam = FAMILLE_DE[id] || (S.custom.find(c => c.id === id) || {}).cat;   // une tâche ajoutée dans une famille Enfants aussi
+    return FAMILLES_ENFANTS.has(fam) ? presence() : 1;
+  }
+  // Famille recomposée (prototype du 10/11/2026) : enfants de chacun, avec leur présence (1, 1/2, 1/4), et enfants communs,
+  // toujours là. Part du temps où au moins un enfant est à la maison, gardes supposées indépendantes : 1 - produit des absences.
+  function presence() {
+    const r = S.recompo; if (!r) return 1;
+    if (r.cN > 0) return 1;
+    let abs = 1; for (const [n, p] of [[r.aN, r.aP], [r.bN, r.bP]]) if (n > 0) abs *= 1 - 1 / p;
+    return 1 - abs;
+  }
+  function hj(st, id) { return (st.n * st.d / 60) / J[st.p] * (id ? prorata(id) : 1); }
   function fmt(x, dec = 1) { return x.toFixed(dec).replace(".", ","); }
   function hm(h, gros) { if (gros) return Math.round(h) + " h"; const m = Math.round(h * 60); if (m < 60) return m + " min"; const hh = Math.floor(m / 60), mm = m % 60; return mm ? `${hh} h ${String(mm).padStart(2, "0")}` : `${hh} h`; }
   // Les deux gros chiffres du haut sont arrondis au quart d'heure : « 5 h 38 » donnait une précision que la méthode n'a pas.
@@ -1162,16 +1210,18 @@
   function parts(who, pa = 50) { return who === "a" || who === "b" ? [[who, 1]] : who === "both" ? [["a", pa / 100], ["b", 1 - pa / 100]] : []; }
 
   function compute() {
-    const r = { a: { h: 0, nFait: 0, nPense: 0 }, b: { h: 0, nFait: 0, nPense: 0 }, cats: {}, renseignees: 0, total: 0 };
+    const r = { a: { h: 0, nFait: 0, nPense: 0 }, b: { h: 0, nFait: 0, nPense: 0 }, cats: {}, renseignees: 0, total: 0,
+      hors: { a: { h: 0, nPense: 0 }, b: { h: 0, nPense: 0 } } };   // hors tâches des enfants (famille recomposée, 10/11/2026)
     for (const t of allTasks()) {
       r.total++;
       const st = S.t[t.id]; if (!st || st.fait === null) continue;
       r.renseignees++;
-      const h = hj(st);
+      const h = hj(st, t.id);
       const cat = r.cats[t.cat] || (r.cats[t.cat] = { nom: t.catNom, a: 0, b: 0, both: 0 });
       if (st.fait === "both") cat.both += h; else if (st.fait === "a" || st.fait === "b") cat[st.fait] += h;
-      for (const [who, k] of parts(st.fait, partA(st, "fait"))) { r[who].h += h * k; r[who].nFait += k; }
-      for (const [who, k] of parts(penseOf(st, t), partA(st, "pense"))) { r[who].nPense += k; }
+      const enf = FAMILLES_ENFANTS.has(t.cat);
+      for (const [who, k] of parts(st.fait, partA(st, "fait"))) { r[who].h += h * k; r[who].nFait += k; if (!enf) r.hors[who].h += h * k; }
+      for (const [who, k] of parts(penseOf(st, t), partA(st, "pense"))) { r[who].nPense += k; if (!enf) r.hors[who].nPense += k; }
     }
     return r;
   }
@@ -1352,6 +1402,17 @@
         txt += ` L'écart entre faire et y penser est net : ${who} pense à bien plus de choses que le temps ne le montre. C'est là que se loge la charge mentale.`;
       }
     }
+    // Famille recomposée sans enfant commun (10/11/2026) : la même lecture hors tâches des enfants, et ce que l'on fait
+    // pour ses propres enfants peut être un choix. Le site montre, il ne juge pas.
+    const rc = S.recompo, hH = r.hors.a.h + r.hors.b.h, hP = r.hors.a.nPense + r.hors.b.nPense;
+    if (rc && !rc.cN && rc.aN + rc.bN > 0 && hH > 0 && hP > 0) {
+      const ha = Math.round(100 * r.hors.a.h / hH), hq = Math.round(100 * r.hors.a.nPense / hP);
+      const g = ha >= 50 ? [nomA(), ha] : [nomB(), 100 - ha], q = hq >= 50 ? [nomA(), hq] : [nomB(), 100 - hq];
+      txt += g[0] === q[0] ? ` Hors tâches des enfants, ${g[0]} porte ${g[1]} % du temps et ${q[1]} % de la charge mentale de la maison.`
+        : ` Hors tâches des enfants, ${g[0]} porte ${g[1]} % du temps, ${q[0]} ${q[1]} % de la charge mentale de la maison.`;
+      txt += rc.aN && rc.bN ? " Que chacun s'occupe davantage de ses propres enfants peut être un choix : le résultat le montre, il ne le juge pas."
+        : ` ${(n => (/^[aeiouyhàâäéèêëîïôöûüù]/i.test(n) ? "Qu'" : "Que ") + n)(rc.aN ? nomA() : nomB())} s'occupe davantage de ses enfants peut être un choix : le résultat le montre, il ne le juge pas.`;
+    }
     txt += " Un point de départ pour en parler.";
     L.textContent = txt;
     renderComparer(r);
@@ -1399,6 +1460,7 @@
       });
       return;
     }
+    if (S.recompo) { box.innerHTML = `<h3>Et les autres couples ?</h3><p class="muted">Les familles recomposées auront leurs propres repères dès qu'elles seront assez nombreuses à avoir fait le point : les comparer aux autres foyers n'aurait pas de sens.</p>`; return; }
     if (!fh) { box.innerHTML = `<h3>Et les autres couples ?</h3><p class="muted">La comparaison porte pour l'instant sur les couples femme et homme, les plus nombreux à avoir fait le point. Elle s'ouvrira aux autres couples quand ils seront assez nombreux.</p>`; return; }
     const elle = fh, nom = elle === "a" ? nomA() : nomB(), cls = elle === "a" ? "pa" : "pb";
     const totH = r.a.h + r.b.h, totP = r.a.nPense + r.b.nPense;
@@ -1589,14 +1651,14 @@
           <td class="avec-unite"><span class="pre">faite</span><input type="number" min="0" step="1" value="${st.n}" data-k="n" aria-label="Nombre de fois"><span class="unite">fois</span></td>
           <td class="avec-unite"><span class="pre">par</span><select data-k="p" aria-label="Période">${Object.keys(J).map(p => `<option value="${p}" ${p === st.p ? "selected" : ""}>${p}</option>`).join("")}</select></td>
           <td class="avec-unite"><span class="pre">pendant</span><input type="number" min="0" step="5" value="${st.d}" data-k="d" aria-label="Minutes à chaque fois"><span class="unite">min</span></td>
-          <td class="hj"><span class="eq">=</span>${hm(hj(st))}<span class="pj"> / jour</span></td></tr>${mob}<tr class="repart-ligne" data-rep="${t.id}" hidden><td colspan="7"></td></tr>`;
+          <td class="hj"><span class="eq">=</span>${hm(hj(st, t.id))}<span class="pj"> / jour</span></td></tr>${mob}<tr class="repart-ligne" data-rep="${t.id}" hidden><td colspan="7"></td></tr>`;
       }
       html += `</tbody>`;
     }
     tb.innerHTML = html;
     const totFamille = corps => {
       const ids = [...corps.querySelectorAll("tr[data-id]")].map(tr => tr.dataset.id);
-      const h = ids.reduce((s, id) => s + (S.t[id].fait === "other" ? 0 : hj(S.t[id])), 0);
+      const h = ids.reduce((s, id) => s + (S.t[id].fait === "other" ? 0 : hj(S.t[id], id)), 0);
       corps.querySelector(".cat-tot").textContent = `${ids.length} tâche${ids.length > 1 ? "s" : ""}, ${hm(h)} / jour`;
     };
     tb.querySelectorAll("tbody[data-cat]").forEach(corps => {
@@ -1639,7 +1701,7 @@
           reglerLigne(tr.dataset.id);
           if (window.__ga) gtag("event", "compte_modifie", { champ: k });
         }
-        tr.querySelector(".hj").innerHTML = `<span class="eq">=</span>${hm(hj(st))}<span class="pj"> / jour</span>`;
+        tr.querySelector(".hj").innerHTML = `<span class="eq">=</span>${hm(hj(st, tr.dataset.id))}<span class="pj"> / jour</span>`;
         totFamille(tr.closest("tbody"));
         update();
       }));
@@ -1692,6 +1754,9 @@
 
   /* ---------- mise à jour globale ---------- */
   function update() {
+    document.querySelectorAll("[data-recompo-nom]").forEach(e => { e.textContent = "Enfants de " + (e.dataset.recompoNom === "a" ? nomA() : nomB()); });
+    const ng = document.getElementById("note-garde");
+    if (ng) { const pr = presence(); ng.textContent = S.enfants > 0 && S.recompo && pr < 1 ? ` Famille recomposée : au moins un enfant est là environ ${Math.round(pr * 100)} % du temps, le temps des tâches des enfants compte d'autant.` : ""; }
     const r = compute();
     document.getElementById("nTaches").textContent = `${r.renseignees} / ${r.total}`;
     document.getElementById("prog").style.width = (100 * r.renseignees / Math.max(1, r.total)) + "%";
@@ -1734,14 +1799,29 @@
   // par semaine, soit les six heures hebdomadaires de l'enquête FFDys et Poppins 2024 (cf revue-litterature.md, point 10).
   // La case ne touche la tâche que si sa durée n'a pas été réglée à la main ; décochée, la valeur par défaut revient.
   const iSm = document.getElementById("suiviMed"), boxSm = document.getElementById("suiviMedBox");
-  const peindreSuivi = () => { boxSm.hidden = !(S.enfants > 0); iSm.checked = !!S.suivi; };
+  const boxR = document.getElementById("recompoBox");
+  const peindreSuivi = () => {
+    boxSm.hidden = !(S.enfants > 0); iSm.checked = !!S.suivi;
+    boxR.hidden = !S.recompo; iE.value = S.recompo ? "r" : String(S.enfants);
+    if (S.recompo) boxR.querySelectorAll("[data-rc]").forEach(sel => { sel.value = String(S.recompo[sel.dataset.rc]); });
+    boxR.querySelectorAll("[data-recompo-nom]").forEach(e => { e.textContent = "Enfants de " + (e.dataset.recompoNom === "a" ? nomA() : nomB()); });
+  };
+  boxR.querySelectorAll("[data-rc]").forEach(sel => sel.addEventListener("change", () => {
+    S.recompo[sel.dataset.rc] = +sel.value;
+    S.enfants = S.recompo.aN + S.recompo.bN + S.recompo.cN;
+    peindreSuivi(); update();
+  }));
   iSm.addEventListener("change", () => {
     S.suivi = iSm.checked ? 1 : 0;
     const st = S.t["sante-enfants"], def = santeDefaut(), de = S.suivi ? def : SANTE_MAJ, vers = S.suivi ? SANTE_MAJ : def;
     if (st && st.n === de.n && st.p === de.p && st.d === de.d) Object.assign(st, vers);
     update();
   });
-  iE.addEventListener("change", () => { S.enfants = +iE.value; peindreSuivi(); update(); });
+  iE.addEventListener("change", () => {
+    if (iE.value === "r") { S.recompo = S.recompo || { aN: 1, aP: 2, bN: 0, bP: 2, cN: 0 }; S.enfants = S.recompo.aN + S.recompo.bN + S.recompo.cN; }
+    else { S.recompo = null; S.enfants = +iE.value; }
+    peindreSuivi(); update();
+  });
   peindreSuivi();
   // Qui remplit : pour l'étude seulement, mesurer si la personne qui saisit se crédite davantage. Hors du lien de
   // partage (l'autre qui l'ouvre n'a pas rempli) : gardé pour l'onglet, a, b ou 2 (les deux ensemble).
@@ -1908,6 +1988,7 @@
         faites_a: r.a.nFait, faites_b: r.b.nFait, tete_a: r.a.nPense, tete_b: r.b.nPense, part_tete_a: pct(r.a.nPense, r.b.nPense),
         reponses: champs[5] || "", reglages: champs[6] || "", partages: champs[10] || "",
         pro_a: S.proA ?? "", pro_b: S.proB ?? "",
+        recompo: S.recompo ? champs[15] || "" : "",   // famille recomposée (10/11/2026) : le champ 15 du lien, cinq chiffres
         ...profil(),   // âge, activité, département : facultatifs, saisis dans la modale (prototype du 09/11/2026)   // heures de travail payé par semaine, si indiquées avant le compte (13/10/2026)
         foyer: S.foyer || "",   // numéro de foyer tiré au hasard (30/10/2026) : la feuille n'en garde que l'empreinte
         ajouts: S.custom.map(c => c.nom).join(" | ").slice(0, 600),
