@@ -18,6 +18,10 @@ Outils : afficher_questionnaire (le questionnaire dans la conversation, pour les
 - [Blog](https://quiypense.org/blog/) : ce que disent les enquêtes, et comment en parler à deux
 
 ## Articles
+- [Travail payé et travail à la maison : compter les deux](https://quiypense.org/blog/travail-paye-et-maison.html)
+- [Elle remplit, il remplit : pourquoi les chiffres ne disent pas la même chose](https://quiypense.org/blog/elle-remplit-il-remplit.html)
+- [Famille recomposée : faire le point quand les enfants ne sont pas ceux du couple](https://quiypense.org/blog/famille-recomposee.html)
+- [Jardin, bricolage, voiture : les tâches qu'on oublie de compter](https://quiypense.org/blog/jardin-bricolage-voiture.html)
 - [Un déséquilibre choisi n'est pas une injustice : à quelles conditions](https://quiypense.org/blog/desequilibre-assume-couple.html)
 - [La charge mentale, c'est quoi exactement ? Le mot a quarante ans](https://quiypense.org/blog/charge-mentale-definition.html)
 - [Qui fait quoi à la maison en France : les chiffres, sans commentaire](https://quiypense.org/blog/repartition-taches-chiffres-france.html)
