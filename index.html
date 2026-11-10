@@ -198,6 +198,11 @@
   /* suivi médical d'un enfant (09/11/2026) : visible dès qu'il y a un enfant, majore « Suivre la santé des enfants » */
   .suivi-med { display: flex; gap: .6rem; align-items: flex-start; max-width: 520px; margin-top: .8rem; font-size: .92rem; cursor: pointer; }
   .suivi-med[hidden] { display: none; }
+  .garde { display: grid; gap: .3rem; max-width: 520px; margin-top: .9rem; }
+  .garde[hidden] { display: none; }
+  .garde label { font-size: .85rem; color: var(--muted); }
+  .garde select { padding: .7rem .8rem; border: 1.5px solid var(--border); border-radius: var(--r); background: var(--paper); font: inherit; color: var(--ink); width: 100%; }
+  .garde small { color: var(--muted); font-size: .82rem; }
   .suivi-med input { width: 1.15rem; height: 1.15rem; margin-top: .15rem; flex: none; accent-color: var(--ink); }
   .suivi-med small { display: block; color: var(--muted); font-size: .82rem; margin-top: .2rem; }
   /* genre : trois pastilles, aucune cochée au départ, à choisir avant de commencer (nc possible), sans incidence sur le calcul */
@@ -698,6 +703,11 @@
           <select id="animaux"><option value="0">Aucun</option><option value="1">Oui</option></select>
         </div>
       </div>
+      <div class="garde" id="gardeBox" hidden>
+        <label for="garde">Les enfants vivent ici</label>
+        <select id="garde"><option value="">Tout le temps</option><option value="2">Une semaine sur deux</option><option value="4">Un week-end sur deux</option></select>
+        <small>Garde alternée : leur temps compte pour moitié. Un week-end sur deux et la moitié des vacances : pour un quart. Ce que vous gardez en tête, lui, ne change pas.</small>
+      </div>
       <label class="suivi-med" id="suiviMedBox" hidden><input type="checkbox" id="suiviMed">
         <span>Un enfant a besoin d'un suivi médical ou d'un accompagnement particulier (handicap, maladie chronique)
         <small>Le temps prévu pour suivre sa santé passe à 6 h par semaine, à ajuster ensuite. Cette case reste dans votre navigateur : elle n'est pas transmise à l'étude.</small></span></label>
@@ -780,7 +790,7 @@
   <div class="ecran" id="e3">
     <section>
       <h2>Votre répartition</h2>
-      <p class="muted">Calculée avec des durées courantes pour chaque tâche. Corrigez-les plus bas si elles ne collent pas chez vous : le résultat se met à jour en direct.</p>
+      <p class="muted">Calculée avec des durées courantes pour chaque tâche. Corrigez-les plus bas si elles ne collent pas chez vous : le résultat se met à jour en direct.<span id="note-garde"></span></p>
       <p class="verdict" id="verdict"></p>
       <table class="resultats" id="cartes"></table>
       <div class="parcat" id="parcat"></div>
@@ -1061,7 +1071,7 @@
   let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
 
   function fresh() {
-    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, suivi: 0, ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null, foyer: "" };   // foyer : numéro tiré au hasard au premier résultat (30/10/2026) ; proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
+    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, suivi: 0, garde: "", ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null, foyer: "" };   // foyer : numéro tiré au hasard au premier résultat (30/10/2026) ; proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
     for (const cat of C.categories) for (const t of cat.taches) s.t[t.id] = { fait: null, pense: null, n: t.n, p: t.periode, d: t.duree };
     return s;
   }
@@ -1093,7 +1103,7 @@
     const vh = v => v === null || v === undefined ? "" : v, pro = vh(S.proA) === "" && vh(S.proB) === "" ? "" : vh(S.proA) + "_" + vh(S.proB);
     // numéro de foyer (30/10/2026) : champ 13, 32 caractères hexadécimaux tirés au hasard, relie les passages d'un même foyer dans l'étude
     // suivi médical d'un enfant (09/11/2026) : champ 14, « 1 » si la case est cochée ; jamais repris dans la copie de l'étude
-    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : ""].join("~").replace(/~+$/, "");
+    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : "", S.garde || ""].join("~").replace(/~+$/, "");
   }
   function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
@@ -1113,6 +1123,7 @@
     if (f[12]) { const [pa, pb] = f[12].split("_").map(borne); s.proA = pa === undefined ? null : pa; s.proB = pb === undefined ? null : pb; }   // travail rémunéré, 13/10/2026
     if (/^[0-9a-f]{32}$/.test(f[13] || "")) s.foyer = f[13];   // numéro de foyer, 30/10/2026
     s.suivi = f[14] === "1" ? 1 : 0;   // suivi médical d'un enfant, 09/11/2026
+    s.garde = f[15] === "2" || f[15] === "4" ? f[15] : "";   // garde des enfants (prototype du 10/11/2026) : sans le champ, tout le temps
     return s;
   }
   // Lien au format 7 (avant le 08/11/2026) : l'ancienne tâche « S'occuper des courses » comprenait la liste. La liste reprend
@@ -1143,7 +1154,15 @@
   function visibleCats() { return C.categories.filter(c => (S.enfants > 0 || !FAMILLES_ENFANTS.has(c.id)) && (S.animaux > 0 || !FAMILLES_ANIMAUX.has(c.id))); }
   function visibleTasks(cat) { return [...cat.taches.filter(t => S.enfants > 0 || !TACHES_ENFANTS.has(t.id)), ...S.custom.filter(c => c.cat === cat.id)]; }
   function allTasks() { const out = []; for (const cat of visibleCats()) for (const t of visibleTasks(cat)) out.push({ ...t, cat: cat.id, catNom: cat.nom }); return out; }
-  function hj(st) { return (st.n * st.d / 60) / J[st.p]; }
+  // Garde des enfants (prototype du 10/11/2026, avis des familles recomposées) : le temps des tâches des deux familles
+  // « Enfants » est compté au prorata du temps où ils sont à la maison. Ce qu'on garde en tête ne change pas.
+  const GARDE = { "": 1, "2": 0.5, "4": 0.25 };
+  const FAMILLE_DE = {}; for (const c of C.categories) for (const t of c.taches) FAMILLE_DE[t.id] = c.id;
+  function prorata(id) {
+    const fam = FAMILLE_DE[id] || (S.custom.find(c => c.id === id) || {}).cat;   // une tâche ajoutée dans une famille Enfants aussi
+    return FAMILLES_ENFANTS.has(fam) ? (GARDE[S.garde || ""] || 1) : 1;
+  }
+  function hj(st, id) { return (st.n * st.d / 60) / J[st.p] * (id ? prorata(id) : 1); }
   function fmt(x, dec = 1) { return x.toFixed(dec).replace(".", ","); }
   function hm(h, gros) { if (gros) return Math.round(h) + " h"; const m = Math.round(h * 60); if (m < 60) return m + " min"; const hh = Math.floor(m / 60), mm = m % 60; return mm ? `${hh} h ${String(mm).padStart(2, "0")}` : `${hh} h`; }
   // Les deux gros chiffres du haut sont arrondis au quart d'heure : « 5 h 38 » donnait une précision que la méthode n'a pas.
@@ -1167,7 +1186,7 @@
       r.total++;
       const st = S.t[t.id]; if (!st || st.fait === null) continue;
       r.renseignees++;
-      const h = hj(st);
+      const h = hj(st, t.id);
       const cat = r.cats[t.cat] || (r.cats[t.cat] = { nom: t.catNom, a: 0, b: 0, both: 0 });
       if (st.fait === "both") cat.both += h; else if (st.fait === "a" || st.fait === "b") cat[st.fait] += h;
       for (const [who, k] of parts(st.fait, partA(st, "fait"))) { r[who].h += h * k; r[who].nFait += k; }
@@ -1589,14 +1608,14 @@
           <td class="avec-unite"><span class="pre">faite</span><input type="number" min="0" step="1" value="${st.n}" data-k="n" aria-label="Nombre de fois"><span class="unite">fois</span></td>
           <td class="avec-unite"><span class="pre">par</span><select data-k="p" aria-label="Période">${Object.keys(J).map(p => `<option value="${p}" ${p === st.p ? "selected" : ""}>${p}</option>`).join("")}</select></td>
           <td class="avec-unite"><span class="pre">pendant</span><input type="number" min="0" step="5" value="${st.d}" data-k="d" aria-label="Minutes à chaque fois"><span class="unite">min</span></td>
-          <td class="hj"><span class="eq">=</span>${hm(hj(st))}<span class="pj"> / jour</span></td></tr>${mob}<tr class="repart-ligne" data-rep="${t.id}" hidden><td colspan="7"></td></tr>`;
+          <td class="hj"><span class="eq">=</span>${hm(hj(st, t.id))}<span class="pj"> / jour</span></td></tr>${mob}<tr class="repart-ligne" data-rep="${t.id}" hidden><td colspan="7"></td></tr>`;
       }
       html += `</tbody>`;
     }
     tb.innerHTML = html;
     const totFamille = corps => {
       const ids = [...corps.querySelectorAll("tr[data-id]")].map(tr => tr.dataset.id);
-      const h = ids.reduce((s, id) => s + (S.t[id].fait === "other" ? 0 : hj(S.t[id])), 0);
+      const h = ids.reduce((s, id) => s + (S.t[id].fait === "other" ? 0 : hj(S.t[id], id)), 0);
       corps.querySelector(".cat-tot").textContent = `${ids.length} tâche${ids.length > 1 ? "s" : ""}, ${hm(h)} / jour`;
     };
     tb.querySelectorAll("tbody[data-cat]").forEach(corps => {
@@ -1639,7 +1658,7 @@
           reglerLigne(tr.dataset.id);
           if (window.__ga) gtag("event", "compte_modifie", { champ: k });
         }
-        tr.querySelector(".hj").innerHTML = `<span class="eq">=</span>${hm(hj(st))}<span class="pj"> / jour</span>`;
+        tr.querySelector(".hj").innerHTML = `<span class="eq">=</span>${hm(hj(st, tr.dataset.id))}<span class="pj"> / jour</span>`;
         totFamille(tr.closest("tbody"));
         update();
       }));
@@ -1692,6 +1711,8 @@
 
   /* ---------- mise à jour globale ---------- */
   function update() {
+    const ng = document.getElementById("note-garde");
+    if (ng) ng.textContent = S.enfants > 0 && S.garde ? ` Les enfants vivent ici ${S.garde === "2" ? "une semaine sur deux" : "un week-end sur deux"} : le temps de leurs tâches compte ${S.garde === "2" ? "pour moitié" : "pour un quart"}.` : "";
     const r = compute();
     document.getElementById("nTaches").textContent = `${r.renseignees} / ${r.total}`;
     document.getElementById("prog").style.width = (100 * r.renseignees / Math.max(1, r.total)) + "%";
@@ -1734,7 +1755,9 @@
   // par semaine, soit les six heures hebdomadaires de l'enquête FFDys et Poppins 2024 (cf revue-litterature.md, point 10).
   // La case ne touche la tâche que si sa durée n'a pas été réglée à la main ; décochée, la valeur par défaut revient.
   const iSm = document.getElementById("suiviMed"), boxSm = document.getElementById("suiviMedBox");
-  const peindreSuivi = () => { boxSm.hidden = !(S.enfants > 0); iSm.checked = !!S.suivi; };
+  const iG = document.getElementById("garde"), boxG = document.getElementById("gardeBox");
+  const peindreSuivi = () => { boxSm.hidden = !(S.enfants > 0); iSm.checked = !!S.suivi; boxG.hidden = !(S.enfants > 0); iG.value = S.garde || ""; };
+  iG.addEventListener("change", () => { S.garde = iG.value; update(); });
   iSm.addEventListener("change", () => {
     S.suivi = iSm.checked ? 1 : 0;
     const st = S.t["sante-enfants"], def = santeDefaut(), de = S.suivi ? def : SANTE_MAJ, vers = S.suivi ? SANTE_MAJ : def;
