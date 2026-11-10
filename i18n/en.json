@@ -1,0 +1,1478 @@
+{
+ "_lisezmoi": "Remplacements appliqués par tools/traduire.mjs (du plus long au plus court) ; « ignorer » : identifiants de code repérés à tort comme du français.",
+ "ignorer": [
+  "ENFANTS[e]",
+  "Qui y pense ?",
+  "S.enfants, S.ecran",
+  "avec-unite",
+  "budget-lA",
+  "cache qui-cell",
+  "deux-tp",
+  "deux.length",
+  "enfants",
+  "enfants-quotidien",
+  "enfants: 0, animaux: 0",
+  "maison + pro",
+  "produits-maison",
+  "qui-cell",
+  "recompo-qui",
+  "sante-enfants",
+  "semaine",
+  "vous${v",
+  "vous${v < 15 ?"
+ ],
+ "remplacements": [
+  [
+   "<html lang=\"fr\">",
+   "<html lang=\"en-GB\">"
+  ],
+  [
+   "<title>Qui y pense ? Test de charge mentale du couple</title>",
+   "<title>Who thinks of it? A mental load test for couples</title>"
+  ],
+  [
+   "content=\"Qui fait quoi à la maison, et qui y pense ? Faites le test de charge mentale à deux : heures par jour et choses en tête pour chacun. Gratuit, sans inscription.\">",
+   "content=\"Who does what at home, and who thinks of it? Take the mental load test together: hours a day and things to keep in mind for each of you. Free, no sign-up.\">"
+  ],
+  [
+   "<link rel=\"canonical\" href=\"https://quiypense.org/\">",
+   "<link rel=\"canonical\" href=\"https://quiypense.org/en/\">"
+  ],
+  [
+   "<meta name=\"author\" content=\"Qui y pense ?\">",
+   "<meta name=\"author\" content=\"Who thinks of it?\">"
+  ],
+  [
+   "<meta property=\"og:locale\" content=\"fr_FR\">",
+   "<meta property=\"og:locale\" content=\"en_GB\">"
+  ],
+  [
+   "<meta property=\"og:site_name\" content=\"Qui y pense ?\">",
+   "<meta property=\"og:site_name\" content=\"Who thinks of it?\">"
+  ],
+  [
+   "content=\"Qui y pense ? Qui fait quoi à la maison\">",
+   "content=\"Who thinks of it? Who does what at home\">"
+  ],
+  [
+   "content=\"Faire le point sur la charge mentale du foyer, à deux, en dix minutes. Gratuit, sans inscription, sans publicité.\">",
+   "content=\"Take stock of your household's mental load, together, in ten minutes. Free, no sign-up, no ads.\">"
+  ],
+  [
+   "<meta property=\"og:url\" content=\"https://quiypense.org/\">",
+   "<meta property=\"og:url\" content=\"https://quiypense.org/en/\">"
+  ],
+  [
+   "content=\"Qui y pense ? On fait le point, à deux ? Pour chaque tâche de la maison : qui s'en occupe, et qui y pense. Dix minutes, sans jugement.\">",
+   "content=\"Who thinks of it? Shall we take stock, together? For every household task: who does it, and who thinks of it. Ten minutes, no judgement.\">"
+  ],
+  [
+   "\"@id\": \"https://quiypense.org/#site\",",
+   "\"@id\": \"https://quiypense.org/en/#site\","
+  ],
+  [
+   "\"@id\": \"https://quiypense.org/#app\",",
+   "\"@id\": \"https://quiypense.org/en/#app\","
+  ],
+  [
+   "\"@id\": \"https://quiypense.org/#faq\",",
+   "\"@id\": \"https://quiypense.org/en/#faq\","
+  ],
+  [
+   "\"name\": \"Qui y pense ?\",",
+   "\"name\": \"Who thinks of it?\","
+  ],
+  [
+   "\"alternateName\": [\"Qui y pense\", \"quiypense\", \"quiypense.org\"],",
+   "\"alternateName\": [\"Who thinks of it\", \"quiypense\", \"quiypense.org\"],"
+  ],
+  [
+   "\"url\": \"https://quiypense.org/\"",
+   "\"url\": \"https://quiypense.org/en/\""
+  ],
+  [
+   "\"inLanguage\": \"fr\"",
+   "\"inLanguage\": \"en-GB\""
+  ],
+  [
+   "\"alternateName\": \"Qui fait quoi à la maison\",",
+   "\"alternateName\": \"Who does what at home\","
+  ],
+  [
+   "\"description\": \"Outil gratuit pour faire le point sur les tâches et la charge mentale du foyer : qui s'en occupe, qui y pense, combien d'heures par jour et combien de choses en tête pour chacun.\",",
+   "\"description\": \"A free tool to take stock of household tasks and the mental load: who does it, who thinks of it, how many hours a day and how many things to keep in mind for each of you.\","
+  ],
+  [
+   "\"browserRequirements\": \"Fonctionne dans tout navigateur récent, sans inscription\",",
+   "\"browserRequirements\": \"Works in any recent browser, no sign-up\","
+  ],
+  [
+   "{ \"@type\": \"Question\", \"name\": \"Qu'est-ce que la charge mentale ?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"La charge mentale est le travail constant de gestion, d'organisation et de planification de la bonne marche de la maison (définition de Nicole Brais). Concrètement : remarquer qu'il faut faire quelque chose, planifier, et vérifier que c'est fait, même quand quelqu'un d'autre exécute. Le terme vient de la sociologue Monique Haicault (1984) ; Allison Daminger (2019) a montré que l'anticipation et le suivi restent presque toujours portés par la même personne du couple.\" } },",
+   "{ \"@type\": \"Question\", \"name\": \"What is the mental load?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"The mental load is the constant work of managing, organising and planning the smooth running of the home (as defined by Nicole Brais). In practice: noticing that something needs doing, planning it, and checking that it is done, even when someone else carries it out. The term comes from the French sociologist Monique Haicault (1984); Allison Daminger (2019) showed that anticipating and monitoring almost always fall to the same person in the couple.\" } },"
+  ],
+  [
+   "{ \"@type\": \"Question\", \"name\": \"Comment le résultat est-il calculé ?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Pour chaque tâche, vous dites qui s'en occupe et qui y pense (y penser, c'est aussi devoir demander ou rappeler). Les heures par jour se calculent sur qui s'en occupe : nombre de fois par période multiplié par la durée, ramené à la journée. La charge mentale se mesure en nombre de tâches à garder en tête, pas en heures. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE (2010) et du jeu de cartes Fair Play (Eve Rodsky, 2019) ; vous les corrigez ensuite avec votre réalité.\" } },",
+   "{ \"@type\": \"Question\", \"name\": \"How is the result calculated?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"For each task, you say who does it and who thinks of it (thinking of it also means having to ask or remind). Hours per day are based on who does it: number of times per period multiplied by the duration, brought back to a single day. The mental load is measured as the number of tasks to keep in mind, not in hours. The default durations come from the INSEE time-use survey in France (2010) and the Fair Play card deck (Eve Rodsky, 2019); you then adjust them to your own reality.\" } },"
+  ],
+  [
+   "{ \"@type\": \"Question\", \"name\": \"D'où viennent les chiffres cités ?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"INSEE, enquête Emploi du temps 2010 : les femmes consacrent 4 h 01 par jour au travail domestique, les hommes 2 h 13, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens : on passe 86 % de temps en plus à penser aux tâches qu'à les faire.\" } },",
+   "{ \"@type\": \"Question\", \"name\": \"Where do the figures quoted come from?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"In France, INSEE time-use survey 2010: women spend 4h 01m a day on domestic work, men 2h 13m, a male figure unchanged since 1999. In France, INED FAMEMP survey 2025: 20% of couples where both partners work describe an equal split. Invisible Load Index 2024, 6,000 Europeans: people spend 86% more time thinking about tasks than doing them.\" } },"
+  ],
+  [
+   "{ \"@type\": \"Question\", \"name\": \"Mes réponses sont-elles envoyées quelque part ?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Une copie anonymisée, oui, et c'est annoncé avant le résultat. Tout se calcule dans votre navigateur, sans inscription : vos réponses sont encodées dans l'adresse de la page, et le fichier Excel se génère sur votre ordinateur. Pour afficher le résultat, le site en conserve une copie anonymisée, destinée à une étude sur la répartition domestique : ni prénoms, ni adresse, ni e-mail, ni adresse IP. C'est la contrepartie d'un outil gratuit et sans publicité.\" } },",
+   "{ \"@type\": \"Question\", \"name\": \"Are my answers sent anywhere?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"An anonymised copy, yes, and you are told before the result. Everything is calculated in your browser, with no sign-up: your answers are encoded in the page address, and the Excel file is generated on your computer. To show the result, the site keeps an anonymised copy for a study on how domestic work is shared: no names, no address, no email, no IP address. That is the trade-off for a free, ad-free tool.\" } },"
+  ],
+  [
+   "{ \"@type\": \"Question\", \"name\": \"Combien de temps ça prend et à combien ?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, le genre de chacun, qui remplit, et le nombre d'enfants. Les tâches vont de la plus fréquente à la plus rare, jusqu'à la maison, l'extérieur et les véhicules en fin de liste ; les durées s'affinent après coup, sous le résultat.\" } },",
+   "{ \"@type\": \"Question\", \"name\": \"How long does it take, and how many people?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"About ten minutes, together. You enter two first names, in no particular order and with no roles, each person's gender, who is filling in, and the number of children. Tasks go from the most frequent to the rarest, with the house, outdoors and vehicles at the end of the list; durations can be fine-tuned afterwards, below the result.\" } },"
+  ],
+  [
+   "{ \"@type\": \"Question\", \"name\": \"Peut-on faire le point depuis ChatGPT ou Claude ?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Oui. Qui y pense ? existe aussi en serveur MCP, que l'on ajoute comme connecteur dans un assistant (Claude, ChatGPT, VS Code…) avec l'adresse https://quiypense-mcp.quiypense-mcp.workers.dev/mcp. L'assistant affiche le questionnaire dans la conversation (ou pose les mêmes questions que le site) et donne le même résultat ; les prénoms restent dans la conversation et ne sont jamais transmis. La copie anonymisée pour l'étude est annoncée avant le résultat, comme ici.\" } }",
+   "{ \"@type\": \"Question\", \"name\": \"Can you take stock from ChatGPT or Claude?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Yes. Who thinks of it? also exists as an MCP server (in French for now), which you add as a connector in an assistant (Claude, ChatGPT, VS Code…) with the address https://quiypense-mcp.quiypense-mcp.workers.dev/mcp. The assistant shows the questionnaire in the conversation (or asks the same questions as the site) and gives the same result; first names stay in the conversation and are never passed on. The anonymised copy for the study is announced before the result, as here.\" } }"
+  ],
+  [
+   "<a class=\"marque\" href=\"./\">Qui y pense&nbsp;?</a>",
+   "<a class=\"marque\" href=\"./\">Who thinks of it?</a>"
+  ],
+  [
+   "<span class=\"bmc-emoji\" aria-hidden=\"true\">🙏</span>Soutenir</a></nav>",
+   "<span class=\"bmc-emoji\" aria-hidden=\"true\">🙏</span>Support</a></nav>"
+  ],
+  [
+   "<nav class=\"fil\" id=\"fil\" aria-label=\"Étapes\"><span data-n=\"1\">Vous</span><span data-n=\"2\">Qui y pense</span><span data-n=\"3\">Le résultat</span></nav>",
+   "<nav class=\"fil\" id=\"fil\" aria-label=\"Steps\"><span data-n=\"1\">You</span><span data-n=\"2\">Who thinks of it</span><span data-n=\"3\">Your results</span></nav>"
+  ],
+  [
+   "<p class=\"sur\">Qui fait quoi à la maison ?</p>",
+   "<p class=\"sur\">Who does what at home?</p>"
+  ],
+  [
+   "<h1>Qui y pense ?</h1>",
+   "<h1>Who thinks of it?</h1>"
+  ],
+  [
+   "<p class=\"lead\">Faites le point à deux, en dix minutes. Les tâches sont déjà listées : pour chacune, dites qui s'en occupe, et qui y pense. Vous lisez ensuite le résultat pour chacun : les heures par jour, et le nombre de choses à garder en tête.</p>",
+   "<p class=\"lead\">Take stock together, in ten minutes. The tasks are already listed: for each one, say who does it, and who thinks of it. You then see the result for each of you: hours a day, and the number of things to keep in mind.</p>"
+  ],
+  [
+   "<h2>On commence</h2>",
+   "<h2>Let's start</h2>"
+  ],
+  [
+   "<label for=\"nomA\">Prénom 1</label><input id=\"nomA\" placeholder=\"Prénom\">",
+   "<label for=\"nomA\">Name 1</label><input id=\"nomA\" placeholder=\"First name\">"
+  ],
+  [
+   "<label for=\"nomB\">Prénom 2</label><input id=\"nomB\" placeholder=\"Prénom\">",
+   "<label for=\"nomB\">Name 2</label><input id=\"nomB\" placeholder=\"First name\">"
+  ],
+  [
+   "aria-label=\"Genre de la première personne.",
+   "aria-label=\"Gender of the first person."
+  ],
+  [
+   "aria-label=\"Genre de la deuxième personne.",
+   "aria-label=\"Gender of the second person."
+  ],
+  [
+   "Sert seulement à l'étude anonyme, ne change rien au calcul.",
+   "Only used for the anonymous study, it does not change the calculation."
+  ],
+  [
+   " nc si vous préférez ne pas le dire.\"",
+   " n/a if you prefer not to say.\""
+  ],
+  [
+   " « nc » si vous préférez ne pas le dire.\"",
+   " 'n/a' if you prefer not to say.\""
+  ],
+  [
+   "title=\"Femme\"><span class=\"sym\" aria-hidden=\"true\">&#9792;</span><span class=\"sr\">Femme</span>",
+   "title=\"Woman\"><span class=\"sym\" aria-hidden=\"true\">&#9792;</span><span class=\"sr\">Woman</span>"
+  ],
+  [
+   "title=\"Homme\"><span class=\"sym\" aria-hidden=\"true\">&#9794;</span><span class=\"sr\">Homme</span>",
+   "title=\"Man\"><span class=\"sym\" aria-hidden=\"true\">&#9794;</span><span class=\"sr\">Man</span>"
+  ],
+  [
+   "title=\"Ne se prononce pas\"><span aria-hidden=\"true\">nc</span><span class=\"sr\">Ne se prononce pas</span>",
+   "title=\"Prefer not to say\"><span aria-hidden=\"true\">n/a</span><span class=\"sr\">Prefer not to say</span>"
+  ],
+  [
+   "<label for=\"enfants\">Enfants à la maison</label>",
+   "<label for=\"enfants\">Children at home</label>"
+  ],
+  [
+   "<option value=\"0\">Aucun</option>",
+   "<option value=\"0\">None</option>"
+  ],
+  [
+   "<option value=\"3\">3 ou plus</option>",
+   "<option value=\"3\">3 or more</option>"
+  ],
+  [
+   "<option value=\"r\">Famille recomposée</option>",
+   "<option value=\"r\">Blended family</option>"
+  ],
+  [
+   "<label for=\"animaux\">Animaux</label>",
+   "<label for=\"animaux\">Pets</label>"
+  ],
+  [
+   "<option value=\"1\">Oui</option>",
+   "<option value=\"1\">Yes</option>"
+  ],
+  [
+   "<p class=\"recompo-titre\">Les enfants de chacun</p>",
+   "<p class=\"recompo-titre\">Each person's children</p>"
+  ],
+  [
+   "<span class=\"recompo-tete\">Nombre</span><span class=\"recompo-tete\">Ils vivent ici</span>",
+   "<span class=\"recompo-tete\">Number</span><span class=\"recompo-tete\">They live here</span>"
+  ],
+  [
+   "data-recompo-nom=\"a\">Enfants de Prénom 1</span>",
+   "data-recompo-nom=\"a\">Name 1's children</span>"
+  ],
+  [
+   "data-recompo-nom=\"b\">Enfants de Prénom 2</span>",
+   "data-recompo-nom=\"b\">Name 2's children</span>"
+  ],
+  [
+   "aria-label=\"Nombre d'enfants, personne 1\"",
+   "aria-label=\"Number of children, person 1\""
+  ],
+  [
+   "aria-label=\"Nombre d'enfants, personne 2\"",
+   "aria-label=\"Number of children, person 2\""
+  ],
+  [
+   "aria-label=\"Présence, enfants de la personne 1\"",
+   "aria-label=\"Time here, person 1's children\""
+  ],
+  [
+   "aria-label=\"Présence, enfants de la personne 2\"",
+   "aria-label=\"Time here, person 2's children\""
+  ],
+  [
+   "<option value=\"1\">Tout le temps</option><option value=\"2\">Une semaine sur deux</option><option value=\"4\">Un week-end sur deux</option>",
+   "<option value=\"1\">All the time</option><option value=\"2\">Every other week</option><option value=\"4\">Every other weekend</option>"
+  ],
+  [
+   "<span class=\"recompo-qui\">Enfants communs</span>",
+   "<span class=\"recompo-qui\">Children together</span>"
+  ],
+  [
+   "aria-label=\"Nombre d'enfants communs\"",
+   "aria-label=\"Number of children you have together\""
+  ],
+  [
+   "<span class=\"recompo-fixe\">Tout le temps</span>",
+   "<span class=\"recompo-fixe\">All the time</span>"
+  ],
+  [
+   "<small id=\"recompo-txt\">Le temps des tâches des enfants compte au prorata du temps où au moins un enfant est là. Ce que vous gardez en tête, lui, ne change pas.</small>",
+   "<small id=\"recompo-txt\">Time spent on children's tasks counts in proportion to the time at least one child is here. What you keep in mind does not change.</small>"
+  ],
+  [
+   "<span>Un enfant a besoin d'un suivi médical ou d'un accompagnement particulier (handicap, maladie chronique)",
+   "<span>A child needs medical follow-up or particular support (disability, chronic illness)"
+  ],
+  [
+   "<small>Le temps prévu pour suivre sa santé passe à 6 h par semaine, à ajuster ensuite. Cette case reste dans votre navigateur : elle n'est pas transmise à l'étude.</small></span></label>",
+   "<small>The time set aside for their health care goes up to 6h a week, which you can adjust afterwards. This box stays in your browser: it is not sent to the study.</small></span></label>"
+  ],
+  [
+   "<span class=\"lbl\" id=\"remplit-lbl\">Qui remplit le questionnaire ?</span>",
+   "<span class=\"lbl\" id=\"remplit-lbl\">Who is filling in the questionnaire?</span>"
+  ],
+  [
+   "title=\"Les deux ensemble\">À deux</button>",
+   "title=\"Both together\">Together</button>"
+  ],
+  [
+   "<button class=\"btn\" id=\"go2\">Commencer</button><span class=\"small muted\" id=\"hint1\">Gratuit, sans inscription. Tout se calcule dans votre navigateur.</span>",
+   "<button class=\"btn\" id=\"go2\">Start</button><span class=\"small muted\" id=\"hint1\">Free, no sign-up. Everything is calculated in your browser.</span>"
+  ],
+  [
+   "<div class=\"stat\"><strong>20 %</strong><span>des couples où les deux travaillent décrivent un partage égal des tâches</span><small>INED, enquête FAMEMP, 2025</small></div>",
+   "<div class=\"stat\"><strong>20%</strong><span>of couples in France where both partners work describe an equal split of tasks</span><small>INED, FAMEMP survey, France, 2025</small></div>"
+  ],
+  [
+   "<div class=\"stat\"><strong>4 h 01 contre 2 h 13</strong><span>de travail domestique par jour, femmes et hommes de 15 à 60 ans. Côté hommes, inchangé depuis 1999</span><small>INSEE, Emploi du temps, 2010</small></div>",
+   "<div class=\"stat\"><strong>4h 01m vs 2h 13m</strong><span>of domestic work a day, women and men aged 15 to 60 in France. For men, unchanged since 1999</span><small>INSEE, time-use survey, France, 2010</small></div>"
+  ],
+  [
+   "<div class=\"stat\"><strong>86 %</strong><span>de temps en plus passé à penser aux tâches qu'à les faire</span><small>Invisible Load Index, 6 000 Européens, 2024</small></div>",
+   "<div class=\"stat\"><strong>86%</strong><span>more time spent thinking about tasks than doing them</span><small>Invisible Load Index, 6,000 Europeans, 2024</small></div>"
+  ],
+  [
+   "<h2>Pourquoi faire l'exercice</h2>",
+   "<h2>Why take stock</h2>"
+  ],
+  [
+   "<p>La plupart des couples n'ont jamais listé ce qu'il y a à faire. Chacun voit ce qu'il fait, et une partie de ce que l'autre fait. Le reste est invisible : remarquer qu'il n'y a plus de lessive, savoir quand tombe le rendez-vous chez le dentiste, vérifier que le sac de piscine est prêt. Ce travail-là ne prend pas d'heures, il prend de la place dans la tête.</p>",
+   "<p>Most couples have never listed everything there is to do. Each of you sees what you do, and part of what the other does. The rest is invisible: noticing that the washing powder has run out, knowing when the dentist appointment is, checking that the swimming bag is ready. That work does not take hours, it takes up room in your head.</p>"
+  ],
+  [
+   "<p>Cette page ne juge rien. Elle met des chiffres à la place des impressions, pour que la conversation parte de quelque chose de concret. Chez nous, la première version a surtout révélé les tâches que personne ne voyait.</p>",
+   "<p>This page judges nothing. It puts figures in place of impressions, so that the conversation starts from something concrete. In our home, the first version mostly revealed the tasks nobody saw.</p>"
+  ],
+  [
+   "<span class=\"presse-ref-label\">Vu dans la presse</span>",
+   "<span class=\"presse-ref-label\">Featured in the press</span>"
+  ],
+  [
+   "<span class=\"presse-ref-media\">Marie Claire · 7 novembre 2026</span>",
+   "<span class=\"presse-ref-media\">Marie Claire (France) · 7 November 2026</span>"
+  ],
+  [
+   "<span class=\"presse-ref-titre\">« Charge mentale&nbsp;: en seulement 10 minutes, cet outil gratuit révèle la vraie répartition des tâches dans votre couple&nbsp;»</span>",
+   "<span class=\"presse-ref-titre\">‘Mental load: in just 10 minutes, this free tool reveals how tasks are really shared in your relationship’ (translated from French)</span>"
+  ],
+  [
+   "<span class=\"presse-ref-lire\">Lire l'article<span aria-hidden=\"true\"> ↗</span><span class=\"sr\"> (nouvel onglet)</span></span>",
+   "<span class=\"presse-ref-lire\">Read the article (in French)<span aria-hidden=\"true\"> ↗</span><span class=\"sr\"> (new tab)</span></span>"
+  ],
+  [
+   "<h2 id=\"faq-titre\">Questions fréquentes</h2>",
+   "<h2 id=\"faq-titre\">Frequently asked questions</h2>"
+  ],
+  [
+   "<details><summary>Qu'est-ce que la charge mentale ?</summary><p>Le travail constant de gestion, d'organisation et de planification de la bonne marche de la maison, selon la définition de Nicole Brais. Concrètement : remarquer qu'il faut faire quelque chose, planifier, vérifier que c'est fait, même quand quelqu'un d'autre exécute. Le terme vient de la sociologue Monique Haicault (1984). Allison Daminger (2019) a montré que l'anticipation et le suivi restent presque toujours portés par la même personne du couple, alors que les décisions se prennent à deux.</p></details>",
+   "<details><summary>What is the mental load?</summary><p>The constant work of managing, organising and planning the smooth running of the home, as defined by Nicole Brais. In practice: noticing that something needs doing, planning it, checking that it is done, even when someone else carries it out. The term comes from the French sociologist Monique Haicault (1984). Allison Daminger (2019) showed that anticipating and monitoring almost always fall to the same person in the couple, even though decisions are made together.</p></details>"
+  ],
+  [
+   "<details><summary>Comment le résultat est-il calculé ?</summary><p>Pour chaque tâche, vous dites qui s'en occupe et qui y pense (y penser, c'est aussi devoir demander ou rappeler). Les heures par jour se calculent sur « qui s'en occupe » : nombre de fois par période, multiplié par la durée, ramené à la journée. La charge mentale se mesure en nombre de tâches à garder en tête, pas en heures : aucune enquête sérieuse ne convertit la pensée en minutes. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE (2010) et du jeu de cartes Fair Play (Eve Rodsky, 2019). Vous les corrigez ensuite avec votre réalité.</p></details>",
+   "<details><summary>How is the result calculated?</summary><p>For each task, you say who does it and who thinks of it (thinking of it also means having to ask or remind). Hours per day are based on ‘who does it’: number of times per period, multiplied by the duration, brought back to a single day. The mental load is measured as the number of tasks to keep in mind, not in hours: no serious survey converts thinking into minutes. The default durations come from the INSEE time-use survey in France (2010) and the Fair Play card deck (Eve Rodsky, 2019). You then adjust them to your own reality.</p></details>"
+  ],
+  [
+   "<details><summary>D'où viennent les chiffres cités ?</summary><p>INSEE, enquête Emploi du temps 2010 : 4 h 01 par jour de travail domestique pour les femmes, 2 h 13 pour les hommes, un temps masculin inchangé depuis 1999. INED, enquête FAMEMP publiée en 2025 : 20 % des couples où les deux travaillent décrivent un partage égal. Invisible Load Index 2024, 6 000 Européens interrogés : 86 % de temps en plus passé à penser aux tâches qu'à les faire. Les libellés des tâches suivent la nomenclature INSEE, complétée par les cent cartes Fair Play.</p></details>",
+   "<details><summary>Where do the figures quoted come from?</summary><p>In France, INSEE time-use survey 2010: 4h 01m a day of domestic work for women, 2h 13m for men, a male figure unchanged since 1999. In France, INED FAMEMP survey published in 2025: 20% of couples where both partners work describe an equal split. Invisible Load Index 2024, 6,000 Europeans surveyed: 86% more time spent thinking about tasks than doing them. Task labels follow the French INSEE classification, supplemented by the hundred Fair Play cards.</p></details>"
+  ],
+  [
+   "<details><summary>Mes réponses sont-elles envoyées quelque part ?</summary><p>Une copie anonymisée, oui, et c'est annoncé avant le résultat. Tout se calcule dans votre navigateur, il n'y a aucune inscription : vos réponses sont encodées dans l'adresse de la page, c'est ce lien que vous partagez, et le fichier Excel se génère sur votre ordinateur. Pour afficher le résultat, le site en conserve une copie anonymisée, destinée à une étude sur la répartition domestique : ni prénoms, ni adresse, ni e-mail, ni adresse IP, rien qui permette de remonter jusqu'à vous. C'est la contrepartie d'un outil gratuit et sans publicité. Les polices sont hébergées avec le site. Une mesure d'audience (Google Analytics) mesure la fréquentation, seulement si vous l'acceptez dans le bandeau, et sans jamais recevoir vos réponses.</p></details>",
+   "<details><summary>Are my answers sent anywhere?</summary><p>An anonymised copy, yes, and you are told before the result. Everything is calculated in your browser and there is no sign-up: your answers are encoded in the page address, which is the link you share, and the Excel file is generated on your computer. To show the result, the site keeps an anonymised copy for a study on how domestic work is shared: no names, no address, no email, no IP address, nothing that could lead back to you. That is the trade-off for a free, ad-free tool. Fonts are hosted with the site. Audience measurement (Google Analytics) counts visits, only if you accept it in the banner, and never receives your answers.</p></details>"
+  ],
+  [
+   "<details><summary>Combien de temps ça prend, et à combien ?</summary><p>Environ dix minutes, à deux. On indique deux prénoms, sans ordre ni rôle, le genre de chacun, qui remplit, et le nombre d'enfants. Les tâches vont de la plus fréquente à la plus rare, jusqu'à la maison, l'extérieur et les véhicules en fin de liste ; les durées s'affinent après coup, sous le résultat.</p></details>",
+   "<details><summary>How long does it take, and how many people?</summary><p>About ten minutes, together. You enter two first names, in no particular order and with no roles, each person's gender, who is filling in, and the number of children. Tasks go from the most frequent to the rarest, with the house, outdoors and vehicles at the end of the list; durations can be fine-tuned afterwards, below the result.</p></details>"
+  ],
+  [
+   "<details><summary>Peut-on faire le point depuis ChatGPT ou Claude&nbsp;?</summary><p>Oui. Qui y pense&nbsp;? existe aussi en serveur MCP, que l'on ajoute comme connecteur dans un assistant (Claude, ChatGPT, VS Code…) avec l'adresse <code>https://quiypense-mcp.quiypense-mcp.workers.dev/mcp</code>. L'assistant affiche le questionnaire dans la conversation (ou pose les mêmes questions que le site) et donne le même résultat&nbsp;; les prénoms restent dans la conversation et ne sont jamais transmis. La copie anonymisée pour l'étude est annoncée avant le résultat, comme ici.</p></details>",
+   "<details><summary>Can you take stock from ChatGPT or Claude?</summary><p>Yes. Who thinks of it? also exists as an MCP server (in French for now), which you add as a connector in an assistant (Claude, ChatGPT, VS Code…) with the address <code>https://quiypense-mcp.quiypense-mcp.workers.dev/mcp</code>. The assistant shows the questionnaire in the conversation (or asks the same questions as the site) and gives the same result; first names stay in the conversation and are never passed on. The anonymised copy for the study is announced before the result, as here.</p></details>"
+  ],
+  [
+   "aria-hidden=\"true\">Faire le point</button>",
+   "aria-hidden=\"true\">Take stock</button>"
+  ],
+  [
+   "<h2>Qui y pense ?</h2>",
+   "<h2>Who thinks of it?</h2>"
+  ],
+  [
+   "<p class=\"muted\">Pour chaque tâche, deux questions : à gauche, qui s'en occupe ; à droite, qui y pense. Y penser, c'est aussi devoir demander ou rappeler : si l'un sort les poubelles mais que l'autre doit le lui rappeler, c'est l'autre qui y pense. Un clic à gauche suffit, la droite suit ; ne la corrigez que si c'est différent.</p>",
+   "<p class=\"muted\">For each task, two questions: on the left, who does it; on the right, who thinks of it. Thinking of it also means having to ask or remind: if one of you takes the bins out but the other has to remind them, it is the other who thinks of it. One click on the left is enough, the right follows; only change it if it is different.</p>"
+  ],
+  [
+   "<p class=\"muted\">Les tâches vont de la plus fréquente à la plus rare, avec des durées proposées par défaut : allez jusqu'au bout (la maison, l'extérieur et les véhicules sont en fin de liste), vous pourrez affiner les durées et les réponses après coup, sous le résultat.</p>",
+   "<p class=\"muted\">Tasks go from the most frequent to the rarest, with default durations already suggested: go all the way to the end (the house, outdoors and vehicles are at the end of the list). You can fine-tune durations and answers afterwards, below the result.</p>"
+  ],
+  [
+   "<details class=\"legende\"><summary>Les quatre réponses, et ce que veut dire « y pense »</summary>",
+   "<details class=\"legende\"><summary>The four answers, and what ‘thinks of it’ means</summary>"
+  ],
+  [
+   "<dt>Prénom 1, Prénom 2</dt><dd>la personne qui fait la tâche. C'est ce qui donne les heures.</dd>",
+   "<dt>Name 1, Name 2</dt><dd>the person who does the task. This is what gives the hours.</dd>"
+  ],
+  [
+   "<dt>Les deux</dt><dd>à parts égales, ou à tour de rôle.</dd>",
+   "<dt>Both</dt><dd>in equal shares, or taking turns.</dd>"
+  ],
+  [
+   "<dt>Pas nous</dt><dd>quelqu'un d'autre s'en occupe (aide à domicile, grands-parents, nounou, enfants), ou la tâche n'existe pas chez vous. Elle n'entre dans les heures d'aucun de vous deux. Si l'un de vous y pense quand même, dites-le dans « y pense ».</dd>",
+   "<dt>Neither of us</dt><dd>someone else does it (home help, grandparents, childminder, children), or the task does not exist in your home. It does not count in the hours of either of you. If one of you still thinks of it, say so under ‘thinks of it’.</dd>"
+  ],
+  [
+   "<dt>Y pense</dt><dd>la personne qui remarque qu'il faut le faire, planifie, vérifie, et demande ou rappelle quand c'est l'autre qui le fait. La petite ligne « y pense » suit votre réponse : ne la changez que si c'est vraiment quelqu'un d'autre. C'est la charge mentale, mesurée en nombre de choses à garder en tête.</dd>",
+   "<dt>Thinks of it</dt><dd>the person who notices it needs doing, plans, checks, and asks or reminds when the other one does it. The small ‘thinks of it’ row follows your answer: only change it if it really is someone else. This is the mental load, measured as the number of things to keep in mind.</dd>"
+  ],
+  [
+   "<h3>Et le travail rémunéré ?</h3>",
+   "<h3>And paid work?</h3>"
+  ],
+  [
+   "<p class=\"small muted\">Facultatif. Le temps de travail payé de chacun par semaine, trajets compris. Il s'affiche à côté du résultat pour voir la charge totale, sans le changer. Laissez vide si vous préférez.</p>",
+   "<p class=\"small muted\">Optional. Each person's paid working time per week, commuting included. It is shown next to the result so you can see the total load, without changing it. Leave blank if you prefer.</p>"
+  ],
+  [
+   " h / semaine</span>",
+   " h / week</span>"
+  ],
+  [
+   "<button class=\"btn secondary\" id=\"back1\">Retour</button>",
+   "<button class=\"btn secondary\" id=\"back1\">Back</button>"
+  ],
+  [
+   ">Voir le résultat</button>",
+   ">See the result</button>"
+  ],
+  [
+   "<h2>Votre répartition</h2>",
+   "<h2>Your split</h2>"
+  ],
+  [
+   "<p class=\"muted\">Calculée avec des durées courantes pour chaque tâche. Corrigez-les plus bas si elles ne collent pas chez vous : le résultat se met à jour en direct.<span id=\"note-garde\"></span></p>",
+   "<p class=\"muted\">Calculated with typical durations for each task. Adjust them further down if they do not match your home: the result updates as you go.<span id=\"note-garde\"></span></p>"
+  ],
+  [
+   "<p class=\"muted\">Le résultat ne regarde que la maison&nbsp;; le travail payé pèse aussi. En l'ajoutant, vous voyez la charge totale de chacun, sans que le résultat change.</p>",
+   "<p class=\"muted\">The result only looks at the home; paid work counts too. By adding it, you see each person's total load, without the result changing.</p>"
+  ],
+  [
+   "Envoyer ce résultat à l'autre",
+   "Send this result to your partner"
+  ],
+  [
+   "<p class=\"small muted\">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce résultat.</p>",
+   "<p class=\"small muted\">To read it together: whoever opens the link sees exactly this result.</p>"
+  ],
+  [
+   "<h3 id=\"avis-titre\">Votre avis</h3>",
+   "<h3 id=\"avis-titre\">Your feedback</h3>"
+  ],
+  [
+   "<p class=\"small muted\">Deux clics pour nous dire si l'outil vous a servi. Facultatif et anonyme.</p>",
+   "<p class=\"small muted\">Two clicks to tell us whether the tool was useful. Optional and anonymous.</p>"
+  ],
+  [
+   "<h3>Et les revenus du foyer ?</h3>",
+   "<h3>And household income?</h3>"
+  ],
+  [
+   "<p class=\"muted\">Facultatif. Le temps donné à la maison et l'argent apporté au foyer se répondent souvent. Cette réglette ne change rien au résultat et ne part pas dans l'étude : elle sert à garder l'écart de revenus en tête.</p>",
+   "<p class=\"muted\">Optional. Time given to the home and money brought into the household often go hand in hand. This slider does not change the result and is not sent to the study: it helps keep the income gap in mind.</p>"
+  ],
+  [
+   "<span class=\"q\">Qui apporte quelle part des revenus du foyer ?</span>",
+   "<span class=\"q\">Who brings in what share of the household income?</span>"
+  ],
+  [
+   "<summary>Calculer à partir de vos revenus</summary>",
+   "<summary>Calculate from your incomes</summary>"
+  ],
+  [
+   "placeholder=\"€ net par mois\"",
+   "placeholder=\"€ net per month\""
+  ],
+  [
+   "<p class=\"small muted\">Les montants restent sur cette page : seul le pourcentage est gardé dans le lien du résultat.</p>",
+   "<p class=\"small muted\">The amounts stay on this page: only the percentage is kept in the result link.</p>"
+  ],
+  [
+   "<h2>Affinez le résultat</h2>",
+   "<h2>Fine-tune the result</h2>"
+  ],
+  [
+   "<p class=\"muted\">Tout se corrige ici, sans revenir à la liste : qui s'en occupe, qui y pense, et le temps. Les valeurs proposées viennent d'enquêtes sur le temps domestique. Pour chaque tâche : combien de fois par jour, semaine, mois ou an, et combien de minutes à chaque fois (pas au total). Le total par jour se recalcule tout seul. Exemple : les courses 2 fois par semaine, 90 minutes à chaque fois, font 26 minutes par jour.</p>",
+   "<p class=\"muted\">Everything can be corrected here, without going back to the list: who does it, who thinks of it, and the time. The suggested values come from surveys on time spent on domestic work. For each task: how many times a day, week, month or year, and how many minutes each time (not in total). The daily total recalculates itself. Example: shopping twice a week, 90 minutes each time, makes 26 minutes a day.</p>"
+  ],
+  [
+   "<p class=\"avert-5050\"><strong>Un mot avant de tout régler à la minute.</strong> Chercher l'équilibre exact ligne par ligne épuise les couples autant que le déséquilibre lui-même. Un écart n'est pas un problème tant qu'il est choisi, dit et réversible : <a href=\"blog/desequilibre-assume-couple.html?utm_source=quiypense&amp;utm_medium=compte&amp;utm_campaign=affiner\" target=\"_blank\" rel=\"noopener\">un déséquilibre choisi n'est pas une injustice</a>.</p>",
+   "<p class=\"avert-5050\"><strong>A word before you set everything to the minute.</strong> Chasing an exact balance line by line wears couples out as much as the imbalance itself. A gap is not a problem as long as it is chosen, talked about and reversible: an imbalance you choose is not an injustice.</p>"
+  ],
+  [
+   "<h2>Et maintenant</h2>",
+   "<h2>What next</h2>"
+  ],
+  [
+   "<button class=\"btn\" id=\"sauver\">Sauvegarder</button>",
+   "<button class=\"btn\" id=\"sauver\">Save</button>"
+  ],
+  [
+   "<button class=\"btn secondary\" id=\"xlsx\">Télécharger en Excel</button>",
+   "<button class=\"btn secondary\" id=\"xlsx\">Download as Excel</button>"
+  ],
+  [
+   "<button class=\"btn secondary\" id=\"back2\">Modifier qui y pense</button>",
+   "<button class=\"btn secondary\" id=\"back2\">Edit your answers</button>"
+  ],
+  [
+   "<p class=\"small muted garde-note\">Ce résultat n'est gardé pour vous nulle part : copiez le lien ou ajoutez la page aux favoris pour le retrouver.</p>",
+   "<p class=\"small muted garde-note\">This result is not stored anywhere for you: copy the link or bookmark the page to find it again.</p>"
+  ],
+  [
+   "<a href=\"#\" id=\"reset\">Recommencer depuis le début</a>",
+   "<a href=\"#\" id=\"reset\">Start again from the beginning</a>"
+  ],
+  [
+   "<h2>Faire connaître Qui y pense ?</h2>",
+   "<h2>Tell others about Who thinks of it?</h2>"
+  ],
+  [
+   "<p class=\"muted\">Un couple sur cinq se dit à égalité. Si le résultat vous a été utile, envoyez le site à un couple qui en aurait besoin, ou partagez-le sur vos réseaux : c'est ce qui le fait vivre.</p>",
+   "<p class=\"muted\">In France, one couple in five says they share equally. If the result was useful, send the site to a couple who could use it, or share it on social media: that is what keeps it going.</p>"
+  ],
+  [
+   "id=\"image-ouvrir\" aria-haspopup=\"dialog\">Créer une image à partager</button>",
+   "id=\"image-ouvrir\" aria-haspopup=\"dialog\">Create an image to share</button>"
+  ],
+  [
+   "<h2 id=\"soutien-titre\">Ce point vous a servi&nbsp;?</h2>",
+   "<h2 id=\"soutien-titre\">Was this useful?</h2>"
+  ],
+  [
+   "<p class=\"muted\">Qui y pense&nbsp;? est gratuit, sans inscription ni publicité, et fait sur du temps libre. Un café aide à le garder en ligne et à préparer la suite&nbsp;: refaire le point dans six mois, une sauvegarde en ligne.</p>",
+   "<p class=\"muted\">Who thinks of it? is free, with no sign-up and no ads, and made in spare time. A coffee helps keep it online and prepare what comes next: taking stock again in six months, an online save.</p>"
+  ],
+  [
+   "data-soutenir=\"resultat\"><span class=\"bmc-emoji\" aria-hidden=\"true\">🙏</span><span>Soutenir</span></a>",
+   "data-soutenir=\"resultat\"><span class=\"bmc-emoji\" aria-hidden=\"true\">🙏</span><span>Support</span></a>"
+  ],
+  [
+   "<a href=\"soutenir/?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir\">À quoi sert votre soutien</a>",
+   ""
+  ],
+  [
+   "<p class=\"apropos\">D'où viennent les durées par défaut : de l'enquête Emploi du temps de l'INSEE (2010), qui mesure le temps domestique au carnet, et du jeu de cartes Fair Play (Eve Rodsky, 2019) pour les tâches que le carnet ne voit pas. Un couple avec enfants qui garde toutes les valeurs par défaut totalise environ 8 heures et demie par jour, dans la fourchette haute de ce que l'INSEE observe. La distinction « y penser » et « s'en occuper » vient des travaux d'Allison Daminger (2019) : anticiper et vérifier, c'est du travail, même quand quelqu'un d'autre exécute.</p>",
+   "<p class=\"apropos\">Where the default durations come from: the INSEE time-use survey in France (2010), which measures domestic time with diaries, and the Fair Play card deck (Eve Rodsky, 2019) for the tasks the diary does not capture. A couple with children who keeps all the default values totals about eight and a half hours a day, at the high end of what INSEE observes in France. The distinction between ‘thinking of it’ and ‘doing it’ comes from the work of Allison Daminger (2019): anticipating and checking is work, even when someone else carries it out.</p>"
+  ],
+  [
+   "<nav class=\"pied-nav\" aria-label=\"Pied de page\"><a href=\"blog/\">Blog</a><a href=\"presse/\">Presse</a><a href=\"charte/\">Charte</a><a href=\"avis/\">Votre avis</a><a href=\"soutenir/?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir\"><span class=\"bmc-emoji\" aria-hidden=\"true\">🙏</span>Soutenir</a><button type=\"button\" id=\"pied-partager\" aria-expanded=\"false\" aria-controls=\"pied-partage\"><svg aria-hidden=\"true\"><use href=\"#i-partager\"/></svg>Partager le site</button></nav>",
+   "<nav class=\"pied-nav\" aria-label=\"Footer\"><a href=\"https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir\" target=\"_blank\" rel=\"noopener\"><span class=\"bmc-emoji\" aria-hidden=\"true\">🙏</span>Support</a><button type=\"button\" id=\"pied-partager\" aria-expanded=\"false\" aria-controls=\"pied-partage\"><svg aria-hidden=\"true\"><use href=\"#i-partager\"/></svg>Share the site</button></nav>"
+  ],
+  [
+   "<p>Qui y pense ? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. Le lien de partage contient vos réponses, rien d'autre. Une question, une idée : <a href=\"mailto:contact@quiypense.org\">contact@quiypense.org</a>. <a href=\"#\" id=\"consent-lien\">Cookies</a>. <a href=\"confidentialite/\">Confidentialité</a>, <a href=\"conditions/\">conditions d'utilisation</a>. Sources : <a href=\"https://www.insee.fr/fr/statistiques/2123967\">INSEE, Emploi du temps 2010</a>, <a href=\"https://www.ined.fr/fr/premiers-resultats-enquete-famemp\">INED, FAMEMP</a>, <a href=\"https://journals.sagepub.com/doi/10.1177/0003122419859007\">Daminger 2019</a>, <a href=\"https://www.fairplaylife.com/the-book\">Fair Play</a>.</p>",
+   "<p>Who thinks of it? (quiypense.org) started as a spreadsheet kept by two people, at home. An independent project, with no sign-up and no ads. The share link contains your answers, nothing else. A question, an idea: <a href=\"mailto:contact@quiypense.org\">contact@quiypense.org</a>. <a href=\"#\" id=\"consent-lien\">Cookies</a>. <a href=\"privacy/\">Privacy</a>, <a href=\"terms/\">terms of use</a>. Sources: <a href=\"https://www.insee.fr/fr/statistiques/2123967\">INSEE, time-use survey 2010 (France)</a>, <a href=\"https://www.ined.fr/fr/premiers-resultats-enquete-famemp\">INED, FAMEMP survey (France)</a>, <a href=\"https://journals.sagepub.com/doi/10.1177/0003122419859007\">Daminger 2019</a>, <a href=\"https://www.fairplaylife.com/the-book\">Fair Play</a>.</p>"
+  ],
+  [
+   ">Ce site calcule tout dans votre navigateur : il a besoin de JavaScript pour fonctionner.</p>",
+   ">This site calculates everything in your browser: it needs JavaScript to work.</p>"
+  ],
+  [
+   "<legend>Recommanderiez-vous Qui y pense&nbsp;? à un couple autour de vous&nbsp;?</legend>",
+   "<legend>Would you recommend Who thinks of it? to a couple you know?</legend>"
+  ],
+  [
+   "aria-label=\"Note de 0 à 10\"",
+   "aria-label=\"Score from 0 to 10\""
+  ],
+  [
+   "<span>0 : pas du tout</span><span>10 : tout à fait</span>",
+   "<span>0: not at all</span><span>10: absolutely</span>"
+  ],
+  [
+   "<legend>Est-ce que ça vous a aidés à en parler&nbsp;?</legend>",
+   "<legend>Did it help you talk about it?</legend>"
+  ],
+  [
+   "aria-pressed=\"false\">Oui</button><button type=\"button\" class=\"g\" value=\"un-peu\" aria-pressed=\"false\">Un peu</button><button type=\"button\" class=\"g\" value=\"pas-vraiment\" aria-pressed=\"false\">Pas vraiment</button>",
+   "aria-pressed=\"false\">Yes</button><button type=\"button\" class=\"g\" value=\"un-peu\" aria-pressed=\"false\">A little</button><button type=\"button\" class=\"g\" value=\"pas-vraiment\" aria-pressed=\"false\">Not really</button>"
+  ],
+  [
+   "<label class=\"avis-mot\">Un mot, une idée, ce qui manque <span>(facultatif, pas de prénom, merci)</span>",
+   "<label class=\"avis-mot\">A word, an idea, something missing <span>(optional, no names please)</span>"
+  ],
+  [
+   "<button class=\"btn\" type=\"submit\">Envoyer mon avis</button>",
+   "<button class=\"btn\" type=\"submit\">Send my feedback</button>"
+  ],
+  [
+   ">Fermer</button>",
+   ">Close</button>"
+  ],
+  [
+   "aria-label=\"Fermer\"",
+   "aria-label=\"Close\""
+  ],
+  [
+   "<h3 id=\"avis-encart-titre\">Votre avis, en deux clics</h3>",
+   "<h3 id=\"avis-encart-titre\">Your feedback, in two clicks</h3>"
+  ],
+  [
+   "<h2 id=\"intention-titre\">Une sauvegarde en ligne, pas encore</h2>",
+   "<h2 id=\"intention-titre\">An online save, not yet</h2>"
+  ],
+  [
+   "<p>Aujourd'hui, la sauvegarde se fait par le lien de partage et le fichier Excel. On réfléchit à une version payante pour l'enregistrer, le modifier plus tard et recevoir des rappels. Deux questions pour savoir si ça vaut le coup :</p>",
+   "<p>For now, saving works through the share link and the Excel file. We are thinking about a paid version to store your result, edit it later and get reminders. Two questions to find out whether it is worth it:</p>"
+  ],
+  [
+   "<legend>Combien paieriez-vous pour ces fonctions ?</legend>",
+   "<legend>How much would you pay for these features?</legend>"
+  ],
+  [
+   "required> Rien, je m'en passe</label>",
+   "required> Nothing, I'll do without</label>"
+  ],
+  [
+   "value=\"2-une-fois\"> 2 € une fois</label>",
+   "value=\"2-une-fois\"> €2 once</label>"
+  ],
+  [
+   "value=\"5-une-fois\"> 5 € une fois</label>",
+   "value=\"5-une-fois\"> €5 once</label>"
+  ],
+  [
+   "value=\"2-par-mois\"> 2 € par mois</label>",
+   "value=\"2-par-mois\"> €2 a month</label>"
+  ],
+  [
+   "value=\"5-par-mois\"> 5 € par mois</label>",
+   "value=\"5-par-mois\"> €5 a month</label>"
+  ],
+  [
+   "value=\"plus\"> Plus, si c'est vraiment utile</label>",
+   "value=\"plus\"> More, if it is really useful</label>"
+  ],
+  [
+   "<label class=\"champ\">Votre e-mail, pour vous prévenir si ça se fait",
+   "<label class=\"champ\">Your email, so we can let you know if it happens"
+  ],
+  [
+   "placeholder=\"facultatif\"",
+   "placeholder=\"optional\""
+  ],
+  [
+   "<p class=\"small muted\">En laissant votre e-mail, vous acceptez qu'on vous écrive une fois pour ça, rien d'autre. Vos réponses au questionnaire ne partent pas avec ce formulaire. L'envoi est protégé contre les robots par Cloudflare Turnstile.</p>",
+   "<p class=\"small muted\">By leaving your email, you agree that we may write to you once about this, nothing else. Your questionnaire answers are not sent with this form. Sending is protected against bots by Cloudflare Turnstile.</p>"
+  ],
+  [
+   "<button class=\"btn\" type=\"submit\">Envoyer</button>",
+   "<button class=\"btn\" type=\"submit\">Send</button>"
+  ],
+  [
+   "<p class=\"muted\">Le lien contient vos réponses, rien d'autre : la personne qui l'ouvre retrouve exactement ce résultat.</p>",
+   "<p class=\"muted\">The link contains your answers, nothing else: whoever opens it sees exactly this result.</p>"
+  ],
+  [
+   "<h2 id=\"partage-titre\">Partager Qui y pense ?</h2>",
+   "<h2 id=\"partage-titre\">Share Who thinks of it?</h2>"
+  ],
+  [
+   "<p class=\"muted\">Une image carrée, dessinée dans votre navigateur : rien ne part tant que vous ne la publiez pas.</p>",
+   "<p class=\"muted\">A square image, drawn in your browser: nothing is sent until you post it.</p>"
+  ],
+  [
+   "<legend>Le visuel</legend>",
+   "<legend>The image</legend>"
+  ],
+  [
+   "aria-label=\"Aperçu avec vos prénoms et votre répartition\"></canvas><span>Avec nos résultats</span>",
+   "aria-label=\"Preview with your names and your split\"></canvas><span>With our results</span>"
+  ],
+  [
+   "aria-label=\"Aperçu sans vos résultats\"></canvas><span>Sans nos résultats</span>",
+   "aria-label=\"Preview without your results\"></canvas><span>Without our results</span>"
+  ],
+  [
+   "id=\"partage-phrase\">Une autre phrase</button>",
+   "id=\"partage-phrase\">Another phrase</button>"
+  ],
+  [
+   "<legend>Où le partager</legend>",
+   "<legend>Where to share it</legend>"
+  ],
+  [
+   "<h2 id=\"sortie-titre\">Sauvegarder ce résultat : gardez son lien</h2>",
+   "<h2 id=\"sortie-titre\">Save this result: keep its link</h2>"
+  ],
+  [
+   "<p>Pour l'instant, la sauvegarde se fait par le lien de cette page. Il contient tout le résultat, réponses et durées : gardez-le pour le retrouver plus tard ou l'envoyer à l'autre. Rien n'est enregistré ailleurs pour vous : si vous fermez l'onglet sans avoir gardé le lien, le résultat est perdu.</p>",
+   "<p>For now, saving works through this page's link. It contains the whole result, answers and durations: keep it to find the result again later or send it to your partner. Nothing is stored anywhere else for you: if you close the tab without keeping the link, the result is lost.</p>"
+  ],
+  [
+   "<span>Copier le lien de ce résultat</span>",
+   "<span>Copy the link to this result</span>"
+  ],
+  [
+   ">Ou ajoutez la page aux favoris : Ctrl + D (⌘ + D sur Mac).</p>",
+   ">Or bookmark the page: Ctrl + D (⌘ + D on Mac).</p>"
+  ],
+  [
+   ">Une sauvegarde en ligne ? Dites-nous si ça vous intéresse</button>",
+   ">An online save? Tell us if you are interested</button>"
+  ],
+  [
+   "<span>Soutenir le projet</span>",
+   "<span>Support the project</span>"
+  ],
+  [
+   "<h2 id=\"etude-titre\">Important, avant d'afficher votre résultat</h2>",
+   "<h2 id=\"etude-titre\">Important, before we show your result</h2>"
+  ],
+  [
+   "<p>Pour afficher le résultat, nous conservons une copie <strong class=\"souligne\">anonymisée</strong> de vos réponses, afin de mener une grande étude sur la répartition des tâches et de la charge mentale dans les foyers.</p>",
+   "<p>To show the result, we keep an <strong class=\"souligne\">anonymised</strong> copy of your answers, for a large study on how tasks and the mental load are shared in households.</p>"
+  ],
+  [
+   "<p class=\"profil-titre\">Pour affiner l'étude <span class=\"profil-fac\">(facultatif)</span></p>",
+   "<p class=\"profil-titre\">To refine the study <span class=\"profil-fac\">(optional)</span></p>"
+  ],
+  [
+   "<label class=\"profil-lab\" for=\"profil-age-a\">Âge</label>",
+   "<label class=\"profil-lab\" for=\"profil-age-a\">Age</label>"
+  ],
+  [
+   "aria-label=\"Âge, personne 1\"",
+   "aria-label=\"Age, person 1\""
+  ],
+  [
+   "aria-label=\"Âge, personne 2\"",
+   "aria-label=\"Age, person 2\""
+  ],
+  [
+   "<label class=\"profil-lab\" for=\"profil-csp-a\">Activité</label>",
+   "<label class=\"profil-lab\" for=\"profil-csp-a\">Occupation</label>"
+  ],
+  [
+   "aria-label=\"Activité, personne 1\"",
+   "aria-label=\"Occupation, person 1\""
+  ],
+  [
+   "aria-label=\"Activité, personne 2\"",
+   "aria-label=\"Occupation, person 2\""
+  ],
+  [
+   "<label class=\"profil-lab\" for=\"profil-dept\">Département ou pays</label>",
+   "<label class=\"profil-lab\" for=\"profil-dept\">Country (or French department)</label>"
+  ],
+  [
+   "<p class=\"small muted\">Jamais vos prénoms, ni e-mail, ni adresse IP. <a href=\"confidentialite/\" target=\"_blank\" rel=\"noopener\">Ce qui est conservé</a></p>",
+   "<p class=\"small muted\">Never your names, email or IP address. <a href=\"privacy/\" target=\"_blank\" rel=\"noopener\">What is kept</a></p>"
+  ],
+  [
+   "Vérification anti-robot en cours…",
+   "Bot check in progress…"
+  ],
+  [
+   "id=\"etude-retour\">Revenir à la liste</button>",
+   "id=\"etude-retour\">Back to the list</button>"
+  ],
+  [
+   "id=\"etude-oui\">Accepter et voir le résultat</button>",
+   "id=\"etude-oui\">Accept and see the result</button>"
+  ],
+  [
+   "<h2 id=\"consent-titre\">Une mesure d'audience, avec votre accord</h2>",
+   "<h2 id=\"consent-titre\">Audience measurement, with your consent</h2>"
+  ],
+  [
+   "<p>Ce site utilise Google Analytics pour mesurer la fréquentation et comprendre ce qui est utile. Ça dépose un cookie et envoie à Google des données de navigation, qui ne disent pas qui vous êtes. Vos réponses au questionnaire ne sont jamais envoyées à Google, quel que soit votre choix.</p>",
+   "<p>This site uses Google Analytics to measure visits and understand what is useful. It sets a cookie and sends Google browsing data, which does not say who you are. Your questionnaire answers are never sent to Google, whatever you choose.</p>"
+  ],
+  [
+   "id=\"consent-non\">Refuser</button>",
+   "id=\"consent-non\">Decline</button>"
+  ],
+  [
+   "id=\"consent-oui\">Accepter</button>",
+   "id=\"consent-oui\">Accept</button>"
+  ],
+  [
+   "<span class=\"texte\">Ce résultat se lit à deux.</span>",
+   "<span class=\"texte\">This result is best read together.</span>"
+  ],
+  [
+   "id=\"barre-envoyer\" aria-haspopup=\"dialog\">Partager à ma moitié</button>",
+   "id=\"barre-envoyer\" aria-haspopup=\"dialog\">Share with my other half</button>"
+  ],
+  [
+   "const SITE = \"https://quiypense.org/\";",
+   "const SITE = \"https://quiypense.org/en/\";"
+  ],
+  [
+   "function fmt(x, dec = 1) { return x.toFixed(dec).replace(\".\", \",\"); }",
+   "function fmt(x, dec = 1) { return x.toFixed(dec); }"
+  ],
+  [
+   "function hm(h, gros) { if (gros) return Math.round(h) + \" h\"; const m = Math.round(h * 60); if (m < 60) return m + \" min\"; const hh = Math.floor(m / 60), mm = m % 60; return mm ? `${hh} h ${String(mm).padStart(2, \"0\")}` : `${hh} h`; }",
+   "function hm(h, gros) { if (gros) return Math.round(h) + \"h\"; const m = Math.round(h * 60); if (m < 60) return m + \" min\"; const hh = Math.floor(m / 60), mm = m % 60; return mm ? `${hh}h ${String(mm).padStart(2, \"0\")}m` : `${hh}h`; }"
+  ],
+  [
+   "\"moins de 15 min\"",
+   "\"under 15 min\""
+  ],
+  [
+   "\"moins de 5 min\"",
+   "\"under 5 min\""
+  ],
+  [
+   "\"Prénom 1\"",
+   "\"Name 1\""
+  ],
+  [
+   "\"Prénom 2\"",
+   "\"Name 2\""
+  ],
+  [
+   "k === \"both\" ? \"les deux\" : \"pas nous\"; }",
+   "k === \"both\" ? \"both\" : \"neither of us\"; }"
+  ],
+  [
+   "\\u00a0%",
+   "%"
+  ],
+  [
+   "toLocaleString(\"fr-FR\")",
+   "toLocaleString(\"en-GB\")"
+  ],
+  [
+   "language: \"fr\"",
+   "language: \"en\""
+  ],
+  [
+   "<span class=\"r2 c${c + 2}\">les deux</span><span class=\"r2 c${c + 3}\">pas nous</span>",
+   "<span class=\"r2 c${c + 2}\">both</span><span class=\"r2 c${c + 3}\">not us</span>"
+  ],
+  [
+   "<span class=\"grp g1\">S'en occupe</span><span class=\"grp g2\">Y pense</span>",
+   "<span class=\"grp g1\">Who does it</span><span class=\"grp g2\">Who thinks of it</span>"
+  ],
+  [
+   "\"Ajouter une tâche dans « \" + cat.nom + \" »\"",
+   "\"Add a task to \" + cat.nom"
+  ],
+  [
+   "<input placeholder=\"Nom de la tâche\" aria-label=\"Nouvelle tâche\"><button type=\"submit\">Ajouter</button>",
+   "<input placeholder=\"Task name\" aria-label=\"New task\"><button type=\"submit\">Add</button>"
+  ],
+  [
+   "(deux.length <= 3 ? deux : \"les 2\")",
+   "(deux.length <= 3 ? deux : \"both\")"
+  ],
+  [
+   "(st.pense === null ? \"À deux, dans quelle proportion ?\" : \"À deux, qui en fait le plus ?\") : \"Vous y pensez à deux : dans quelle proportion ?\";",
+   "(st.pense === null ? \"Together: in what proportion?\" : \"Together: who does more?\") : \"You both think of it: in what proportion?\";"
+  ],
+  [
+   "aria-label=\"Part de ${ng}\"",
+   "aria-label=\"${ng}'s share\""
+  ],
+  [
+   "`${ng} ${v} %, ${nd} ${100 - v} %`",
+   "`${ng} ${v}%, ${nd} ${100 - v}%`"
+  ],
+  [
+   "\"y pense : \" + label(k)",
+   "\"thinks of it: \" + label(k)"
+  ],
+  [
+   "`<td><strong>${maison + pro} h</strong><small>par semaine, ${zero",
+   "`<td><strong>${maison + pro}h</strong><small>a week, ${zero"
+  ],
+  [
+   "? `travail payé à 0\\u00a0h, <a href=\"#pro\" class=\"a-indiquer-lien\">à indiquer</a>` : `dont ${pro} h de travail payé`}</small></td>`;",
+   "? `paid work at 0h, <a href=\"#pro\" class=\"a-indiquer-lien\">to fill in</a>` : `including ${pro}h of paid work`}</small></td>`;"
+  ],
+  [
+   "<td class=\"lbl\">Avec le travail payé</td>",
+   "<td class=\"lbl\">Including paid work</td>"
+  ],
+  [
+   "<tr><td class=\"lbl\">Temps à faire</td><td><strong>${hmQuart(r.a.h)}</strong><small>par jour, soit ${hm(quart(r.a.h) * 7, true)} par semaine</small></td><td><strong>${hmQuart(r.b.h)}</strong><small>par jour, soit ${hm(quart(r.b.h) * 7, true)} par semaine</small></td></tr>",
+   "<tr><td class=\"lbl\">Time spent doing</td><td><strong>${hmQuart(r.a.h)}</strong><small>a day, or ${hm(quart(r.a.h) * 7, true)} a week</small></td><td><strong>${hmQuart(r.b.h)}</strong><small>a day, or ${hm(quart(r.b.h) * 7, true)} a week</small></td></tr>"
+  ],
+  [
+   "<tr><td class=\"lbl\">Tâches faites</td>",
+   "<tr><td class=\"lbl\">Tasks done</td>"
+  ],
+  [
+   "<tr><td class=\"lbl\">Tâches à garder en tête</td>",
+   "<tr><td class=\"lbl\">Tasks to keep in mind</td>"
+  ],
+  [
+   "<h3>Le temps par jour pour la maison, par famille de tâches</h3>",
+   "<h3>Time per day on the home, by group of tasks</h3>"
+  ],
+  [
+   "<i style=\"background:var(--both)\"></i>les deux</span>",
+   "<i style=\"background:var(--both)\"></i>both</span>"
+  ],
+  [
+   "\"Aucune tâche attribuée à l'un de vous deux pour l'instant. Revenez à l'étape 2.\"",
+   "\"No task assigned to either of you yet. Go back to step 2.\""
+  ],
+  [
+   " porte ${gros[2]} % du temps et ${tete[2]} % de la charge mentale de la maison.`",
+   " carries ${gros[2]}% of the time and ${tete[2]}% of the household's mental load.`"
+  ],
+  [
+   " porte ${gros[2]} % du temps, <span class=\"${tete[0]}\">${tete[1]}</span> ${tete[2]} % de la charge mentale de la maison.`",
+   " carries ${gros[2]}% of the time, <span class=\"${tete[0]}\">${tete[1]}</span> ${tete[2]}% of the household's mental load.`"
+  ],
+  [
+   "`${hm(quart(r.a.h) + quart(r.b.h))} par jour à faire en tout.`",
+   "`${hm(quart(r.a.h) + quart(r.b.h))} a day of tasks in all.`"
+  ],
+  [
+   "` L'écart entre faire et y penser est net : ${who} pense à bien plus de choses que le temps ne le montre. C'est là que se loge la charge mentale.`",
+   "` The gap between doing and thinking of it is clear: ${who} thinks of far more things than the time shows. That is where the mental load sits.`"
+  ],
+  [
+   "` Hors tâches des enfants, ${g[0]} porte ${g[1]} % du temps et ${q[1]} % de la charge mentale de la maison.`",
+   "` Leaving out children's tasks, ${g[0]} carries ${g[1]}% of the time and ${q[1]}% of the household's mental load.`"
+  ],
+  [
+   "` Hors tâches des enfants, ${g[0]} porte ${g[1]} % du temps, ${q[0]} ${q[1]} % de la charge mentale de la maison.`",
+   "` Leaving out children's tasks, ${g[0]} carries ${g[1]}% of the time, ${q[0]} ${q[1]}% of the household's mental load.`"
+  ],
+  [
+   "\" Que chacun s'occupe davantage de ses propres enfants peut être un choix : le résultat le montre, il ne le juge pas.\"",
+   "\" Each of you doing more for your own children may well be a choice: the result shows it, it does not judge it.\""
+  ],
+  [
+   "` ${(n => (/^[aeiouyhàâäéèêëîïôöûüù]/i.test(n) ? \"Qu'\" : \"Que \") + n)(rc.aN ? nomA() : nomB())} s'occupe davantage de ses enfants peut être un choix : le résultat le montre, il ne le juge pas.`",
+   "` ${rc.aN ? nomA() : nomB()} doing more for their own children may well be a choice: the result shows it, it does not judge it.`"
+  ],
+  [
+   "\" Un point de départ pour en parler.\"",
+   "\" A starting point for a conversation.\""
+  ],
+  [
+   "const TRAVAIL = { \"deux-tp\": \"Deux temps pleins\", \"lui-plus\": \"Lui, plus d'heures de travail\", \"elle-plus\": \"Elle, plus d'heures de travail\", \"proches\": \"Heures de travail proches\" };",
+   "const TRAVAIL = { \"deux-tp\": \"Both full-time\", \"lui-plus\": \"He works more hours\", \"elle-plus\": \"She works more hours\", \"proches\": \"Similar working hours\" };"
+  ],
+  [
+   "const ENFANTS = [\"Sans enfant\", \"Un enfant\", \"Deux enfants\", \"Trois enfants et plus\"];",
+   "const ENFANTS = [\"No children\", \"One child\", \"Two children\", \"Three or more children\"];"
+  ],
+  [
+   "\"Moins de 25 ans\"",
+   "\"Under 25\""
+  ],
+  [
+   "\"25 à 34 ans\"",
+   "\"25 to 34\""
+  ],
+  [
+   "\"35 à 44 ans\"",
+   "\"35 to 44\""
+  ],
+  [
+   "\"45 à 54 ans\"",
+   "\"45 to 54\""
+  ],
+  [
+   "\"55 à 64 ans\"",
+   "\"55 to 64\""
+  ],
+  [
+   "\"65 ans et plus\"",
+   "\"65 and over\""
+  ],
+  [
+   "<option value=\"\">choisir</option><option value=\"f\">femme</option><option value=\"h\">homme</option><option value=\"x\">ne se prononce pas</option>",
+   "<option value=\"\">choose</option><option value=\"f\">woman</option><option value=\"h\">man</option><option value=\"x\">prefer not to say</option>"
+  ],
+  [
+   "<h3>Et les autres couples ?</h3>",
+   "<h3>And other couples?</h3>"
+  ],
+  [
+   "<p class=\"muted\">Pour vous comparer aux couples qui vous ressemblent, indiquez le genre de chacun.</p>",
+   "<p class=\"muted\">To compare yourselves with couples like you, give each person's gender.</p>"
+  ],
+  [
+   "<p class=\"muted\">Les repères arriveront dès que 30 couples auront fait le point dans cette langue : les comparer aux couples français n'aurait pas de sens.</p>",
+   "<p class=\"muted\">Comparisons will appear once 30 couples have taken stock in English: comparing you with couples in France would not make sense.</p>"
+  ],
+  [
+   "<p class=\"muted\">Les familles recomposées auront leurs propres repères dès qu'elles seront assez nombreuses à avoir fait le point : les comparer aux autres foyers n'aurait pas de sens.</p>",
+   "<p class=\"muted\">Blended families will get their own comparisons once enough of them have taken stock: comparing them with other households would not make sense.</p>"
+  ],
+  [
+   "<p class=\"muted\">La comparaison porte pour l'instant sur les couples femme et homme, les plus nombreux à avoir fait le point. Elle s'ouvrira aux autres couples quand ils seront assez nombreux.</p>",
+   "<p class=\"muted\">For now, the comparison covers woman and man couples, the largest group to have taken stock. It will open to other couples once there are enough of them.</p>"
+  ],
+  [
+   "` Avec les mêmes heures de travail, ils ne sont pas encore ${R.min}.`",
+   "` With the same working hours, there are not yet ${R.min} of them.`"
+  ],
+  [
+   "` Avec le même âge, ils ne sont pas encore ${R.min}.`",
+   "` With the same age, there are not yet ${R.min} of them.`"
+  ],
+  [
+   "` Pas encore ${R.min} couples avec le même nombre d'enfants : la comparaison se fait sur tous les couples.`",
+   "` Not yet ${R.min} couples with the same number of children: the comparison uses all couples.`"
+  ],
+  [
+   "<span class=\"puce on\">Tous les couples</span>",
+   "<span class=\"puce on\">All couples</span>"
+  ],
+  [
+   "<span class=\"puce on\">Femme et homme</span>",
+   "<span class=\"puce on\">Woman and man</span>"
+  ],
+  [
+   "<span class=\"puce off\">Mêmes heures de travail : pas encore assez de couples</span>",
+   "<span class=\"puce off\">Same working hours: not enough couples yet</span>"
+  ],
+  [
+   "data-aller=\"pro\">Heures de travail : à indiquer plus haut</button>",
+   "data-aller=\"pro\">Working hours: fill in above</button>"
+  ],
+  [
+   "aria-label=\"Âge d'elle\"><option value=\"\">Âge d'elle : choisir</option>",
+   "aria-label=\"Her age\"><option value=\"\">Her age: choose</option>"
+  ],
+  [
+   "aria-label=\"${nom} : ${v} %. Chez la moitié de ces couples, entre ${q1} et ${q3} %.\"",
+   "aria-label=\"${nom}: ${v}%. In half of these couples, between ${q1} and ${q3}%.\""
+  ],
+  [
+   "<span>à parts égales</span>",
+   "<span>equal shares</span>"
+  ],
+  [
+   "<i style=\"background:var(--c)\"></i>votre tranche</span><span><i style=\"background:#B9AA92\"></i>la moitié des couples du milieu</span><span><i style=\"background:var(--line)\"></i>les autres</span>",
+   "<i style=\"background:var(--c)\"></i>your band</span><span><i style=\"background:#B9AA92\"></i>the middle half of couples</span><span><i style=\"background:var(--line)\"></i>the others</span>"
+  ],
+  [
+   "<p class=\"phrase\">Chez la moitié de ces couples, elle en ${verbe} entre <b>${q1}</b> et <b>${q3}\\u00a0%</b>. Chez vous, <b>${v}\\u00a0%</b>.</p>",
+   "<p class=\"phrase\">In half of these couples, she ${verbe} between <b>${q1}</b> and <b>${q3}%</b>. In yours, <b>${v}%</b>.</p>"
+  ],
+  [
+   "const titreT = \"Part du temps total, travail payé compris, fait par\";",
+   "const titreT = \"Share of total time, paid work included, done by\";"
+  ],
+  [
+   "g.total, \"fait\", false)",
+   "g.total, \"does\", false)"
+  ],
+  [
+   "<p class=\"phrase\">Le travail payé compte aussi. <button type=\"button\" class=\"lien\" data-aller=\"pro\">Indiquer les heures de travail</button> pour vous situer parmi les ${g.total.n.toLocaleString(\"fr-FR\")} couples qui l'ont fait.</p>",
+   "<p class=\"phrase\">Paid work counts too. <button type=\"button\" class=\"lien\" data-aller=\"pro\">Enter your working hours</button> to see where you stand among the ${g.total.n.toLocaleString(\"en-GB\")} couples who did.</p>"
+  ],
+  [
+   "<p class=\"muted\">Votre résultat, à côté de ceux des couples qui vous ressemblent. Un repère pour en parler, pas une note.</p>",
+   "<p class=\"muted\">Your result, next to those of couples like you. A reference point for talking, not a score.</p>"
+  ],
+  [
+   "couples comparables ont fait le point.${note}</p>",
+   "comparable couples have taken stock.${note}</p>"
+  ],
+  [
+   "${carte(\"Part de la charge mentale portée par\", tete, g.tete, \"porte\", true)}",
+   "${carte(\"Share of the mental load carried by\", tete, g.tete, \"carries\", true)}"
+  ],
+  [
+   "${carte(\"Part du temps à la maison fait par\", temps, g.temps, \"fait\", false)}",
+   "${carte(\"Share of home time done by\", temps, g.temps, \"does\", false)}"
+  ],
+  [
+   "<p class=\"small muted\">Repères calculés à partir des copies anonymisées de l'étude, mis à jour chaque semaine (dernière mise à jour : ${new Date(R.date).toLocaleDateString(\"fr-FR\", { day: \"numeric\", month: \"long\" })}). Ils sont déjà dans la page : rien de plus ne part de votre navigateur.</p>",
+   "<p class=\"small muted\">Comparisons calculated from the study's anonymised copies, updated every week (last update: ${new Date(R.date).toLocaleDateString(\"en-GB\", { day: \"numeric\", month: \"long\" })}). They are already in the page: nothing more leaves your browser.</p>"
+  ],
+  [
+   "const vide = `<td class=\"a-indiquer\">à indiquer</td>`;",
+   "const vide = `<td class=\"a-indiquer\">to fill in</td>`;"
+  ],
+  [
+   "<table class=\"pro-tab\"><tr><th>Par semaine</th>",
+   "<table class=\"pro-tab\"><tr><th>Per week</th>"
+  ],
+  [
+   "<tr><td>Travail payé</td>${vide}${vide}</tr>",
+   "<tr><td>Paid work</td>${vide}${vide}</tr>"
+  ],
+  [
+   "<tr><td>Maison</td><td>${ma} h</td><td>${mb} h</td></tr>",
+   "<tr><td>Home</td><td>${ma}h</td><td>${mb}h</td></tr>"
+  ],
+  [
+   "<p class=\"small muted\">Indiquez les heures de travail payé plus haut pour voir la charge totale de chacun.</p>",
+   "<p class=\"small muted\">Enter paid working hours above to see each person's total load.</p>"
+  ],
+  [
+   "<tr><td>Travail payé</td><td>${pr.a} h</td><td>${pr.b} h</td></tr>",
+   "<tr><td>Paid work</td><td>${pr.a}h</td><td>${pr.b}h</td></tr>"
+  ],
+  [
+   "<tr class=\"tot\"><td>Total</td><td>${ta} h</td><td>${tb} h</td></tr></table>",
+   "<tr class=\"tot\"><td>Total</td><td>${ta}h</td><td>${tb}h</td></tr></table>"
+  ],
+  [
+   "<p class=\"pro-conclusion\">Une charge totale proche, travail payé et maison compris. Reste à voir si la façon de vous la répartir vous convient à tous les deux.</p>",
+   "<p class=\"pro-conclusion\">A similar total load, paid work and home included. What remains is whether the way you share it suits you both.</p>"
+  ],
+  [
+   " a ${ecart} h de plus par semaine, travail payé et maison compris. Si c'est un choix, tant mieux\\u00a0; sinon, c'est un point de départ pour en parler.</p>",
+   " has ${ecart}h more a week, paid work and home included. If that is a choice, all the better; if not, it is a starting point for a conversation.</p>"
+  ],
+  [
+   "<p class=\"small muted\">Pas d'heures indiquées pour ${pr.zeroA ? nomA() : nomB()} : prises à 0 h. Corrigez plus haut si besoin.</p>",
+   "<p class=\"small muted\">No hours given for ${pr.zeroA ? nomA() : nomB()}: counted as 0h. Correct above if needed.</p>"
+  ],
+  [
+   "`Part des revenus du foyer apportée par ${ng}`",
+   "`Share of household income brought in by ${ng}`"
+  ],
+  [
+   "\"pas encore réglée\"",
+   "\"not set yet\""
+  ],
+  [
+   "eur = v => (v * 10).toLocaleString(\"fr-FR\") + \"\\u00a0€\";",
+   "eur = v => \"€\" + (v * 10).toLocaleString(\"en-GB\");"
+  ],
+  [
+   "<p>Au prorata des revenus, sur 1\\u00a0000\\u00a0€ de dépenses communes, <span class=\"pa\">${nomA()}</span> en met ${eur(ra)} et <span class=\"pb\">${nomB()}</span> ${eur(rb)}. Chacun garde ainsi pour soi la même part de ses revenus.</p>",
+   "<p>In proportion to income, out of €1,000 of shared spending, <span class=\"pa\">${nomA()}</span> puts in ${eur(ra)} and <span class=\"pb\">${nomB()}</span> ${eur(rb)}. That way each of you keeps the same share of your income.</p>"
+  ],
+  [
+   "<p><span class=\"pa\">${nomA()}</span> apporte ${ra}\\u00a0% des revenus et porte ${ta}\\u00a0% du temps à la maison\\u00a0; <span class=\"pb\">${nomB()}</span>, ${rb}\\u00a0% des revenus et ${100 - ta}\\u00a0% du temps.</p>",
+   "<p><span class=\"pa\">${nomA()}</span> brings in ${ra}% of the income and carries ${ta}% of the time at home; <span class=\"pb\">${nomB()}</span>, ${rb}% of the income and ${100 - ta}% of the time.</p>"
+  ],
+  [
+   "<tr class=\"entete-aff\"><th>Tâche</th><th class=\"cache\">S'en occupe</th><th class=\"cache\">Y pense</th><th>faite</th><th>par</th><th>pendant</th><th class=\"hj\">= par jour</th></tr>",
+   "<tr class=\"entete-aff\"><th>Task</th><th class=\"cache\">Who does it</th><th class=\"cache\">Who thinks of it</th><th>done</th><th>per</th><th>for</th><th class=\"hj\">= per day</th></tr>"
+  ],
+  [
+   "aria-label=\"${k === \"fait\" ? \"Qui s'en occupe\" : \"Qui y pense\"}\"",
+   "aria-label=\"${k === \"fait\" ? \"Who does it\" : \"Who thinks of it\"}\""
+  ],
+  [
+   "<label>y pense ${choix(pv, \"pense\", \"\")}</label>",
+   "<label>thinks of it ${choix(pv, \"pense\", \"\")}</label>"
+  ],
+  [
+   "<label>s'en occupe ${choix(st.fait, \"fait\", \"\")}</label>",
+   "<label>does it ${choix(st.fait, \"fait\", \"\")}</label>"
+  ],
+  [
+   "aria-label=\"Ce que recouvre la tâche\">i</button>",
+   "aria-label=\"What the task covers\">i</button>"
+  ],
+  [
+   "<span class=\"pre\">faite</span><input type=\"number\" min=\"0\" step=\"1\" value=\"${st.n}\" data-k=\"n\" aria-label=\"Nombre de fois\"><span class=\"unite\">fois</span>",
+   "<span class=\"pre\">done</span><input type=\"number\" min=\"0\" step=\"1\" value=\"${st.n}\" data-k=\"n\" aria-label=\"Number of times\"><span class=\"unite\">times</span>"
+  ],
+  [
+   "<span class=\"pre\">par</span><select data-k=\"p\" aria-label=\"Période\">",
+   "<span class=\"pre\">per</span><select data-k=\"p\" aria-label=\"Period\">"
+  ],
+  [
+   "${p === st.p ? \"selected\" : \"\"}>${p}</option>",
+   "${p === st.p ? \"selected\" : \"\"}>${[\"day\", \"week\", \"month\", \"year\"][PER.indexOf(p)]}</option>"
+  ],
+  [
+   "<span class=\"pre\">pendant</span><input type=\"number\" min=\"0\" step=\"5\" value=\"${st.d}\" data-k=\"d\" aria-label=\"Minutes à chaque fois\">",
+   "<span class=\"pre\">for</span><input type=\"number\" min=\"0\" step=\"5\" value=\"${st.d}\" data-k=\"d\" aria-label=\"Minutes each time\">"
+  ],
+  [
+   "<span class=\"pj\"> / jour</span>",
+   "<span class=\"pj\"> / day</span>"
+  ],
+  [
+   "`${ids.length} tâche${ids.length > 1 ? \"s\" : \"\"}, ${hm(h)} / jour`",
+   "`${ids.length} task${ids.length > 1 ? \"s\" : \"\"}, ${hm(h)} / day`"
+  ],
+  [
+   "const rows = [[\"Famille\", \"Tâche\", \"S'en occupe\", \"Y pense\", \"Fois\", \"Par\", \"Minutes à chaque fois\", \"Heures par jour\", \"Heures par semaine\"]];",
+   "const rows = [[\"Group\", \"Task\", \"Who does it\", \"Who thinks of it\", \"Times\", \"Per\", \"Minutes each time\", \"Hours per day\", \"Hours per week\"]];"
+  ],
+  [
+   "`les deux (${nomA()} ${partA(st, quoi)} %, ${nomB()} ${100 - partA(st, quoi)} %)`",
+   "`both (${nomA()} ${partA(st, quoi)}%, ${nomB()} ${100 - partA(st, quoi)}%)`"
+  ],
+  [
+   "off ? \"\" : st.p,",
+   "off ? \"\" : [\"day\", \"week\", \"month\", \"year\"][PER.indexOf(st.p)],"
+  ],
+  [
+   "[\"Qui y pense ? Qui fait quoi à la maison, le point sur la charge mentale\", \"\", \"\"]",
+   "[\"Who thinks of it? Who does what at home, taking stock of the mental load\", \"\", \"\"]"
+  ],
+  [
+   "[\"Heures par jour à faire\",",
+   "[\"Hours a day spent doing\","
+  ],
+  [
+   "[\"Heures par semaine à faire\",",
+   "[\"Hours a week spent doing\","
+  ],
+  [
+   "[\"Tâches faites\", r.a.nFait",
+   "[\"Tasks done\", r.a.nFait"
+  ],
+  [
+   "[\"Tâches à garder en tête\", r.a.nPense",
+   "[\"Tasks to keep in mind\", r.a.nPense"
+  ],
+  [
+   "[], [\"Enfants à la maison\", S.enfants], [\"Animaux\", S.animaux ? \"oui\" : \"non\"], [\"Généré le\", new Date().toLocaleDateString(\"fr-FR\")], [\"Source\", \"quiypense.org, durées par défaut INSEE Emploi du temps 2010 et Fair Play\"]];",
+   "[], [\"Children at home\", S.enfants], [\"Pets\", S.animaux ? \"yes\" : \"no\"], [\"Generated on\", new Date().toLocaleDateString(\"en-GB\")], [\"Source\", \"quiypense.org/en, default durations from the INSEE time-use survey 2010 (France) and Fair Play\"]];"
+  ],
+  [
+   "`qui-y-pense-${",
+   "`who-thinks-of-it-${"
+  ],
+  [
+   "aoa_to_sheet(res), \"Résultats\");",
+   "aoa_to_sheet(res), \"Results\");"
+  ],
+  [
+   "aoa_to_sheet(rowsExport()), \"Tâches\");",
+   "aoa_to_sheet(rowsExport()), \"Tasks\");"
+  ],
+  [
+   "\"Enfants de \" + (e.dataset.recompoNom === \"a\" ? nomA() : nomB())",
+   "(e.dataset.recompoNom === \"a\" ? nomA() : nomB()) + \"'s children\""
+  ],
+  [
+   "` Famille recomposée : au moins un enfant est là environ ${Math.round(pr * 100)} % du temps, le temps des tâches des enfants compte d'autant.`",
+   "` Blended family: at least one child is here about ${Math.round(pr * 100)}% of the time, so children's tasks count in proportion.`"
+  ],
+  [
+   "`${r.total - r.renseignees} tâche${r.total - r.renseignees > 1 ? \"s\" : \"\"} sans réponse seront ignorées`",
+   "`${r.total - r.renseignees} task${r.total - r.renseignees > 1 ? \"s\" : \"\"} without an answer will be left out`"
+  ],
+  [
+   "\"Les deux prénoms d'abord.\"",
+   "\"Both names first, please.\""
+  ],
+  [
+   "\"Le genre de chacun aussi, « nc » si vous préférez ne pas le dire.\"",
+   "\"Each person's gender too, ‘n/a’ if you prefer not to say.\""
+  ],
+  [
+   "\"Et qui remplit : l'un, l'autre, ou les deux ensemble.\"",
+   "\"And who is filling in: one of you, the other, or both together.\""
+  ],
+  [
+   "confirm(\"Tout effacer et recommencer ?\")",
+   "confirm(\"Clear everything and start again?\")"
+  ],
+  [
+   "`Voici notre résultat « Qui y pense ? », à lire ensemble : `",
+   "`Here is our ‘Who thinks of it?’ result, to read together: `"
+  ],
+  [
+   "`Qui fait quoi à la maison, et surtout qui y pense ? Faites le point à deux, en dix minutes, gratuit et sans inscription : `",
+   "`Who does what at home, and above all who thinks of it? Take stock together, in ten minutes, free and with no sign-up: `"
+  ],
+  [
+   "compte ? \"Notre résultat Qui y pense ?\" : \"Qui y pense ? Qui fait quoi à la maison\";",
+   "compte ? \"Our Who thinks of it? result\" : \"Who thinks of it? Who does what at home\";"
+  ],
+  [
+   "[\"mail\", \"E-mail\",",
+   "[\"mail\", \"Email\","
+  ],
+  [
+   "aria-label=\"Partager par ${nom}\"",
+   "aria-label=\"Share via ${nom}\""
+  ],
+  [
+   "pied ? \"Copier le lien du site\" : \"Copier le lien\"",
+   "pied ? \"Copy the site link\" : \"Copy the link\""
+  ],
+  [
+   "\"Lien copié\"",
+   "\"Link copied\""
+  ],
+  [
+   "prompt(\"Copiez ce lien :\", url)",
+   "prompt(\"Copy this link:\", url)"
+  ],
+  [
+   "Autre application`",
+   "Other app`"
+  ],
+  [
+   "age: [[\"\", \"Non précisé\"],",
+   "age: [[\"\", \"Not specified\"],"
+  ],
+  [
+   "csp: [[\"\", \"Non précisé\"], [\"cadre\", \"Cadre, prof. libérale\"], [\"inter\", \"Profession intermédiaire\"], [\"employe\", \"Employé(e)\"], [\"ouvrier\", \"Ouvrier(ère)\"],",
+   "csp: [[\"\", \"Not specified\"], [\"cadre\", \"Manager or professional\"], [\"inter\", \"Intermediate occupation\"], [\"employe\", \"Clerical or service worker\"], [\"ouvrier\", \"Manual worker\"],"
+  ],
+  [
+   "[\"independant\", \"Artisan, commerçant\"], [\"agri\", \"Agriculteur(trice)\"], [\"retraite\", \"Retraité(e)\"], [\"etudes\", \"Étudiant(e)\"], [\"sans\", \"Sans emploi, au foyer\"]],",
+   "[\"independant\", \"Craftsperson, shopkeeper, business owner\"], [\"agri\", \"Farmer\"], [\"retraite\", \"Retired\"], [\"etudes\", \"Student\"], [\"sans\", \"Not working, stay-at-home\"]],"
+  ],
+  [
+   "dept: [[\"\", \"Non précisé\"],",
+   "dept: [[\"\", \"Not specified\"], [\"gb\", \"United Kingdom\"],"
+  ],
+  [
+   "[\"dz\", \"Algérie\"], [\"be\", \"Belgique\"], [\"cm\", \"Cameroun\"], [\"ca\", \"Canada\"], [\"ci\", \"Côte d'Ivoire\"], [\"lb\", \"Liban\"], [\"lu\", \"Luxembourg\"],",
+   "[\"dz\", \"Algeria\"], [\"be\", \"Belgium\"], [\"cm\", \"Cameroon\"], [\"ca\", \"Canada\"], [\"ci\", \"Ivory Coast\"], [\"lb\", \"Lebanon\"], [\"lu\", \"Luxembourg\"],"
+  ],
+  [
+   "[\"ma\", \"Maroc\"], [\"mc\", \"Monaco\"], [\"gb\", \"Royaume-Uni\"], [\"sn\", \"Sénégal\"], [\"ch\", \"Suisse\"], [\"tn\", \"Tunisie\"], [\"etranger\", \"Autre pays\"]],",
+   "[\"mc\", \"Monaco\"], [\"ma\", \"Morocco\"], [\"sn\", \"Senegal\"], [\"ch\", \"Switzerland\"], [\"tn\", \"Tunisia\"], [\"etranger\", \"Other country\"]],"
+  ],
+  [
+   "\"La vérification anti-robot n'a pas pu se charger. Votre résultat s'affiche quand même, sans être ajouté à l'étude.\"",
+   "\"The bot check could not load. Your result is shown anyway, without being added to the study.\""
+  ],
+  [
+   "\"Vérification expirée, elle se relance…\"",
+   "\"Check expired, restarting…\""
+  ],
+  [
+   "\"On vient de faire le point sur qui pense à quoi à la maison. Le couple va bien, merci.\",",
+   "\"We just took stock of who thinks of what at home. The couple is fine, thanks.\","
+  ],
+  [
+   "\"Ce soir, pas de série\\u00a0: on a fait le point sur qui pense aux chaussettes.\",",
+   "\"No box set tonight: we took stock of who thinks about the socks.\","
+  ],
+  [
+   "\"Test de la charge mentale\\u00a0: fait. Dispute\\u00a0: aucune. Liste de courses\\u00a0: toujours en cours.\",",
+   "\"Mental load test: done. Arguments: none. Shopping list: still in progress.\","
+  ],
+  [
+   "\"On a fait le point à deux. Le lave-vaisselle, lui, attend toujours.\",",
+   "\"We took stock together. The dishwasher is still waiting.\","
+  ],
+  [
+   "\"Dix minutes à deux pour savoir qui y pense. On a même ri.\",",
+   "\"Ten minutes together to find out who thinks of it. We even laughed.\","
+  ],
+  [
+   "\"On sait enfin qui pense à racheter du papier toilette.\"",
+   "\"We finally know who remembers to buy more loo roll.\""
+  ],
+  [
+   "texte(ctx, \"Qui y pense ?\", X, 132, serif(40), ink);",
+   "texte(ctx, \"Who thinks of it?\", X, 132, serif(40), ink);"
+  ],
+  [
+   "texte(ctx, \"Qui fait quoi à la maison\", W - X, 132, sans(26), muted, \"right\");",
+   "texte(ctx, \"Who does what at home\", W - X, 132, sans(26), muted, \"right\");"
+  ],
+  [
+   "`${n0(v)} ${v > 1 ? \"choses\" : \"chose\"} en tête`",
+   "`${n0(v)} ${v === 1 ? \"thing\" : \"things\"} in mind`"
+  ],
+  [
+   "repartition(ctx, 480, \"Le temps à faire\", pa, `${hmQuart(r.a.h)} par jour`, `${hmQuart(r.b.h)} par jour`);",
+   "repartition(ctx, 480, \"Time spent doing\", pa, `${hmQuart(r.a.h)} a day`, `${hmQuart(r.b.h)} a day`);"
+  ],
+  [
+   "\"La charge mentale\"",
+   "\"The mental load\""
+  ],
+  [
+   "texte(ctx, \"Et chez vous, qui y pense ?\", X, 966, serif(48), ink);",
+   "texte(ctx, \"Who thinks of it in your home?\", X, 966, serif(48), ink);"
+  ],
+  [
+   "texte(ctx, \"quiypense.org\", X, 1020, sans(34, 600), ink);",
+   "texte(ctx, \"quiypense.org/en\", X, 1020, sans(34, 600), ink);"
+  ],
+  [
+   "texte(ctx, \"Gratuit, sans inscription, dix minutes à deux.\", W - X, 1020, sans(26), muted, \"right\");",
+   "texte(ctx, \"Free, no sign-up, ten minutes together.\", W - X, 1020, sans(26), muted, \"right\");"
+  ],
+  [
+   "\"qui-y-pense.png\"",
+   "\"who-thinks-of-it.png\""
+  ],
+  [
+   "const TEXTE = \"On a fait le point : qui fait quoi à la maison, et surtout qui y pense. Et chez vous ? \";",
+   "const TEXTE = \"We took stock: who does what at home, and above all who thinks of it. What about you? \";"
+  ],
+  [
+   "null, \"la publication\"]",
+   "null, \"the post\"]"
+  ],
+  [
+   "\"la conversation WhatsApp\"]",
+   "\"the WhatsApp chat\"]"
+  ],
+  [
+   "\"la publication Facebook\"]",
+   "\"the Facebook post\"]"
+  ],
+  [
+   "\"le post LinkedIn\"]",
+   "\"the LinkedIn post\"]"
+  ],
+  [
+   "\"le message X\"]",
+   "\"the X post\"]"
+  ],
+  [
+   "[\"telecharger\", \"Télécharger\", null, \"\"]",
+   "[\"telecharger\", \"Download\", null, \"\"]"
+  ],
+  [
+   "`Ouvrir ${nom}`",
+   "`Open ${nom}`"
+  ],
+  [
+   "\"Image téléchargée. Instagram publie depuis l'application : envoyez l'image sur votre téléphone, puis publiez-la en post ou en story (avec le sticker « Lien » vers quiypense.org).\" : \"Image téléchargée.\"",
+   "\"Image downloaded. Instagram posts from the app: send the image to your phone, then share it as a post or a story (with the ‘Link’ sticker pointing to quiypense.org/en).\" : \"Image downloaded.\""
+  ],
+  [
+   "`Image copiée. Dans ${ou} qui vient de s'ouvrir, collez-la (${COLLER}) avant d'envoyer.`",
+   "`Image copied. In ${ou} that has just opened, paste it (${COLLER}) before sending.`"
+  ],
+  [
+   "`Image téléchargée : ajoutez-la dans ${ou} qui vient de s'ouvrir.`",
+   "`Image downloaded: add it to ${ou} that has just opened.`"
+  ],
+  [
+   "\"Un instant, la vérification anti-robot n'est pas terminée.\"",
+   "\"One moment, the bot check is not finished yet.\""
+  ],
+  [
+   "\"Merci, c'est noté.\" + (form.email.value ? \" On vous écrira si ça se fait.\" : \"\")",
+   "\"Thank you, noted.\" + (form.email.value ? \" We will write to you if it happens.\" : \"\")"
+  ],
+  [
+   "\"La vérification anti-robot a échoué. Fermez et réessayez.\" : \"L'envoi n'a pas abouti. Réessayez plus tard, ou écrivez-nous.\"",
+   "\"The bot check failed. Close and try again.\" : \"Sending did not work. Try again later, or write to us.\""
+  ],
+  [
+   "\"Choisissez au moins une réponse.\"",
+   "\"Choose at least one answer.\""
+  ],
+  [
+   "\"Vérification anti-robot…\"",
+   "\"Bot check…\""
+  ],
+  [
+   "\"Envoi impossible pour l'instant (vérification anti-robot bloquée). Réessayez plus tard.\"",
+   "\"Cannot send for now (bot check blocked). Try again later.\""
+  ],
+  [
+   "\"Envoi impossible pour l'instant. Réessayez plus tard.\"",
+   "\"Cannot send for now. Try again later.\""
+  ],
+  [
+   "<p class=\"avis-merci\">Merci pour votre avis.</p>",
+   "<p class=\"avis-merci\">Thank you for your feedback.</p>"
+  ],
+  [
+   "<p class=\"avis-merci\">Merci, vous avez déjà donné votre avis.</p>",
+   "<p class=\"avis-merci\">Thank you, you have already given your feedback.</p>"
+  ],
+  [
+   ">Prénom 1<",
+   ">Name 1<"
+  ],
+  [
+   ">Prénom 2<",
+   ">Name 2<"
+  ],
+  [
+   "const gA = `${nomA()} ${pa} %`, gB = `${100 - pa} % ${nomB()}`;",
+   "const gA = `${nomA()} ${pa}%`, gB = `${100 - pa}% ${nomB()}`;"
+  ],
+  [
+   "\"Lien copié. Ajoutez aussi la page aux favoris : Ctrl + D (⌘ + D sur Mac).\"",
+   "\"Link copied. Bookmark the page too: Ctrl + D (⌘ + D on Mac).\""
+  ],
+  [
+   "  const ETAPES = { 1: [\"/\", \"Accueil\"], 2: [\"/etape/qui-y-pense\", \"Étape 2, qui y pense\"], 3: [\"/etape/compte\", \"Étape 3, le résultat\"] };",
+   "  const ETAPES = { 1: [\"/en/\", \"Home\"], 2: [\"/en/etape/qui-y-pense\", \"Step 2, who thinks of it\"], 3: [\"/en/etape/compte\", \"Step 3, results\"] };"
+  ]
+ ]
+}

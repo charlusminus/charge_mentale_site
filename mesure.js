@@ -24,13 +24,21 @@
     boite = document.createElement("div");
     boite.className = "consent"; boite.hidden = true;
     boite.setAttribute("role", "dialog"); boite.setAttribute("aria-modal", "true"); boite.setAttribute("aria-labelledby", "consent-titre");
+    // Version anglaise (10/11/2026) : mêmes textes en anglais sur les pages en <html lang="en-…">.
+    var en = (document.documentElement.lang || "").indexOf("en") === 0;
+    var t = en ? ["Audience measurement, with your consent",
+        "This site uses Google Analytics to count visits and understand what is useful. It sets a cookie and sends browsing data to Google, which does not say who you are. Your answers to the questionnaire are never sent to Google, whatever you choose.",
+        "Decline", "Accept"]
+      : ["Une mesure d'audience, avec votre accord",
+        "Ce site utilise Google Analytics pour compter les visites et comprendre ce qui est utile. Ça dépose un cookie et envoie à Google des données de navigation, qui ne disent pas qui vous êtes. Vos réponses au questionnaire ne sont jamais envoyées à Google, quel que soit votre choix.",
+        "Refuser", "Accepter"];
     boite.innerHTML =
       '<div class="consent-boite">' +
-      '<h2 id="consent-titre">Une mesure d\'audience, avec votre accord</h2>' +
-      '<p>Ce site utilise Google Analytics pour compter les visites et comprendre ce qui est utile. Ça dépose un cookie et envoie à Google des données de navigation, qui ne disent pas qui vous êtes. Vos réponses au questionnaire ne sont jamais envoyées à Google, quel que soit votre choix.</p>' +
+      '<h2 id="consent-titre">' + t[0] + '</h2>' +
+      '<p>' + t[1] + '</p>' +
       '<div class="consent-actions">' +
-      '<button class="btn secondary" type="button" data-choix="non">Refuser</button>' +
-      '<button class="btn secondary" type="button" data-choix="oui">Accepter</button>' +
+      '<button class="btn secondary" type="button" data-choix="non">' + t[2] + '</button>' +
+      '<button class="btn secondary" type="button" data-choix="oui">' + t[3] + '</button>' +
       '</div></div>';
     document.body.appendChild(boite);
     boite.addEventListener("click", function (e) {

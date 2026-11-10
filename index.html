@@ -22,6 +22,9 @@
 <title>Qui y pense ? Test de charge mentale du couple</title>
 <meta name="description" content="Qui fait quoi à la maison, et qui y pense ? Faites le test de charge mentale à deux : heures par jour et choses en tête pour chacun. Gratuit, sans inscription.">
 <link rel="canonical" href="https://quiypense.org/">
+<link rel="alternate" hreflang="fr" href="https://quiypense.org/">
+<link rel="alternate" hreflang="en-GB" href="https://quiypense.org/en/">
+<link rel="alternate" hreflang="x-default" href="https://quiypense.org/">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="Qui y pense ?">
 <meta name="theme-color" content="#FAF6EF">
@@ -768,6 +771,7 @@
       <details><summary>Peut-on faire le point depuis ChatGPT ou Claude&nbsp;?</summary><p>Oui. Qui y pense&nbsp;? existe aussi en serveur MCP, que l'on ajoute comme connecteur dans un assistant (Claude, ChatGPT, VS Code…) avec l'adresse <code>https://quiypense-mcp.quiypense-mcp.workers.dev/mcp</code>. L'assistant affiche le questionnaire dans la conversation (ou pose les mêmes questions que le site) et donne le même résultat&nbsp;; les prénoms restent dans la conversation et ne sont jamais transmis. La copie anonymisée pour l'étude est annoncée avant le résultat, comme ici.</p></details>
     </section>
 
+    <!-- en:retirer -->
     <section class="blog-accueil" id="blog-accueil" aria-labelledby="blog-titre">
       <h2 id="blog-titre">Pour aller plus loin</h2>
       <p class="muted">Ce que disent les enquêtes, comment ça a bougé en quarante ans, et comment en parler à deux sans tribunal. Écrit par les deux personnes derrière le tableur.</p>
@@ -781,6 +785,7 @@
       </ul>
       <p><a class="btn secondary" href="blog/">Tous les articles du blog</a></p>
     </section>
+    <!-- /en:retirer -->
 
 
     <button type="button" class="btn cta-collant" id="cta-collant" tabindex="-1" aria-hidden="true">Faire le point</button>
@@ -829,7 +834,7 @@
         <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce résultat à l'autre</button>
         <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce résultat.</p>
       </div>
-      <p class="parler"><strong>Avant d'en parler à deux.</strong> Une méthode en une soirée, testée chez nous et chez des amis : <a href="blog/parler-repartition-couple.html?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=parler" target="_blank" rel="noopener">comment parler du partage des tâches sans que ça finisse en dispute</a> (2 min de lecture).</p>
+<!-- en:retirer -->      <p class="parler"><strong>Avant d'en parler à deux.</strong> Une méthode en une soirée, testée chez nous et chez des amis : <a href="blog/parler-repartition-couple.html?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=parler" target="_blank" rel="noopener">comment parler du partage des tâches sans que ça finisse en dispute</a> (2 min de lecture).</p><!-- /en:retirer -->
       <div class="comparer" id="comparer" hidden></div>
       <section class="avis" id="avis" aria-labelledby="avis-titre">
         <h3 id="avis-titre">Votre avis</h3>
@@ -1462,6 +1467,7 @@
       });
       return;
     }
+    if (!(document.documentElement.lang || "fr").startsWith("fr")) { box.innerHTML = `<h3>Et les autres couples ?</h3><p class="muted">Les repères arriveront dès que 30 couples auront fait le point dans cette langue : les comparer aux couples français n'aurait pas de sens.</p>`; return; }   // version anglaise : repères français non comparables
     if (S.recompo) { box.innerHTML = `<h3>Et les autres couples ?</h3><p class="muted">Les familles recomposées auront leurs propres repères dès qu'elles seront assez nombreuses à avoir fait le point : les comparer aux autres foyers n'aurait pas de sens.</p>`; return; }
     if (!fh) { box.innerHTML = `<h3>Et les autres couples ?</h3><p class="muted">La comparaison porte pour l'instant sur les couples femme et homme, les plus nombreux à avoir fait le point. Elle s'ouvrira aux autres couples quand ils seront assez nombreux.</p>`; return; }
     const elle = fh, nom = elle === "a" ? nomA() : nomB(), cls = elle === "a" ? "pa" : "pb";
@@ -1961,7 +1967,7 @@
         ["independant", "Artisan, commerçant"], ["agri", "Agriculteur(trice)"], ["retraite", "Retraité(e)"], ["etudes", "Étudiant(e)"], ["sans", "Sans emploi, au foyer"]],
       dept: [["", "Non précisé"], ...["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","2A","2B","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","971","972","973","974","976"].map(d => [d, d]),
         ["dz", "Algérie"], ["be", "Belgique"], ["cm", "Cameroun"], ["ca", "Canada"], ["ci", "Côte d'Ivoire"], ["lb", "Liban"], ["lu", "Luxembourg"],
-        ["ma", "Maroc"], ["mc", "Monaco"], ["sn", "Sénégal"], ["ch", "Suisse"], ["tn", "Tunisie"], ["etranger", "Autre pays"]],   // pays par ordre alphabétique (09/11/2026)
+        ["ma", "Maroc"], ["mc", "Monaco"], ["gb", "Royaume-Uni"], ["sn", "Sénégal"], ["ch", "Suisse"], ["tn", "Tunisie"], ["etranger", "Autre pays"]],   // pays par ordre alphabétique (09/11/2026)
     };
     (function remplirProfil() {
       document.querySelectorAll("#profil select[data-profil]").forEach(sel => {
@@ -1990,7 +1996,8 @@
         faites_a: r.a.nFait, faites_b: r.b.nFait, tete_a: r.a.nPense, tete_b: r.b.nPense, part_tete_a: pct(r.a.nPense, r.b.nPense),
         reponses: champs[5] || "", reglages: champs[6] || "", partages: champs[10] || "",
         pro_a: S.proA ?? "", pro_b: S.proB ?? "",
-        recompo: S.recompo ? champs[15] || "" : "",   // famille recomposée (10/11/2026) : le champ 15 du lien, cinq chiffres
+        recompo: S.recompo ? champs[15] || "" : "",
+        langue: (document.documentElement.lang || "fr").slice(0, 2),   // version anglaise (10/11/2026) : « en » sur quiypense.org/en/   // famille recomposée (10/11/2026) : le champ 15 du lien, cinq chiffres
         ...profil(),   // âge, activité, département : facultatifs, saisis dans la modale (prototype du 09/11/2026)   // heures de travail payé par semaine, si indiquées avant le compte (13/10/2026)
         foyer: S.foyer || "",   // numéro de foyer tiré au hasard (30/10/2026) : la feuille n'en garde que l'empreinte
         ajouts: S.custom.map(c => c.nom).join(" | ").slice(0, 600),

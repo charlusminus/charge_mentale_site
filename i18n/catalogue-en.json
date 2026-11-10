@@ -1,0 +1,78 @@
+{
+  "familles": {
+    "courses": "Shopping and supplies",
+    "repas": "Meals",
+    "menage": "Cleaning and tidying",
+    "linge": "Laundry",
+    "enfants-quotidien": "Children: day to day",
+    "enfants-suivi": "Children: school, health, activities",
+    "administratif": "Paperwork and money",
+    "organisation": "Planning, family, friends",
+    "maison": "Home, outdoors, vehicles",
+    "animaux": "Pets"
+  },
+  "taches": {
+    "liste": { "nom": "Make the shopping list", "aide": "notice what is running out and what is going off, plan the meals, keep the list, not forgetting the house: washing powder, toilet roll, light bulbs" },
+    "courses": { "nom": "Do the shopping", "aide": "the shop, the market or click and collect, carrying, putting it all away at home, returns" },
+
+    "cuisiner": { "nom": "Take care of the meals", "aide": "choose what to eat, cook breakfast, lunch and dinner" },
+    "vaisselle": { "nom": "Clear the table and do the washing-up", "aide": "table, dishwasher or by hand" },
+
+    "ranger": { "nom": "Tidy away what's lying around", "aide": "toys, belongings, post, worktop" },
+    "poussiere": { "nom": "Do the dusting", "aide": "furniture, shelves, screens" },
+    "sols": { "nom": "Do the floors", "aide": "hoover, broom, mop, robot hoover" },
+    "poubelles": { "nom": "Take care of the bins", "aide": "put them out, bring them in, change the bags, recycling, compost if you have it" },
+    "cuisine-nettoyage": { "nom": "Clean the kitchen", "aide": "worktop, hob, sink, bin" },
+    "sanitaires": { "nom": "Clean the bathroom and toilet", "aide": "" },
+    "lits": { "nom": "Change the sheets and towels", "aide": "all the beds, bath towels and tea towels" },
+    "gros-nettoyage": { "nom": "Do the deep clean", "aide": "windows, fridge, oven, cupboards, appliances: a few times a year" },
+    "tri": { "nom": "Sort out, tidy away, give away what's no longer used", "aide": "clothes that are too small, toys, loft, garage, seasonal things" },
+
+    "machines": { "nom": "Put the washing on", "aide": "sort, treat stains, start the machine, hang out or tumble dry" },
+    "repassage": { "nom": "Do the ironing", "aide": "" },
+    "ranger-linge": { "nom": "Put the clean washing away", "aide": "fold, put away in wardrobes and drawers" },
+    "gros-linge": { "nom": "Wash the bulky items", "aide": "duvets, pillows, curtains, sofa covers, a few times a year" },
+    "taches": { "nom": "Look after the clothes", "aide": "mending, dry cleaner's, shoe repairs, alterations" },
+
+    "matin": { "nom": "Get the children ready in the morning", "aide": "getting up, getting dressed, bags, school bag" },
+    "trajets": { "nom": "Do the morning drop-off", "aide": "school, nursery, childminder" },
+    "recuperer": { "nom": "Do the evening pick-up", "aide": "school, after-school club, childminder, activities" },
+    "gouter-devoirs": { "nom": "After-school snack, homework, end of the day", "aide": "" },
+    "bain": { "nom": "Do bath time and brush teeth", "aide": "" },
+    "coucher": { "nom": "Put the children to bed", "aide": "" },
+    "nuits": { "nom": "Take care of the nights", "aide": "getting up for a child who wakes, a nightmare, a bottle, a poorly child" },
+    "jouer": { "nom": "Play, go out, read with the children", "aide": "park, games, reading" },
+    "garde": { "nom": "Look after the children", "aide": "after school, at weekends, in the evenings: being the one who is there" },
+    "malade": { "nom": "Look after a poorly child", "aide": "staying at home, the GP, medicine" },
+
+    "ecole": { "nom": "Keep up with school admin", "aide": "home-school diary or app, emails, parents' evenings, school trips, forms to sign, school supplies" },
+    "sante-enfants": { "nom": "Keep track of the children's health", "aide": "GP, dentist, vaccinations, prescriptions, glasses" },
+    "activites": { "nom": "Manage the children's activities", "aide": "signing up, timetables, kit, getting them there" },
+    "vetements-enfants": { "nom": "Manage the children's clothes", "aide": "sizes, seasons, shoes, sorting, buying" },
+    "mode-garde": { "nom": "Organise childcare", "aide": "childminder, nursery, after-school club, grandparents, school holidays" },
+    "anniversaires-enfants": { "nom": "Organise birthday parties", "aide": "your children's, and their friends': invitations, presents, being there" },
+    "ecrans-regles": { "nom": "Set and keep the rules with the children", "aide": "screens, sleep, discipline, the difficult conversations" },
+    "souvenirs": { "nom": "Keep the family memories", "aide": "photos, albums, drawings, red book (child health record)" },
+
+    "factures": { "nom": "Manage the household money", "aide": "bills, accounts, budget, savings" },
+    "papiers": { "nom": "Deal with the admin and paperwork", "aide": "post, contracts, insurance, bank, council tax, refunds, tax and benefits" },
+    "numerique": { "nom": "Keep the household tech working", "aide": "broadband router, phones, passwords, printer, streaming subscriptions" },
+    "employeur": { "nom": "Be the employer of the nanny or home help", "aide": "contract, registering with HMRC, payroll, cover" },
+
+    "agenda": { "nom": "Keep the family calendar and plan the weekends", "aide": "who is where, when, and what we are doing on Sunday" },
+    "amis": { "nom": "Keep in touch with friends and family", "aide": "invitations, calls, visits, news" },
+    "cadeaux": { "nom": "Think of presents and celebrations", "aide": "birthdays, Christmas, Mother's Day, cards, thank-yous" },
+    "vacances": { "nom": "Organise the holidays", "aide": "choosing, booking, packing the cases" },
+    "parents-ages": { "nom": "Help an elderly parent or an ill loved one", "aide": "appointments, shopping, admin, visits" },
+
+    "reparations": { "nom": "Repair, do the DIY, oversee the building work", "aide": "light bulb, leak, furniture, painting, tradespeople" },
+    "plantes": { "nom": "Look after the plants, garden or balcony", "aide": "watering, mowing, pruning, weeding" },
+    "voiture": { "nom": "Look after the vehicles", "aide": "fuel, MOT, service, tyres, washing, insurance, fines" },
+    "chauffage": { "nom": "Keep the house maintained", "aide": "heating and boiler, energy, chimney sweep, smoke alarms, keys, burglar alarm" },
+
+    "animal-quotidien": { "nom": "Feed and walk the pets", "aide": "bowls, litter tray, walks" },
+    "animal-suivi": { "nom": "Keep track of the pets' health", "aide": "vet, vaccinations, treatments, care during the holidays" }
+  },
+  "periodes": { "jour": "day", "semaine": "week", "mois": "month", "an": "year" },
+  "source": "Catalogue v2. Families aligned with the categories of the INSEE (French national statistics office) 2010 Time Use survey (cooking, cleaning, laundry, shopping, running the household, care and education of children, DIY, gardening, pets, help for adults), supplemented by the 100 Fair Play cards (Rodsky, 2019) for what the time diary does not capture (calendar, presents, school, photos, loved ones). Labels in everyday language, with nothing specific to any one household. Default durations calibrated on INSEE 2010: a couple with children should come out between 6 and 9 hours a day. See docs/recherche/revue-litterature.md. Version 2026-11-08a: 'Take care of the shopping' split into 'Make the shopping list' (in your head) and 'Do the shopping', same total time (15 + 95 min, twice a week), 51 tasks."
+}
