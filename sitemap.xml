@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://quiypense.org/</loc><lastmod>2026-10-20</lastmod><changefreq>monthly</changefreq></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://quiypense.org/</loc><lastmod>2026-10-20</lastmod><changefreq>monthly</changefreq><xhtml:link rel="alternate" hreflang="fr" href="https://quiypense.org/"/><xhtml:link rel="alternate" hreflang="en-GB" href="https://quiypense.org/en/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://quiypense.org/"/></url>
   <url><loc>https://quiypense.org/blog/</loc><lastmod>2026-10-06</lastmod><changefreq>weekly</changefreq></url>
   <url><loc>https://quiypense.org/charte/</loc><lastmod>2026-10-20</lastmod><changefreq>yearly</changefreq></url>
-  <url><loc>https://quiypense.org/confidentialite/</loc><lastmod>2026-11-09</lastmod><changefreq>yearly</changefreq></url>
-  <url><loc>https://quiypense.org/conditions/</loc><lastmod>2026-11-09</lastmod><changefreq>yearly</changefreq></url>
+  <url><loc>https://quiypense.org/confidentialite/</loc><lastmod>2026-11-09</lastmod><changefreq>yearly</changefreq><xhtml:link rel="alternate" hreflang="fr" href="https://quiypense.org/confidentialite/"/><xhtml:link rel="alternate" hreflang="en-GB" href="https://quiypense.org/en/privacy/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://quiypense.org/confidentialite/"/></url>
+  <url><loc>https://quiypense.org/conditions/</loc><lastmod>2026-11-09</lastmod><changefreq>yearly</changefreq><xhtml:link rel="alternate" hreflang="fr" href="https://quiypense.org/conditions/"/><xhtml:link rel="alternate" hreflang="en-GB" href="https://quiypense.org/en/terms/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://quiypense.org/conditions/"/></url>
   <url><loc>https://quiypense.org/presse/</loc><lastmod>2026-10-20</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://quiypense.org/soutenir/</loc><lastmod>2026-11-08</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://quiypense.org/partenaires/</loc><lastmod>2026-10-24</lastmod><changefreq>monthly</changefreq></url>
@@ -25,7 +25,7 @@
   <url><loc>https://quiypense.org/blog/elle-remplit-il-remplit.html</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://quiypense.org/blog/famille-recomposee.html</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://quiypense.org/blog/jardin-bricolage-voiture.html</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://quiypense.org/en/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://quiypense.org/en/privacy/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://quiypense.org/en/terms/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://quiypense.org/en/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq><xhtml:link rel="alternate" hreflang="fr" href="https://quiypense.org/"/><xhtml:link rel="alternate" hreflang="en-GB" href="https://quiypense.org/en/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://quiypense.org/"/></url>
+  <url><loc>https://quiypense.org/en/privacy/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq><xhtml:link rel="alternate" hreflang="fr" href="https://quiypense.org/confidentialite/"/><xhtml:link rel="alternate" hreflang="en-GB" href="https://quiypense.org/en/privacy/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://quiypense.org/confidentialite/"/></url>
+  <url><loc>https://quiypense.org/en/terms/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq><xhtml:link rel="alternate" hreflang="fr" href="https://quiypense.org/conditions/"/><xhtml:link rel="alternate" hreflang="en-GB" href="https://quiypense.org/en/terms/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://quiypense.org/conditions/"/></url>
 </urlset>

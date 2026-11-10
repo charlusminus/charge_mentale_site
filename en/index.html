@@ -30,6 +30,7 @@
 <meta name="theme-color" content="#FAF6EF">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="fr_FR">
 <meta property="og:site_name" content="Who thinks of it?">
 <meta property="og:title" content="Who thinks of it? Who does what at home">
 <meta property="og:description" content="Take stock of your household's mental load, together, in ten minutes. Free, no sign-up, no ads.">
@@ -65,6 +66,7 @@
     {
       "@type": "WebApplication",
       "@id": "https://quiypense.org/en/#app",
+      "translationOfWork": { "@id": "https://quiypense.org/#app" },
       "name": "Who thinks of it?",
       "alternateName": "Who does what at home",
       "url": "https://quiypense.org/en/",
@@ -75,7 +77,7 @@
       "inLanguage": "en-GB",
       "isAccessibleForFree": true,
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
-      "author": { "@type": "Organization", "name": "Who thinks of it?", "url": "https://quiypense.org/en/" },
+      "author": { "@type": "Organization", "@id": "https://quiypense.org/#org", "name": "Who thinks of it?", "alternateName": "Who thinks of it?", "url": "https://quiypense.org/en/", "email": "contact@quiypense.org" },
       "image": "https://quiypense.org/img/apercu-en-2026-11.png"
     },
     {
@@ -987,7 +989,7 @@
         <label class="profil-lab" for="profil-csp-a">Occupation</label>
         <select id="profil-csp-a" data-profil="csp_a" aria-label="Occupation, person 1"></select>
         <select id="profil-csp-b" data-profil="csp_b" aria-label="Occupation, person 2"></select>
-        <label class="profil-lab" for="profil-dept">Country (or French department)</label>
+        <label class="profil-lab" for="profil-dept">Country</label>
         <select id="profil-dept" data-profil="dept" class="profil-large"></select>
       </div>
     </div>
@@ -1951,7 +1953,7 @@
       age: [["", "Not specified"], ["-25", "Under 25"], ["25-34", "25 to 34"], ["35-44", "35 to 44"], ["45-54", "45 to 54"], ["55-64", "55 to 64"], ["65+", "65 and over"]],
       csp: [["", "Not specified"], ["cadre", "Manager or professional"], ["inter", "Intermediate occupation"], ["employe", "Clerical or service worker"], ["ouvrier", "Manual worker"],
         ["independant", "Craftsperson, shopkeeper, business owner"], ["agri", "Farmer"], ["retraite", "Retired"], ["etudes", "Student"], ["sans", "Not working, stay-at-home"]],
-      dept: [["", "Not specified"], ["gb", "United Kingdom"], ...["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","2A","2B","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","971","972","973","974","976"].map(d => [d, d]),
+      dept: [["", "Not specified"], ["gb", "United Kingdom"], ["fr", "France"],
         ["dz", "Algeria"], ["be", "Belgium"], ["cm", "Cameroon"], ["ca", "Canada"], ["ci", "Ivory Coast"], ["lb", "Lebanon"], ["lu", "Luxembourg"],
         ["mc", "Monaco"], ["ma", "Morocco"], ["sn", "Senegal"], ["ch", "Switzerland"], ["tn", "Tunisia"], ["etranger", "Other country"]],   // pays par ordre alphabétique (09/11/2026)
     };
