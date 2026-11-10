@@ -287,6 +287,7 @@
   .resultats { width: 100%; border-collapse: collapse; margin-top: 1.4rem; }
   .resultats th { text-align: left; font-family: var(--serif); font-weight: 600; font-size: 1.3rem; padding: .4rem 0 .5rem; border-bottom: 1.5px solid var(--ink); }
   .resultats th.a { color: var(--a); } .resultats th.b { color: var(--b); }
+  .a-indiquer-lien { white-space: nowrap; }   /* « à indiquer » ne se coupe pas entre deux colonnes étroites (mobile) */
   .resultats td { padding: .7rem 0; border-bottom: 1px solid var(--line); vertical-align: baseline; }
   .resultats td.lbl { color: var(--muted); font-size: .9rem; width: 34%; }
   .resultats td strong { font-family: var(--serif); font-weight: 600; font-size: 1.9rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -1310,7 +1311,7 @@
   function ligneTotal(r) {
     const pr = proRetenu() || { a: 0, b: 0, zeroA: true, zeroB: true };
     const cel = (maison, pro, zero) => `<td><strong>${maison + pro} h</strong><small>par semaine, ${zero
-      ? `travail payé à 0 h, <a href="#pro" class="a-indiquer-lien">à indiquer</a>` : `dont ${pro} h de travail payé`}</small></td>`;
+      ? `travail payé à 0\u00a0h, <a href="#pro" class="a-indiquer-lien">à indiquer</a>` : `dont ${pro} h de travail payé`}</small></td>`;
     return `<td class="lbl">Avec le travail payé</td>${cel(Math.round(quart(r.a.h) * 7), pr.a, pr.zeroA)}${cel(Math.round(quart(r.b.h) * 7), pr.b, pr.zeroB)}`;
   }
   function renderResults(r) {
