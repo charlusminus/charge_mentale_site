@@ -46,6 +46,19 @@ for (const [fr, en] of [...R].sort((a, b) => b[0].length - a[0].length)) {
 // Chemins : la page vit dans en/ ; les ressources communes restent à la racine.
 s = s.replace(/(["'(])(fonts\/|img\/|manifest\.webmanifest|favicon\.ico|mesure\.js|reperes\.js)/g, "$1../$2");
 s = s.replace(/(["'])catalogue\.js/g, "$1../catalogue-en.js");
+// Blog anglais (10/11/2026) : les cartes des derniers articles anglais (générées par blog/build.py du dépôt privé dans
+// i18n/blog-cartes-en.html) remplacent le bloc du blog français ; le renvoi « Avant d'en parler » pointe vers l'article anglais.
+const fCartes = path.join(RACINE, "i18n", "blog-cartes-en.html");
+const cartes = fs.existsSync(fCartes) ? fs.readFileSync(fCartes, "utf8").trim() : "";
+s = s.replace("<!-- en:blog -->", cartes ? `<section class="blog-accueil" id="blog-accueil" aria-labelledby="blog-titre">
+      <h2 id="blog-titre">Further reading</h2>
+      <p class="muted">What the surveys say, and how to talk about it together without it turning into a trial.</p>
+      <ul class="blog-cartes">
+${cartes}
+      </ul>
+      <p><a class="btn secondary" href="blog/">All blog articles</a></p>
+    </section>` : "");
+s = s.replace("<!-- en:parler -->", cartes ? `<p class="parler"><strong>Before you talk it over.</strong> A method for one evening, tried at home and with friends: <a href="blog/talking-about-chores-without-a-row.html?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=parler">how to talk about sharing chores without a row</a>.</p>` : "");
 fs.mkdirSync(path.join(RACINE, "en"), { recursive: true });
 fs.writeFileSync(path.join(RACINE, "en", "index.html"), s);
 
