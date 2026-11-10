@@ -7,6 +7,7 @@ Pour afficher le résultat, une copie anonymisée des réponses (sans prénoms n
 ## English version
 - [Who thinks of it?](https://quiypense.org/en/) : the same free tool in British English (no sign-up, no ads). For each household task, who does it and who thinks of it; results computed in the browser, an anonymised copy (no names, no IP) goes to the study.
 - [Privacy](https://quiypense.org/en/privacy/) and [Terms](https://quiypense.org/en/terms/)
+- MCP server, same endpoint (https://quiypense-mcp.quiypense-mcp.workers.dev/mcp): pass `langue: "en"` to lister_taches, calculer_resultat and afficher_questionnaire for British English tasks, results and a link to /en/.
 
 ## Pour les assistants IA
 Serveur MCP (Streamable HTTP, sans inscription) : https://quiypense-mcp.quiypense-mcp.workers.dev/mcp
