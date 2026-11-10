@@ -310,6 +310,9 @@
   .comparer .puce.off { color: var(--muted); border-style: dashed; background: transparent; }
   .comparer button.puce { cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
   .comparer .puce-age { padding: 0 .4rem; }
+  .comparer .carte-vide { border-style: dashed; background: transparent; }
+  .comparer .carte-vide .phrase { margin-bottom: 0; }
+  .comparer button.lien { border: 0; background: none; padding: 0; font: inherit; font-weight: 600; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
   .comparer .puce-age select { border: 0; background: transparent; font: inherit; font-size: inherit; color: inherit; padding: .35rem .2rem; cursor: pointer; }
   .comparer .carte { background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem 1.1rem; margin-top: 1rem; }
   .comparer .carte h4 { margin: 0; font-size: 1rem; font-weight: 600; }
@@ -1428,6 +1431,17 @@
         ${legende ? `<div class="legende"><span><i style="background:var(--c)"></i>votre tranche</span><span><i style="background:#B9AA92"></i>la moitié des couples du milieu</span><span><i style="background:var(--line)"></i>les autres</span></div>` : ""}
         <p class="phrase">Chez la moitié de ces couples, elle en ${verbe} entre <b>${q1}</b> et <b>${q3}\u00a0%</b>. Chez vous, <b>${v}\u00a0%</b>.</p></div>`;
     };
+    // Troisième repère (10/11/2026) : part du temps total, travail payé par semaine plus maison (heures par jour x 7),
+    // seulement quand les heures de travail sont indiquées ; sinon une carte vide qui renvoie à la saisie.
+    let totalCarte = "";
+    if (g.total) {
+      const titreT = "Part du temps total, travail payé compris, fait par";
+      if (pr) {
+        const tf = pf + 7 * r[elle].h, th = ph + 7 * r[elle === "a" ? "b" : "a"].h;
+        if (tf + th > 0) totalCarte = carte(titreT, Math.round(100 * tf / (tf + th)), g.total, "fait", false);
+      } else totalCarte = `<div class="carte carte-vide"><h4>${titreT} <span class="${cls}">${nom}</span></h4>
+        <p class="phrase">Le travail payé compte aussi. <button type="button" class="lien" data-aller="pro">Indiquer les heures de travail</button> pour vous situer parmi les ${g.total.n.toLocaleString("fr-FR")} couples qui l'ont fait.</p></div>`;
+    }
     box.style.setProperty("--c", `var(--${elle})`);
     box.innerHTML = `<h3>Et les autres couples ?</h3>
       <p class="muted">Votre résultat, à côté de ceux des couples qui vous ressemblent. Un repère pour en parler, pas une note.</p>
@@ -1435,12 +1449,12 @@
       <p class="small muted">${g.n.toLocaleString("fr-FR")} couples comparables ont fait le point.${note}</p>
       ${carte("Part de la charge mentale portée par", tete, g.tete, "porte", true)}
       ${carte("Part du temps à la maison fait par", temps, g.temps, "fait", false)}
+      ${totalCarte}
       <p class="small muted">Repères calculés à partir des copies anonymisées de l'étude, mis à jour chaque semaine (dernière mise à jour : ${new Date(R.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}). Ils sont déjà dans la page : rien de plus ne part de votre navigateur.</p>`;
     box.querySelectorAll("[data-par]").forEach(b => b.addEventListener("click", () => { cmpPar = b.dataset.par; renderComparer(r); }));
     const sa = box.querySelector("[data-age-cmp]");
     if (sa) sa.addEventListener("change", () => { cmpAge = sa.value; cmpPar = "age"; renderComparer(r); });
-    const aller = box.querySelector("[data-aller=pro]");
-    if (aller) aller.addEventListener("click", () => document.getElementById("pro").scrollIntoView({ behavior: "smooth", block: "start" }));
+    box.querySelectorAll("[data-aller=pro]").forEach(aller => aller.addEventListener("click", () => document.getElementById("pro").scrollIntoView({ behavior: "smooth", block: "start" })));
   }
 
   // Travail rémunéré (demande du 13/10/2026, après les commentaires « et le travail ? ») : facultatif,
