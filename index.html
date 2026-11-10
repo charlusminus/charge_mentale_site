@@ -318,9 +318,10 @@
   .comparer .barres i { flex: 1; background: var(--line); border-radius: 3px 3px 0 0; min-height: 1px; }
   .comparer .barres i.mil { background: #B9AA92; }
   .comparer .barres i.ici { background: var(--c, var(--a)); }
-  .comparer .vous { position: absolute; top: -1.6rem; bottom: 0; border-left: 2px dashed var(--border); z-index: 0; }
-  .comparer .vous span { position: absolute; top: -.15rem; left: 6px; white-space: nowrap; font-weight: 700; color: var(--c, var(--a)); font-size: .9rem; }
-  .comparer .vous.droite span { left: auto; right: 6px; }
+  .comparer .vous { position: absolute; top: 0; bottom: 0; border-left: 2px dashed var(--border); z-index: 0; }
+  .comparer .vous span { position: absolute; bottom: 100%; left: 0; transform: translateX(-50%); padding-bottom: .2rem; white-space: nowrap; font-weight: 700; color: var(--c, var(--a)); font-size: .9rem; }
+  .comparer .vous.gauche span { transform: translateX(-.7rem); }
+  .comparer .vous.droite span { transform: translateX(calc(-100% + .7rem)); }
   .comparer .axe { display: flex; justify-content: space-between; font-size: .78rem; color: var(--muted); border-top: 1.5px solid var(--ink); padding-top: .3rem; }
   .comparer .legende { display: flex; gap: .4rem 1rem; flex-wrap: wrap; font-size: .8rem; color: var(--muted); margin-top: .5rem; }
   .comparer .legende i { display: inline-block; width: .8rem; height: .8rem; border-radius: 2px; margin-right: .35rem; vertical-align: -1px; }
@@ -1422,7 +1423,7 @@
       const barres = res.hist.map((n, i) => { const c = i * 10 + 5; return `<i class="${i === ici ? "ici" : (c >= q1 && c <= q3 ? "mil" : "")}" style="height:${Math.round(100 * n / max)}%"></i>`; }).join("");
       return `<div class="carte"><h4>${titre} <span class="${cls}">${nom}</span></h4>
         <div class="graphe" role="img" aria-label="${nom} : ${v} %. Chez la moitié de ces couples, entre ${q1} et ${q3} %."><div class="barres">${barres}</div>
-        <div class="vous${v > 62 ? " droite" : ""}" style="left:${v}%"><span>${nom}, ${v}\u00a0%</span></div></div>
+        <div class="vous${v < 15 ? " gauche" : v > 85 ? " droite" : ""}" style="left:${v}%"><span>${nom}, ${v}\u00a0%</span></div></div>
         <div class="axe"><span>0\u00a0%</span><span>à parts égales</span><span>100\u00a0%</span></div>
         ${legende ? `<div class="legende"><span><i style="background:var(--c)"></i>votre tranche</span><span><i style="background:#B9AA92"></i>la moitié des couples du milieu</span><span><i style="background:var(--line)"></i>les autres</span></div>` : ""}
         <p class="phrase">Chez la moitié de ces couples, elle en ${verbe} entre <b>${q1}</b> et <b>${q3}\u00a0%</b>. Chez vous, <b>${v}\u00a0%</b>.</p></div>`;
