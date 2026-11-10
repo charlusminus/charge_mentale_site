@@ -38,7 +38,7 @@ fs.writeFileSync(path.join(RACINE, "catalogue-en.js"), "window.CATALOGUE = " + J
 let s = lire("index.html");
 // Blocs propres au site français (blog, articles) : retirés de la version anglaise.
 s = s.replace(/<!-- en:retirer -->[\s\S]*?<!-- \/en:retirer -->/g, "");
-const R = JSON.parse(lire("i18n/en.json")).remplacements;
+const I18N = JSON.parse(lire("i18n/en.json")), R = I18N.remplacements, IGNORER = I18N.ignorer || [];
 for (const [fr, en] of [...R].sort((a, b) => b[0].length - a[0].length)) {
   if (!s.includes(fr)) { alertes.push(`introuvable : ${fr.slice(0, 90)}`); continue; }
   s = s.split(fr).join(en);
@@ -61,6 +61,8 @@ lignes.forEach((l, i) => {
     .concat([...l.matchAll(/(?:"|`)([^"`]{6,})(?:"|`)/g)].map(m => m[1]))
     .concat([...l.matchAll(/(?:aria-label|title|alt|placeholder|content)="([^"]+)"/g)].map(m => m[1]));
   for (const m of morceaux) {
+    if (/^[a-z0-9_-]+$/.test(m.trim())) continue;   // identifiant seul (id de tâche, classe CSS), jamais visible tel quel
+    if (IGNORER.some(x => m.trim() === x || m.trim().split(/\s+/).every(w => IGNORER.includes(w)) || (x.length > 8 && m.includes(x)))) continue;   // identifiants de code
     if (/^[\w\s.:#%-]*$/.test(m) && !MOTS.test(m)) continue;
     if (MOTS.test(m.replace(/https?:\/\/\S+/g, "").replace(/[\w-]+\.(js|html|css|png|svg)/g, ""))) { alertes.push(`français ? l.${i + 1} : ${m.trim().slice(0, 90)}`); break; }
   }
