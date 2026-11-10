@@ -989,7 +989,7 @@
 </div></div>
 
 <script src="catalogue.js?v=20261108"></script>
-<script src="reperes.js?v=20261109"></script>
+<script src="reperes.js?v=20261110"></script>
 <script>
   // bouton collant « Faire le point » : visible dès que le formulaire est sorti de l'écran par le haut
   (function () {
@@ -1358,6 +1358,7 @@
   // l'axe est la part portée par elle. Aucun mot de classement, seulement la position du couple dans la répartition.
   const TRAVAIL = { "deux-tp": "Deux temps pleins", "lui-plus": "Lui, plus d'heures de travail", "elle-plus": "Elle, plus d'heures de travail", "proches": "Heures de travail proches" };
   const ENFANTS = ["Sans enfant", "Un enfant", "Deux enfants", "Trois enfants et plus"];
+  const AGES = { "-25": "Moins de 25 ans", "25-34": "25 à 34 ans", "35-44": "35 à 44 ans", "45-54": "45 à 54 ans", "55-64": "55 à 64 ans", "65+": "65 ans et plus" };
   // Heures de travail payé retenues pour l'affichage : si une seule personne en a indiqué, l'autre est prise à 0 h
   // (retour du 22/10/2026 : 16 h saisies d'un côté, rien de l'autre, et aucun total affiché). La copie de l'étude garde
   // la saisie brute, case vide comprise.
@@ -1396,13 +1397,19 @@
     const tete = Math.round(100 * r[elle].nPense / totP), temps = Math.round(100 * r[elle].h / totH);
     const e = Math.min(3, S.enfants || 0);
     const pr = proRetenu(), pf = pr ? (elle === "a" ? pr.a : pr.b) : null, ph = pr ? (elle === "a" ? pr.b : pr.a) : null, t = travailCat(pf, ph);
+    // Âge (10/11/2026) : celui d'elle, sinon de lui, saisi dans la fenêtre d'accord ; pris quand les heures de travail
+    // ne donnent pas de groupe. Pas d'activité ni de lieu : trop peu de couples par case.
+    const ageDe = k => (document.getElementById(`profil-age-${k}`) || {}).value || "";
+    const age = ageDe(elle) || ageDe(elle === "a" ? "b" : "a"), ka = AGES[age] ? `e${e}-a${age}` : null;
     let cle = `e${e}`, note = "";
     if (t && R.groupes[`e${e}-${t}`]) cle = `e${e}-${t}`;
-    else if (t) note = ` Avec les mêmes heures de travail, ils ne sont pas encore ${R.min} : la comparaison se fait sur le nombre d'enfants.`;
+    else if (ka && R.groupes[ka]) cle = ka;
+    if (t && cle !== `e${e}-${t}`) note = ` Avec les mêmes heures de travail, ils ne sont pas encore ${R.min} : la comparaison se fait sur le nombre d'enfants${cle === ka ? " et l'âge" : ""}.`;
     if (!R.groupes[cle]) { cle = "tous"; note = ` Pas encore ${R.min} couples avec le même nombre d'enfants : la comparaison se fait sur tous les couples.`; }
     const g = R.groupes[cle];
     const puces = [cle === "tous" ? `<span class="puce on">Tous les couples</span>` : `<span class="puce on">${ENFANTS[e]}</span>`, `<span class="puce on">Femme et homme</span>`];
-    if (cle.includes("-")) puces.push(`<span class="puce on">${TRAVAIL[t]}</span>`);
+    if (cle === ka) puces.push(`<span class="puce on">${AGES[age]}</span>`);
+    if (t && cle === `e${e}-${t}`) puces.push(`<span class="puce on">${TRAVAIL[t]}</span>`);
     else if (t) puces.push(`<span class="puce off">Mêmes heures de travail : pas encore assez de couples</span>`);
     else puces.push(`<button type="button" class="puce off" data-aller="pro">Heures de travail : à indiquer plus haut</button>`);
     const carte = (titre, v, res, verbe, legende) => {
