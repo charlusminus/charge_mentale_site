@@ -318,7 +318,6 @@
   .comparer .barres i { flex: 1; background: var(--line); border-radius: 3px 3px 0 0; min-height: 1px; }
   .comparer .barres i.mil { background: #B9AA92; }
   .comparer .barres i.ici { background: var(--c, var(--a)); }
-  .comparer .moitie { position: absolute; top: 0; bottom: 0; left: 50%; border-left: 1.5px dashed var(--border); }
   .comparer .vous { position: absolute; top: -1.6rem; bottom: 0; border-left: 2.5px solid var(--c, var(--a)); }
   .comparer .vous span { position: absolute; top: -.15rem; left: 6px; white-space: nowrap; font-weight: 700; color: var(--c, var(--a)); font-size: .9rem; }
   .comparer .vous.droite span { left: auto; right: 6px; }
@@ -1422,7 +1421,7 @@
       const max = Math.max(...res.hist, 1), ici = Math.min(9, Math.floor(v / 10)), [q1, , q3] = res.q;
       const barres = res.hist.map((n, i) => { const c = i * 10 + 5; return `<i class="${i === ici ? "ici" : (c >= q1 && c <= q3 ? "mil" : "")}" style="height:${Math.round(100 * n / max)}%"></i>`; }).join("");
       return `<div class="carte"><h4>${titre} <span class="${cls}">${nom}</span></h4>
-        <div class="graphe" role="img" aria-label="${nom} : ${v} %. Chez la moitié de ces couples, entre ${q1} et ${q3} %."><div class="barres">${barres}</div><div class="moitie"></div>
+        <div class="graphe" role="img" aria-label="${nom} : ${v} %. Chez la moitié de ces couples, entre ${q1} et ${q3} %."><div class="barres">${barres}</div>
         <div class="vous${v > 62 ? " droite" : ""}" style="left:${v}%"><span>${nom}, ${v}\u00a0%</span></div></div>
         <div class="axe"><span>0\u00a0%</span><span>à parts égales</span><span>100\u00a0%</span></div>
         ${legende ? `<div class="legende"><span><i style="background:var(--c)"></i>votre tranche</span><span><i style="background:#B9AA92"></i>la moitié des couples du milieu</span><span><i style="background:var(--line)"></i>les autres</span></div>` : ""}
