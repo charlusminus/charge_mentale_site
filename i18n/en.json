@@ -1658,6 +1658,18 @@
   [
    "<span></span><span class=\"h\">S'en occupe</span><span class=\"h\">Y pense</span>\n        <span>Selon ${p1}</span>${cel(a.fait, b.fait)}${cel(penseOf(a), penseOf(b))}<span>Selon ${p2}</span>",
    "<span></span><span class=\"h\">Does it</span><span class=\"h\">Thinks of it</span>\n        <span>According to ${p1}</span>${cel(a.fait, b.fait)}${cel(penseOf(a), penseOf(b))}<span>According to ${p2}</span>"
+  ],
+  [
+   "barre.textContent = \"Partager à ma moitié\"; barreTxt.textContent = \"Ce résultat se lit à deux.\"; };",
+   "barre.textContent = \"Share with my other half\"; barreTxt.textContent = \"This result is best read together.\"; };"
+  ],
+  [
+   "<button type=\"button\" class=\"lien-envoi\" id=\"cmp-envoi\">ou lui envoyer directement votre résultat</button>`;",
+   "<button type=\"button\" class=\"lien-envoi\" id=\"cmp-envoi\">or simply send them your result</button>`;"
+  ],
+  [
+   "barre.textContent = `Inviter ${autre}`; barreTxt.textContent = `Et selon ${autre} ?`;",
+   "barre.textContent = `Invite ${autre}`; barreTxt.textContent = `And according to ${autre}?`;"
   ]
  ]
 }
