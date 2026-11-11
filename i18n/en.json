@@ -23,7 +23,8 @@
   "semaine",
   "vous${v",
   "vous${v < 15 ?",
-  "${semaine(x.h)}"
+  "${semaine(x.h)}",
+  "; try { qui = sessionStorage.getItem("
  ],
  "remplacements": [
   [
@@ -1581,6 +1582,82 @@
   [
    "<p>Y penser, c'est aussi devoir demander ou rappeler : si l'un sort les poubelles mais que l'autre doit le lui rappeler, c'est l'autre qui y pense. Les tâches vont de la plus fréquente à la plus rare : la maison, l'extérieur et les véhicules sont en fin de liste.</p>",
    "<p>Thinking of it also means having to ask or remind: if one of you takes the bins out but the other has to remind them, it is the other who thinks of it. Tasks go from the most frequent to the rarest: the house, outdoors and vehicles are at the end of the list.</p>"
+  ],
+  [
+   "<strong>Ensemble, tâche par tâche.</strong> Seulement celles où vos réponses différaient : pour chacune, mettez-vous d'accord, puis répondez.",
+   "<strong>Together, task by task.</strong> Only the ones where your answers differed: for each one, agree between you, then answer."
+  ],
+  [
+   "<strong>${p1} a fait le point de son côté.</strong> À vous maintenant : répondez sans regarder ses réponses. Vous comparerez vos deux regards à la fin.",
+   "<strong>${p1} has taken stock on their own.</strong> Your turn now: answer without looking at their answers. You will compare your two views at the end."
+  ],
+  [
+   "const fait = k => k === \"other\" ? \"quelqu'un d'autre s'en occupe\" : k === \"both\" ? \"les deux s'en occupent\" : `${label(k)} s'en occupe`;",
+   "const fait = k => k === \"other\" ? \"someone else does it\" : k === \"both\" ? \"both do it\" : `${label(k)} does it`;"
+  ],
+  [
+   "const pense = k => k === \"other\" ? \"quelqu'un d'autre y pense\" : k === \"both\" ? \"les deux y pensent\" : `${label(k)} y pense`;",
+   "const pense = k => k === \"other\" ? \"someone else thinks of it\" : k === \"both\" ? \"both think of it\" : `${label(k)} thinks of it`;"
+  ],
+  [
+   "<h3>Et selon ${autre} ?</h3><p>Chacun voit d'abord ce qu'il fait. Envoyez le questionnaire à ${autre} : ${autre} répond de son côté, sans voir vos réponses, et vous comparez vos deux regards à la fin.</p>",
+   "<h3>And according to ${autre}?</h3><p>Each of us sees what we do first. Send the questionnaire to ${autre}: ${autre} answers on their own, without seeing your answers, and you compare your two views at the end.</p>"
+  ],
+  [
+   "id=\"cmp-inviter\">Inviter ${autre} à répondre</button>",
+   "id=\"cmp-inviter\">Invite ${autre} to answer</button>"
+  ],
+  [
+   "text: \"À ton tour de répondre, de ton côté. On compare après.\"",
+   "text: \"Your turn to answer, on your own. We compare afterwards.\""
+  ],
+  [
+   "ok.textContent = `Lien copié : envoyez-le à ${autre}.`;",
+   "ok.textContent = `Link copied: send it to ${autre}.`;"
+  ],
+  [
+   "<h3>Votre version commune</h3><p>Vous aviez répondu chacun de votre côté, puis vous vous êtes mis d'accord sur les ${diff.length} tâches où vos réponses différaient. Le résultat ci-dessous est le vôtre, à deux.</p>",
+   "<h3>Your shared version</h3><p>You each answered on your own, then agreed on the ${diff.length} tasks where your answers differed. The result below is yours, together.</p>"
+  ],
+  [
+   "${bloc(\"La charge mentale, les choses à garder en tête\", \"q\")}${bloc(\"Le temps à faire\", \"h\")}`;\n      return;",
+   "${bloc(\"The mental load, the things to keep in mind\", \"q\")}${bloc(\"Time spent doing\", \"h\")}`;\n      return;"
+  ],
+  [
+   "<h3>Vos deux regards</h3><p>${p1} et ${p2} ont répondu chacun de leur côté. Personne ne ment : chacun voit d'abord ce qu'il fait, et une partie de ce que fait l'autre.</p>\n      ${bloc(\"La charge mentale, les choses à garder en tête\", \"q\")}${bloc(\"Le temps à faire\", \"h\")}",
+   "<h3>Your two views</h3><p>${p1} and ${p2} each answered on their own. Nobody is lying: each of us sees what we do first, and only part of what the other does.</p>\n      ${bloc(\"The mental load, the things to keep in mind\", \"q\")}${bloc(\"Time spent doing\", \"h\")}"
+  ],
+  [
+   "<p class=\"cmp-accord\">Vous êtes d'accord sur ${tous - diff.length} tâches sur ${tous}.</p>",
+   "<p class=\"cmp-accord\">You agree on ${tous - diff.length} tasks out of ${tous}.</p>"
+  ],
+  [
+   "Les ${diff.length} autres, de la plus longue à la plus courte : c'est par elles que la conversation est la plus utile.",
+   "The other ${diff.length}, from the longest to the shortest: these are where talking it over helps most."
+  ],
+  [
+   "<summary>Voir les ${diff.length - 6} autres</summary>",
+   "<summary>See the other ${diff.length - 6}</summary>"
+  ],
+  [
+   "<p class=\"suite\">Le résultat ci-dessous est celui de ${p2}. Pour obtenir le vôtre, à deux, reprenez ensemble ces ${diff.length} tâches, et seulement elles.</p>",
+   "<p class=\"suite\">The result below is ${p2}'s. To get yours, together, go through these ${diff.length} tasks together, and only these.</p>"
+  ],
+  [
+   "id=\"cmp-ensemble\">Faire le point ensemble sur ces ${diff.length} tâches</button>",
+   "id=\"cmp-ensemble\">Take stock together on these ${diff.length} tasks</button>"
+  ],
+  [
+   "<p class=\"suite\">Vous voyez les choses de la même façon : le résultat ci-dessous est le vôtre.</p>",
+   "<p class=\"suite\">You see things the same way: the result below is yours.</p>"
+  ],
+  [
+   "<span>Selon ${p1}</span>${bar(part(r1, k))}</div><div class=\"ligne\"><span>Selon ${p2}</span>${bar(part(r2, k))}</div>${commune ? `<div class=\"ligne\"><span><strong>Ensemble</strong></span>",
+   "<span>According to ${p1}</span>${bar(part(r1, k))}</div><div class=\"ligne\"><span>According to ${p2}</span>${bar(part(r2, k))}</div>${commune ? `<div class=\"ligne\"><span><strong>Together</strong></span>"
+  ],
+  [
+   "<span></span><span class=\"h\">S'en occupe</span><span class=\"h\">Y pense</span>\n        <span>Selon ${p1}</span>${cel(a.fait, b.fait)}${cel(penseOf(a), penseOf(b))}<span>Selon ${p2}</span>",
+   "<span></span><span class=\"h\">Does it</span><span class=\"h\">Thinks of it</span>\n        <span>According to ${p1}</span>${cel(a.fait, b.fait)}${cel(penseOf(a), penseOf(b))}<span>According to ${p2}</span>"
   ]
  ]
 }
