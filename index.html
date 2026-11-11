@@ -194,6 +194,8 @@
   .cmp-invite h3 { font-family: var(--serif); font-weight: 500; font-size: 1.3rem; margin: 0 0 .3rem; }
   .cmp-invite p { margin: 0 0 .9rem; color: var(--muted); }
   .cmp-invite .ok { margin: .6rem 0 0; font-size: .88rem; color: var(--ink); }
+  .cmp-invite .lien-envoi { display: block; margin: .9rem 0 0; padding: 0; border: 0; background: none; font: inherit; font-size: .92rem; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .envoi[hidden] { display: none; }
   .cmp { margin: 0 0 2rem; padding: 1.3rem 1.4rem; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; }
   .cmp h3 { font-family: var(--serif); font-weight: 500; font-size: 1.5rem; margin: 0 0 .3rem; }
   .cmp > p { margin: 0 0 1rem; color: var(--muted); }
@@ -932,7 +934,7 @@
         <div class="pro-txt" id="pro-txt"></div>
       </div>
       <div class="reeq" id="reeq" hidden></div>
-      <div class="envoi">
+      <div class="envoi" id="envoi-bloc">
         <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce résultat à l'autre</button>
         <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce résultat.</p>
       </div>
@@ -1648,14 +1650,22 @@
   function cap(x) { return x.charAt(0).toUpperCase() + x.slice(1); }
   function renderCmp(rCour) {
     const inv = document.getElementById("cmp-invite"), box = document.getElementById("cmp");
+    const envoiBloc = document.getElementById("envoi-bloc"), barre = document.getElementById("barre-envoyer");
+    // Un seul appel à l'action (retour du 11/11/2026) : si l'invitation est proposée, elle remplace « Envoyer ce résultat »
+    // (devenu un lien secondaire) et la barre collante l'ouvre ; sinon, l'envoi du résultat reste l'action principale.
+    const barreTxt = document.querySelector("#barre-partage .texte");
+    const actionEnvoi = () => { envoiBloc.hidden = false; barre.dataset.mode = ""; barre.textContent = "Partager à ma moitié"; barreTxt.textContent = "Ce résultat se lit à deux."; };
     let qui = ""; try { qui = sessionStorage.getItem("saisie") || ""; } catch (e) {}
     if (!S.cmp) {
       box.hidden = true;
-      if (qui === "2") { inv.hidden = true; return; }   // rempli à deux : rien à comparer
+      if (qui === "2") { inv.hidden = true; actionEnvoi(); return; }   // rempli à deux : rien à comparer
       const moi = qui === "b" ? "b" : "a", autre = moi === "a" ? nomB() : nomA();
       inv.hidden = false;
       inv.innerHTML = `<h3>Et selon ${autre} ?</h3><p>Chacun voit d'abord ce qu'il fait. Envoyez le questionnaire à ${autre} : ${autre} répond de son côté, sans voir vos réponses, et vous comparez vos deux regards à la fin.</p>
-        <button class="btn" type="button" id="cmp-inviter">Inviter ${autre} à répondre</button><p class="ok" id="cmp-ok" hidden></p>`;
+        <button class="btn" type="button" id="cmp-inviter">Inviter ${autre} à répondre</button><p class="ok" id="cmp-ok" hidden></p>
+        <button type="button" class="lien-envoi" id="cmp-envoi">ou lui envoyer directement votre résultat</button>`;
+      envoiBloc.hidden = true; barre.dataset.mode = "inviter"; barre.textContent = `Inviter ${autre}`; barreTxt.textContent = `Et selon ${autre} ?`;
+      inv.querySelector("#cmp-envoi").addEventListener("click", () => document.getElementById("envoyer").click());
       inv.querySelector("#cmp-inviter").addEventListener("click", async () => {
         const url = location.origin + location.pathname + "?comparer=" + moi + "#" + encode(), ok = inv.querySelector("#cmp-ok");
         if (window.__ga) gtag("event", "comparer_invite");
@@ -1665,7 +1675,7 @@
       });
       return;
     }
-    inv.hidden = true;
+    inv.hidden = true; actionEnvoi();
     const p1 = S.cmp.par === "a" ? nomA() : nomB(), p2 = S.cmp.par === "a" ? nomB() : nomA();
     const repA = reponsesDe(S.cmp.rep), repB = S.cmp.repB ? reponsesDe(S.cmp.repB) : S.t;
     const r1 = computeAvec(repA), r2 = S.cmp.repB ? computeAvec(repB) : rCour;
@@ -2228,7 +2238,11 @@
     const m = document.getElementById("envoi");
     const ouvrir = origine => { ouvrirModale(m, m.querySelector(".rs a")); if (window.__ga) gtag("event", "envoi_ouvert", { origine }); };
     document.getElementById("envoyer").addEventListener("click", () => ouvrir("resultat"));
-    document.getElementById("barre-envoyer").addEventListener("click", () => ouvrir("bandeau"));   // bandeau collant, 26/09/2026
+    // Un seul appel à l'action (11/11/2026) : tant que l'invitation « chacun de son côté » est proposée, la barre collante l'ouvre.
+    document.getElementById("barre-envoyer").addEventListener("click", e => {
+      if (e.currentTarget.dataset.mode === "inviter") { const b = document.getElementById("cmp-inviter"); if (b) { b.click(); return; } }
+      ouvrir("bandeau");
+    });   // bandeau collant, 26/09/2026
     document.getElementById("envoi-fermer").addEventListener("click", () => fermerModale(m));
     m.addEventListener("click", e => { if (e.target === m) fermerModale(m); });
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });
