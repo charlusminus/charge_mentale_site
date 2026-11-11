@@ -247,11 +247,6 @@
   /* étape 2 */
   section { padding: 36px 0 0; }
   .etape { color: var(--muted); font-size: .85rem; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .6rem; }
-  .legende { margin: 1rem 0 0; font-size: .92rem; }
-  .legende summary { cursor: pointer; color: var(--muted); }
-  .legende dl { display: grid; grid-template-columns: auto 1fr; gap: .3rem 1rem; margin: .6rem 0 0; padding: .9rem 1.1rem; background: var(--bg-2); border-radius: var(--r); }
-  .legende dt { font-weight: 600; white-space: nowrap; }
-  .legende dd { margin: 0; }
   .categorie { margin-top: 2rem; }
   .categorie h3 { padding-bottom: .4rem; border-bottom: 1.5px solid var(--ink); }
   /* colonnes : libellé | 5 cases « s'en occupe » | espace | 4 cases « y pense » */
@@ -401,9 +396,12 @@
   .src-btn { color: inherit; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px; }
   .src-btn .i { display: inline-grid; place-items: center; width: 1.1rem; height: 1.1rem; margin-left: .3rem; vertical-align: .05em; border: 1.5px solid var(--border); border-radius: 50%; font-size: .68rem; font-weight: 700; font-style: italic; font-family: var(--serif); }
   .src-btn[aria-expanded="true"] .i { background: var(--ink); border-color: var(--ink); color: var(--bg); }
-  .sources-durees { margin: -.4rem 0 1rem; }
-  .sources-durees[hidden] { display: none; }
-  .sources-durees p { margin: 0; padding: .8rem 1rem; max-width: 64ch; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); box-shadow: 0 6px 18px rgba(42,33,24,.08); font-size: .88rem; color: var(--ink); }
+  .bulle-info { margin: -.4rem 0 1rem; padding: .8rem 1rem; max-width: 64ch; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); box-shadow: 0 6px 18px rgba(42,33,24,.08); font-size: .88rem; color: var(--ink); }
+  .bulle-info[hidden] { display: none; }
+  .bulle-info p { margin: 0; }
+  .bulle-info dl { display: grid; grid-template-columns: auto 1fr; gap: .3rem 1rem; margin: .7rem 0 0; }
+  .bulle-info dt { font-weight: 600; white-space: nowrap; }
+  .bulle-info dd { margin: 0; }
   /* affinage du temps */
   .affiner { margin-top: 2.4rem; }
   .affiner table { width: 100%; border-collapse: collapse; font-size: .9rem; margin-top: .6rem; }
@@ -618,7 +616,7 @@
     .case { width: 30px; height: 30px; }
     .barre { grid-template-columns: 1fr 56px; gap: .2rem .6rem; }
     .barre > span:first-child { grid-column: 1 / -1; }
-    .legende dl { grid-template-columns: 1fr; }
+    .bulle-info dl { grid-template-columns: 1fr; }
     /* « Affinez le résultat » sur mobile : plus de tableau à colonnes (trop étroit, champs tronqués). Chaque tâche se lit
        sur trois lignes : le nom et le total par jour ; « faite [2] fois par [semaine] pendant [90] min » ; qui s'en
        occupe et qui y pense. La description passe derrière un (i). */
@@ -674,7 +672,7 @@
   .pap-mode { display: inline-flex; border: 1.5px solid var(--border); border-radius: var(--r); overflow: hidden; margin: .4rem 0 1.2rem; }
   .pap-mode button { border: 0; background: transparent; padding: .5rem .9rem; font: inherit; font-size: .88rem; color: var(--muted); cursor: pointer; }
   .pap-mode button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
-  #e2.un > section > p.muted, #e2.un > section > .legende { display: none; }
+  #e2.un .intro-liste, #e2.un #aide-questions { display: none; }
   #e2.un:not(.fin) .pro-saisie, #e2.un:not(.fin) .nav { display: none; }
   .pap { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); padding: 28px 32px 24px; min-height: 430px; display: flex; flex-direction: column; }
   .pap-haut { display: flex; justify-content: space-between; gap: 1rem; font-size: .82rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
@@ -866,16 +864,16 @@
   <div class="ecran" id="e2">
     <section>
       <h2>Who thinks of it?</h2>
-      <p class="muted">For each task, two questions: on the left, who does it; on the right, who thinks of it. Thinking of it also means having to ask or remind: if one of you takes the bins out but the other has to remind them, it is the other who thinks of it. One click on the left is enough, the right follows; only change it if it is different.</p>
-      <p class="muted">Tasks go from the most frequent to the rarest, with default durations already suggested: go all the way to the end (the house, outdoors and vehicles are at the end of the list). You can fine-tune durations and answers afterwards, below the result.</p>
-      <details class="legende"><summary>The four answers, and what ‘thinks of it’ means</summary>
-        <dl>
+      <p class="muted intro-liste">For each task: on the left, who does it; on the right, <a href="#aide-questions" class="src-btn" role="button" aria-expanded="false" aria-controls="aide-questions">who thinks of it<span class="i" aria-hidden="true">i</span></a>. One click on the left is enough, the right follows. Go all the way to the end: everything can be corrected below the result.</p>
+      <div class="bulle-info" id="aide-questions" hidden>
+        <p>Thinking of it also means having to ask or remind: if one of you takes the bins out but the other has to remind them, it is the other who thinks of it. Tasks go from the most frequent to the rarest: the house, outdoors and vehicles are at the end of the list.</p>
+          <dl>
           <dt>Name 1, Name 2</dt><dd>the person who does the task. This is what gives the hours.</dd>
           <dt>Both</dt><dd>in equal shares, or taking turns.</dd>
           <dt>Neither of us</dt><dd>someone else does it (home help, grandparents, childminder, children), or the task does not exist in your home. It does not count in the hours of either of you. If one of you still thinks of it, say so under ‘thinks of it’.</dd>
           <dt>Thinks of it</dt><dd>the person who notices it needs doing, plans, checks, and asks or reminds when the other one does it. The small ‘thinks of it’ row follows your answer: only change it if it really is someone else. This is the mental load, measured as the number of things to keep in mind.</dd>
         </dl>
-      </details>
+      </div>
       <div id="catalogue"></div>
       <div class="pro-saisie" id="pro-saisie">
         <h3>And paid work?</h3>
@@ -935,7 +933,7 @@
       <div class="affiner">
         <h2>Fine-tune the result</h2>
         <p class="muted">Everything can be corrected here, without going back to the list: who does it, who thinks of it, and the time. <a href="#sources-durees" class="src-btn" role="button" aria-expanded="false" aria-controls="sources-durees">The suggested values come from surveys on time spent on domestic work<span class="i" aria-hidden="true">i</span></a>. For each task: how many times a day, week, month or year, and how many minutes each time (not in total). The daily total recalculates itself. Example: shopping twice a week, 90 minutes each time, makes 26 minutes a day.</p>
-        <div class="sources-durees" id="sources-durees" hidden><p>The INSEE time-use survey in France (2010), which measures domestic time with diaries, and the Fair Play card deck (Eve Rodsky, 2019) for the tasks the diary does not capture. A couple with children who keeps all the default values totals about eight and a half hours a day, at the high end of what INSEE observes in France. The distinction between ‘thinking of it’ and ‘doing it’ comes from the work of Allison Daminger (2019): anticipating and checking is work, even when someone else carries it out.</p></div>
+        <div class="bulle-info" id="sources-durees" hidden><p>The INSEE time-use survey in France (2010), which measures domestic time with diaries, and the Fair Play card deck (Eve Rodsky, 2019) for the tasks the diary does not capture. A couple with children who keeps all the default values totals about eight and a half hours a day, at the high end of what INSEE observes in France. The distinction between ‘thinking of it’ and ‘doing it’ comes from the work of Allison Daminger (2019): anticipating and checking is work, even when someone else carries it out.</p></div>
         <p class="avert-5050"><strong>A word before you set everything to the minute.</strong> Chasing an exact balance line by line wears couples out as much as the imbalance itself. A gap is not a problem as long as it is chosen, talked about and reversible: an imbalance you choose is not an injustice.</p>
         <table id="table-affiner"></table>
       </div>
@@ -1831,16 +1829,17 @@
   }
   document.addEventListener("click", e => { if (!e.target.closest(".affiner .info")) fermerInfos(); });
   document.addEventListener("keydown", e => { if (e.key === "Escape") fermerInfos(); });
-  // Bulle des sources des durées (11/11/2026), ouverte depuis l'intro d'« Affinez le résultat » : un clic ailleurs ou Échap la referme.
-  (function () {
-    const btn = document.querySelector(".src-btn"), bulle = document.getElementById("sources-durees");
-    if (!btn || !bulle) return;
+  // Bulles d'aide (11/11/2026) : un lien .src-btn ouvre l'encadré nommé par aria-controls (sources des durées, aide des
+  // questions de l'étape 2) ; un clic ailleurs ou Échap le referme.
+  document.querySelectorAll(".src-btn").forEach(btn => {
+    const bulle = document.getElementById(btn.getAttribute("aria-controls"));
+    if (!bulle) return;
     const basculer = v => { bulle.hidden = !v; btn.setAttribute("aria-expanded", v ? "true" : "false"); };
     btn.addEventListener("click", e => { e.preventDefault(); basculer(bulle.hidden); });
     btn.addEventListener("keydown", e => { if (e.key === " ") { e.preventDefault(); basculer(bulle.hidden); } });
-    document.addEventListener("click", e => { if (!bulle.hidden && !e.target.closest(".src-btn, #sources-durees")) basculer(false); });
+    document.addEventListener("click", e => { if (!bulle.hidden && !btn.contains(e.target) && !bulle.contains(e.target)) basculer(false); });
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !bulle.hidden) { basculer(false); btn.focus(); } });
-  })();
+  });
 
   const affOuvertes = new Set();   // familles dépliées dans « Affinez le résultat », gardées d'un rendu à l'autre
   function renderAffiner() {
