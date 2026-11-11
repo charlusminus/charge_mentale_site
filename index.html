@@ -181,7 +181,8 @@
   .blog-cartes .desc { display: block; color: var(--muted); font-size: .95rem; }
   .demarrer { margin-top: 40px; padding: 32px; background: var(--bg-2); border-radius: var(--r); }
   .demarrer .nav { margin: 1.4rem 0 0; }
-  .dem-n { font-family: var(--sans); font-size: .8rem; font-weight: 400; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-left: .6rem; vertical-align: middle; }
+  .dem-n { font-family: var(--sans); font-size: .8rem; font-weight: 400; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-left: .6rem; vertical-align: middle; white-space: nowrap; }
+  @media (max-width: 640px) { .dem-n { display: block; margin: .4rem 0 0; } }   /* mobile : « 1 sur 2 » sous le titre, jamais coupé (retour du 11/11/2026) */
   .dem-titre { margin: .8rem 0 0; font-weight: 600; }
   .dem[hidden] { display: none; }
   /* bouton collant de l'accueil : apparaît quand le formulaire est passé au-dessus de l'écran, y ramène */
@@ -395,7 +396,13 @@
   .budget .budget-txt { margin-top: .9rem; max-width: 64ch; }
   .budget .budget-txt p { margin: .4rem 0 0; }
   .actions { margin-top: 1.6rem; display: flex; gap: .7rem; flex-wrap: wrap; }
-  .apropos { font-size: .9rem; color: var(--muted); max-width: 64ch; }
+  /* sources des durées : bulle à ouvrir dans « Affinez le résultat » (11/11/2026, avant : paragraphe en bas de page) */
+  .src-btn { color: inherit; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px; }
+  .src-btn .i { display: inline-grid; place-items: center; width: 1.1rem; height: 1.1rem; margin-left: .3rem; vertical-align: .05em; border: 1.5px solid var(--border); border-radius: 50%; font-size: .68rem; font-weight: 700; font-style: italic; font-family: var(--serif); }
+  .src-btn[aria-expanded="true"] .i { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .sources-durees { margin: -.4rem 0 1rem; }
+  .sources-durees[hidden] { display: none; }
+  .sources-durees p { margin: 0; padding: .8rem 1rem; max-width: 64ch; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); box-shadow: 0 6px 18px rgba(42,33,24,.08); font-size: .88rem; color: var(--ink); }
   /* affinage du temps */
   .affiner { margin-top: 2.4rem; }
   .affiner table { width: 100%; border-collapse: collapse; font-size: .9rem; margin-top: .6rem; }
@@ -921,10 +928,20 @@
       </div>
       <div class="affiner">
         <h2>Affinez le résultat</h2>
-        <p class="muted">Tout se corrige ici, sans revenir à la liste : qui s'en occupe, qui y pense, et le temps. Les valeurs proposées viennent d'enquêtes sur le temps domestique. Pour chaque tâche : combien de fois par jour, semaine, mois ou an, et combien de minutes à chaque fois (pas au total). Le total par jour se recalcule tout seul. Exemple : les courses 2 fois par semaine, 90 minutes à chaque fois, font 26 minutes par jour.</p>
+        <p class="muted">Tout se corrige ici, sans revenir à la liste : qui s'en occupe, qui y pense, et le temps. <a href="#sources-durees" class="src-btn" role="button" aria-expanded="false" aria-controls="sources-durees">Les valeurs proposées viennent d'enquêtes sur le temps domestique<span class="i" aria-hidden="true">i</span></a>. Pour chaque tâche : combien de fois par jour, semaine, mois ou an, et combien de minutes à chaque fois (pas au total). Le total par jour se recalcule tout seul. Exemple : les courses 2 fois par semaine, 90 minutes à chaque fois, font 26 minutes par jour.</p>
+        <div class="sources-durees" id="sources-durees" hidden><p>De l'enquête Emploi du temps de l'INSEE (2010), qui mesure le temps domestique au carnet, et du jeu de cartes Fair Play (Eve Rodsky, 2019) pour les tâches que le carnet ne voit pas. Un couple avec enfants qui garde toutes les valeurs par défaut totalise environ 8 heures et demie par jour, dans la fourchette haute de ce que l'INSEE observe. La distinction « y penser » et « s'en occuper » vient des travaux d'Allison Daminger (2019) : anticiper et vérifier, c'est du travail, même quand quelqu'un d'autre exécute.</p></div>
         <p class="avert-5050"><strong>Un mot avant de tout régler à la minute.</strong> Chercher l'équilibre exact ligne par ligne épuise les couples autant que le déséquilibre lui-même. Un écart n'est pas un problème tant qu'il est choisi, dit et réversible : <a href="blog/desequilibre-assume-couple.html?utm_source=quiypense&amp;utm_medium=compte&amp;utm_campaign=affiner" target="_blank" rel="noopener">un déséquilibre choisi n'est pas une injustice</a>.</p>
         <table id="table-affiner"></table>
       </div>
+
+      <section class="soutien" id="soutien" aria-labelledby="soutien-titre">
+        <h2 id="soutien-titre">Ce point vous a servi&nbsp;?</h2>
+        <p class="muted">Qui y pense&nbsp;? est gratuit, sans inscription ni publicité, et fait sur du temps libre. Un café aide à le garder en ligne et à préparer la suite&nbsp;: refaire le point dans six mois, une sauvegarde en ligne.</p>
+        <div class="soutien-actions">
+          <a class="bmc" id="soutien-cafe" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="resultat"><span class="bmc-emoji" aria-hidden="true">🙏</span><span>Soutenir</span></a>
+          <a href="soutenir/?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir">À quoi sert votre soutien</a>
+        </div>
+      </section>
 
       <div class="fin" id="fin">
         <h2>Et maintenant</h2>
@@ -942,15 +959,6 @@
         <div class="rs" data-partage="site"></div>
         <button class="btn secondary image-cta" type="button" id="image-ouvrir" aria-haspopup="dialog">Créer une image à partager</button>
       </div>
-      <section class="soutien" id="soutien" aria-labelledby="soutien-titre">
-        <h2 id="soutien-titre">Ce point vous a servi&nbsp;?</h2>
-        <p class="muted">Qui y pense&nbsp;? est gratuit, sans inscription ni publicité, et fait sur du temps libre. Un café aide à le garder en ligne et à préparer la suite&nbsp;: refaire le point dans six mois, une sauvegarde en ligne.</p>
-        <div class="soutien-actions">
-          <a class="bmc" id="soutien-cafe" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="resultat"><span class="bmc-emoji" aria-hidden="true">🙏</span><span>Soutenir</span></a>
-          <a href="soutenir/?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir">À quoi sert votre soutien</a>
-        </div>
-      </section>
-      <p class="apropos">D'où viennent les durées par défaut : de l'enquête Emploi du temps de l'INSEE (2010), qui mesure le temps domestique au carnet, et du jeu de cartes Fair Play (Eve Rodsky, 2019) pour les tâches que le carnet ne voit pas. Un couple avec enfants qui garde toutes les valeurs par défaut totalise environ 8 heures et demie par jour, dans la fourchette haute de ce que l'INSEE observe. La distinction « y penser » et « s'en occuper » vient des travaux d'Allison Daminger (2019) : anticiper et vérifier, c'est du travail, même quand quelqu'un d'autre exécute.</p>
     </section>
   </div>
 
@@ -1822,6 +1830,16 @@
   }
   document.addEventListener("click", e => { if (!e.target.closest(".affiner .info")) fermerInfos(); });
   document.addEventListener("keydown", e => { if (e.key === "Escape") fermerInfos(); });
+  // Bulle des sources des durées (11/11/2026), ouverte depuis l'intro d'« Affinez le résultat » : un clic ailleurs ou Échap la referme.
+  (function () {
+    const btn = document.querySelector(".src-btn"), bulle = document.getElementById("sources-durees");
+    if (!btn || !bulle) return;
+    const basculer = v => { bulle.hidden = !v; btn.setAttribute("aria-expanded", v ? "true" : "false"); };
+    btn.addEventListener("click", e => { e.preventDefault(); basculer(bulle.hidden); });
+    btn.addEventListener("keydown", e => { if (e.key === " ") { e.preventDefault(); basculer(bulle.hidden); } });
+    document.addEventListener("click", e => { if (!bulle.hidden && !e.target.closest(".src-btn, #sources-durees")) basculer(false); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !bulle.hidden) { basculer(false); btn.focus(); } });
+  })();
 
   const affOuvertes = new Set();   // familles dépliées dans « Affinez le résultat », gardées d'un rendu à l'autre
   function renderAffiner() {
