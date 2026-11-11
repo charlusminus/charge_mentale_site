@@ -185,6 +185,7 @@
   @media (max-width: 640px) { .dem-n { display: block; margin: .4rem 0 0; } }   /* mobile : « 1 sur 2 » sous le titre, jamais coupé (retour du 11/11/2026) */
   .dem-titre { margin: .8rem 0 0; font-weight: 600; }
   .dem[hidden] { display: none; }
+  #suiviBtn.cache { display: none; }
   /* bouton collant de l'accueil : apparaît quand le formulaire est passé au-dessus de l'écran, y ramène */
   .cta-collant { position: fixed; z-index: 30; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom)); transform: translate(-50%, 160%);
     opacity: 0; pointer-events: none; box-shadow: 0 6px 18px rgba(42, 33, 24, .22); transition: transform .25s ease, opacity .25s ease; }
@@ -1334,6 +1335,7 @@
     e2.classList.toggle("un", PAP.mode === "un");
     if (PAP.mode === "un") return renderUn(root);
     e2.classList.remove("fin");
+    document.getElementById("suiviBtn").classList.remove("cache");
     root.appendChild(modePap());
     const cats = visibleCats();
     const entete = document.createElement("div"); entete.className = "entete";
@@ -1464,6 +1466,9 @@
     const list = allTasks(), n = list.length, e2 = document.getElementById("e2");
     PAP.i = Math.max(0, Math.min(PAP.i, n));
     e2.classList.toggle("fin", PAP.i >= n);
+    // Retour du 11/11/2026 (accord de l'étude tombé de 98 % à 81 %) : en mode une tâche à la fois, « Voir le résultat »
+    // de la barre du bas n'apparaît qu'une fois toutes les tâches passées ; avant, on l'ouvrait en cours de route.
+    document.getElementById("suiviBtn").classList.toggle("cache", PAP.i < n);
     root.appendChild(modePap());
     const carte = document.createElement("div"); carte.className = "pap"; root.appendChild(carte);
     if (PAP.i >= n) {
