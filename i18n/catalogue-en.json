@@ -40,6 +40,7 @@
     "gouter-devoirs": { "nom": "After-school snack, homework, end of the day", "aide": "" },
     "bain": { "nom": "Do bath time and brush teeth", "aide": "" },
     "coucher": { "nom": "Put the children to bed", "aide": "" },
+    "bebe": { "nom": "Look after the baby", "aide": "breastfeeding or bottles, baby food, nappies and changing; ‘neither of us’ if there is no baby at home" },
     "nuits": { "nom": "Take care of the nights", "aide": "getting up for a child who wakes, a nightmare, a bottle, a poorly child" },
     "jouer": { "nom": "Play, go out, read with the children", "aide": "park, games, reading" },
     "garde": { "nom": "Look after the children", "aide": "after school, at weekends, in the evenings: being the one who is there" },
@@ -68,7 +69,8 @@
     "reparations": { "nom": "Repair, do the DIY, oversee the building work", "aide": "light bulb, leak, furniture, painting, tradespeople" },
     "plantes": { "nom": "Look after the plants, garden or balcony", "aide": "watering, mowing, pruning, weeding" },
     "voiture": { "nom": "Look after the vehicles", "aide": "fuel, MOT, service, tyres, washing, insurance, fines" },
-    "chauffage": { "nom": "Keep the house maintained", "aide": "heating and boiler, energy, chimney sweep, smoke alarms, keys, burglar alarm" },
+    "chauffage": { "nom": "Keep the house maintained", "aide": "heating and boiler, energy, chimney sweep, smoke alarms, keys, burglar alarm, swimming pool" },
+    "residence": { "nom": "Manage a second home or a rented property", "aide": "opening up and closing the house, upkeep, bills, tenants and check-in inventories; ‘neither of us’ if you don't have one" },
 
     "animal-quotidien": { "nom": "Feed and walk the pets", "aide": "bowls, litter tray, walks" },
     "animal-suivi": { "nom": "Keep track of the pets' health", "aide": "vet, vaccinations, treatments, care during the holidays" }

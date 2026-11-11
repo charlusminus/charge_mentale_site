@@ -1670,6 +1670,18 @@
   [
    "barre.textContent = `Inviter ${autre}`; barreTxt.textContent = `Et selon ${autre} ?`;",
    "barre.textContent = `Invite ${autre}`; barreTxt.textContent = `And according to ${autre}?`;"
+  ],
+  [
+   "<summary>Il manque quelque chose chez vous ? Ajoutez une tâche</summary>",
+   "<summary>Something missing in your home? Add a task</summary>"
+  ],
+  [
+   "<form><label>Famille<select>",
+   "<form><label>Family<select>"
+  ],
+  [
+   "<label>Tâche<input placeholder=\"Nom de la tâche\" maxlength=\"80\"></label><button type=\"submit\" class=\"btn secondary\">Ajouter</button></form></details>`}",
+   "<label>Task<input placeholder=\"Task name\" maxlength=\"80\"></label><button type=\"submit\" class=\"btn secondary\">Add</button></form></details>`}"
   ]
  ]
 }
