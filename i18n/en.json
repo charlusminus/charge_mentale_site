@@ -471,10 +471,6 @@
    "<h2>Fine-tune the result</h2>"
   ],
   [
-   "<p class=\"muted\">Tout se corrige ici, sans revenir à la liste : qui s'en occupe, qui y pense, et le temps. Les valeurs proposées viennent d'enquêtes sur le temps domestique. Pour chaque tâche : combien de fois par jour, semaine, mois ou an, et combien de minutes à chaque fois (pas au total). Le total par jour se recalcule tout seul. Exemple : les courses 2 fois par semaine, 90 minutes à chaque fois, font 26 minutes par jour.</p>",
-   "<p class=\"muted\">Everything can be corrected here, without going back to the list: who does it, who thinks of it, and the time. The suggested values come from surveys on time spent on domestic work. For each task: how many times a day, week, month or year, and how many minutes each time (not in total). The daily total recalculates itself. Example: shopping twice a week, 90 minutes each time, makes 26 minutes a day.</p>"
-  ],
-  [
    "<p class=\"avert-5050\"><strong>Un mot avant de tout régler à la minute.</strong> Chercher l'équilibre exact ligne par ligne épuise les couples autant que le déséquilibre lui-même. Un écart n'est pas un problème tant qu'il est choisi, dit et réversible : <a href=\"blog/desequilibre-assume-couple.html?utm_source=quiypense&amp;utm_medium=compte&amp;utm_campaign=affiner\" target=\"_blank\" rel=\"noopener\">un déséquilibre choisi n'est pas une injustice</a>.</p>",
    "<p class=\"avert-5050\"><strong>A word before you set everything to the minute.</strong> Chasing an exact balance line by line wears couples out as much as the imbalance itself. A gap is not a problem as long as it is chosen, talked about and reversible: an imbalance you choose is not an injustice.</p>"
   ],
@@ -529,10 +525,6 @@
   [
    "<a href=\"soutenir/?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir\">À quoi sert votre soutien</a>",
    ""
-  ],
-  [
-   "<p class=\"apropos\">D'où viennent les durées par défaut : de l'enquête Emploi du temps de l'INSEE (2010), qui mesure le temps domestique au carnet, et du jeu de cartes Fair Play (Eve Rodsky, 2019) pour les tâches que le carnet ne voit pas. Un couple avec enfants qui garde toutes les valeurs par défaut totalise environ 8 heures et demie par jour, dans la fourchette haute de ce que l'INSEE observe. La distinction « y penser » et « s'en occuper » vient des travaux d'Allison Daminger (2019) : anticiper et vérifier, c'est du travail, même quand quelqu'un d'autre exécute.</p>",
-   "<p class=\"apropos\">Where the default durations come from: the INSEE time-use survey in France (2010), which measures domestic time with diaries, and the Fair Play card deck (Eve Rodsky, 2019) for the tasks the diary does not capture. A couple with children who keeps all the default values totals about eight and a half hours a day, at the high end of what INSEE observes in France. The distinction between ‘thinking of it’ and ‘doing it’ comes from the work of Allison Daminger (2019): anticipating and checking is work, even when someone else carries it out.</p>"
   ],
   [
    "<nav class=\"pied-nav\" aria-label=\"Pied de page\"><a href=\"en/\" hreflang=\"en-GB\" lang=\"en-GB\">English</a><a href=\"blog/\">Blog</a><a href=\"presse/\">Presse</a><a href=\"charte/\">Charte</a><a href=\"avis/\">Votre avis</a><a href=\"soutenir/?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir\"><span class=\"bmc-emoji\" aria-hidden=\"true\">🙏</span>Soutenir</a><button type=\"button\" id=\"pied-partager\" aria-expanded=\"false\" aria-controls=\"pied-partage\"><svg aria-hidden=\"true\"><use href=\"#i-partager\"/></svg>Partager le site</button></nav>",
@@ -1589,6 +1581,10 @@
   [
    "<span class=\"v\">${pm1 !== pm0 ? `<s>${pm0} %</s>` : \"\"}${pm1} %</span>",
    "<span class=\"v\">${pm1 !== pm0 ? `<s>${pm0}%</s>` : \"\"}${pm1}%</span>"
+  ],
+  [
+   "<p class=\"muted\">Tout se corrige ici, sans revenir à la liste : qui s'en occupe, qui y pense, et le temps. <a href=\"#sources-durees\" class=\"src-btn\" role=\"button\" aria-expanded=\"false\" aria-controls=\"sources-durees\">Les valeurs proposées viennent d'enquêtes sur le temps domestique<span class=\"i\" aria-hidden=\"true\">i</span></a>. Pour chaque tâche : combien de fois par jour, semaine, mois ou an, et combien de minutes à chaque fois (pas au total). Le total par jour se recalcule tout seul. Exemple : les courses 2 fois par semaine, 90 minutes à chaque fois, font 26 minutes par jour.</p>\n        <div class=\"sources-durees\" id=\"sources-durees\" hidden><p>De l'enquête Emploi du temps de l'INSEE (2010), qui mesure le temps domestique au carnet, et du jeu de cartes Fair Play (Eve Rodsky, 2019) pour les tâches que le carnet ne voit pas. Un couple avec enfants qui garde toutes les valeurs par défaut totalise environ 8 heures et demie par jour, dans la fourchette haute de ce que l'INSEE observe. La distinction « y penser » et « s'en occuper » vient des travaux d'Allison Daminger (2019) : anticiper et vérifier, c'est du travail, même quand quelqu'un d'autre exécute.</p></div>",
+   "<p class=\"muted\">Everything can be corrected here, without going back to the list: who does it, who thinks of it, and the time. <a href=\"#sources-durees\" class=\"src-btn\" role=\"button\" aria-expanded=\"false\" aria-controls=\"sources-durees\">The suggested values come from surveys on time spent on domestic work<span class=\"i\" aria-hidden=\"true\">i</span></a>. For each task: how many times a day, week, month or year, and how many minutes each time (not in total). The daily total recalculates itself. Example: shopping twice a week, 90 minutes each time, makes 26 minutes a day.</p>\n        <div class=\"sources-durees\" id=\"sources-durees\" hidden><p>The INSEE time-use survey in France (2010), which measures domestic time with diaries, and the Fair Play card deck (Eve Rodsky, 2019) for the tasks the diary does not capture. A couple with children who keeps all the default values totals about eight and a half hours a day, at the high end of what INSEE observes in France. The distinction between ‘thinking of it’ and ‘doing it’ comes from the work of Allison Daminger (2019): anticipating and checking is work, even when someone else carries it out.</p></div>"
   ]
  ]
 }
