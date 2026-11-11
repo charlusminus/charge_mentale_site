@@ -38,7 +38,7 @@
 <body>
 <header class="haut">
   <a class="marque" href="/">Qui y pense&nbsp;?</a>
-  <nav aria-label="Navigation"><a href="/blog/">Blog</a><a class="btn petit" href="/">Faire le point</a></nav>
+  <nav aria-label="Navigation"><a href="/blog/">Blog</a><a class="btn petit secondary" href="/">Faire le point</a></nav>
 </header>
 
 <main class="article">
@@ -48,7 +48,7 @@
     garder en ligne et à le faire grandir.</p>
 
   <div class="cta">
-    <a class="bmc" id="cafe" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=page-soutenir&amp;utm_campaign=soutenir" target="_blank" rel="noopener"><span class="bmc-emoji" aria-hidden="true">🙏</span><span>Soutenir</span></a>
+    <a class="bmc" id="cafe" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=page-soutenir&amp;utm_campaign=soutenir" target="_blank" rel="noopener"><span class="bmc-emoji" aria-hidden="true">🙏</span><span>Offrir un café (3&nbsp;€)</span></a>
     <p class="note-paiement">Le paiement se fait chez Ko-fi, par carte ou PayPal, sans créer de compte.</p>
   </div>
 
@@ -82,6 +82,8 @@
   <p>Qui y pense&nbsp;? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. <a href="/">Faire le point</a> · <a href="/blog/">Blog</a> · <a href="/presse/">Presse</a> · <a href="/charte/">Charte</a> · <a href="/avis/">Votre avis</a> · <a href="/soutenir/">Soutenir</a> · <a href="mailto:contact@quiypense.org">contact@quiypense.org</a> · <a href="#cookies" data-cookies>Cookies</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/conditions/">Conditions</a></p>
 </footer>
 <script>
+  // Libellé « Offrir un café (3 €) » et « Faire le point » en bouton secondaire sur cette page (11/11/2026) : un seul
+  // bouton plein, celui de Ko-fi. Mesure avant / après : événement soutenir_clic.
   // Page « Soutenir » (08/11/2026) : le bouton du haut des pages et l'encart du résultat y mènent.
   document.getElementById("cafe").addEventListener("click", function () {
     if (window.__ga) gtag("event", "soutenir_clic", { origine: "page" });
