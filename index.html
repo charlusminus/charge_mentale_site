@@ -181,7 +181,8 @@
   .blog-cartes .desc { display: block; color: var(--muted); font-size: .95rem; }
   .demarrer { margin-top: 40px; padding: 32px; background: var(--bg-2); border-radius: var(--r); }
   .demarrer .nav { margin: 1.4rem 0 0; }
-  .dem-n { font-family: var(--sans); font-size: .8rem; font-weight: 400; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-left: .6rem; vertical-align: middle; }
+  .dem-n { font-family: var(--sans); font-size: .8rem; font-weight: 400; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-left: .6rem; vertical-align: middle; white-space: nowrap; }
+  @media (max-width: 640px) { .dem-n { display: block; margin: .4rem 0 0; } }   /* mobile : « 1 sur 2 » sous le titre, jamais coupé (retour du 11/11/2026) */
   .dem-titre { margin: .8rem 0 0; font-weight: 600; }
   .dem[hidden] { display: none; }
   /* bouton collant de l'accueil : apparaît quand le formulaire est passé au-dessus de l'écran, y ramène */
