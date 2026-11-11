@@ -7,6 +7,12 @@ Pour afficher le résultat, une copie anonymisée des réponses (sans prénoms n
 ## English version
 - [Who thinks of it?](https://quiypense.org/en/) : the same free tool in British English (no sign-up, no ads). For each household task, who does it and who thinks of it; results computed in the browser, an anonymised copy (no names, no IP) goes to the study.
 - [Privacy](https://quiypense.org/en/privacy/) and [Terms](https://quiypense.org/en/terms/)
+- [Blog](https://quiypense.org/en/blog/): what the surveys say, and how to talk about it together
+  - [What is the mental load, exactly? The idea is forty years old](https://quiypense.org/en/blog/what-is-the-mental-load.html)
+  - [Paid work and work at home: counting both](https://quiypense.org/en/blog/paid-work-and-housework.html)
+  - [She fills it in, he fills it in: why the figures don't say the same thing](https://quiypense.org/en/blog/she-fills-it-in-he-fills-it-in.html)
+  - [Handing over a task but keeping the thinking lightens nothing](https://quiypense.org/en/blog/delegating-without-the-thinking.html)
+  - [How to talk about sharing the chores without it ending in a row](https://quiypense.org/en/blog/talking-about-chores-without-a-row.html)
 - MCP server, same endpoint (https://quiypense-mcp.quiypense-mcp.workers.dev/mcp): pass `langue: "en"` to lister_taches, calculer_resultat and afficher_questionnaire for British English tasks, results and a link to /en/.
 
 ## Pour les assistants IA
