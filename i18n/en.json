@@ -22,7 +22,8 @@
   "sante-enfants",
   "semaine",
   "vous${v",
-  "vous${v < 15 ?"
+  "vous${v < 15 ?",
+  "${semaine(x.h)}"
  ],
  "remplacements": [
   [
@@ -158,10 +159,6 @@
    "<p class=\"lead\">Take stock together, in ten minutes. The tasks are already listed: for each one, say who does it, and who thinks of it. You then see the result for each of you: hours a day, and the number of things to keep in mind.</p>"
   ],
   [
-   "<h2>On commence</h2>",
-   "<h2>Let's start</h2>"
-  ],
-  [
    "<label for=\"nomA\">Prénom 1</label><input id=\"nomA\" placeholder=\"Prénom\">",
    "<label for=\"nomA\">Name 1</label><input id=\"nomA\" placeholder=\"First name\">"
   ],
@@ -292,10 +289,6 @@
   [
    "title=\"Les deux ensemble\">À deux</button>",
    "title=\"Both together\">Together</button>"
-  ],
-  [
-   "<button class=\"btn\" id=\"go2\">Commencer</button><span class=\"small muted\" id=\"hint1\">Gratuit, sans inscription. Tout se calcule dans votre navigateur.</span>",
-   "<button class=\"btn\" id=\"go2\">Start</button><span class=\"small muted\" id=\"hint1\">Free, no sign-up. Everything is calculated in your browser.</span>"
   ],
   [
    "<div class=\"stat\"><strong>20 %</strong><span>des couples où les deux travaillent décrivent un partage égal des tâches</span><small>INED, enquête FAMEMP, 2025</small></div>",
@@ -1492,6 +1485,110 @@
   [
    "\"workTranslation\": { \"@id\": \"https://quiypense.org/en/#app\" },",
    "\"translationOfWork\": { \"@id\": \"https://quiypense.org/#app\" },"
+  ],
+  [
+   "<h2>On commence <span class=\"dem-n\" id=\"dem-n\">1 sur 2</span></h2>",
+   "<h2>Let's start <span class=\"dem-n\" id=\"dem-n\">1 of 2</span></h2>"
+  ],
+  [
+   "<p class=\"dem-titre\">Et chez vous ?</p>",
+   "<p class=\"dem-titre\">And at home?</p>"
+  ],
+  [
+   "id=\"dem-retour\" hidden>Retour</button><button class=\"btn\" id=\"go2\">Continuer</button><span class=\"small muted\" id=\"hint1\">Gratuit, sans inscription. Tout se calcule dans votre navigateur.</span>",
+   "id=\"dem-retour\" hidden>Back</button><button class=\"btn\" id=\"go2\">Continue</button><span class=\"small muted\" id=\"hint1\">Free, no sign-up. Everything is calculated in your browser.</span>"
+  ],
+  [
+   "document.getElementById(\"go2\").textContent = n === 1 ? \"Continuer\" : \"Commencer\";",
+   "document.getElementById(\"go2\").textContent = n === 1 ? \"Continue\" : \"Start\";"
+  ],
+  [
+   "document.getElementById(\"dem-n\").textContent = n + \" sur 2\";",
+   "document.getElementById(\"dem-n\").textContent = n + \" of 2\";"
+  ],
+  [
+   "m.setAttribute(\"aria-label\", \"Affichage des tâches\");",
+   "m.setAttribute(\"aria-label\", \"How to show the tasks\");"
+  ],
+  [
+   "aria-pressed=\"${PAP.mode === \"un\"}\">Une tâche à la fois</button><button type=\"button\" data-m=\"liste\" aria-pressed=\"${PAP.mode === \"liste\"}\">Toute la liste</button>",
+   "aria-pressed=\"${PAP.mode === \"un\"}\">One task at a time</button><button type=\"button\" data-m=\"liste\" aria-pressed=\"${PAP.mode === \"liste\"}\">Whole list</button>"
+  ],
+  [
+   "both: [\"3\", \"Les deux\"], other: [\"4\", \"Pas nous\"] };",
+   "both: [\"3\", \"Both\"], other: [\"4\", \"Neither of us\"] };"
+  ],
+  [
+   "<span>C'est fini</span>",
+   "<span>All done</span>"
+  ],
+  [
+   "<h3 class=\"pap-nom\">Toutes les tâches sont passées.</h3><p class=\"pap-aide\">Une dernière question, facultative, juste en dessous. Vous pourrez corriger chaque réponse et chaque durée sous le résultat.</p>",
+   "<h3 class=\"pap-nom\">That's every task.</h3><p class=\"pap-aide\">One last question, optional, just below. You can correct every answer and every time under the result.</p>"
+  ],
+  [
+   "id=\"pap-prec\">← Revenir à la dernière tâche</button>",
+   "id=\"pap-prec\">← Back to the last task</button>"
+  ],
+  [
+   "${fi === 0 ? \"\" : ` · ${fi + 1} sur ${dansFam.length}`}",
+   "${fi === 0 ? \"\" : ` · ${fi + 1} of ${dansFam.length}`}"
+  ],
+  [
+   "<p class=\"pap-q\">Qui s'en occupe ?</p>",
+   "<p class=\"pap-q\">Who does it?</p>"
+  ],
+  [
+   "q.innerHTML = `Et qui y pense ?<small>Remarquer qu'il faut le faire, prévoir, rappeler. Par défaut, la même personne.</small>`;",
+   "q.innerHTML = `And who thinks of it?<small>Noticing it needs doing, planning ahead, reminding. By default, the same person.</small>`;"
+  ],
+  [
+   "${PAP.i ? \"\" : \"disabled\"}>← Précédente</button><span class=\"astuce\">Clavier : 1 à 4 pour répondre, Entrée pour continuer</span>",
+   "${PAP.i ? \"\" : \"disabled\"}>← Previous</button><span class=\"astuce\">Keyboard: 1 to 4 to answer, Enter to continue</span>"
+  ],
+  [
+   "${st.pense === null && st.fait ? \"Continuer\" : \"Suivante\"}",
+   "${st.pense === null && st.fait ? \"Continue\" : \"Next\"}"
+  ],
+  [
+   "const semaine = h => hm(h * 7, h * 7 >= 10) + \" par semaine\";",
+   "const semaine = h => hm(h * 7, h * 7 >= 10) + \" a week\";"
+  ],
+  [
+   "let html = `<h3>Si vous voulez rééquilibrer</h3><p>${nX} porte ${Math.round(100 * w[X] / wT)} % du temps total${avecPro ? \", travail payé compris\" : \" (travail payé non indiqué)\"}. Quelques pistes tirées de vos réponses, à discuter à deux. Rien d'obligatoire : un déséquilibre peut aussi être un choix.</p>`;",
+   "let html = `<h3>If you want to rebalance</h3><p>${nX} carries ${Math.round(100 * w[X] / wT)}% of the total time${avecPro ? \", paid work included\" : \" (paid work not entered)\"}. A few ideas drawn from your answers, to talk over together. Nothing compulsory: an imbalance can also be a choice.</p>`;"
+  ],
+  [
+   "html += `<h4>${nY} s'en occupe déjà, ${nX} y pense</h4><p>Reprendre aussi le fait d'y penser ne demande pas de temps en plus à ${nY}, et libère la tête de ${nX}.</p>",
+   "html += `<h4>${nY} already does it, ${nX} thinks of it</h4><p>Taking over the thinking too costs ${nY} no extra time, and frees up ${nX}'s head.</p>"
+  ],
+  [
+   "html += `<h4>Confier une tâche en entier à ${nY}</h4><p>Le faire et y penser : prévoir, vérifier, racheter. Sans cela, la charge mentale reste où elle était.</p>",
+   "html += `<h4>Hand a whole task over to ${nY}</h4><p>Doing it and thinking of it: planning, checking, restocking. Otherwise the mental load stays where it was.</p>"
+  ],
+  [
+   "<small class=\"note\">Une méthode pour en parler sans dispute : <a href=\"blog/y-penser-ou-faire.html\" target=\"_blank\" rel=\"noopener\">confier une tâche, pas seulement l'exécution</a>.</small>",
+   "<small class=\"note\">To talk it over without a row: <a href=\"blog/delegating-without-the-thinking.html\" target=\"_blank\" rel=\"noopener\">handing over a task, not just the doing</a>.</small>"
+  ],
+  [
+   "eff.innerHTML = `<strong>Avec les pistes cochées, part de ${nX}</strong>",
+   "eff.innerHTML = `<strong>With the ticked ideas, ${nX}'s share</strong>"
+  ],
+  [
+   "<span>${avecPro ? \"Temps total\" : \"Temps à faire\"}</span>",
+   "<span>${avecPro ? \"Total time\" : \"Time spent\"}</span>"
+  ],
+  [
+   "<div class=\"ligne\"><span>Charge mentale</span>",
+   "<div class=\"ligne\"><span>Mental load</span>"
+  ],
+  [
+   "<span class=\"v\">${pt1 !== pt0 ? `<s>${pt0} %</s>` : \"\"}${pt1} %</span>",
+   "<span class=\"v\">${pt1 !== pt0 ? `<s>${pt0}%</s>` : \"\"}${pt1}%</span>"
+  ],
+  [
+   "<span class=\"v\">${pm1 !== pm0 ? `<s>${pm0} %</s>` : \"\"}${pm1} %</span>",
+   "<span class=\"v\">${pm1 !== pm0 ? `<s>${pm0}%</s>` : \"\"}${pm1}%</span>"
   ]
  ]
 }

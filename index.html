@@ -181,6 +181,9 @@
   .blog-cartes .desc { display: block; color: var(--muted); font-size: .95rem; }
   .demarrer { margin-top: 40px; padding: 32px; background: var(--bg-2); border-radius: var(--r); }
   .demarrer .nav { margin: 1.4rem 0 0; }
+  .dem-n { font-family: var(--sans); font-size: .8rem; font-weight: 400; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-left: .6rem; vertical-align: middle; }
+  .dem-titre { margin: .8rem 0 0; font-weight: 600; }
+  .dem[hidden] { display: none; }
   /* bouton collant de l'accueil : apparaît quand le formulaire est passé au-dessus de l'écran, y ramène */
   .cta-collant { position: fixed; z-index: 30; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom)); transform: translate(-50%, 160%);
     opacity: 0; pointer-events: none; box-shadow: 0 6px 18px rgba(42, 33, 24, .22); transition: transform .25s ease, opacity .25s ease; }
@@ -658,6 +661,62 @@
     .etude-actions .btn { width: 100%; }
   }
   @media print { .suivi, .actions, .ajout, .nav, .fil { display: none; } }
+
+  /* Retours du 11/11/2026 : l'étape 2 une tâche à la fois, et des pistes pour rééquilibrer sous le résultat */
+  .pap-mode { display: inline-flex; border: 1.5px solid var(--border); border-radius: var(--r); overflow: hidden; margin: .4rem 0 1.2rem; }
+  .pap-mode button { border: 0; background: transparent; padding: .5rem .9rem; font: inherit; font-size: .88rem; color: var(--muted); cursor: pointer; }
+  .pap-mode button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  #e2.un > section > p.muted, #e2.un > section > .legende { display: none; }
+  #e2.un:not(.fin) .pro-saisie, #e2.un:not(.fin) .nav { display: none; }
+  .pap { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); padding: 28px 32px 24px; min-height: 430px; display: flex; flex-direction: column; }
+  .pap-haut { display: flex; justify-content: space-between; gap: 1rem; font-size: .82rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+  .pap-prog { height: 4px; background: var(--bg-2); border-radius: 2px; margin: .6rem 0 1.6rem; overflow: hidden; }
+  .pap-prog i { display: block; height: 100%; background: var(--ink); transition: width .25s; }
+  .pap-nom { font-family: var(--serif); font-size: 1.75rem; line-height: 1.15; margin: 0 0 .4rem; font-weight: 500; }
+  .pap-aide { color: var(--muted); margin: 0 0 1.4rem; font-size: .95rem; }
+  .pap-q { font-weight: 600; margin: .4rem 0 .6rem; }
+  .pap-q small { display: block; font-weight: 400; color: var(--muted); font-size: .85rem; }
+  .pap-choix { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .6rem; margin-bottom: 1.2rem; }
+  .pap-choix button { display: flex; align-items: center; gap: .6rem; min-height: 54px; padding: .6rem .8rem; border: 1.5px solid var(--border); border-radius: var(--r); background: var(--paper); font: inherit; color: var(--ink); cursor: pointer; text-align: left; }
+  .pap-choix button:hover { border-color: var(--ink); }
+  .pap-choix .touche { flex: none; display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 5px; border: 1px solid var(--line); font-size: .72rem; color: var(--muted); }
+  .pap-choix .k-a .touche { background: var(--a); color: var(--paper); border-color: var(--a); }
+  .pap-choix .k-b .touche { background: var(--b); color: var(--paper); border-color: var(--b); }
+  .pap-choix button.on { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+  .pap-choix .k-a.on { background: var(--a); border-color: var(--a); } .pap-choix .k-b.on { background: var(--b); border-color: var(--b); }
+  .pap-choix button.on .touche { background: rgba(255,255,255,.18); border-color: transparent; color: inherit; }
+  .pap-choix button.suit { box-shadow: inset 0 0 0 2px rgba(255,255,255,.55); }
+  .pap .repart { margin: -.4rem 0 1.2rem; }
+  .pap-nav { margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-top: .6rem; }
+  .pap-nav .lien { background: none; border: 0; color: var(--muted); font: inherit; cursor: pointer; padding: .4rem 0; }
+  .pap-nav .lien:disabled { visibility: hidden; }
+  .pap-nav .astuce { font-size: .8rem; color: var(--muted); }
+  .pap-fin { text-align: left; }
+  @media (max-width: 640px) {
+    .pap { padding: 20px 18px 18px; min-height: 0; }
+    .pap-nom { font-size: 1.4rem; }
+    .pap-haut { font-size: .72rem; letter-spacing: .04em; } .pap-haut span:last-child { white-space: nowrap; }
+    .pap-choix button { min-height: 48px; }
+    .pap-choix { grid-template-columns: 1fr 1fr; }
+    .pap-nav .astuce { display: none; }
+  }
+  .reeq { margin: 28px 0; padding: 24px 28px; background: var(--bg-2); border-radius: var(--r); }
+  .reeq h3 { margin: 0 0 .3rem; font-family: var(--serif); font-weight: 500; font-size: 1.35rem; }
+  .reeq > p { margin: 0 0 1rem; color: var(--muted); }
+  .reeq h4 { margin: 1.1rem 0 .2rem; font-size: 1rem; }
+  .reeq h4 + p { margin: 0 0 .5rem; color: var(--muted); font-size: .9rem; }
+  .reeq ul { list-style: none; margin: 0; padding: 0; }
+  .reeq li label { display: flex; gap: .7rem; align-items: baseline; padding: .45rem .1rem; border-bottom: 1px solid var(--line); cursor: pointer; }
+  .reeq li input { accent-color: var(--ink); width: 1.05rem; height: 1.05rem; flex: none; transform: translateY(.15rem); }
+  .reeq li .t { flex: 1; } .reeq li .h { color: var(--muted); font-size: .88rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .reeq-effet { margin-top: 1.3rem; padding: 1rem 1.1rem; background: var(--paper); border-radius: var(--r); }
+  .reeq-effet .ligne { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr) 6.5rem; gap: .8rem; align-items: center; font-size: .9rem; margin: .35rem 0; }
+  .reeq-effet .bar { height: 12px; border-radius: 6px; overflow: hidden; display: flex; background: var(--bg-2); }
+  .reeq-effet .bar i { display: block; height: 100%; transition: width .25s; } .reeq-effet .bar .ia { background: var(--a); } .reeq-effet .bar .ib { background: var(--b); }
+  .reeq-effet .v { text-align: right; font-variant-numeric: tabular-nums; }
+  .reeq-effet .v s { color: var(--muted); margin-right: .3rem; }
+  .reeq small.note { display: block; margin-top: 1rem; color: var(--muted); font-size: .85rem; }
+  @media (max-width: 640px) { .reeq { padding: 20px 18px; } .reeq-effet .ligne { grid-template-columns: 1fr auto; } .reeq-effet .bar { grid-column: 1 / -1; grid-row: 2; } }
 </style>
 </head>
 <body>
@@ -688,7 +747,8 @@
       </header>
 
     <div class="demarrer">
-      <h2>On commence</h2>
+      <h2>On commence <span class="dem-n" id="dem-n">1 sur 2</span></h2>
+      <div class="dem" id="dem1">
       <div class="prenoms">
         <div class="a"><label for="nomA">Prénom 1</label><input id="nomA" placeholder="Prénom">
           <div class="genre" role="group" aria-label="Genre de la première personne. Sert seulement à l'étude anonyme, ne change rien au calcul. nc si vous préférez ne pas le dire." title="Sert seulement à l'étude anonyme, ne change rien au calcul. « nc » si vous préférez ne pas le dire." data-genre="A">
@@ -703,6 +763,17 @@
             <button type="button" class="g" value="x" aria-pressed="false" title="Ne se prononce pas"><span aria-hidden="true">nc</span><span class="sr">Ne se prononce pas</span></button>
           </div></div>
       </div>
+      <div class="remplit">
+        <span class="lbl" id="remplit-lbl">Qui remplit le questionnaire ?</span>
+        <div class="choix" id="remplit" role="group" aria-labelledby="remplit-lbl" title="Sert seulement à l'étude anonyme, ne change rien au calcul.">
+          <button type="button" class="g a" value="a" aria-pressed="false"><span class="nA">Prénom 1</span></button>
+          <button type="button" class="g b" value="b" aria-pressed="false"><span class="nB">Prénom 2</span></button>
+          <button type="button" class="g" value="2" aria-pressed="false" title="Les deux ensemble">À deux</button>
+        </div>
+      </div>
+      </div>
+      <div class="dem" id="dem2" hidden>
+        <p class="dem-titre">Et chez vous ?</p>
       <div class="prenoms foyer">
         <div class="enfants">
           <label for="enfants">Enfants à la maison</label>
@@ -732,15 +803,8 @@
       <label class="suivi-med" id="suiviMedBox" hidden><input type="checkbox" id="suiviMed">
         <span>Un enfant a besoin d'un suivi médical ou d'un accompagnement particulier (handicap, maladie chronique)
         <small>Le temps prévu pour suivre sa santé passe à 6 h par semaine, à ajuster ensuite. Cette case reste dans votre navigateur : elle n'est pas transmise à l'étude.</small></span></label>
-      <div class="remplit">
-        <span class="lbl" id="remplit-lbl">Qui remplit le questionnaire ?</span>
-        <div class="choix" id="remplit" role="group" aria-labelledby="remplit-lbl" title="Sert seulement à l'étude anonyme, ne change rien au calcul.">
-          <button type="button" class="g a" value="a" aria-pressed="false"><span class="nA">Prénom 1</span></button>
-          <button type="button" class="g b" value="b" aria-pressed="false"><span class="nB">Prénom 2</span></button>
-          <button type="button" class="g" value="2" aria-pressed="false" title="Les deux ensemble">À deux</button>
-        </div>
       </div>
-      <div class="nav"><button class="btn" id="go2">Commencer</button><span class="small muted" id="hint1">Gratuit, sans inscription. Tout se calcule dans votre navigateur.</span></div>
+      <div class="nav"><button class="btn secondary" type="button" id="dem-retour" hidden>Retour</button><button class="btn" id="go2">Continuer</button><span class="small muted" id="hint1">Gratuit, sans inscription. Tout se calcule dans votre navigateur.</span></div>
     </div>
 
     <div class="stats">
@@ -833,6 +897,7 @@
         <div class="pro-champs"><label><span class="n pa" data-nom="a"></span><span class="champ"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pro="a" id="pro-a-3" placeholder="0"> h / semaine</span></label><label><span class="n pb" data-nom="b"></span><span class="champ"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pro="b" id="pro-b-3" placeholder="0"> h / semaine</span></label></div>
         <div class="pro-txt" id="pro-txt"></div>
       </div>
+      <div class="reeq" id="reeq" hidden></div>
       <div class="envoi">
         <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce résultat à l'autre</button>
         <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce résultat.</p>
@@ -1261,6 +1326,11 @@
   function renderCatalogue() {
     const root = document.getElementById("catalogue");
     root.innerHTML = "";
+    const e2 = document.getElementById("e2");
+    e2.classList.toggle("un", PAP.mode === "un");
+    if (PAP.mode === "un") return renderUn(root);
+    e2.classList.remove("fin");
+    root.appendChild(modePap());
     const cats = visibleCats();
     const entete = document.createElement("div"); entete.className = "entete";
     const ia = initiale(S.nomA, "1"), ib = initiale(S.nomB, "2");
@@ -1365,6 +1435,121 @@
     return el;
   }
 
+
+  /* ---------- une tâche à la fois (retour du 11/11/2026 : « moins de texte, pas à pas ») ---------- */
+  const PAP = { mode: "un", i: 0 };
+  function modePap() {
+    const m = document.createElement("div"); m.className = "pap-mode"; m.setAttribute("role", "group"); m.setAttribute("aria-label", "Affichage des tâches");
+    m.innerHTML = `<button type="button" data-m="un" aria-pressed="${PAP.mode === "un"}">Une tâche à la fois</button><button type="button" data-m="liste" aria-pressed="${PAP.mode === "liste"}">Toute la liste</button>`;
+    m.querySelectorAll("button").forEach(b => b.addEventListener("click", () => { PAP.mode = b.dataset.m; renderCatalogue(); update(); }));
+    return m;
+  }
+  function choixPap(sel, suit, onPick) {
+    const d = document.createElement("div"); d.className = "pap-choix";
+    const [ia, ib] = reperes();
+    const rep = { a: [ia, nomA()], b: [ib, nomB()], both: ["3", "Les deux"], other: ["4", "Pas nous"] };
+    WHO.forEach((k, j) => {
+      const b = document.createElement("button"); b.type = "button"; b.className = "k-" + k + (sel === k ? " on" + (suit ? " suit" : "") : "");
+      b.innerHTML = `<span class="touche">${j + 1}</span><span>${rep[k][1]}</span>`;
+      b.setAttribute("aria-pressed", sel === k); b.addEventListener("click", () => onPick(k));
+      d.appendChild(b);
+    });
+    return d;
+  }
+  function renderUn(root) {
+    const list = allTasks(), n = list.length, e2 = document.getElementById("e2");
+    PAP.i = Math.max(0, Math.min(PAP.i, n));
+    e2.classList.toggle("fin", PAP.i >= n);
+    root.appendChild(modePap());
+    const carte = document.createElement("div"); carte.className = "pap"; root.appendChild(carte);
+    if (PAP.i >= n) {
+      const faites = list.filter(t => S.t[t.id] && S.t[t.id].fait).length;
+      carte.classList.add("pap-fin");
+      carte.innerHTML = `<div class="pap-haut"><span>C'est fini</span><span>${faites} / ${n}</span></div><div class="pap-prog"><i style="width:100%"></i></div>
+        <h3 class="pap-nom">Toutes les tâches sont passées.</h3><p class="pap-aide">Une dernière question, facultative, juste en dessous. Vous pourrez corriger chaque réponse et chaque durée sous le résultat.</p>
+        <div class="pap-nav"><button type="button" class="lien" id="pap-prec">← Revenir à la dernière tâche</button></div>`;
+      carte.querySelector("#pap-prec").addEventListener("click", () => { PAP.i = n - 1; renderCatalogue(); });
+      return;
+    }
+    const t = list[PAP.i], st = S.t[t.id];
+    const cats = visibleCats(), ci = cats.findIndex(c => c.id === t.cat);
+    const dansFam = list.filter(x => x.cat === t.cat), fi = dansFam.findIndex(x => x.id === t.id);
+    const avance = () => { PAP.i++; renderCatalogue(); update(); };
+    carte.innerHTML = `<div class="pap-haut"><span>${t.catNom}${fi === 0 ? "" : ` · ${fi + 1} sur ${dansFam.length}`}</span><span>${PAP.i + 1} / ${n}</span></div>
+      <div class="pap-prog"><i style="width:${100 * PAP.i / n}%"></i></div>
+      <h3 class="pap-nom">${t.nom}</h3>${t.aide ? `<p class="pap-aide">${t.aide}</p>` : `<p class="pap-aide"></p>`}
+      <p class="pap-q">Qui s'en occupe ?</p>`;
+    carte.appendChild(choixPap(st.fait, false, k => { st.fait = k; st.pense = null; renderCatalogue(); update(); }));
+    if (st.fait) {
+      const q = document.createElement("p"); q.className = "pap-q";
+      q.innerHTML = `Et qui y pense ?<small>Remarquer qu'il faut le faire, prévoir, rappeler. Par défaut, la même personne.</small>`;
+      carte.appendChild(q);
+      carte.appendChild(choixPap(penseOf(st), st.pense === null, k => {
+        st.pense = (k === st.fait) ? null : k; update();
+        if (reglette(t, st)) renderCatalogue(); else setTimeout(avance, 180);
+      }));
+      const r = reglette(t, st); if (r) carte.appendChild(r);
+    }
+    const nav = document.createElement("div"); nav.className = "pap-nav";
+    nav.innerHTML = `<button type="button" class="lien" ${PAP.i ? "" : "disabled"}>← Précédente</button><span class="astuce">Clavier : 1 à 4 pour répondre, Entrée pour continuer</span><button type="button" class="btn" ${st.fait ? "" : "disabled"}>${st.pense === null && st.fait ? "Continuer" : "Suivante"}</button>`;
+    const [prec, , suiv] = nav.children;
+    prec.addEventListener("click", () => { PAP.i--; renderCatalogue(); });
+    suiv.addEventListener("click", avance);
+    carte.appendChild(nav);
+  }
+  document.addEventListener("keydown", e => {
+    if (S.ecran !== 2 || PAP.mode !== "un" || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+    const carte = document.querySelector(".pap"); if (!carte) return;
+    const grilles = carte.querySelectorAll(".pap-choix"), g = grilles[grilles.length - 1];
+    if (/^[1-4]$/.test(e.key) && g) { e.preventDefault(); g.children[+e.key - 1].click(); }
+    else if (e.key === "Enter") { const b = carte.querySelector(".pap-nav .btn"); if (b && !b.disabled) { e.preventDefault(); b.click(); } }
+  });
+
+  /* ---------- « Si vous voulez rééquilibrer » (retour du 11/11/2026) ---------- */
+  // Pistes tirées des réponses, jamais une consigne : (1) ce que l'autre fait déjà mais auquel la personne la plus chargée
+  // pense, à reprendre en entier sans temps en plus ; (2) des tâches à confier en entier (faire et y penser), choisies pour
+  // rapprocher le temps de l'équilibre sans le dépasser. Les cases cochées recalculent l'effet en direct.
+  // Retour du 11/11/2026 : les pistes ne s'affichent que si le temps total (maison par semaine, plus le travail payé
+  // indiqué, 0 h sinon, comme la ligne « Avec le travail payé ») penche nettement : 55 % ou plus pour l'un des deux.
+  function renderReeq(r) {
+    const box = document.getElementById("reeq");
+    const tot = r.a.h + r.b.h, totP = r.a.nPense + r.b.nPense;
+    const pr = proRetenu() || { a: 0, b: 0 }, avecPro = !!proRetenu();
+    const w = { a: r.a.h * 7 + pr.a, b: r.b.h * 7 + pr.b }, wT = w.a + w.b;
+    if (!tot || !totP || !wT) { box.hidden = true; return; }
+    const X = w.a >= w.b ? "a" : "b", Y = X === "a" ? "b" : "a", nX = X === "a" ? nomA() : nomB(), nY = Y === "a" ? nomA() : nomB();
+    if (w[X] / wT < .55) { box.hidden = true; return; }
+    const taches = allTasks().map(t => ({ t, st: S.t[t.id] })).filter(x => x.st && x.st.fait);
+    const pense1 = taches.filter(x => x.st.fait === Y && penseOf(x.st) === X).map(x => ({ ...x, h: 0, p: 1 }));
+    let resteH = (w[X] - wT / 2) / 7;   // en heures par jour, ce qu'il faudrait déplacer pour l'équilibre du temps total
+    const entieres = taches.filter(x => x.st.fait === X && penseOf(x.st) === X).map(x => ({ ...x, h: hj(x.st, x.t.id), p: 1 })).sort((u, v) => v.h - u.h);
+    const choisies = [];
+    for (const x of entieres) { if (choisies.length >= 3) break; if (x.h <= resteH * 1.15 && x.h >= 1 / 60 * 10 / 7) { choisies.push(x); resteH -= 2 * x.h; } }
+    const autres = entieres.filter(x => !choisies.includes(x)).slice(0, 3);
+    const semaine = h => hm(h * 7, h * 7 >= 10) + " par semaine";
+    const li = (x, coche, i) => `<li><label><input type="checkbox" data-i="${i}" ${coche ? "checked" : ""}><span class="t">${x.t.nom}</span>${x.h ? `<span class="h">${semaine(x.h)}</span>` : ""}</label></li>`;
+    const tous = [...pense1.slice(0, 3), ...choisies, ...autres];
+    let html = `<h3>Si vous voulez rééquilibrer</h3><p>${nX} porte ${Math.round(100 * w[X] / wT)} % du temps total${avecPro ? ", travail payé compris" : " (travail payé non indiqué)"}. Quelques pistes tirées de vos réponses, à discuter à deux. Rien d'obligatoire : un déséquilibre peut aussi être un choix.</p>`;
+    if (pense1.length) html += `<h4>${nY} s'en occupe déjà, ${nX} y pense</h4><p>Reprendre aussi le fait d'y penser ne demande pas de temps en plus à ${nY}, et libère la tête de ${nX}.</p><ul>${pense1.slice(0, 3).map((x, i) => li(x, true, i)).join("")}</ul>`;
+    const off = Math.min(pense1.length, 3);
+    if (choisies.length || autres.length) html += `<h4>Confier une tâche en entier à ${nY}</h4><p>Le faire et y penser : prévoir, vérifier, racheter. Sans cela, la charge mentale reste où elle était.</p><ul>${choisies.map((x, i) => li(x, true, off + i)).join("")}${autres.map((x, i) => li(x, false, off + choisies.length + i)).join("")}</ul>`;
+    html += `<div class="reeq-effet" aria-live="polite"></div><small class="note">Une méthode pour en parler sans dispute : <a href="blog/y-penser-ou-faire.html" target="_blank" rel="noopener">confier une tâche, pas seulement l'exécution</a>.</small>`;
+    box.innerHTML = html; box.hidden = false;
+    const eff = box.querySelector(".reeq-effet");
+    const peindre = () => {
+      let dh = 0, dp = 0;
+      box.querySelectorAll("input[type=checkbox]").forEach(c => { if (c.checked) { const x = tous[+c.dataset.i]; dh += x.h; dp += x.p; } });
+      const pt0 = Math.round(100 * w[X] / wT), pt1 = Math.round(100 * (w[X] - dh * 7) / wT);
+      const pm0 = Math.round(100 * r[X].nPense / totP), pm1 = Math.round(100 * (r[X].nPense - dp) / totP);
+      const bar = v => X === "a" ? `<i class="ia" style="width:${v}%"></i><i class="ib" style="width:${100 - v}%"></i>` : `<i class="ia" style="width:${100 - v}%"></i><i class="ib" style="width:${v}%"></i>`;
+      eff.innerHTML = `<strong>Avec les pistes cochées, part de ${nX}</strong>
+        <div class="ligne"><span>${avecPro ? "Temps total" : "Temps à faire"}</span><div class="bar">${bar(pt1)}</div><span class="v">${pt1 !== pt0 ? `<s>${pt0} %</s>` : ""}${pt1} %</span></div>
+        <div class="ligne"><span>Charge mentale</span><div class="bar">${bar(pm1)}</div><span class="v">${pm1 !== pm0 ? `<s>${pm0} %</s>` : ""}${pm1} %</span></div>`;
+    };
+    box.querySelectorAll("input[type=checkbox]").forEach(c => c.addEventListener("change", peindre));
+    peindre();
+  }
+
   /* ---------- écran 3 ---------- */
   // Total avec le travail payé (demande du 10/11/2026) : sous le temps à faire, dès le premier affichage, maison par
   // semaine plus heures de travail payé ; une personne sans heures indiquées compte 0 h, avec un lien vers la saisie.
@@ -1425,6 +1610,7 @@
     }
     txt += " Un point de départ pour en parler.";
     L.textContent = txt;
+    renderReeq(r);
     renderComparer(r);
     renderPro(r);
     renderBudget(r);
@@ -1572,7 +1758,7 @@
     const v = i.value.trim() === "" ? null : Math.max(0, Math.min(100, Math.round(+i.value) || 0));
     if (i.dataset.pro === "a") S.proA = v; else S.proB = v;
     document.querySelectorAll(`input[data-pro=${i.dataset.pro}]`).forEach(j => { if (j !== i) j.value = v === null ? "" : v; });
-    if (S.ecran === 3) { const r = compute(); renderPro(r); renderComparer(r); const lt = document.getElementById("ligne-total"); if (lt) lt.innerHTML = ligneTotal(r); } save();
+    if (S.ecran === 3) { const r = compute(); renderPro(r); renderComparer(r); renderReeq(r); const lt = document.getElementById("ligne-total"); if (lt) lt.innerHTML = ligneTotal(r); } save();
   }));
   document.querySelectorAll("input[data-pro]").forEach(i => i.addEventListener("change", () => { if (window.__ga) gtag("event", "travail_paye_indique", { champ: S.ecran === 3 ? "compte" : "liste" }); }));
 
@@ -1856,8 +2042,17 @@
     }
     if (!saisie) { remplit.classList.add("manque"); return bloque("saisie", "Et qui remplit : l'un, l'autre, ou les deux ensemble."); }
     hint.textContent = hint.dataset.defaut;
+    // Étape 1 en deux temps (retour du 11/11/2026) : vous deux, puis le foyer.
+    if (document.getElementById("dem2").hidden) { demPartie(2); document.getElementById("enfants").focus(); return; }
     show(2);
   });
+  function demPartie(n) {
+    document.getElementById("dem1").hidden = n === 2; document.getElementById("dem2").hidden = n === 1;
+    document.getElementById("dem-retour").hidden = n === 1;
+    document.getElementById("go2").textContent = n === 1 ? "Continuer" : "Commencer";
+    document.getElementById("dem-n").textContent = n + " sur 2";
+  }
+  document.getElementById("dem-retour").addEventListener("click", () => { demPartie(1); document.getElementById("nomA").focus(); });
   document.getElementById("back1").addEventListener("click", () => show(1));
   document.getElementById("go3").addEventListener("click", voirCompte);
   document.getElementById("suiviBtn").addEventListener("click", voirCompte);
