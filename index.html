@@ -181,6 +181,9 @@
   .blog-cartes .desc { display: block; color: var(--muted); font-size: .95rem; }
   .demarrer { margin-top: 40px; padding: 32px; background: var(--bg-2); border-radius: var(--r); }
   .demarrer .nav { margin: 1.4rem 0 0; }
+  .dem-n { font-family: var(--sans); font-size: .8rem; font-weight: 400; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-left: .6rem; vertical-align: middle; }
+  .dem-titre { margin: .8rem 0 0; font-weight: 600; }
+  .dem[hidden] { display: none; }
   /* bouton collant de l'accueil : apparaît quand le formulaire est passé au-dessus de l'écran, y ramène */
   .cta-collant { position: fixed; z-index: 30; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom)); transform: translate(-50%, 160%);
     opacity: 0; pointer-events: none; box-shadow: 0 6px 18px rgba(42, 33, 24, .22); transition: transform .25s ease, opacity .25s ease; }
@@ -659,7 +662,7 @@
   }
   @media print { .suivi, .actions, .ajout, .nav, .fil { display: none; } }
 
-  /* Maquette du 11/11/2026 (retours) : l'étape 2 une tâche à la fois, et des pistes pour rééquilibrer sous le résultat */
+  /* Retours du 11/11/2026 : l'étape 2 une tâche à la fois, et des pistes pour rééquilibrer sous le résultat */
   .pap-mode { display: inline-flex; border: 1.5px solid var(--border); border-radius: var(--r); overflow: hidden; margin: .4rem 0 1.2rem; }
   .pap-mode button { border: 0; background: transparent; padding: .5rem .9rem; font: inherit; font-size: .88rem; color: var(--muted); cursor: pointer; }
   .pap-mode button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
@@ -744,7 +747,8 @@
       </header>
 
     <div class="demarrer">
-      <h2>On commence</h2>
+      <h2>On commence <span class="dem-n" id="dem-n">1 sur 2</span></h2>
+      <div class="dem" id="dem1">
       <div class="prenoms">
         <div class="a"><label for="nomA">Prénom 1</label><input id="nomA" placeholder="Prénom">
           <div class="genre" role="group" aria-label="Genre de la première personne. Sert seulement à l'étude anonyme, ne change rien au calcul. nc si vous préférez ne pas le dire." title="Sert seulement à l'étude anonyme, ne change rien au calcul. « nc » si vous préférez ne pas le dire." data-genre="A">
@@ -759,6 +763,17 @@
             <button type="button" class="g" value="x" aria-pressed="false" title="Ne se prononce pas"><span aria-hidden="true">nc</span><span class="sr">Ne se prononce pas</span></button>
           </div></div>
       </div>
+      <div class="remplit">
+        <span class="lbl" id="remplit-lbl">Qui remplit le questionnaire ?</span>
+        <div class="choix" id="remplit" role="group" aria-labelledby="remplit-lbl" title="Sert seulement à l'étude anonyme, ne change rien au calcul.">
+          <button type="button" class="g a" value="a" aria-pressed="false"><span class="nA">Prénom 1</span></button>
+          <button type="button" class="g b" value="b" aria-pressed="false"><span class="nB">Prénom 2</span></button>
+          <button type="button" class="g" value="2" aria-pressed="false" title="Les deux ensemble">À deux</button>
+        </div>
+      </div>
+      </div>
+      <div class="dem" id="dem2" hidden>
+        <p class="dem-titre">Et chez vous ?</p>
       <div class="prenoms foyer">
         <div class="enfants">
           <label for="enfants">Enfants à la maison</label>
@@ -788,15 +803,8 @@
       <label class="suivi-med" id="suiviMedBox" hidden><input type="checkbox" id="suiviMed">
         <span>Un enfant a besoin d'un suivi médical ou d'un accompagnement particulier (handicap, maladie chronique)
         <small>Le temps prévu pour suivre sa santé passe à 6 h par semaine, à ajuster ensuite. Cette case reste dans votre navigateur : elle n'est pas transmise à l'étude.</small></span></label>
-      <div class="remplit">
-        <span class="lbl" id="remplit-lbl">Qui remplit le questionnaire ?</span>
-        <div class="choix" id="remplit" role="group" aria-labelledby="remplit-lbl" title="Sert seulement à l'étude anonyme, ne change rien au calcul.">
-          <button type="button" class="g a" value="a" aria-pressed="false"><span class="nA">Prénom 1</span></button>
-          <button type="button" class="g b" value="b" aria-pressed="false"><span class="nB">Prénom 2</span></button>
-          <button type="button" class="g" value="2" aria-pressed="false" title="Les deux ensemble">À deux</button>
-        </div>
       </div>
-      <div class="nav"><button class="btn" id="go2">Commencer</button><span class="small muted" id="hint1">Gratuit, sans inscription. Tout se calcule dans votre navigateur.</span></div>
+      <div class="nav"><button class="btn secondary" type="button" id="dem-retour" hidden>Retour</button><button class="btn" id="go2">Continuer</button><span class="small muted" id="hint1">Gratuit, sans inscription. Tout se calcule dans votre navigateur.</span></div>
     </div>
 
     <div class="stats">
@@ -883,13 +891,13 @@
       <table class="resultats" id="cartes"></table>
       <div class="parcat" id="parcat"></div>
       <div class="lecture" id="lecture"></div>
-      <div class="reeq" id="reeq" hidden></div>
       <div class="pro" id="pro">
         <h3>Et le travail rémunéré ?</h3>
         <p class="muted">Le résultat ne regarde que la maison&nbsp;; le travail payé pèse aussi. En l'ajoutant, vous voyez la charge totale de chacun, sans que le résultat change.</p>
         <div class="pro-champs"><label><span class="n pa" data-nom="a"></span><span class="champ"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pro="a" id="pro-a-3" placeholder="0"> h / semaine</span></label><label><span class="n pb" data-nom="b"></span><span class="champ"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pro="b" id="pro-b-3" placeholder="0"> h / semaine</span></label></div>
         <div class="pro-txt" id="pro-txt"></div>
       </div>
+      <div class="reeq" id="reeq" hidden></div>
       <div class="envoi">
         <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce résultat à l'autre</button>
         <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce résultat.</p>
@@ -1428,7 +1436,7 @@
   }
 
 
-  /* ---------- maquette : une tâche à la fois (retour du 11/11/2026 : « moins de texte, pas à pas ») ---------- */
+  /* ---------- une tâche à la fois (retour du 11/11/2026 : « moins de texte, pas à pas ») ---------- */
   const PAP = { mode: "un", i: 0 };
   function modePap() {
     const m = document.createElement("div"); m.className = "pap-mode"; m.setAttribute("role", "group"); m.setAttribute("aria-label", "Affichage des tâches");
@@ -1497,28 +1505,31 @@
     else if (e.key === "Enter") { const b = carte.querySelector(".pap-nav .btn"); if (b && !b.disabled) { e.preventDefault(); b.click(); } }
   });
 
-  /* ---------- maquette : « Si vous voulez rééquilibrer » (retour du 11/11/2026) ---------- */
+  /* ---------- « Si vous voulez rééquilibrer » (retour du 11/11/2026) ---------- */
   // Pistes tirées des réponses, jamais une consigne : (1) ce que l'autre fait déjà mais auquel la personne la plus chargée
   // pense, à reprendre en entier sans temps en plus ; (2) des tâches à confier en entier (faire et y penser), choisies pour
   // rapprocher le temps de l'équilibre sans le dépasser. Les cases cochées recalculent l'effet en direct.
+  // Retour du 11/11/2026 : les pistes ne s'affichent que si le temps total (maison par semaine, plus le travail payé
+  // indiqué, 0 h sinon, comme la ligne « Avec le travail payé ») penche nettement : 55 % ou plus pour l'un des deux.
   function renderReeq(r) {
     const box = document.getElementById("reeq");
     const tot = r.a.h + r.b.h, totP = r.a.nPense + r.b.nPense;
-    if (!tot || !totP) { box.hidden = true; return; }
-    const sA = (r.a.h / tot + r.a.nPense / totP) / 2;
-    const X = sA >= .5 ? "a" : "b", Y = X === "a" ? "b" : "a", nX = X === "a" ? nomA() : nomB(), nY = Y === "a" ? nomA() : nomB();
-    if (Math.abs(sA - .5) < .06) { box.hidden = false; box.innerHTML = `<h3>Si vous voulez rééquilibrer</h3><p>Votre répartition est déjà proche de l'équilibre, en temps comme en charge mentale. Rien à suggérer ici.</p>`; return; }
+    const pr = proRetenu() || { a: 0, b: 0 }, avecPro = !!proRetenu();
+    const w = { a: r.a.h * 7 + pr.a, b: r.b.h * 7 + pr.b }, wT = w.a + w.b;
+    if (!tot || !totP || !wT) { box.hidden = true; return; }
+    const X = w.a >= w.b ? "a" : "b", Y = X === "a" ? "b" : "a", nX = X === "a" ? nomA() : nomB(), nY = Y === "a" ? nomA() : nomB();
+    if (w[X] / wT < .55) { box.hidden = true; return; }
     const taches = allTasks().map(t => ({ t, st: S.t[t.id] })).filter(x => x.st && x.st.fait);
     const pense1 = taches.filter(x => x.st.fait === Y && penseOf(x.st) === X).map(x => ({ ...x, h: 0, p: 1 }));
-    let resteH = r[X].h - tot / 2;
+    let resteH = (w[X] - wT / 2) / 7;   // en heures par jour, ce qu'il faudrait déplacer pour l'équilibre du temps total
     const entieres = taches.filter(x => x.st.fait === X && penseOf(x.st) === X).map(x => ({ ...x, h: hj(x.st, x.t.id), p: 1 })).sort((u, v) => v.h - u.h);
     const choisies = [];
-    if (r[X].h / tot > .55) for (const x of entieres) { if (choisies.length >= 3) break; if (x.h <= resteH * 1.15 && x.h >= 1 / 60 * 10 / 7) { choisies.push(x); resteH -= 2 * x.h; } }
-    const autres = r[X].h / tot > .55 ? entieres.filter(x => !choisies.includes(x)).slice(0, 3) : [];
+    for (const x of entieres) { if (choisies.length >= 3) break; if (x.h <= resteH * 1.15 && x.h >= 1 / 60 * 10 / 7) { choisies.push(x); resteH -= 2 * x.h; } }
+    const autres = entieres.filter(x => !choisies.includes(x)).slice(0, 3);
     const semaine = h => hm(h * 7, h * 7 >= 10) + " par semaine";
     const li = (x, coche, i) => `<li><label><input type="checkbox" data-i="${i}" ${coche ? "checked" : ""}><span class="t">${x.t.nom}</span>${x.h ? `<span class="h">${semaine(x.h)}</span>` : ""}</label></li>`;
     const tous = [...pense1.slice(0, 3), ...choisies, ...autres];
-    let html = `<h3>Si vous voulez rééquilibrer</h3><p>Quelques pistes tirées de vos réponses, à discuter à deux. Rien d'obligatoire : un déséquilibre peut aussi être un choix.</p>`;
+    let html = `<h3>Si vous voulez rééquilibrer</h3><p>${nX} porte ${Math.round(100 * w[X] / wT)} % du temps total${avecPro ? ", travail payé compris" : " (travail payé non indiqué)"}. Quelques pistes tirées de vos réponses, à discuter à deux. Rien d'obligatoire : un déséquilibre peut aussi être un choix.</p>`;
     if (pense1.length) html += `<h4>${nY} s'en occupe déjà, ${nX} y pense</h4><p>Reprendre aussi le fait d'y penser ne demande pas de temps en plus à ${nY}, et libère la tête de ${nX}.</p><ul>${pense1.slice(0, 3).map((x, i) => li(x, true, i)).join("")}</ul>`;
     const off = Math.min(pense1.length, 3);
     if (choisies.length || autres.length) html += `<h4>Confier une tâche en entier à ${nY}</h4><p>Le faire et y penser : prévoir, vérifier, racheter. Sans cela, la charge mentale reste où elle était.</p><ul>${choisies.map((x, i) => li(x, true, off + i)).join("")}${autres.map((x, i) => li(x, false, off + choisies.length + i)).join("")}</ul>`;
@@ -1528,11 +1539,11 @@
     const peindre = () => {
       let dh = 0, dp = 0;
       box.querySelectorAll("input[type=checkbox]").forEach(c => { if (c.checked) { const x = tous[+c.dataset.i]; dh += x.h; dp += x.p; } });
-      const pt0 = Math.round(100 * r[X].h / tot), pt1 = Math.round(100 * (r[X].h - dh) / tot);
+      const pt0 = Math.round(100 * w[X] / wT), pt1 = Math.round(100 * (w[X] - dh * 7) / wT);
       const pm0 = Math.round(100 * r[X].nPense / totP), pm1 = Math.round(100 * (r[X].nPense - dp) / totP);
       const bar = v => X === "a" ? `<i class="ia" style="width:${v}%"></i><i class="ib" style="width:${100 - v}%"></i>` : `<i class="ia" style="width:${100 - v}%"></i><i class="ib" style="width:${v}%"></i>`;
       eff.innerHTML = `<strong>Avec les pistes cochées, part de ${nX}</strong>
-        <div class="ligne"><span>Temps à faire</span><div class="bar">${bar(pt1)}</div><span class="v">${pt1 !== pt0 ? `<s>${pt0} %</s>` : ""}${pt1} %</span></div>
+        <div class="ligne"><span>${avecPro ? "Temps total" : "Temps à faire"}</span><div class="bar">${bar(pt1)}</div><span class="v">${pt1 !== pt0 ? `<s>${pt0} %</s>` : ""}${pt1} %</span></div>
         <div class="ligne"><span>Charge mentale</span><div class="bar">${bar(pm1)}</div><span class="v">${pm1 !== pm0 ? `<s>${pm0} %</s>` : ""}${pm1} %</span></div>`;
     };
     box.querySelectorAll("input[type=checkbox]").forEach(c => c.addEventListener("change", peindre));
@@ -1747,7 +1758,7 @@
     const v = i.value.trim() === "" ? null : Math.max(0, Math.min(100, Math.round(+i.value) || 0));
     if (i.dataset.pro === "a") S.proA = v; else S.proB = v;
     document.querySelectorAll(`input[data-pro=${i.dataset.pro}]`).forEach(j => { if (j !== i) j.value = v === null ? "" : v; });
-    if (S.ecran === 3) { const r = compute(); renderPro(r); renderComparer(r); const lt = document.getElementById("ligne-total"); if (lt) lt.innerHTML = ligneTotal(r); } save();
+    if (S.ecran === 3) { const r = compute(); renderPro(r); renderComparer(r); renderReeq(r); const lt = document.getElementById("ligne-total"); if (lt) lt.innerHTML = ligneTotal(r); } save();
   }));
   document.querySelectorAll("input[data-pro]").forEach(i => i.addEventListener("change", () => { if (window.__ga) gtag("event", "travail_paye_indique", { champ: S.ecran === 3 ? "compte" : "liste" }); }));
 
@@ -2031,8 +2042,17 @@
     }
     if (!saisie) { remplit.classList.add("manque"); return bloque("saisie", "Et qui remplit : l'un, l'autre, ou les deux ensemble."); }
     hint.textContent = hint.dataset.defaut;
+    // Étape 1 en deux temps (retour du 11/11/2026) : vous deux, puis le foyer.
+    if (document.getElementById("dem2").hidden) { demPartie(2); document.getElementById("enfants").focus(); return; }
     show(2);
   });
+  function demPartie(n) {
+    document.getElementById("dem1").hidden = n === 2; document.getElementById("dem2").hidden = n === 1;
+    document.getElementById("dem-retour").hidden = n === 1;
+    document.getElementById("go2").textContent = n === 1 ? "Continuer" : "Commencer";
+    document.getElementById("dem-n").textContent = n + " sur 2";
+  }
+  document.getElementById("dem-retour").addEventListener("click", () => { demPartie(1); document.getElementById("nomA").focus(); });
   document.getElementById("back1").addEventListener("click", () => show(1));
   document.getElementById("go3").addEventListener("click", voirCompte);
   document.getElementById("suiviBtn").addEventListener("click", voirCompte);
