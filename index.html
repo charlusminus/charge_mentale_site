@@ -15,6 +15,7 @@
     // une page à part (/, /etape/qui-y-pense, /etape/compte) par window.__pageEtape, dans le script de l'appli.
     gtag('config', 'G-NYTV9VXCBN', { send_page_view: false });
     if (window.__pageEtape) window.__pageEtape(true);
+    if (window.__cmpOuvert) gtag('event', 'comparer_ouvert');   // lien « chacun de son côté » ouvert (11/11/2026)
   }
 </script>
 <meta charset="utf-8">
@@ -186,6 +187,31 @@
   .dem-titre { margin: .8rem 0 0; font-weight: 600; }
   .dem[hidden] { display: none; }
   #suiviBtn.cache { display: none; }
+  /* Prototype « chacun de son côté, puis on compare » (11/11/2026) */
+  .cmp-bandeau { margin: 0 0 1.2rem; padding: .9rem 1.1rem; background: var(--bg-2); border-left: 4px solid var(--ink); border-radius: var(--r); font-size: .95rem; }
+  .cmp-invite { margin: 1.6rem 0; padding: 1.2rem 1.4rem; background: var(--bg-2); border-radius: 12px; }
+  .cmp-invite h3 { font-family: var(--serif); font-weight: 500; font-size: 1.3rem; margin: 0 0 .3rem; }
+  .cmp-invite p { margin: 0 0 .9rem; color: var(--muted); }
+  .cmp-invite .ok { margin: .6rem 0 0; font-size: .88rem; color: var(--ink); }
+  .cmp { margin: 0 0 2rem; padding: 1.3rem 1.4rem; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; }
+  .cmp h3 { font-family: var(--serif); font-weight: 500; font-size: 1.5rem; margin: 0 0 .3rem; }
+  .cmp > p { margin: 0 0 1rem; color: var(--muted); }
+  .cmp-bloc { margin: 1rem 0; }
+  .cmp-bloc h4 { margin: 0 0 .4rem; font-size: .95rem; }
+  .cmp .ligne { display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: .8rem; align-items: center; margin: .35rem 0; font-size: .9rem; }
+  .cmp .bar { display: flex; height: 22px; border-radius: 6px; overflow: hidden; background: var(--bg-2); font-size: .75rem; font-weight: 600; color: #fff; }
+  .cmp .bar i { display: flex; align-items: center; padding: 0 .4rem; font-style: normal; white-space: nowrap; overflow: hidden; }
+  .cmp .bar .ia { background: var(--a); } .cmp .bar .ib { background: var(--b); justify-content: flex-end; }
+  .cmp-accord { font-weight: 600; margin: 1.2rem 0 .4rem; }
+  .cmp ul { list-style: none; margin: 0; padding: 0; }
+  .cmp li { padding: .6rem 0; border-bottom: 1px solid var(--line); }
+  .cmp li .t { font-weight: 600; display: block; }
+  .cmp li .g { display: grid; grid-template-columns: auto 1fr 1fr; gap: .15rem .9rem; margin-top: .35rem; font-size: .86rem; color: var(--muted); }
+  .cmp li .g .h { font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; }
+  .cmp li .g .ecart { color: var(--ink); font-weight: 600; }
+  .cmp .suite { margin: 1rem 0; font-size: .92rem; }
+  .cmp-avant { display: flex; flex-direction: column; gap: .15rem; margin: -.6rem 0 1.2rem; padding: .6rem .8rem; background: var(--bg-2); border-radius: var(--r); font-size: .86rem; color: var(--muted); }
+  @media (max-width: 640px) { .cmp, .cmp-invite { padding: 1rem; } .cmp .ligne { grid-template-columns: 1fr; gap: .2rem; } }
   /* bouton collant de l'accueil : apparaît quand le formulaire est passé au-dessus de l'écran, y ramène */
   .cta-collant { position: fixed; z-index: 30; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom)); transform: translate(-50%, 160%);
     opacity: 0; pointer-events: none; box-shadow: 0 6px 18px rgba(42, 33, 24, .22); transition: transform .25s ease, opacity .25s ease; }
@@ -893,6 +919,7 @@
     <section>
       <h2>Votre répartition</h2>
       <p class="muted">Calculée avec des durées courantes pour chaque tâche. Corrigez-les plus bas si elles ne collent pas chez vous : le résultat se met à jour en direct.<span id="note-garde"></span></p>
+      <div class="cmp" id="cmp" hidden></div>
       <p class="verdict" id="verdict"></p>
       <table class="resultats" id="cartes"></table>
       <div class="parcat" id="parcat"></div>
@@ -908,6 +935,7 @@
         <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce résultat à l'autre</button>
         <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce résultat.</p>
       </div>
+      <div class="cmp-invite" id="cmp-invite" hidden></div>
 <!-- en:retirer -->      <p class="parler"><strong>Avant d'en parler à deux.</strong> Une méthode en une soirée, testée chez nous et chez des amis : <a href="blog/parler-repartition-couple.html?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=parler" target="_blank" rel="noopener">comment parler du partage des tâches sans que ça finisse en dispute</a> (2 min de lecture).</p><!-- /en:retirer --><!-- en:parler -->
       <div class="comparer" id="comparer" hidden></div>
       <section class="avis" id="avis" aria-labelledby="avis-titre">
@@ -1172,6 +1200,19 @@
   const ORDRE_V2 = ["cuisiner", "vaisselle", "petit-dej", "courses", "produits-maison", "ranger", "cuisine-nettoyage", "sols", "sanitaires", "poubelles", "poussiere", "lits", "gros-nettoyage", "tri", "machines", "taches", "repassage", "gros-linge", "matin", "trajets", "gouter-devoirs", "coucher", "bain", "jouer", "garde", "malade", "ecole", "sante-enfants", "activites", "vetements-enfants", "mode-garde", "anniversaires-enfants", "ecrans-regles", "souvenirs", "factures", "papiers", "impots", "numerique", "employeur", "agenda", "amis", "cadeaux", "vacances", "parents-ages", "reparations", "plantes", "voiture", "chauffage", "animal-quotidien", "animal-suivi"];
   // état : { nomA, nomB, enfants, ecran, t: { id: {fait, pense, n, p, d} }, custom: [{id, cat, nom, aide}] }
   let S = load() || fresh();
+  // Prototype « chacun de son côté, puis on compare » (11/11/2026). Le lien d'invitation porte « ?comparer=a » (ou b : la
+  // personne qui a déjà rempli) et ses réponses. On les met de côté dans S.cmp, on vide les réponses, et la seconde personne
+  // remplit à l'aveugle ; son résultat affiche les deux regards. Les durées, le foyer et le profil sont repris.
+  (function invitation() {
+    const par = new URLSearchParams(location.search).get("comparer");
+    if (!/^[ab]$/.test(par || "") || !location.hash || S.cmp) return;
+    const rep = catTasks().map(t => lettre(S.t[t.id] || {})).join("").replace(/0+$/, "");
+    for (const t of catTasks()) Object.assign(S.t[t.id], { fait: null, pense: null, pf: undefined, pp: undefined });
+    S.custom = []; S.cmp = { par, rep, etat: "", repB: "" }; S.ecran = 2;
+    window.__cmpOuvert = true;   // mesuré une fois GA chargé
+    try { sessionStorage.setItem("saisie", par === "a" ? "b" : "a"); } catch (e) {}
+    history.replaceState(null, "", location.pathname + "#" + encode());
+  })();
   let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
 
   function fresh() {
@@ -1207,7 +1248,7 @@
     const vh = v => v === null || v === undefined ? "" : v, pro = vh(S.proA) === "" && vh(S.proB) === "" ? "" : vh(S.proA) + "_" + vh(S.proB);
     // numéro de foyer (30/10/2026) : champ 13, 32 caractères hexadécimaux tirés au hasard, relie les passages d'un même foyer dans l'étude
     // suivi médical d'un enfant (09/11/2026) : champ 14, « 1 » si la case est cochée ; jamais repris dans la copie de l'étude
-    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : "", S.recompo ? [S.recompo.aN, S.recompo.aP, S.recompo.bN, S.recompo.bP, S.recompo.cN].join("") : ""].join("~").replace(/~+$/, "");
+    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : "", S.recompo ? [S.recompo.aN, S.recompo.aP, S.recompo.bN, S.recompo.bP, S.recompo.cN].join("") : "", S.cmp ? S.cmp.par + S.cmp.rep + (S.cmp.etat ? "." + S.cmp.etat + S.cmp.repB : "") : ""].join("~").replace(/~+$/, "");
   }
   function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
@@ -1227,6 +1268,10 @@
     if (f[12]) { const [pa, pb] = f[12].split("_").map(borne); s.proA = pa === undefined ? null : pa; s.proB = pb === undefined ? null : pb; }   // travail rémunéré, 13/10/2026
     if (/^[0-9a-f]{32}$/.test(f[13] || "")) s.foyer = f[13];   // numéro de foyer, 30/10/2026
     s.suivi = f[14] === "1" ? 1 : 0;   // suivi médical d'un enfant, 09/11/2026
+    // « Chacun de son côté » (11/11/2026) : qui a rempli d'abord, ses réponses ; puis, une fois le pas à pas « ensemble »
+    // commencé (e) ou fini (c), les réponses de la seconde personne, gardées pour la comparaison.
+    const cm = /^([ab])([0-9a-z]*)(?:\.([ec])([0-9a-z]*))?$/.exec(f[16] || "");
+    if (cm) s.cmp = { par: cm[1], rep: cm[2], etat: cm[3] || "", repB: cm[4] || "" };
     if (/^[0-3][124][0-3][124][0-3]$/.test(f[15] || "")) { const v = f[15]; s.recompo = { aN: +v[0], aP: +v[1], bN: +v[2], bP: +v[3], cN: +v[4] }; }   // famille recomposée (prototype du 10/11/2026)
     return s;
   }
@@ -1318,6 +1363,7 @@
   function show(n) {
     S.ecran = n;
     if (n === 3) numeroFoyer();
+    if (n === 3 && S.cmp && S.cmp.etat === "e") { S.cmp.etat = "c"; save(); }
     document.querySelectorAll(".ecran").forEach((e, i) => e.classList.toggle("actif", i + 1 === n));
     document.querySelectorAll("#fil span").forEach((s, i) => { s.classList.toggle("on", i + 1 === n); s.classList.toggle("fait", i + 1 < n); if (i + 1 === n) s.setAttribute("aria-current", "step"); else s.removeAttribute("aria-current"); });
     document.getElementById("suivi").classList.toggle("on", n === 2);
@@ -1335,6 +1381,10 @@
     root.innerHTML = "";
     const e2 = document.getElementById("e2");
     e2.classList.toggle("un", PAP.mode === "un");
+    if (S.cmp && S.cmp.etat !== "c") { const b = document.createElement("div"); b.className = "cmp-bandeau"; const p1 = S.cmp.par === "a" ? nomA() : nomB();
+      b.innerHTML = S.cmp.etat === "e" ? `<strong>Ensemble, tâche par tâche.</strong> Seulement celles où vos réponses différaient : pour chacune, mettez-vous d'accord, puis répondez.`
+        : `<strong>${p1} a fait le point de son côté.</strong> À vous maintenant : répondez sans regarder ses réponses. Vous comparerez vos deux regards à la fin.`; root.appendChild(b); }
+    if (S.cmp && S.cmp.etat === "e") PAP.mode = "un";
     if (PAP.mode === "un") return renderUn(root);
     e2.classList.remove("fin");
     document.getElementById("suiviBtn").classList.remove("cache");
@@ -1465,13 +1515,13 @@
     return d;
   }
   function renderUn(root) {
-    const list = allTasks(), n = list.length, e2 = document.getElementById("e2");
+    const list = listePap(), n = list.length, e2 = document.getElementById("e2");
     PAP.i = Math.max(0, Math.min(PAP.i, n));
     e2.classList.toggle("fin", PAP.i >= n);
     // Retour du 11/11/2026 (accord de l'étude tombé de 98 % à 81 %) : en mode une tâche à la fois, « Voir le résultat »
     // de la barre du bas n'apparaît qu'une fois toutes les tâches passées ; avant, on l'ouvrait en cours de route.
     document.getElementById("suiviBtn").classList.toggle("cache", PAP.i < n);
-    root.appendChild(modePap());
+    if (!(S.cmp && S.cmp.etat === "e")) root.appendChild(modePap());
     const carte = document.createElement("div"); carte.className = "pap"; root.appendChild(carte);
     if (PAP.i >= n) {
       const faites = list.filter(t => S.t[t.id] && S.t[t.id].fait).length;
@@ -1489,6 +1539,7 @@
     carte.innerHTML = `<div class="pap-haut"><span>${t.catNom}${fi === 0 ? "" : ` · ${fi + 1} sur ${dansFam.length}`}</span><span>${PAP.i + 1} / ${n}</span></div>
       <div class="pap-prog"><i style="width:${100 * PAP.i / n}%"></i></div>
       <h3 class="pap-nom">${t.nom}</h3>${t.aide ? `<p class="pap-aide">${t.aide}</p>` : `<p class="pap-aide"></p>`}
+      ${S.cmp && S.cmp.etat === "e" ? avantEnsemble(t) : ""}
       <p class="pap-q">Qui s'en occupe ?</p>`;
     carte.appendChild(choixPap(st.fait, false, k => { st.fait = k; st.pense = null; renderCatalogue(); update(); }));
     if (st.fait) {
@@ -1561,6 +1612,96 @@
     peindre();
   }
 
+
+
+  /* ---------- chacun de son côté, puis on compare (11/11/2026) ---------- */
+  // Réponses d'une personne à partir des lettres du lien, dans l'ordre du catalogue.
+  function reponsesDe(lettres) { const o = {}; catTasks().forEach((t, i) => { o[t.id] = delettre(lettres[i]); }); return o; }
+  function lettresDe(t0) { return catTasks().map(t => lettre(t0[t.id] || {})).join("").replace(/0+$/, ""); }
+  // Résultat calculé avec d'autres réponses que celles de la page, mêmes durées et même foyer.
+  function computeAvec(rep) {
+    const garde = S;
+    S = { ...garde, t: Object.fromEntries(Object.entries(garde.t).map(([id, st]) => [id, { ...st, ...(rep[id] || { fait: null, pense: null }), pf: undefined, pp: undefined }])) };
+    try { return compute(); } finally { S = garde; }
+  }
+  // Tâches où les deux regards diffèrent (qui s'en occupe ou qui y pense).
+  function ecarts(rA, rB) {
+    return allTasks().filter(t => { const a = rA[t.id], b = rB[t.id]; return a && b && a.fait && b.fait && (a.fait !== b.fait || penseOf(a) !== penseOf(b)); })
+      .sort((u, v) => hj(S.t[v.id], v.id) - hj(S.t[u.id], u.id));
+  }
+  // Pas à pas « ensemble » : seulement les tâches en désaccord.
+  function listePap() {
+    if (!S.cmp || S.cmp.etat !== "e") return allTasks();
+    const ids = new Set(ecarts(reponsesDe(S.cmp.rep), reponsesDe(S.cmp.repB)).map(t => t.id));
+    return allTasks().filter(t => ids.has(t.id));
+  }
+
+  function avantEnsemble(t) {
+    const p1 = S.cmp.par === "a" ? nomA() : nomB(), p2 = S.cmp.par === "a" ? nomB() : nomA();
+    const a = reponsesDe(S.cmp.rep)[t.id], b = reponsesDe(S.cmp.repB)[t.id];
+    const fait = k => k === "other" ? "quelqu'un d'autre s'en occupe" : k === "both" ? "les deux s'en occupent" : `${label(k)} s'en occupe`;
+    const pense = k => k === "other" ? "quelqu'un d'autre y pense" : k === "both" ? "les deux y pensent" : `${label(k)} y pense`;
+    const dit = x => cap(fait(x.fait)) + ", " + pense(penseOf(x));
+    return `<p class="cmp-avant"><span>${p1} : ${dit(a)}</span><span>${p2} : ${dit(b)}</span></p>`;
+  }
+  function cap(x) { return x.charAt(0).toUpperCase() + x.slice(1); }
+  function renderCmp(rCour) {
+    const inv = document.getElementById("cmp-invite"), box = document.getElementById("cmp");
+    let qui = ""; try { qui = sessionStorage.getItem("saisie") || ""; } catch (e) {}
+    if (!S.cmp) {
+      box.hidden = true;
+      if (qui === "2") { inv.hidden = true; return; }   // rempli à deux : rien à comparer
+      const moi = qui === "b" ? "b" : "a", autre = moi === "a" ? nomB() : nomA();
+      inv.hidden = false;
+      inv.innerHTML = `<h3>Et selon ${autre} ?</h3><p>Chacun voit d'abord ce qu'il fait. Envoyez le questionnaire à ${autre} : ${autre} répond de son côté, sans voir vos réponses, et vous comparez vos deux regards à la fin.</p>
+        <button class="btn" type="button" id="cmp-inviter">Inviter ${autre} à répondre</button><p class="ok" id="cmp-ok" hidden></p>`;
+      inv.querySelector("#cmp-inviter").addEventListener("click", async () => {
+        const url = location.origin + location.pathname + "?comparer=" + moi + "#" + encode(), ok = inv.querySelector("#cmp-ok");
+        if (window.__ga) gtag("event", "comparer_invite");
+        try { if (navigator.share) { await navigator.share({ title: "Qui y pense ?", text: "À ton tour de répondre, de ton côté. On compare après.", url }); return; } } catch (e) { if (e && e.name === "AbortError") return; }
+        try { await navigator.clipboard.writeText(url); ok.textContent = `Lien copié : envoyez-le à ${autre}.`; } catch (e) { ok.textContent = url; }
+        ok.hidden = false;
+      });
+      return;
+    }
+    inv.hidden = true;
+    const p1 = S.cmp.par === "a" ? nomA() : nomB(), p2 = S.cmp.par === "a" ? nomB() : nomA();
+    const repA = reponsesDe(S.cmp.rep), repB = S.cmp.repB ? reponsesDe(S.cmp.repB) : S.t;
+    const r1 = computeAvec(repA), r2 = S.cmp.repB ? computeAvec(repB) : rCour;
+    const part = (r, k) => { const t = k === "h" ? r.a.h + r.b.h : r.a.nPense + r.b.nPense; return t ? Math.round(100 * (k === "h" ? r.a.h : r.a.nPense) / t) : 50; };
+    const bar = v => `<div class="bar" role="img" aria-label="${nomA()} ${v} %, ${nomB()} ${100 - v} %"><i class="ia" style="width:${v}%">${v >= 24 ? nomA() + " " + v + " %" : ""}</i><i class="ib" style="width:${100 - v}%">${100 - v >= 24 ? (100 - v) + " % " + nomB() : ""}</i></div>`;
+    const commune = S.cmp.etat === "c";
+    const bloc = (titre, k) => `<div class="cmp-bloc"><h4>${titre}</h4><div class="ligne"><span>Selon ${p1}</span>${bar(part(r1, k))}</div><div class="ligne"><span>Selon ${p2}</span>${bar(part(r2, k))}</div>${commune ? `<div class="ligne"><span><strong>Ensemble</strong></span>${bar(part(rCour, k))}</div>` : ""}</div>`;
+    const diff = ecarts(repA, repB), tous = allTasks().filter(t => repA[t.id] && repA[t.id].fait && repB[t.id] && repB[t.id].fait).length;
+    box.hidden = false;
+    if (commune) {
+      box.innerHTML = `<h3>Votre version commune</h3><p>Vous aviez répondu chacun de votre côté, puis vous vous êtes mis d'accord sur les ${diff.length} tâches où vos réponses différaient. Le résultat ci-dessous est le vôtre, à deux.</p>
+        ${bloc("La charge mentale, les choses à garder en tête", "q")}${bloc("Le temps à faire", "h")}`;
+      return;
+    }
+    const cel = (a, b) => `<span class="${a === b ? "" : "ecart"}">${cap(label(a))}</span>`;
+    const li = t => { const a = repA[t.id], b = repB[t.id];
+      return `<li><span class="t">${t.nom}</span><div class="g"><span></span><span class="h">S'en occupe</span><span class="h">Y pense</span>
+        <span>Selon ${p1}</span>${cel(a.fait, b.fait)}${cel(penseOf(a), penseOf(b))}<span>Selon ${p2}</span>${cel(b.fait, a.fait)}${cel(penseOf(b), penseOf(a))}</div></li>`; };
+    box.innerHTML = `<h3>Vos deux regards</h3><p>${p1} et ${p2} ont répondu chacun de leur côté. Personne ne ment : chacun voit d'abord ce qu'il fait, et une partie de ce que fait l'autre.</p>
+      ${bloc("La charge mentale, les choses à garder en tête", "q")}${bloc("Le temps à faire", "h")}
+      <p class="cmp-accord">Vous êtes d'accord sur ${tous - diff.length} tâches sur ${tous}.</p>
+      ${diff.length ? `<p class="muted small">Les ${diff.length} autres, de la plus longue à la plus courte : c'est par elles que la conversation est la plus utile.</p>
+      <ul>${diff.slice(0, 6).map(li).join("")}</ul>${diff.length > 6 ? `<details><summary>Voir les ${diff.length - 6} autres</summary><ul>${diff.slice(6).map(li).join("")}</ul></details>` : ""}
+      <p class="suite">Le résultat ci-dessous est celui de ${p2}. Pour obtenir le vôtre, à deux, reprenez ensemble ces ${diff.length} tâches, et seulement elles.</p>
+      <button class="btn" type="button" id="cmp-ensemble">Faire le point ensemble sur ces ${diff.length} tâches</button>`
+      : `<p class="suite">Vous voyez les choses de la même façon : le résultat ci-dessous est le vôtre.</p>`}`;
+    const go = box.querySelector("#cmp-ensemble");
+    if (go) go.addEventListener("click", () => {
+      S.cmp.repB = lettresDe(S.t); S.cmp.etat = "e";
+      for (const t of diff) Object.assign(S.t[t.id], { fait: null, pense: null, pf: undefined, pp: undefined });
+      try { sessionStorage.setItem("saisie", "2"); } catch (e) {}
+      etude.relancer();
+      if (window.__ga) gtag("event", "comparer_ensemble", { ecarts: diff.length });
+      PAP.mode = "un"; PAP.i = 0; save(); show(2);
+    });
+  }
+
   /* ---------- écran 3 ---------- */
   // Total avec le travail payé (demande du 10/11/2026) : sous le temps à faire, dès le premier affichage, maison par
   // semaine plus heures de travail payé ; une personne sans heures indiquées compte 0 h, avec un lien vers la saisie.
@@ -1622,6 +1763,7 @@
     txt += " Un point de départ pour en parler.";
     L.textContent = txt;
     renderReeq(r);
+    renderCmp(r);
     renderComparer(r);
     renderPro(r);
     renderBudget(r);
@@ -2292,6 +2434,13 @@
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermerModale(m); });   // échap : on referme, on reste sur la liste
     return {
       dejaPasse: () => passe,   // accepté dans cet onglet, envoi fait ou impossible : on ne redemande pas
+      // Version commune (11/11/2026) : un nouveau résultat, donc une nouvelle copie, sous le même numéro de foyer. La copie de
+      // la seconde personne n'est plus mise à jour : sa perception reste telle qu'elle l'a donnée.
+      relancer: () => {
+        envoye = false; passe = false; jetonTs = null;
+        try { sessionStorage.removeItem("etude-maj"); } catch (e) {}
+        if (widget !== null && window.turnstile) { try { window.turnstile.reset(widget); } catch (e) {} }
+      },
       demander: () => {
         document.querySelectorAll("[data-profil-nom]").forEach(e => { const n = (e.dataset.profilNom === "a" ? S.nomA : S.nomB) || ""; e.textContent = n.trim() || (e.dataset.profilNom === "a" ? "Prénom 1" : "Prénom 2"); });
         ouvrirModale(m, oui); verifier(); if (window.__ga) gtag("event", "etude_demandee");
