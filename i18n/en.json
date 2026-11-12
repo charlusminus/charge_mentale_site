@@ -516,7 +516,7 @@
    ""
   ],
   [
-   "<nav class=\"pied-nav\" aria-label=\"Pied de page\"><a href=\"en/\" hreflang=\"en-GB\" lang=\"en-GB\">English</a><a href=\"blog/\">Blog</a><a href=\"presse/\">Presse</a><a href=\"charte/\">Charte</a><a href=\"avis/\">Votre avis</a><a href=\"soutenir/?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir\"><span class=\"bmc-emoji\" aria-hidden=\"true\">🙏</span>Soutenir</a><button type=\"button\" id=\"pied-partager\" aria-expanded=\"false\" aria-controls=\"pied-partage\"><svg aria-hidden=\"true\"><use href=\"#i-partager\"/></svg>Partager le site</button></nav>",
+   "<nav class=\"pied-nav\" aria-label=\"Pied de page\"><a href=\"en/\" hreflang=\"en-GB\" lang=\"en-GB\">English</a><a href=\"blog/\">Blog</a><a href=\"presse/\">Presse</a><a href=\"charte/\">Charte</a><a href=\"soutenir/?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir\"><span class=\"bmc-emoji\" aria-hidden=\"true\">🙏</span>Soutenir</a><button type=\"button\" id=\"pied-partager\" aria-expanded=\"false\" aria-controls=\"pied-partage\"><svg aria-hidden=\"true\"><use href=\"#i-partager\"/></svg>Partager le site</button></nav>",
    "<nav class=\"pied-nav\" aria-label=\"Footer\"><a href=\"../\" hreflang=\"fr\" lang=\"fr\">Français</a><a href=\"blog/\">Blog</a><a href=\"https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir\" target=\"_blank\" rel=\"noopener\"><span class=\"bmc-emoji\" aria-hidden=\"true\">🙏</span>Support</a><button type=\"button\" id=\"pied-partager\" aria-expanded=\"false\" aria-controls=\"pied-partage\"><svg aria-hidden=\"true\"><use href=\"#i-partager\"/></svg>Share the site</button></nav>"
   ],
   [
