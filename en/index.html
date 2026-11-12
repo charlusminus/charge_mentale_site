@@ -817,7 +817,7 @@
         <p class="dem-titre">And at home?</p>
       <div class="prenoms foyer">
         <div class="enfants">
-          <label for="enfants">Children at home</label>
+          <label for="enfants">Children at home (dependent)</label>
           <select id="enfants"><option value="0">None</option><option value="1">1</option><option value="2">2</option><option value="3">3 or more</option><option value="r">Blended family</option></select>
         </div>
         <div class="enfants">
@@ -2128,7 +2128,7 @@
       ["Hours a week spent doing", +(r.a.h * 7).toFixed(1), +(r.b.h * 7).toFixed(1)],
       ["Tasks done", r.a.nFait, r.b.nFait],
       ["Tasks to keep in mind", r.a.nPense, r.b.nPense],
-      [], ["Children at home", S.enfants], ["Pets", S.animaux ? "yes" : "no"], ["Generated on", new Date().toLocaleDateString("en-GB")], ["Source", "quiypense.org/en, default durations from the INSEE time-use survey 2010 (France) and Fair Play"]];
+      [], ["Children at home (dependent)", S.enfants], ["Pets", S.animaux ? "yes" : "no"], ["Generated on", new Date().toLocaleDateString("en-GB")], ["Source", "quiypense.org/en, default durations from the INSEE time-use survey 2010 (France) and Fair Play"]];
     const nomFichier = `who-thinks-of-it-${(nomA() + "-" + nomB()).toLowerCase().replace(/[^a-z0-9-]+/g, "")}`;
     try {
       const X = await loadXlsx();

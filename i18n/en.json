@@ -200,8 +200,8 @@
    "title=\"Prefer not to say\"><span aria-hidden=\"true\">n/a</span><span class=\"sr\">Prefer not to say</span>"
   ],
   [
-   "<label for=\"enfants\">Enfants à la maison</label>",
-   "<label for=\"enfants\">Children at home</label>"
+   "<label for=\"enfants\">Enfants à la maison (à charge)</label>",
+   "<label for=\"enfants\">Children at home (dependent)</label>"
   ],
   [
    "<option value=\"0\">Aucun</option>",
@@ -1180,8 +1180,8 @@
    "[\"Tasks to keep in mind\", r.a.nPense"
   ],
   [
-   "[], [\"Enfants à la maison\", S.enfants], [\"Animaux\", S.animaux ? \"oui\" : \"non\"], [\"Généré le\", new Date().toLocaleDateString(\"fr-FR\")], [\"Source\", \"quiypense.org, durées par défaut INSEE Emploi du temps 2010 et Fair Play\"]];",
-   "[], [\"Children at home\", S.enfants], [\"Pets\", S.animaux ? \"yes\" : \"no\"], [\"Generated on\", new Date().toLocaleDateString(\"en-GB\")], [\"Source\", \"quiypense.org/en, default durations from the INSEE time-use survey 2010 (France) and Fair Play\"]];"
+   "[], [\"Enfants à la maison (à charge)\", S.enfants], [\"Animaux\", S.animaux ? \"oui\" : \"non\"], [\"Généré le\", new Date().toLocaleDateString(\"fr-FR\")], [\"Source\", \"quiypense.org, durées par défaut INSEE Emploi du temps 2010 et Fair Play\"]];",
+   "[], [\"Children at home (dependent)\", S.enfants], [\"Pets\", S.animaux ? \"yes\" : \"no\"], [\"Generated on\", new Date().toLocaleDateString(\"en-GB\")], [\"Source\", \"quiypense.org/en, default durations from the INSEE time-use survey 2010 (France) and Fair Play\"]];"
   ],
   [
    "`qui-y-pense-${",
