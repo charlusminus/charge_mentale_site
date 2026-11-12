@@ -408,7 +408,7 @@
    "<h2>Your split</h2>"
   ],
   [
-   "<p class=\"muted\">Calculée avec des durées courantes pour chaque tâche. Corrigez-les plus bas si elles ne collent pas chez vous : le résultat se met à jour en direct.<span id=\"note-garde\"></span></p>",
+   "<p class=\"muted\">Calculée avec des durées courantes pour chaque tâche. Corrigez-les plus bas si elles ne collent pas chez vous&nbsp;: le résultat se met à jour en direct.<span id=\"note-garde\"></span></p>",
    "<p class=\"muted\">Calculated with typical durations for each task. Adjust them further down if they do not match your home: the result updates as you go.<span id=\"note-garde\"></span></p>"
   ],
   [
