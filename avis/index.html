@@ -56,72 +56,15 @@
 <main class="article">
   <p class="fil"><a href="/">Qui y pense&nbsp;?</a> › Votre avis</p>
   <h1>Votre avis</h1>
-  <p class="chapo">Une note, et un mot si vous voulez. C'est anonyme, et ça nous aide à améliorer le site.</p>
-
-  <form id="avis-form" novalidate>
-    <fieldset>
-      <legend>Recommanderiez-vous Qui y pense&nbsp;? à un couple autour de vous&nbsp;?</legend>
-      <div class="note" id="note" role="group" aria-label="Note de 0 à 10"></div>
-      <div class="bornes" aria-hidden="true"><span>0 : pas du tout</span><span>10 : tout à fait</span></div>
-    </fieldset>
-    <label class="mot">Un mot, une idée, ce qui manque <span>(facultatif, pas de prénom, merci)</span>
-      <textarea id="mot" maxlength="600" rows="5"></textarea></label>
-    <div id="cf-avis"></div>
-    <div class="envoi"><button type="submit" id="envoyer">Envoyer mon avis</button><span class="etat" id="etat" aria-live="polite"></span></div>
-  </form>
-  <p class="date">Ce qui est gardé&nbsp;: la note, le mot (adresses e-mail et numéros de téléphone retirés) et la date. Ni prénom, ni adresse
-    IP. Voir <a href="/charte/">la charte</a>.</p>
+  <p class="chapo">Les avis se donnent juste après avoir fait le point, sous votre résultat&nbsp;: c'est là qu'ils nous
+    apprennent le plus. Merci d'y penser à ce moment-là.</p>
+  <p><a class="btn" href="/">Faire le point</a></p>
+  <p class="date">Une question, une idée&nbsp;: <a href="mailto:contact@quiypense.org">contact@quiypense.org</a>.</p>
 </main>
 
 <footer class="pied">
-  <p>Qui y pense&nbsp;? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. <a href="/">Faire le point</a> · <a href="/blog/">Blog</a> · <a href="/presse/">Presse</a> · <a href="/charte/">Charte</a> · <a href="/avis/">Votre avis</a> · <a href="/soutenir/">Soutenir</a> · <a href="mailto:contact@quiypense.org">contact@quiypense.org</a> · <a href="#cookies" data-cookies>Cookies</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/conditions/">Conditions</a></p>
+  <p>Qui y pense&nbsp;? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. <a href="/">Faire le point</a> · <a href="/blog/">Blog</a> · <a href="/presse/">Presse</a> · <a href="/charte/">Charte</a> · <a href="/soutenir/">Soutenir</a> · <a href="mailto:contact@quiypense.org">contact@quiypense.org</a> · <a href="#cookies" data-cookies>Cookies</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/conditions/">Conditions</a></p>
 </footer>
-<script>
-  // Page « Votre avis » (01/11/2026), ouverte depuis le pied de page : même envoi que l'avis de la page du résultat
-  // (Apps Script de l'étude, type « avis », contexte « page »), sans lien avec un résultat.
-  (function () {
-    const ETUDE_URL = "https://script.google.com/macros/s/AKfycbyk8TDF1GhBwTm6lantMqRlig0cPWCFl3j2yC4ow_5Qknlxvd0Jmf-F_4dTEJqneFlJ/exec";
-    const SITEKEY = "0x4AAAAAAE-qa9jJxGWCyc5B";
-    const form = document.getElementById("avis-form"), notes = document.getElementById("note"), mot = document.getElementById("mot");
-    const bouton = document.getElementById("envoyer"), etat = document.getElementById("etat");
-    let note = "", jeton = null, attend = false, charge = false;
-    for (let i = 0; i <= 10; i++) {
-      const b = document.createElement("button"); b.type = "button"; b.value = String(i); b.textContent = i; b.setAttribute("aria-pressed", "false");
-      notes.appendChild(b);
-    }
-    function turnstile() {
-      if (charge) return; charge = true;
-      window.__avisPret = () => {
-        window.turnstile.render("#cf-avis", { sitekey: SITEKEY, action: "avis", language: "fr", theme: "light", size: "flexible", appearance: "interaction-only",
-          callback: t => { jeton = t; if (attend) { attend = false; envoyer(); } },
-          "expired-callback": () => { jeton = null; },
-          "error-callback": () => { if (attend) { attend = false; bouton.disabled = false; etat.textContent = "Envoi impossible pour l'instant. Réessayez plus tard."; } return true; } });
-      };
-      const sc = document.createElement("script"); sc.async = true;
-      sc.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__avisPret&render=explicit";
-      sc.onerror = () => { charge = false; if (attend) { attend = false; bouton.disabled = false; etat.textContent = "Envoi impossible pour l'instant (vérification anti-robot bloquée)."; } };
-      document.head.appendChild(sc);
-    }
-    notes.addEventListener("click", e => {
-      const b = e.target.closest("button"); if (!b) return;
-      note = b.value; notes.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); turnstile();
-    });
-    mot.addEventListener("focus", turnstile);
-    function envoyer() {
-      const data = new URLSearchParams({ type: "avis", contexte: "page", note, aide: "", texte: mot.value.trim().slice(0, 600), foyer: "",
-        source: new URLSearchParams(location.search).get("utm_source") || "", page: location.origin + location.pathname, "cf-turnstile-response": jeton });
-      jeton = null;
-      try { fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true, mode: "no-cors", credentials: "omit" }).catch(() => {}); } catch (e) {}
-      if (window.__ga) gtag("event", "avis_envoye", { contexte: "page", note: note === "" ? "aucune" : note, aide: "aucune" });
-      form.outerHTML = '<p class="merci">Merci pour votre avis.</p>';
-    }
-    form.addEventListener("submit", e => {
-      e.preventDefault();
-      if (note === "" && !mot.value.trim()) { etat.textContent = "Choisissez une note ou écrivez un mot."; return; }
-      if (!jeton) { attend = true; bouton.disabled = true; etat.textContent = "Vérification anti-robot…"; turnstile(); return; }
-      envoyer();
-    });
-  })();
-</script>
+<!-- Formulaire retiré le 12/11/2026 : les avis ne se donnent plus que sous le résultat (avis de la page sans questionnaire = bruit). -->
 </body>
 </html>
