@@ -817,7 +817,7 @@
         <p class="dem-titre">Et chez vous ?</p>
       <div class="prenoms foyer">
         <div class="enfants">
-          <label for="enfants">Enfants à la maison</label>
+          <label for="enfants">Enfants à la maison (à charge)</label>
           <select id="enfants"><option value="0">Aucun</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option><option value="r">Famille recomposée</option></select>
         </div>
         <div class="enfants">
@@ -2132,7 +2132,7 @@
       ["Heures par semaine à faire", +(r.a.h * 7).toFixed(1), +(r.b.h * 7).toFixed(1)],
       ["Tâches faites", r.a.nFait, r.b.nFait],
       ["Tâches à garder en tête", r.a.nPense, r.b.nPense],
-      [], ["Enfants à la maison", S.enfants], ["Animaux", S.animaux ? "oui" : "non"], ["Généré le", new Date().toLocaleDateString("fr-FR")], ["Source", "quiypense.org, durées par défaut INSEE Emploi du temps 2010 et Fair Play"]];
+      [], ["Enfants à la maison (à charge)", S.enfants], ["Animaux", S.animaux ? "oui" : "non"], ["Généré le", new Date().toLocaleDateString("fr-FR")], ["Source", "quiypense.org, durées par défaut INSEE Emploi du temps 2010 et Fair Play"]];
     const nomFichier = `qui-y-pense-${(nomA() + "-" + nomB()).toLowerCase().replace(/[^a-z0-9-]+/g, "")}`;
     try {
       const X = await loadXlsx();
