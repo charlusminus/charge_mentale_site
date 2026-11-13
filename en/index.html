@@ -821,6 +821,16 @@
   .pap-note { margin: -.8rem 0 1.2rem; padding: .55rem .8rem; border-radius: var(--r); background: var(--bg-2); font-size: .85rem; color: var(--muted); }
   /* heures de garde saisies dès la première réponse (13/11/2026) */
   .h-saisies { display: grid; gap: .6rem; margin: 0 0 1.2rem; }
+  .repas-q { margin: 0 0 1.2rem; padding: .8rem .9rem .7rem; border-radius: var(--r); background: var(--bg-2); }
+  .repas-lbl { margin: 0 0 .35rem; font-size: .85rem; font-weight: 600; }
+  .choix-mini { display: flex; flex-wrap: wrap; gap: .35rem; margin: 0 0 .75rem; }
+  .choix-mini button { min-height: 40px; padding: .35rem .75rem; border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper); font: inherit; font-size: .88rem; color: var(--ink); cursor: pointer; }
+  .choix-mini button:hover { border-color: var(--border); }
+  .choix-mini button[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+  .repas-temps { margin: 0; font-size: .82rem; color: var(--muted); }
+  .tache .repas-q { margin: .5rem 0 0; max-width: 520px; }
+  .choix-mini button { flex: 1 1 0; min-width: 0; }
+  @media (max-width: 520px) { .choix-mini { flex-wrap: nowrap; } .choix-mini button { min-height: 44px; padding: .35rem .3rem; font-size: .85rem; } }
   .h-saisie { display: flex; align-items: center; gap: .5rem; font-size: .95rem; }
   .h-saisie span { flex: 1; }
   .h-saisie small { display: block; color: var(--muted); font-size: .82rem; }
@@ -1410,7 +1420,7 @@
   let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
 
   function fresh() {
-    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, suivi: 0, presence: 0, ageP: "", recompo: null, ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null, foyer: "" };   // foyer : numéro tiré au hasard au premier résultat (30/10/2026) ; proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
+    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, suivi: 0, presence: 0, ageP: "", midi: "", effort: "", recompo: null, ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null, foyer: "" };   // foyer : numéro tiré au hasard au premier résultat (30/10/2026) ; proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
     for (const cat of C.categories) for (const t of cat.taches) s.t[t.id] = { fait: null, pense: null, n: t.n, p: t.periode, d: t.duree };
     return s;
   }
@@ -1445,7 +1455,7 @@
     const vh = v => v === null || v === undefined ? "" : v, pro = vh(S.proA) === "" && vh(S.proB) === "" ? "" : vh(S.proA) + "_" + vh(S.proB);
     // numéro de foyer (30/10/2026) : champ 13, 32 caractères hexadécimaux tirés au hasard, relie les passages d'un même foyer dans l'étude
     // suivi médical d'un enfant (09/11/2026) : champ 14, « 1 » si la case est cochée ; jamais repris dans la copie de l'étude
-    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : "", S.recompo ? [S.recompo.aN, S.recompo.aP, S.recompo.bN, S.recompo.bP, S.recompo.cN].join("") : "", S.cmp ? S.cmp.par + S.cmp.rep + (S.cmp.etat ? "." + S.cmp.etat + S.cmp.repB : "") : "", S.presence ? esc(S.presence) : "", S.ageP].join("~").replace(/~+$/, "");   // 17 : heures de simple présence auprès des enfants par semaine (13/11/2026)
+    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : "", S.recompo ? [S.recompo.aN, S.recompo.aP, S.recompo.bN, S.recompo.bP, S.recompo.cN].join("") : "", S.cmp ? S.cmp.par + S.cmp.rep + (S.cmp.etat ? "." + S.cmp.etat + S.cmp.repB : "") : "", S.presence ? esc(S.presence) : "", S.ageP, S.midi, S.effort].join("~").replace(/~+$/, "");   // 17 : heures de simple présence auprès des enfants par semaine (13/11/2026)
   }
   function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
@@ -1466,6 +1476,7 @@
     if (/^[0-9a-f]{32}$/.test(f[13] || "")) s.foyer = f[13];   // numéro de foyer, 30/10/2026
     s.suivi = f[14] === "1" ? 1 : 0;
     { const p = parseFloat(unesc(f[17] || "")); s.presence = p > 0 ? Math.min(100, p) : 0; }
+    s.midi = /^(m|d)$/.test(f[19] || "") ? f[19] : ""; s.effort = /^(p|s|f)$/.test(f[20] || "") ? f[20] : "";   // repas : le midi en semaine, l'effort (13/11/2026)
     s.ageP = /^(0|3|6|11)$/.test(f[18] || "") ? f[18] : "";   // âge du plus jeune enfant (tranche), 13/11/2026   // simple présence auprès des enfants, 13/11/2026   // suivi médical d'un enfant, 09/11/2026
     // « Chacun de son côté » (11/11/2026) : qui a rempli d'abord, ses réponses ; puis, une fois le pas à pas « ensemble »
     // commencé (e) ou fini (c), les réponses de la seconde personne, gardées pour la comparaison.
@@ -1678,7 +1689,35 @@
   // attention compte dans le temps ; la simple présence (les grands sont là, on peut faire autre chose) ne s'ajoute pas
   // aux heures, pour ne pas compter deux fois la cuisine faite pendant ce temps, mais s'affiche à part.
   const HEURES_SAISIE = new Set(["garde"]);
+  // Repas (13/11/2026, avis « personne ne passe 1 h 40 par jour à préparer les repas ») : deux questions facultatives sur
+  // « S'occuper des repas » ajustent les durées par défaut de la cuisine et de la vaisselle, pour le foyer et par jour.
+  // Repères : CRÉDOC 2020, 64 min par jour de préparation pour les ménages qui cuisinent, 27 min pour un dîner de semaine ;
+  // INSEE 2010, 94 min par jour pour un couple, cuisine, vaisselle et table. Calibrage à faire relire (revue de littérature, point 14).
+  const REPAS = { cuisiner: { "": 70, p: 35, s: 60, f: 90 }, vaisselle: { "": 30, p: 20, s: 25, f: 35 } };
+  // Midi pris dehors en semaine : cinq déjeuners sur vingt et un repas de la semaine en moins, soit environ un quart de la
+  // cuisine ; la vaisselle baisse moins (le petit-déjeuner et le soir restent). Arrondi aux 5 minutes.
+  const REPAS_MIDI = { cuisiner: .75, vaisselle: .85 };
+  const repasDefaut = (id, midi, effort) => Math.round(REPAS[id][effort || ""] * (midi === "d" ? REPAS_MIDI[id] : 1) / 5) * 5;
+  function champRepas(t, st) {
+    const d = document.createElement("div"); d.className = "repas-q";
+    const b = (k, v, txt) => `<button type="button" value="${v}" aria-pressed="${S[k] === v}">${txt}</button>`;
+    d.innerHTML = `<p class="repas-lbl">Lunch on weekdays</p><div class="choix-mini" data-k="midi" role="group" aria-label="Lunch on weekdays">${b("midi", "m", "At home")}${b("midi", "d", "Out")}</div>
+      <p class="repas-lbl">Meals are usually</p><div class="choix-mini" data-k="effort" role="group" aria-label="Meals are usually">${b("effort", "p", "Ready-made")}${b("effort", "s", "Simple")}${b("effort", "f", "Home-made")}</div>
+      <p class="repas-temps"></p>`;
+    const temps = () => { d.querySelector(".repas-temps").textContent = `Suggested time for the two of you: ${hm(repasDefaut("cuisiner", S.midi, S.effort) / 60)} of cooking and ${hm(repasDefaut("vaisselle", S.midi, S.effort) / 60)} of washing-up a day. Optional, and you can change it under the result.`; };
+    d.querySelectorAll(".choix-mini").forEach(g => g.querySelectorAll("button").forEach(x => x.addEventListener("click", () => {
+      const k = g.dataset.k, avant = { midi: S.midi, effort: S.effort };
+      S[k] = S[k] === x.value ? "" : x.value;
+      for (const id of ["cuisiner", "vaisselle"]) { const s2 = S.t[id];
+        if (s2 && Math.abs(s2.n * s2.d / J[s2.p] - repasDefaut(id, avant.midi, avant.effort)) < .5) { s2.n = 1; s2.p = "jour"; s2.d = repasDefaut(id, S.midi, S.effort); } }
+      g.querySelectorAll("button").forEach(y => y.setAttribute("aria-pressed", String(S[k] === y.value)));
+      temps(); update();
+      if (window.__ga) gtag("event", "repas_reglage", { midi: S.midi || "vide", effort: S.effort || "vide" });
+    })));
+    temps(); return d;
+  }
   function champHeures(t, st) {
+    if (t.id === "cuisiner") return champRepas(t, st);
     if (!HEURES_SAISIE.has(t.id)) return null;
     const d = document.createElement("div"); d.className = "h-saisies";
     const v = Math.round(st.n * st.d / 60 * 7 / J[st.p] * 2) / 2;
@@ -2685,7 +2724,7 @@
         enfants: S.enfants, animaux: S.animaux ? 1 : 0, genre_a: S.genreA, genre_b: S.genreB, saisie: (() => { try { return sessionStorage.getItem("saisie") || ""; } catch (e) { return ""; } })(),
         taches_total: r.total, taches_renseignees: r.renseignees,
         heures_a: r.a.h.toFixed(3), heures_b: r.b.h.toFixed(3), part_temps_a: pct(r.a.h, r.b.h),
-        faites_a: r.a.nFait, faites_b: r.b.nFait, tete_a: r.a.nPense, tete_b: r.b.nPense, part_tete_a: pct(r.a.nPense, r.b.nPense), part_charge_a: pct(r.a.m, r.b.m), presence: S.presence || "", age_petit: S.enfants > 0 ? S.ageP : "",
+        faites_a: r.a.nFait, faites_b: r.b.nFait, tete_a: r.a.nPense, tete_b: r.b.nPense, part_tete_a: pct(r.a.nPense, r.b.nPense), part_charge_a: pct(r.a.m, r.b.m), presence: S.presence || "", age_petit: S.enfants > 0 ? S.ageP : "", repas_midi: S.midi || "", repas_effort: S.effort || "",
         reponses: champs[5] || "", reglages: champs[6] || "", partages: champs[10] || "",
         pro_a: S.proA ?? "", pro_b: S.proB ?? "",
         recompo: S.recompo ? champs[15] || "" : "",

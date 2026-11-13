@@ -1787,6 +1787,14 @@
   [
    "<p class=\"pap-note\">Le temps de chaque tâche part d'une moyenne pour un couple&nbsp;: vous l'ajusterez sous le résultat.</p>",
    "<p class=\"pap-note\">The time for each task starts from an average for a couple: you can adjust it under the result.</p>"
+  ],
+  [
+   "d.innerHTML = `<p class=\"repas-lbl\">Le midi, en semaine</p><div class=\"choix-mini\" data-k=\"midi\" role=\"group\" aria-label=\"Le midi, en semaine\">${b(\"midi\", \"m\", \"À la maison\")}${b(\"midi\", \"d\", \"Dehors\")}</div>\n      <p class=\"repas-lbl\">En général, les repas sont</p><div class=\"choix-mini\" data-k=\"effort\" role=\"group\" aria-label=\"En général, les repas sont\">${b(\"effort\", \"p\", \"Tout prêts\")}${b(\"effort\", \"s\", \"Simples\")}${b(\"effort\", \"f\", \"Faits maison\")}</div>\n      <p class=\"repas-temps\"></p>`;",
+   "d.innerHTML = `<p class=\"repas-lbl\">Lunch on weekdays</p><div class=\"choix-mini\" data-k=\"midi\" role=\"group\" aria-label=\"Lunch on weekdays\">${b(\"midi\", \"m\", \"At home\")}${b(\"midi\", \"d\", \"Out\")}</div>\n      <p class=\"repas-lbl\">Meals are usually</p><div class=\"choix-mini\" data-k=\"effort\" role=\"group\" aria-label=\"Meals are usually\">${b(\"effort\", \"p\", \"Ready-made\")}${b(\"effort\", \"s\", \"Simple\")}${b(\"effort\", \"f\", \"Home-made\")}</div>\n      <p class=\"repas-temps\"></p>`;"
+  ],
+  [
+   "textContent = `Temps proposé pour vous deux : ${hm(repasDefaut(\"cuisiner\", S.midi, S.effort) / 60)} de cuisine et ${hm(repasDefaut(\"vaisselle\", S.midi, S.effort) / 60)} de vaisselle par jour. Facultatif, et modifiable sous le résultat.`;",
+   "textContent = `Suggested time for the two of you: ${hm(repasDefaut(\"cuisiner\", S.midi, S.effort) / 60)} of cooking and ${hm(repasDefaut(\"vaisselle\", S.midi, S.effort) / 60)} of washing-up a day. Optional, and you can change it under the result.`;"
   ]
  ]
 }
