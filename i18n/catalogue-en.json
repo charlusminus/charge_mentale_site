@@ -43,7 +43,7 @@
     "bebe": { "nom": "Look after the baby", "aide": "breastfeeding or bottles, baby food, nappies and changing; ‘neither of us’ if there is no baby at home" },
     "nuits": { "nom": "Take care of the nights", "aide": "getting up for a child who wakes, a nightmare, a bottle, a poorly child" },
     "jouer": { "nom": "Play, go out, read with the children", "aide": "park, games, reading" },
-    "garde": { "nom": "Look after the children", "aide": "after school, at weekends, in the evenings: being the one who is there" },
+    "garde": { "nom": "Look after the children", "aide": "time when one of you is there for the children, with no school, nursery or childminder: a little one at home, after school, the holidays, evenings. Meals, bath time and bedtime are counted separately" },
     "malade": { "nom": "Look after a poorly child", "aide": "staying at home, the GP, medicine" },
 
     "ecole": { "nom": "Keep up with school admin", "aide": "home-school diary or app, emails, parents' evenings, school trips, forms to sign, school supplies" },

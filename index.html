@@ -724,6 +724,10 @@
   .pap-prog i { display: block; height: 100%; background: var(--ink); transition: width .25s; }
   .pap-nom { font-family: var(--serif); font-size: 1.75rem; line-height: 1.15; margin: 0 0 .4rem; font-weight: 500; }
   .pap-aide { color: var(--muted); margin: 0 0 1.4rem; font-size: .95rem; }
+  /* heures de garde saisies dès la première réponse (13/11/2026) */
+  .h-saisie { display: inline-flex; align-items: center; gap: .5rem; margin: 0 0 1.2rem; font-size: .95rem; }
+  .h-saisie input { width: 4.5rem; padding: .35rem .5rem; border: 1.5px solid var(--border); border-radius: var(--r); font: inherit; background: var(--paper); }
+  .tache .h-saisie { margin: .35rem 0 0; font-size: .85rem; }
   .pap-q { font-weight: 600; margin: .4rem 0 .6rem; }
   .pap-q small { display: block; font-weight: 400; color: var(--muted); font-size: .85rem; }
   .pap-choix { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .6rem; margin-bottom: 1.2rem; }
@@ -1220,7 +1224,7 @@
   <button class="btn" type="button" id="barre-envoyer" aria-haspopup="dialog">Partager à ma moitié</button>
 </div></div>
 
-<script src="catalogue.js?v=20261111"></script>
+<script src="catalogue.js?v=20261113"></script>
 <script src="reperes.js?v=20261112b"></script>
 <script>
   // bouton collant « Faire le point » : visible dès que le formulaire est sorti de l'écran par le haut
@@ -1558,10 +1562,24 @@
     }
   }
 
+  // Garde des enfants (avis du 12/11/2026 : « le temps de garde des petits à la maison n'est pas compté ») : le temps
+  // se saisit dès la première réponse, en heures par semaine, prérempli avec la valeur courante (3 h par défaut).
+  const HEURES_SAISIE = new Set(["garde"]);
+  function champHeures(t, st) {
+    if (!HEURES_SAISIE.has(t.id)) return null;
+    const l = document.createElement("label"); l.className = "h-saisie";
+    const v = Math.round(st.n * st.d / 60 * 7 / J[st.p] * 2) / 2;
+    l.innerHTML = `Combien d'heures de garde par semaine, en tout ? <input type="number" min="0" max="100" step="0.5" inputmode="decimal" value="${v}" aria-label="Heures de garde par semaine"> h`;
+    const i = l.querySelector("input");
+    i.addEventListener("input", () => { const h = Math.max(0, Math.min(100, +i.value || 0)); st.n = 1; st.p = "semaine"; st.d = Math.round(h * 60); update(); });
+    i.addEventListener("change", () => { if (window.__ga) gtag("event", "garde_heures", { heures: st.d / 60 }); });
+    return l;
+  }
   function renderTask(t) {
     const st = S.t[t.id];
     const el = document.createElement("div"); el.className = "tache";
     el.innerHTML = `<div class="txt"><span class="nom">${t.nom}</span>${t.aide ? `<span class="aide">${t.aide}</span>` : ""}</div>`;
+    const hs = champHeures(t, st); if (hs) el.querySelector(".txt").appendChild(hs);
     for (const k of WHO) {
       const c = document.createElement("button"); c.type = "button"; c.className = "case" + (st.fait === k ? " on-" + k : "");
       c.textContent = st.fait === k ? "✓" : glyphe(k); c.classList.add("g-" + k); c.setAttribute("aria-label", label(k)); c.title = label(k);
@@ -1645,6 +1663,7 @@
       <h3 class="pap-nom">${t.nom}</h3>${t.aide ? `<p class="pap-aide">${t.aide}</p>` : `<p class="pap-aide"></p>`}
       ${S.cmp && S.cmp.etat === "e" ? avantEnsemble(t) : ""}
       <p class="pap-q">Qui s'en occupe ?</p>`;
+    const hs = champHeures(t, st); if (hs) carte.insertBefore(hs, carte.querySelector(".pap-q"));
     carte.appendChild(choixPap(st.fait, false, k => { st.fait = k; st.pense = null; renderCatalogue(); update(); }));
     if (st.fait) {
       const q = document.createElement("p"); q.className = "pap-q";
