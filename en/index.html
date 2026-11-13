@@ -194,7 +194,6 @@
   .cmp-invite h3 { font-family: var(--serif); font-weight: 500; font-size: 1.3rem; margin: 0 0 .3rem; }
   .cmp-invite p { margin: 0 0 .9rem; color: var(--muted); }
   .cmp-invite .ok { margin: .6rem 0 0; font-size: .88rem; color: var(--ink); }
-  .cmp-invite .lien-envoi { display: block; margin: .9rem 0 0; padding: 0; border: 0; background: none; font: inherit; font-size: .92rem; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
   .envoi[hidden] { display: none; }
   .cmp { margin: 0 0 2rem; padding: 1.3rem 1.4rem; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; }
   .cmp h3 { font-family: var(--serif); font-weight: 500; font-size: 1.5rem; margin: 0 0 .3rem; }
@@ -1676,8 +1675,9 @@
   function renderCmp(rCour) {
     const inv = document.getElementById("cmp-invite"), box = document.getElementById("cmp");
     const envoiBloc = document.getElementById("envoi-bloc"), barre = document.getElementById("barre-envoyer");
-    // Un seul appel à l'action (retour du 11/11/2026) : si l'invitation est proposée, elle remplace « Envoyer ce résultat »
-    // (devenu un lien secondaire) et la barre collante l'ouvre ; sinon, l'envoi du résultat reste l'action principale.
+    // Partage d'abord (13/11/2026, retour sur la décision du 11/11) : « Send this result to your partner » et la barre
+    // « Partager à ma moitié » restent l'action principale dans tous les cas ; l'invitation à répondre de son côté
+    // vient en second. Avec l'invitation en premier, l'ouverture de l'envoi était passée de 21 % à 8 % des résultats.
     const barreTxt = document.querySelector("#barre-partage .texte");
     const actionEnvoi = () => { envoiBloc.hidden = false; barre.dataset.mode = ""; barre.textContent = "Share with my other half"; barreTxt.textContent = "This result is best read together."; };
     let qui = ""; try { qui = sessionStorage.getItem("saisie") || ""; } catch (e) {}
@@ -1687,10 +1687,8 @@
       const moi = qui === "b" ? "b" : "a", autre = moi === "a" ? nomB() : nomA();
       inv.hidden = false;
       inv.innerHTML = `<h3>And according to ${autre}?</h3><p>Each of us sees what we do first. Send the questionnaire to ${autre}: ${autre} answers on their own, without seeing your answers, and you compare your two views at the end.</p>
-        <button class="btn" type="button" id="cmp-inviter">Invite ${autre} to answer</button><p class="ok" id="cmp-ok" hidden></p>
-        <button type="button" class="lien-envoi" id="cmp-envoi">or simply send them your result</button>`;
-      envoiBloc.hidden = true; barre.dataset.mode = "inviter"; barre.textContent = `Invite ${autre}`; barreTxt.textContent = `And according to ${autre}?`;
-      inv.querySelector("#cmp-envoi").addEventListener("click", () => document.getElementById("envoyer").click());
+        <button class="btn secondary" type="button" id="cmp-inviter">Invite ${autre} to answer</button><p class="ok" id="cmp-ok" hidden></p>`;
+      actionEnvoi();
       inv.querySelector("#cmp-inviter").addEventListener("click", async () => {
         const url = location.origin + location.pathname + "?comparer=" + moi + "#" + encode(), ok = inv.querySelector("#cmp-ok");
         if (window.__ga) gtag("event", "comparer_invite");

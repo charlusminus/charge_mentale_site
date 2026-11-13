@@ -1668,14 +1668,6 @@
    "barre.textContent = \"Share with my other half\"; barreTxt.textContent = \"This result is best read together.\"; };"
   ],
   [
-   "<button type=\"button\" class=\"lien-envoi\" id=\"cmp-envoi\">ou lui envoyer directement votre résultat</button>`;",
-   "<button type=\"button\" class=\"lien-envoi\" id=\"cmp-envoi\">or simply send them your result</button>`;"
-  ],
-  [
-   "barre.textContent = `Inviter ${autre}`; barreTxt.textContent = `Et selon ${autre} ?`;",
-   "barre.textContent = `Invite ${autre}`; barreTxt.textContent = `And according to ${autre}?`;"
-  ],
-  [
    "<summary>Il manque quelque chose chez vous ? Ajoutez une tâche</summary>",
    "<summary>Something missing in your home? Add a task</summary>"
   ],
