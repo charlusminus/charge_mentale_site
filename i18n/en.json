@@ -24,7 +24,8 @@
   "vous${v",
   "vous${v < 15 ?",
   "${semaine(x.h)}",
-  "; try { qui = sessionStorage.getItem("
+  "; try { qui = sessionStorage.getItem(",
+  "age_petit"
  ],
  "remplacements": [
   [
@@ -222,6 +223,14 @@
   [
    "[\"Simple présence auprès des enfants, heures par semaine\",",
    "[\"Just being there for the children, hours per week\","
+  ],
+  [
+   "<label for=\"agePetit\">Âge du plus jeune</label>",
+   "<label for=\"agePetit\">Age of the youngest</label>"
+  ],
+  [
+   "<option value=\"\">Facultatif</option><option value=\"0\">Moins de 3 ans</option><option value=\"3\">3 à 5 ans</option><option value=\"6\">6 à 10 ans</option><option value=\"11\">11 ans et plus</option>",
+   "<option value=\"\">Optional</option><option value=\"0\">Under 3</option><option value=\"3\">3 to 5</option><option value=\"6\">6 to 10</option><option value=\"11\">11 and over</option>"
   ],
   [
    "<label for=\"nomA\">Prénom 1</label><input id=\"nomA\" placeholder=\"Prénom\">",
