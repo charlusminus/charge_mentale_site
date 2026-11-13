@@ -56,7 +56,7 @@ s = s.replace("<!-- en:blog -->", cartes ? `<section class="blog-accueil" id="bl
       <ul class="blog-cartes">
 ${cartes}
       </ul>
-      <p><a class="btn secondary" href="blog/">All blog articles</a></p>
+      <p><a class="btn secondary" href="blog/">All resources</a></p>
     </section>` : "");
 s = s.replace("<!-- en:parler -->", cartes ? `<p class="parler"><strong>Before you talk it over.</strong> A method for one evening, tried at home and with friends: <a href="blog/talking-about-chores-without-a-row.html?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=parler">how to talk about sharing chores without a row</a>.</p>` : "");
 fs.mkdirSync(path.join(RACINE, "en"), { recursive: true });
