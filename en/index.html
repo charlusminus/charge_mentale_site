@@ -411,6 +411,7 @@
   .pro-champs input { width: 5.5rem; font: inherit; padding: .4rem .5rem; border: 1.5px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); }
   .pro-champs input:focus { border-color: var(--ink); outline: none; }
   .pro-txt { margin-top: .9rem; }
+  .pro-tab .hors-tot td { color: var(--muted); font-size: .9rem; }
   /* la conclusion du travail payé, le résultat le plus parlant du site : encadrée, en grand (10/11/2026) */
   .pro-conclusion { margin: 1.1rem 0 0; font-family: var(--serif); font-size: 1.65rem; line-height: 1.3; font-variation-settings: "opsz" 40; }   /* même style que le verdict */
   .pro-conclusion .pa { color: var(--a); } .pro-conclusion .pb { color: var(--b); }
@@ -2049,13 +2050,14 @@
       <p class="small muted">Enter paid working hours above to see each person's total load.</p>`;
       return;
     }
+    // Simple présence affichée à part, hors du total (13/11/2026) : l'ATUS ne l'ajoute pas au temps de travail.
     const pres = presenceDe(), pa = pres ? Math.round(pres.a) : 0, pb = pres ? Math.round(pres.b) : 0;
-    const ta = pr.a + ma + pa, tb = pr.b + mb + pb;
+    const ta = pr.a + ma, tb = pr.b + mb;
     let h = `<table class="pro-tab"><tr><th>Per week</th><th class="pa">${nomA()}</th><th class="pb">${nomB()}</th></tr>
       <tr><td>Paid work</td><td>${pr.a}h</td><td>${pr.b}h</td></tr>
-      <tr><td>Home</td><td>${ma}h</td><td>${mb}h</td></tr>${pres ? `
-      <tr><td>Being there for the children</td><td>${pa}h</td><td>${pb}h</td></tr>` : ""}
-      <tr class="tot"><td>Total</td><td>${ta}h</td><td>${tb}h</td></tr></table>`;
+      <tr><td>Home</td><td>${ma}h</td><td>${mb}h</td></tr>
+      <tr class="tot"><td>Total</td><td>${ta}h</td><td>${tb}h</td></tr>${pres ? `
+      <tr class="hors-tot"><td>Being there for the children, not in the total</td><td>${pa}h</td><td>${pb}h</td></tr>` : ""}</table>`;
     const ecart = Math.abs(ta - tb);
     h += ecart <= 3
       ? `<p class="pro-conclusion">A similar total load, paid work and home included. What remains is whether the way you share it suits you both.</p>`
@@ -2338,7 +2340,9 @@
   // Âge du plus jeune (13/11/2026) : préremplit la garde avec attention et la simple présence (heures par semaine),
   // ordres de grandeur à corriger par chacun (revue-litterature.md, point 13). Une valeur déjà changée à la main ne
   // bouge pas : on ne remplace que la valeur préremplie précédente.
-  const GARDE_AGE = { "": { att: 3, pres: 0 }, "0": { att: 15, pres: 0 }, "3": { att: 8, pres: 0 }, "6": { att: 3, pres: 6 }, "11": { att: 0, pres: 6 } };
+  // Simple présence jamais préremplie (13/11/2026) : l'ATUS en mesure environ 35 h par semaine et par adulte, un chiffre
+  // qu'on n'impose pas ; chacun la saisit s'il le souhaite.
+  const GARDE_AGE = { "": { att: 3, pres: 0 }, "0": { att: 15, pres: 0 }, "3": { att: 8, pres: 0 }, "6": { att: 3, pres: 0 }, "11": { att: 0, pres: 0 } };
   const iAge = document.getElementById("agePetit"), boxAge = document.getElementById("ageBox");
   iAge.value = S.ageP || "";
   iAge.addEventListener("change", () => {

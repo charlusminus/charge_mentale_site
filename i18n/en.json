@@ -217,8 +217,8 @@
    "txt += ` On top of that, ${fmt(Math.round(pres.tot * 2) / 2, (pres.tot * 2) % 2 ? 1 : 0)} hours a week of just being there for the children, ${aQui}, not counted in this time.`;"
   ],
   [
-   "<tr><td>Présence auprès des enfants</td><td>${pa} h</td><td>${pb} h</td></tr>",
-   "<tr><td>Being there for the children</td><td>${pa}h</td><td>${pb}h</td></tr>"
+   "<tr class=\"hors-tot\"><td>Présence auprès des enfants, hors total</td><td>${pa} h</td><td>${pb} h</td></tr>",
+   "<tr class=\"hors-tot\"><td>Being there for the children, not in the total</td><td>${pa}h</td><td>${pb}h</td></tr>"
   ],
   [
    "[\"Simple présence auprès des enfants, heures par semaine\",",
@@ -1145,8 +1145,8 @@
    "<tr><td>Paid work</td><td>${pr.a}h</td><td>${pr.b}h</td></tr>"
   ],
   [
-   "<tr class=\"tot\"><td>Total</td><td>${ta} h</td><td>${tb} h</td></tr></table>",
-   "<tr class=\"tot\"><td>Total</td><td>${ta}h</td><td>${tb}h</td></tr></table>"
+   "<tr class=\"tot\"><td>Total</td><td>${ta} h</td><td>${tb} h</td></tr>${pres",
+   "<tr class=\"tot\"><td>Total</td><td>${ta}h</td><td>${tb}h</td></tr>${pres"
   ],
   [
    "<p class=\"pro-conclusion\">Une charge totale proche, travail payé et maison compris. Reste à voir si la façon de vous la répartir vous convient à tous les deux.</p>",
