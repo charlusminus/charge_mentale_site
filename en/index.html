@@ -818,6 +818,7 @@
   .pap-prog i { display: block; height: 100%; background: var(--ink); transition: width .25s; }
   .pap-nom { font-family: var(--serif); font-size: 1.75rem; line-height: 1.15; margin: 0 0 .4rem; font-weight: 500; }
   .pap-aide { color: var(--muted); margin: 0 0 1.4rem; font-size: .95rem; }
+  .pap-note { margin: -.8rem 0 1.2rem; padding: .55rem .8rem; border-radius: var(--r); background: var(--bg-2); font-size: .85rem; color: var(--muted); }
   /* heures de garde saisies dès la première réponse (13/11/2026) */
   .h-saisies { display: grid; gap: .6rem; margin: 0 0 1.2rem; }
   .h-saisie { display: flex; align-items: center; gap: .5rem; font-size: .95rem; }
@@ -1110,7 +1111,7 @@
       <div class="parts" id="parts"></div>
       </div>
       <div class="res-corps">
-      <p class="muted">Calculated with typical durations for each task. Adjust them further down if they do not match your home: the result updates as you go. <a href="#poids-pense" class="src-btn" role="button" aria-expanded="false" aria-controls="poids-pense">The mental load takes frequency into account<span class="i" aria-hidden="true">i</span></a>.<span id="note-garde"></span></p>
+      <p class="muted">Calculated with average times for a couple, task by task. Adjust them further down if they do not match your home: the result updates as you go. <a href="#poids-pense" class="src-btn" role="button" aria-expanded="false" aria-controls="poids-pense">The mental load takes frequency into account<span class="i" aria-hidden="true">i</span></a>.<span id="note-garde"></span></p>
       <div class="bulle-info" id="poids-pense" hidden><p>Thinking about meals every day does not weigh the same as thinking about holidays a few times a year. Something you think of every week or more counts three times, every month twice, less often once. The table gives the number of things on your mind; the percentages take this weight into account.</p></div>
       <table class="resultats" id="cartes"></table>
       <div class="parcat" id="parcat"></div>
@@ -1781,7 +1782,7 @@
     const avance = () => { if (PAP.ajout) { PAP.ajout = null; PAP.i = listePap().length; } else PAP.i++; renderCatalogue(); update(); };
     carte.innerHTML = `<div class="pap-haut"><span${fi === 0 ? ' class="neuve"' : ""}>${t.catNom}${fi === 0 ? ` · ${dansFam.length} task${dansFam.length > 1 ? "s" : ""}` : ` · ${fi + 1} of ${dansFam.length}`}</span><span>${Math.max(1, Math.round((n - PAP.i) * 12 / 60))} min left</span></div>
       <div class="pap-prog"><i style="width:${100 * PAP.i / n}%"></i></div>
-      <h3 class="pap-nom">${t.nom}</h3>${t.aide ? `<p class="pap-aide">${t.aide}</p>` : `<p class="pap-aide"></p>`}
+      <h3 class="pap-nom">${t.nom}</h3>${t.aide ? `<p class="pap-aide">${t.aide}</p>` : `<p class="pap-aide"></p>`}${PAP.i === 0 ? `<p class="pap-note">The time for each task starts from an average for a couple: you can adjust it under the result.</p>` : ""}
       ${S.cmp && S.cmp.etat === "e" ? avantEnsemble(t) : ""}
       <p class="pap-q">Who does it?</p>`;
     const hs = champHeures(t, st); if (hs) carte.insertBefore(hs, carte.querySelector(".pap-q"));
@@ -1977,7 +1978,7 @@
 
     const pc = document.getElementById("parcat");
     const cats = Object.values(r.cats).filter(c => c.a + c.b + c.both > 0).sort((x, y) => (y.a + y.b + y.both) - (x.a + x.b + x.both));
-    pc.innerHTML = cats.length ? `<h3>The split, family by family</h3><p class="muted small">From the longest to the shortest. On the right, time per day for the home.</p>
+    pc.innerHTML = cats.length ? `<h3>The split, family by family</h3><p class="muted small">From the longest to the shortest. On the right, time per day for the two of you, using average times you can adjust further down.</p>
       <div class="legende-barres"><span><i style="background:var(--a)"></i>${nomA()}</span><span><i style="background:var(--both)"></i>both</span><span><i style="background:var(--b)"></i>${nomB()}</span></div>` + cats.map(c => {
       const tot = c.a + c.b + c.both;
       const pct = v => Math.round(100 * v / tot);
@@ -2003,7 +2004,7 @@
     const choses = v => `${n0(v)} ${v > 1 ? "things" : "thing"} in mind`;
     PA.innerHTML = partBarre("Time spent doing", pa, hmQuart(r.a.h) + " a day", hmQuart(r.b.h) + " a day")
       + (totP ? partBarre("Mental load", qa, choses(r.a.nPense), choses(r.b.nPense)) : "");
-    let txt = `${hm(quart(r.a.h) + quart(r.b.h))} a day of tasks in all.`;   // somme des deux durées arrondies affichées plus haut
+    let txt = `${hm(quart(r.a.h) + quart(r.b.h))} a day of tasks in all, for the two of you.`;   // somme des deux durées arrondies affichées plus haut
     const pres = presenceDe();
     if (pres) { const aQui = pres.a && pres.b ? "between you" : pres.a ? "for " + nomA() : "for " + nomB();
       txt += ` On top of that, ${fmt(Math.round(pres.tot * 2) / 2, (pres.tot * 2) % 2 ? 1 : 0)} hours a week of just being there for the children, ${aQui}, not counted in this time.`; }
@@ -2294,7 +2295,7 @@
     const totFamille = corps => {
       const ids = [...corps.querySelectorAll("tr[data-id]")].map(tr => tr.dataset.id);
       const h = ids.reduce((s, id) => s + (S.t[id].fait === "other" ? 0 : hj(S.t[id], id)), 0);
-      corps.querySelector(".cat-tot").textContent = `${ids.length} task${ids.length > 1 ? "s" : ""}, ${hm(h)} / day`;
+      corps.querySelector(".cat-tot").textContent = `${ids.length} task${ids.length > 1 ? "s" : ""}, ${hm(h)} / day for both`;
     };
     tb.querySelectorAll("tbody[data-cat]").forEach(corps => {
       totFamille(corps);
