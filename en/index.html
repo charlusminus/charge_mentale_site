@@ -417,6 +417,7 @@
   .cmp-seg button { font: 500 .9rem var(--sans); color: var(--ink); background: var(--paper); border: 0; border-right: 1px solid var(--line); padding: .5rem .8rem; cursor: pointer; }
   .cmp-seg button:last-child { border-right: 0; }
   .cmp-seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  @media (max-width: 520px) { .cmp-seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; } .cmp-seg button { padding: .55rem .3rem; font-size: .82rem; line-height: 1.2; min-height: 44px; } }
   .comparer .carte[hidden] { display: none; }
   .comparer .carte { background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem 1.1rem; margin-top: 1rem; }
   .comparer .carte h4 { margin: 0; font-size: 1rem; font-weight: 600; }
@@ -1978,7 +1979,7 @@
       const tot = c.a + c.b + c.both;
       const pct = v => Math.round(100 * v / tot);
       return `<div class="barre"><span>${c.nom}</span>
-        <div class="track" role="img" aria-label="${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%" title="${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%">${[["fa", c.a], ["fboth", c.both], ["fb", c.b]].filter(x => x[1] > 0).map(x => `<div class="${x[0]}" style="flex:${x[1]}"></div>`).join("")}</div><span class="val">${hm5(tot)}</span></div>`;
+        <div class="track" role="img" aria-label="${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%" title="${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%">${[["fa", c.a], ["fboth", c.both], ["fb", c.b]].filter(x => x[1] > 0).map(x => `<div class="${x[0]}" style="flex:${100 * x[1] / tot}"></div>`).join("")}</div><span class="val">${hm5(tot)}</span></div>`;
     }).join("") : "";
 
     const L = document.getElementById("lecture"), V = document.getElementById("verdict"), PA = document.getElementById("parts");
