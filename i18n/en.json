@@ -289,24 +289,20 @@
    "Only used for the anonymous study, it does not change the calculation."
   ],
   [
-   " nc si vous préférez ne pas le dire.\"",
-   " n/a if you prefer not to say.\""
+   "aria-pressed=\"false\">Femme</button>",
+   "aria-pressed=\"false\">Woman</button>"
   ],
   [
-   " « nc » si vous préférez ne pas le dire.\"",
-   " 'n/a' if you prefer not to say.\""
+   "aria-pressed=\"false\">Homme</button>",
+   "aria-pressed=\"false\">Man</button>"
   ],
   [
-   "title=\"Femme\"><span class=\"sym\" aria-hidden=\"true\">&#9792;</span><span class=\"sr\">Femme</span>",
-   "title=\"Woman\"><span class=\"sym\" aria-hidden=\"true\">&#9792;</span><span class=\"sr\">Woman</span>"
+   "aria-pressed=\"false\">Ne pas dire</button>",
+   "aria-pressed=\"false\">Rather not say</button>"
   ],
   [
-   "title=\"Homme\"><span class=\"sym\" aria-hidden=\"true\">&#9794;</span><span class=\"sr\">Homme</span>",
-   "title=\"Man\"><span class=\"sym\" aria-hidden=\"true\">&#9794;</span><span class=\"sr\">Man</span>"
-  ],
-  [
-   "title=\"Ne se prononce pas\"><span aria-hidden=\"true\">nc</span><span class=\"sr\">Ne se prononce pas</span>",
-   "title=\"Prefer not to say\"><span aria-hidden=\"true\">n/a</span><span class=\"sr\">Prefer not to say</span>"
+   "<p class=\"etude-note\">Le genre et « qui remplit » servent à l'étude anonyme. Ils ne changent rien au calcul.</p>",
+   "<p class=\"etude-note\">Gender and \"who is filling it in\" are for the anonymous study. They do not change the calculation.</p>"
   ],
   [
    "<label for=\"enfants\">Enfants à la maison (à charge)</label>",
@@ -1617,8 +1613,8 @@
    "id=\"pap-prec\">← Back to the last task</button>"
   ],
   [
-   "${fi === 0 ? \"\" : ` · ${fi + 1} sur ${dansFam.length}`}",
-   "${fi === 0 ? \"\" : ` · ${fi + 1} of ${dansFam.length}`}"
+   "${fi === 0 ? ` · ${dansFam.length} tâche${dansFam.length > 1 ? \"s\" : \"\"}` : ` · ${fi + 1} sur ${dansFam.length}`}</span><span>encore ${Math.max(1, Math.round((n - PAP.i) * 12 / 60))} min</span>",
+   "${fi === 0 ? ` · ${dansFam.length} task${dansFam.length > 1 ? \"s\" : \"\"}` : ` · ${fi + 1} of ${dansFam.length}`}</span><span>${Math.max(1, Math.round((n - PAP.i) * 12 / 60))} min left</span>"
   ],
   [
    "<p class=\"pap-q\">Qui s'en occupe ?</p>",
