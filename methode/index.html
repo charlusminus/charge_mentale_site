@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>La méthode, en détail | Qui y pense ?</title>
+<title>Méthodologie et transparence | Qui y pense ?</title>
 <meta name="description" content="Toute la méthode de Qui y pense ? : les 53 tâches, les durées par défaut, les calculs du temps et de la charge mentale, l'étude, les chiffres publiés et leurs limites.">
 <link rel="canonical" href="https://quiypense.org/methode/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Qui y pense ?">
 <meta property="og:locale" content="fr_FR">
-<meta property="og:title" content="Qui y pense ? La méthode">
+<meta property="og:title" content="Qui y pense ? Méthodologie et transparence">
 <meta property="og:description" content="Toute la méthode de Qui y pense ? : les 53 tâches, les durées par défaut, les calculs du temps et de la charge mentale, l'étude, les chiffres publiés et leurs limites.">
 <meta property="og:url" content="https://quiypense.org/methode/">
 <meta property="og:image" content="https://quiypense.org/img/apercu-2026-11b.png">
@@ -38,9 +38,16 @@
   .tab td:nth-child(n+2) { white-space: nowrap; }
   code { font-size: .9em; background: var(--bg-2); padding: .05rem .3rem; border-radius: 4px; }
   .sources li { margin-bottom: .4rem; }
+  .engagements { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .8rem; margin: 1.4rem 0 1.6rem; }
+  .engagements div { background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; padding: .9rem 1rem; font-size: .92rem; color: var(--muted); }
+  .engagements strong { display: block; font-family: var(--serif); font-size: 1.05rem; color: var(--ink); margin-bottom: .2rem; }
+  pre { background: var(--bg-2); border-radius: var(--r, 8px); padding: .8rem 1rem; overflow-x: auto; font-size: .88rem; line-height: 1.5; white-space: pre; }
+  .tab table.petit { min-width: 0; table-layout: auto; }
+  .tab table.petit th { width: auto !important; }
+  .tab table.petit td:nth-child(n+2) { white-space: normal; }
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","name":"Qui y pense ? La méthode","inLanguage":"fr",
+{"@context":"https://schema.org","@type":"WebPage","name":"Qui y pense ? Méthodologie et transparence","inLanguage":"fr",
 "url":"https://quiypense.org/methode/","description":"Toute la méthode de Qui y pense ? : les 53 tâches, les durées par défaut, les calculs du temps et de la charge mentale, l'étude, les chiffres publiés et leurs limites.",
 "isPartOf":{"@type":"WebSite","name":"Qui y pense ?","url":"https://quiypense.org/"},
 "publisher":{"@type":"Organization","name":"Qui y pense ?","url":"https://quiypense.org/"}}
@@ -53,60 +60,72 @@
 </header>
 
 <main class="article">
-  <p class="fil"><a href="/">Qui y pense&nbsp;?</a> › Méthode</p>
-  <h1>La méthode, en détail</h1>
+  <p class="fil"><a href="/">Qui y pense&nbsp;?</a> › Méthodologie</p>
+  <h1>Méthodologie et transparence</h1>
   <p class="chapo">Tout ce que fait Qui y pense&nbsp;?, de la question posée au chiffre publié&nbsp;: les tâches, les
-    durées, les calculs, l'étude et ses limites. Écrit pour être relu et discuté, en particulier par des chercheuses et
-    des chercheurs. Le code du calcul est public.</p>
-  <p class="meta">53 tâches · <a href="mailto:contact@quiypense.org">contact@quiypense.org</a></p>
+    durées, les calculs, l'étude et ses limites. Chaque choix est expliqué, chaque formule est écrite, et le code du
+    calcul est public&nbsp;: tout peut être vérifié et discuté.</p>
+
+  <div class="engagements">
+    <div><strong>Calcul dans votre navigateur</strong>Aucun serveur ne calcule votre résultat, aucune intelligence artificielle.</div>
+    <div><strong>Sans inscription</strong>Ni compte, ni e-mail, ni mot de passe.</div>
+    <div><strong>Sans publicité</strong>Aucune publicité, aucun lien d'achat, aucune donnée vendue.</div>
+    <div><strong>Une étude anonyme</strong>Une copie sans prénom ni adresse IP, annoncée avant le résultat.</div>
+    <div><strong>Code public</strong>Les formules de cette page sont celles du <a href="https://github.com/charlusminus/charge_mentale_site/blob/main/index.html">code du site</a>.</div>
+    <div><strong>Sans jugement</strong>Ni note, ni score, ni comparaison à une norme.</div>
+  </div>
 
   <nav class="sommaire" aria-label="Sommaire"><ol>
     <li><a href="#principe">Le principe</a></li><li><a href="#questionnaire">Le questionnaire</a></li>
-    <li><a href="#catalogue">Les 53 tâches et leurs valeurs par défaut</a></li><li><a href="#calculs">Les calculs</a></li>
-    <li><a href="#etude">L'étude</a></li><li><a href="#chiffres">Les chiffres publiés</a></li>
-    <li><a href="#limites">Limites connues</a></li><li><a href="#sources">Sources</a></li>
+    <li><a href="#catalogue">Les 53 tâches</a></li><li><a href="#calculs">Les calculs</a></li>
+    <li><a href="#exemple">Un exemple</a></li><li><a href="#chiffres">L'étude et les chiffres publiés</a></li>
+    <li><a href="#limites">Limites de l'outil</a></li><li><a href="#vie-privee">Vie privée</a></li>
+    <li><a href="#sources">Sources</a></li><li><a href="#financement">Financement et contact</a></li>
   </ol></nav>
 
   <h2 id="principe">1. Le principe</h2>
   <p>Un couple, ou un foyer, passe en revue les tâches de la maison. Pour chacune, deux questions&nbsp;: <strong>qui
     s'en occupe</strong> et <strong>qui y pense</strong>. La première donne un temps, en heures. La seconde donne la
     charge mentale, mesurée en choses à garder en tête&nbsp;: remarquer qu'il faut le faire, prévoir, décider, vérifier,
-    demander ou rappeler quand c'est l'autre qui le fait. Cette distinction suit les travaux sur la dimension cognitive
-    du travail domestique (Daminger, 2019&nbsp;; Wayne et al., 2023).</p>
-  <p>Le calcul se fait dans le navigateur, sans serveur et sans intelligence artificielle. Le site ne juge pas&nbsp;: il
-    ne donne ni note ni score, et ne compare pas à une norme.</p>
+    demander ou rappeler quand c'est l'autre qui le fait.</p>
+  <p><strong>Pourquoi deux questions&nbsp;?</strong> Parce que faire et y penser ne se recouvrent pas&nbsp;: on peut
+    sortir les poubelles parce que l'autre y a pensé. Les travaux sur la dimension cognitive du travail domestique
+    (Daminger, 2019&nbsp;; Wayne et al., 2023) montrent que cette part, invisible dans les enquêtes de temps, est la plus
+    inégalement répartie.</p>
 
   <h2 id="questionnaire">2. Le questionnaire</h2>
-  <ol>
-    <li><strong>Le foyer</strong>&nbsp;: deux prénoms (jamais transmis), le genre de chacun (femme, homme ou ne se
-      prononce pas, pour l'étude seulement), qui remplit (l'un, l'autre ou les deux ensemble), le nombre d'enfants à
-      charge (0 à 3 et plus, ou famille recomposée), l'âge du plus jeune enfant (facultatif, en tranches), les animaux,
-      et une case «&nbsp;suivi médical ou accompagnement particulier d'un enfant&nbsp;».</li>
-    <li><strong>Les tâches</strong>, une à la fois ou en liste&nbsp;: pour chacune, qui s'en occupe (personne 1,
-      personne 2, les deux, pas nous), puis qui y pense (par défaut la même réponse, modifiable). «&nbsp;Les deux&nbsp;»
-      vaut 50/50, réglable par une réglette. «&nbsp;Pas nous&nbsp;»&nbsp;: quelqu'un d'autre s'en occupe ou la tâche
-      n'existe pas chez eux. 21 tâches sont elles-mêmes «&nbsp;de tête&nbsp;» (décider, suivre, organiser)&nbsp;:
-      «&nbsp;qui y pense&nbsp;» y reprend «&nbsp;qui s'en occupe&nbsp;» par défaut. Les couples peuvent ajouter leurs
-      propres tâches.</li>
-    <li><strong>Facultatif</strong>&nbsp;: les heures de travail payé de chacun par semaine (trajets compris), l'âge, la
-      catégorie socioprofessionnelle et le département, et la part de chacun dans les revenus du foyer (affichée, jamais
-      transmise).</li>
-    <li><strong>Le résultat</strong>, après accord pour la copie anonymisée de l'étude (voir <a href="#etude">§ 5</a>).
-      Toutes les réponses et toutes les durées se corrigent ensuite sous le résultat («&nbsp;Affinez le résultat&nbsp;»).</li>
-  </ol>
-  <p>Variante «&nbsp;chacun de son côté, puis on compare&nbsp;»&nbsp;: la seconde personne répond sans voir les réponses
-    de la première&nbsp;; le site montre ensuite les deux regards, puis les tâches où ils diffèrent, à trancher ensemble.</p>
+  <h3>Le foyer</h3>
+  <p>Deux prénoms (jamais transmis), le genre de chacun (femme, homme ou ne se prononce pas, pour l'étude seulement),
+    qui remplit (l'un, l'autre ou les deux ensemble), le nombre d'enfants à charge (0 à 3 et plus, ou famille
+    recomposée), l'âge du plus jeune enfant (facultatif, en tranches), les animaux, et une case «&nbsp;suivi médical ou
+    accompagnement particulier d'un enfant&nbsp;».</p>
+  <h3>Les réponses</h3>
+  <p>Pour chaque tâche, une tâche à la fois ou en liste&nbsp;:</p>
+  <div class="tab"><table class="petit"><thead><tr><th>Réponse</th><th>Ce qu'elle veut dire</th><th>Effet sur le calcul</th></tr></thead><tbody>
+    <tr><td>Personne 1 ou 2</td><td>Elle ou il s'en occupe (ou y pense)</td><td>Tout le temps (ou toute la tâche en tête) pour cette personne</td></tr>
+    <tr><td>Les deux</td><td>À parts égales, ou à tour de rôle</td><td>Partagé selon une réglette, 50/50 par défaut</td></tr>
+    <tr><td>Pas nous</td><td>Quelqu'un d'autre s'en occupe, ou la tâche n'existe pas chez eux</td><td>Compté pour personne</td></tr>
+  </tbody></table></div>
+  <p>«&nbsp;Qui y pense&nbsp;» reprend la réponse à «&nbsp;qui s'en occupe&nbsp;» tant qu'on ne la change pas&nbsp;:
+    dans la plupart des foyers, c'est la même personne, et le questionnaire reste court. 21 tâches sont
+    elles-mêmes de la charge mentale (décider, suivre, organiser). Les couples peuvent ajouter leurs propres tâches.</p>
+  <h3>Facultatif</h3>
+  <p>Les heures de travail payé de chacun par semaine (trajets compris)&nbsp;; l'âge, la catégorie socioprofessionnelle
+    et le département&nbsp;; la part de chacun dans les revenus du foyer (affichée, jamais transmise).</p>
+  <h3>Chacun de son côté</h3>
+  <p>La seconde personne peut répondre sans voir les réponses de la première. Le site montre alors les deux regards,
+    puis les tâches où ils diffèrent, à trancher ensemble. <strong>Pourquoi&nbsp;?</strong> Chacun voit d'abord ce
+    qu'il fait&nbsp;: comparer deux regards sur le même foyer en dit plus qu'un seul.</p>
 
   <h2 id="catalogue">3. Les 53 tâches et leurs valeurs par défaut</h2>
-  <p>Les familles suivent la nomenclature de l'enquête Emploi du temps de l'INSEE (2010, codes indiqués), complétée
-    par les cartes Fair Play (Rodsky, 2019) pour ce que le carnet d'emploi du temps ne voit pas&nbsp;: agenda, cadeaux,
-    école, souvenirs, proches. Les libellés sont génériques&nbsp;; les détails vont dans l'aide. Toute évolution du
-    catalogue se justifie dans notre revue de littérature.</p>
+  <p>Les familles suivent la nomenclature de l'enquête Emploi du temps de l'INSEE (codes indiqués), complétée par les
+    cartes Fair Play (Rodsky, 2019) pour ce que le carnet d'emploi du temps ne voit pas&nbsp;: agenda, cadeaux, école,
+    souvenirs, proches. Les libellés sont génériques, les détails sont dans l'aide de chaque tâche.</p>
   <p><strong>Calibrage.</strong> Ordres de grandeur INSEE Emploi du temps 2010 par ménage en couple (H+F, minutes par jour) : cuisine avec vaisselle et table 94, ménage 66, linge 27, courses 44, divers et administratif 24, soins aux enfants 62 et jeux 25 (ménages avec enfant, tout âge ; INED 2010 : 95 + 41 min de temps parental avec jeunes enfants), bricolage et jardinage 52. Le catalogue vise la fourchette haute pour un couple avec jeunes enfants : environ 8,5 h par jour sans animaux.</p>
-  <p>«&nbsp;Par semaine&nbsp;» est le temps par défaut pour le foyer. «&nbsp;Poids&nbsp;» est le poids de la tâche
-    dans la part de charge mentale (voir <a href="#calcul-charge">§ 4.2</a>)&nbsp;: 29 tâches pèsent 3,
-    21 pèsent 2, 3 pèsent 1. Les tâches des familles «&nbsp;Enfants&nbsp;» n'apparaissent que s'il
-    y a des enfants, celles des animaux que s'il y en a.</p>
+  <p>Chaque valeur se corrige sous le résultat&nbsp;: la fréquence, la période et la durée. «&nbsp;Par semaine&nbsp;»
+    est le temps par défaut pour le foyer, «&nbsp;Poids&nbsp;» le poids dans la part de charge mentale
+    (<a href="#calcul-charge">§ 4.2</a>). Les tâches des familles «&nbsp;Enfants&nbsp;» n'apparaissent que s'il y a des
+    enfants, celles des animaux que s'il y en a.</p>
 <h3>Courses et provisions<small> · INSEE 351-352, 322</small></h3>
 <div class="tab"><table><thead><tr><th>Tâche et ce qu'elle recouvre</th><th>Fréquence</th><th>Durée</th><th>Par semaine</th><th>Poids</th><th>De tête</th></tr></thead><tbody>
 <tr><td><strong>Faire la liste de courses</strong><br><small>remarquer ce qui manque et ce qui périme, prévoir les repas, tenir la liste, sans oublier la maison : lessive, papier toilette, ampoules</small></td><td>2 par semaine</td><td>15 min</td><td>0,5 h</td><td>3</td><td>oui</td></tr>
@@ -192,94 +211,118 @@
 </tbody></table></div>
 
   <h2 id="calculs">4. Les calculs</h2>
-  <p>Toutes les formules sont dans la fonction <code>compute()</code> du <a href="https://github.com/charlusminus/charge_mentale_site/blob/main/index.html">code public du site</a>.</p>
   <h3>4.1 Le temps</h3>
-  <p>Pour chaque tâche, heures par jour = fréquence × durée ÷ 60 ÷ nombre de jours de la période (jour 1, semaine 7,
-    mois 30,44, an 365,25). Le temps va à qui s'en occupe&nbsp;; «&nbsp;les deux&nbsp;» le partage selon la réglette
-    (50/50 par défaut)&nbsp;; «&nbsp;pas nous&nbsp;» ne compte pour personne. Le résultat donne les heures par jour et
-    par semaine de chacun, arrondies au quart d'heure, et la part du temps de chacun.</p>
+  <pre>heures par jour = fréquence × durée (min) ÷ 60 ÷ jours de la période
+jours de la période : jour 1 · semaine 7 · mois 30,44 · an 365,25</pre>
+  <p>Le temps d'une tâche va à qui s'en occupe&nbsp;; «&nbsp;les deux&nbsp;» le partage selon la réglette&nbsp;;
+    «&nbsp;pas nous&nbsp;» ne compte pour personne. Le résultat donne les heures par jour et par semaine de chacun,
+    arrondies au quart d'heure, et la part du temps de chacun.</p>
   <h3 id="calcul-charge">4.2 La charge mentale</h3>
-  <p>Chaque tâche compte pour 1 chez qui y pense (ou se partage selon la réglette). Le tableau du résultat donne ce
-    <strong>nombre de choses à garder en tête</strong>. La <strong>part de charge mentale</strong>
-    (le pourcentage) pondère chaque tâche par sa fréquence, telle qu'elle est réglée pour le foyer&nbsp;: 3 pour une
-    tâche qui revient au moins chaque semaine (52 fois par an ou plus), 2 au moins chaque mois (12 fois par an ou
-    plus), 1 plus rarement. Penser aux repas chaque jour ne pèse pas autant que penser aux vacances quelques fois par
-    an. Comparée à un simple comptage, sur 15&nbsp;408 couples, cette pondération déplace la part portée par elle de
-    -1,2 point en moyenne et de plus de 5 points dans 6 % des couples&nbsp;: les conclusions n'en dépendent pas. Les seuils et les poids sont un choix,
-    pas une mesure&nbsp;; nous les soumettons à la discussion.</p>
-  <h3>4.3 Cas particuliers</h3>
+  <p>Deux chiffres, pour deux usages&nbsp;:</p>
+  <pre>choses en tête (A)       = Σ part de A dans « qui y pense »
+part de charge mentale (A) = Σ (part de A × poids) ÷ Σ poids</pre>
+  <div class="tab"><table class="petit"><thead><tr><th>La tâche revient</th><th>Fois par an</th><th>Poids</th><th>Tâches</th></tr></thead><tbody>
+    <tr><td>Chaque semaine ou plus souvent</td><td>52 ou plus</td><td>3</td><td>29</td></tr>
+    <tr><td>Chaque mois ou plus souvent</td><td>12 à 51</td><td>2</td><td>21</td></tr>
+    <tr><td>Plus rarement</td><td>moins de 12</td><td>1</td><td>3</td></tr>
+  </tbody></table></div>
+  <p><strong>Pourquoi un poids&nbsp;?</strong> Penser aux repas chaque jour ne pèse pas autant que penser aux vacances
+    quelques fois par an. La fréquence retenue est celle du foyer, telle qu'il l'a réglée. <strong>Pourquoi des paliers
+    et pas la fréquence brute&nbsp;?</strong> Les repas, chaque jour, pèseraient sinon 90 fois l'organisation des vacances, et
+    effaceraient ce qui se prévoit de loin (vacances, impôts, vaccins), la part la plus invisible de la charge mentale.
+    <strong>Robustesse&nbsp;:</strong> comparée à un simple comptage, sur 15&nbsp;408 couples, la pondération déplace la
+    part portée par elle de -1,2 point en moyenne et de plus de 5 points dans 6 % des couples&nbsp;; les conclusions
+    n'en dépendent pas. Le nombre de choses en tête, lui, reste un simple compte, plus parlant pour un couple.</p>
+  <h3>4.3 Les enfants</h3>
+  <p><strong>Garde des enfants.</strong> Deux temps distincts, comme dans les enquêtes emploi du temps&nbsp;:</p>
   <ul>
-    <li><strong>Famille recomposée</strong>&nbsp;: les enfants de chacun, leur présence (tout le temps, une semaine sur
-      deux, un week-end sur deux) et les enfants communs. Le temps des tâches des deux familles «&nbsp;Enfants&nbsp;»
-      compte au prorata du temps où au moins un enfant est là (1 moins le produit des absences, gardes supposées
-      indépendantes). Le nombre de choses en tête ne change pas.</li>
-    <li><strong>Suivi médical d'un enfant</strong> (case de l'étape 1)&nbsp;: «&nbsp;Suivre la santé des enfants&nbsp;»
-      passe de 1 h par mois à 3 fois 2 h par semaine, ordre de grandeur de l'enquête FFDys et Poppins (2024). La case
-      reste dans le navigateur&nbsp;; l'étude reçoit la tâche à sa durée par défaut.</li>
-    <li><strong>Garde des enfants</strong>, deux temps distincts comme dans les enquêtes emploi du temps&nbsp;: la
-      <strong>garde avec attention</strong> (un petit qu'on ne peut pas laisser seul), comptée dans le temps, et la
-      <strong>simple présence</strong> (les grands sont là, on peut faire autre chose), affichée à part et jamais
-      ajoutée au temps, comme dans l'enquête américaine ATUS. La garde avec attention est préremplie selon l'âge du plus
-      jeune&nbsp;: 15 h par semaine avant 3 ans, 8 h de 3 à 5 ans, 3 h de 6 à 10 ans, 0 h ensuite (3 h sans réponse)&nbsp;;
-      la simple présence n'est jamais préremplie. Ces valeurs sont des ordres de grandeur rapprochés de la DREES
-      (127 minutes par jour et par parent de temps parental avec un enfant de moins de 3 ans, contre 51 sans) et de
-      l'ATUS 2025&nbsp;; leur passage à nos deux champs est notre extrapolation.</li>
-    <li><strong>Travail payé</strong>&nbsp;: affiché à côté du résultat sans le changer. Temps total de chacun = maison
-      × 7 + travail payé par semaine. Les pistes «&nbsp;Si vous voulez rééquilibrer&nbsp;» n'apparaissent que si l'un
-      porte 55 % ou plus de ce temps total, et jamais vers la personne qui porte déjà plus de la moitié de la maison, en
-      temps ou en charge mentale.</li>
+    <li>la <strong>garde avec attention</strong> (un petit qu'on ne peut pas laisser seul), comptée dans le temps&nbsp;;</li>
+    <li>la <strong>simple présence</strong> (les grands sont là, on peut faire autre chose), affichée à part et jamais
+      ajoutée au temps, comme l'enquête américaine ATUS, pour ne pas compter deux fois la cuisine faite pendant ce temps.</li>
   </ul>
-  <h3>4.4 «&nbsp;Et les autres couples&nbsp;?&nbsp;»</h3>
+  <div class="tab"><table class="petit"><thead><tr><th>Plus jeune enfant</th><th>Garde avec attention préremplie</th></tr></thead><tbody>
+    <tr><td>Moins de 3 ans</td><td>15 h par semaine</td></tr><tr><td>3 à 5 ans</td><td>8 h</td></tr>
+    <tr><td>6 à 10 ans</td><td>3 h</td></tr><tr><td>11 ans et plus</td><td>0 h</td></tr><tr><td>Non indiqué</td><td>3 h</td></tr>
+  </tbody></table></div>
+  <p>Ces valeurs de départ sont rapprochées de la DREES (127 minutes de temps parental par jour et par parent avec un
+    enfant de moins de 3 ans, contre 51 sans) et de l'ATUS. Le repas, le bain, le coucher, le jeu et les soins du bébé
+    sont comptés dans d'autres tâches&nbsp;: la garde ajoute surtout le mercredi, le week-end et les vacances. La simple
+    présence n'est jamais préremplie&nbsp;: l'ATUS en mesure environ 35 h par semaine et par adulte, un chiffre qu'on
+    n'impose pas.</p>
+  <p><strong>Famille recomposée.</strong> Les enfants de chacun, leur présence (tout le temps, une semaine sur deux, un
+    week-end sur deux) et les enfants communs&nbsp;:</p>
+  <pre>présence = 1 − Π (1 − présence des enfants de chacun)     (1 s'il y a des enfants communs)
+temps d'une tâche « Enfants » = temps × présence</pre>
+  <p>Les gardes sont supposées indépendantes. Le nombre de choses en tête ne change pas&nbsp;: on pense à la rentrée
+    même la semaine sans les enfants.</p>
+  <p><strong>Suivi médical.</strong> La case de l'étape 1 porte «&nbsp;Suivre la santé des enfants&nbsp;» de 1 h par
+    mois à 3 fois 2 h par semaine, ordre de grandeur de l'enquête FFDys et Poppins (2024).</p>
+  <h3>4.4 Le travail payé</h3>
+  <pre>temps total (A) = maison par jour × 7 + travail payé par semaine</pre>
+  <p>Affiché à côté du résultat, sans le changer. Les pistes «&nbsp;Si vous voulez rééquilibrer&nbsp;» n'apparaissent
+    que si l'un porte 55 % ou plus de ce temps total, et jamais vers la personne qui porte déjà plus de la moitié de
+    la maison, en temps ou en charge mentale&nbsp;: le site ne demande pas d'en faire plus à qui fait déjà l'essentiel.</p>
+  <h3>4.5 «&nbsp;Et les autres couples&nbsp;?&nbsp;»</h3>
   <p>Le résultat d'un couple femme-homme est situé parmi les couples de l'étude qui lui ressemblent&nbsp;: même nombre
     d'enfants, puis mêmes heures de travail (les deux à temps plein, lui plus, elle plus, proches) ou même tranche
     d'âge. Sont retenus les couples femme-homme ayant renseigné au moins 20 tâches, hors familles recomposées et hors
-    version anglaise, une seule ligne par foyer (la dernière). Le site affiche des histogrammes par tranches de 10 points
-    et des quartiles, jamais une ligne individuelle&nbsp;; un groupe de moins de 30 couples n'est pas publié.</p>
+    version anglaise, une seule ligne par foyer. Le site affiche des histogrammes par tranches de 10 points et des
+    quartiles, jamais une ligne individuelle&nbsp;; un groupe de moins de 30 couples n'est pas publié.</p>
 
-  <h2 id="etude">5. L'étude</h2>
-  <p>Pour afficher le résultat, le couple accepte qu'une copie anonymisée rejoigne l'étude. C'est la condition
-    d'accès au résultat, annoncée avant&nbsp;: sans accord, le résultat ne s'affiche pas.</p>
-  <ul>
-    <li><strong>Ce qui part</strong>&nbsp;: la version du catalogue, le nombre d'enfants, les animaux, les genres, qui
-      remplit, une lettre par tâche (qui s'en occupe, qui y pense), les durées modifiées, les parts «&nbsp;les deux&nbsp;»,
-      les tâches ajoutées, les totaux calculés (heures, tâches, parts), les heures de travail payé, la simple présence et
-      l'âge du plus jeune s'ils sont indiqués, et les réponses facultatives du profil.</li>
-    <li><strong>Ce qui ne part jamais</strong>&nbsp;: les prénoms, une adresse e-mail, l'adresse IP, la case de suivi
-      médical, la part des revenus.</li>
-    <li><strong>Lier les passages d'un foyer</strong>&nbsp;: un numéro tiré au hasard dans le navigateur, gardé dans le
-      lien&nbsp;; l'étude n'en garde qu'une empreinte. Il relie un foyer qui refait le point ou les deux personnes du mode
-      «&nbsp;chacun de son côté&nbsp;».</li>
-    <li><strong>Conservation</strong>&nbsp;: une feuille de calcul privée, accessible au seul responsable du site. Les mises à jour
-      (une durée corrigée après coup) remplacent la ligne de la même session pendant 24 h.</li>
-    <li><strong>Avis</strong>&nbsp;: une note de 0 à 10, «&nbsp;ça vous a aidés à en parler&nbsp;?&nbsp;» et un mot libre,
-      recueillis seulement sous le résultat.</li>
-  </ul>
+  <h2 id="exemple">5. Un exemple</h2>
+  <p>Camille et Alex, un enfant de 4 ans. Trois tâches parmi les 53&nbsp;:</p>
+  <div class="tab"><table class="petit"><thead><tr><th>Tâche</th><th>S'en occupe</th><th>Y pense</th><th>Heures par jour</th><th>Poids</th></tr></thead><tbody>
+    <tr><td>Faire la liste de courses (2 fois par semaine, 15 min)</td><td>Alex</td><td>Camille</td><td>2 × 15 ÷ 60 ÷ 7 = 0,07</td><td>3</td></tr>
+    <tr><td>S'occuper des repas (1 fois par jour, 70 min)</td><td>Les deux</td><td>Les deux</td><td>70 ÷ 60 = 1,17, soit 0,58 chacun</td><td>3</td></tr>
+    <tr><td>Organiser les vacances (4 fois par an, 4 h)</td><td>Camille</td><td>Camille</td><td>4 × 240 ÷ 60 ÷ 365,25 = 0,04</td><td>1</td></tr>
+  </tbody></table></div>
+  <p>Sur ces trois tâches&nbsp;: temps, Camille 0,63 h et Alex 0,65 h par jour, soit 49 % et 51 %. Choses en tête,
+    Camille 2,5 et Alex 0,5. Part de charge mentale de Camille = (3 × 1 + 3 × 0,5 + 1 × 1) ÷ (3 + 3 + 1) = 79 %. Alex
+    fait la liste, mais c'est Camille qui y pense&nbsp;: c'est exactement l'écart que le site rend visible.</p>
 
-  <h2 id="chiffres">6. Les chiffres publiés</h2>
+  <h2 id="chiffres">6. L'étude et les chiffres publiés</h2>
+  <p>Pour afficher le résultat, le couple accepte qu'une copie anonymisée rejoigne l'étude&nbsp;; c'est annoncé
+    avant, et sans accord le résultat ne s'affiche pas. La copie contient la version du catalogue, le nombre
+    d'enfants, les animaux, les genres, qui remplit, une lettre par tâche (qui s'en occupe, qui y pense), les durées
+    modifiées, les parts «&nbsp;les deux&nbsp;», les tâches ajoutées, les totaux calculés, et les réponses facultatives.</p>
+  <p>Un numéro tiré au hasard dans le navigateur, gardé dans le lien de partage, relie les passages d'un même foyer
+    (refaire le point, ou les deux personnes du mode «&nbsp;chacun de son côté&nbsp;»)&nbsp;; l'étude n'en garde qu'une
+    empreinte. Une correction faite dans les 24 heures remplace la copie au lieu d'en ajouter une.</p>
   <p>Les chiffres de la <a href="/presse/">page presse</a> portent sur les couples femme-homme ayant renseigné au moins
-    20 tâches. La part de charge mentale «&nbsp;portée par elle&nbsp;» est la part pondérée du § 4.2. Chaque chiffre se
-    recalcule à partir des réponses enregistrées, une lettre par tâche&nbsp;: le recalcul retrouve les parts
-    enregistrées à 1 point près dans 99 % des lignes. Les moyennes sont données
-    <strong>selon qui remplit</strong>, car chacun se crédite davantage&nbsp;: c'est la première limite ci-dessous.</p>
+    20 tâches. La part «&nbsp;portée par elle&nbsp;» est la part pondérée du § 4.2. Chaque chiffre se recalcule à partir
+    des réponses enregistrées, une lettre par tâche&nbsp;: le recalcul retrouve les parts enregistrées à 1 point près
+    dans 99 % des lignes. Les moyennes sont données <strong>selon qui remplit</strong>, car chacun se crédite davantage.</p>
 
-  <h2 id="limites">7. Limites connues</h2>
-  <ol>
+  <h2 id="limites">7. Limites de l'outil</h2>
+  <ul>
     <li><strong>Qui remplit.</strong> La part portée par elle vaut environ 69 % quand elle remplit seule, 46 % quand il
       remplit seul, 61 % à deux. Une partie tient à qui vient sur le site, une autre au fait que chacun voit d'abord ce
-      qu'il fait. Le mode «&nbsp;chacun de son côté&nbsp;» permet de mesurer cet écart dans un même couple.</li>
-    <li><strong>Échantillon volontaire.</strong> Visiteurs du site (bouche-à-oreille, réseaux, article de Marie Claire
-      du 7 novembre 2026), pas un échantillon représentatif. Aucun redressement n'est appliqué à ce jour.</li>
-    <li><strong>Valeurs par défaut.</strong> Les fréquences et durées sont préremplies et beaucoup de couples les
-      gardent&nbsp;: le temps mesure surtout la répartition des tâches, moins leur durée réelle.</li>
+      qu'il fait.</li>
+    <li><strong>Échantillon volontaire.</strong> Des visiteurs du site, pas un échantillon représentatif&nbsp;; aucun
+      redressement n'est appliqué.</li>
+    <li><strong>Valeurs par défaut.</strong> Beaucoup de couples gardent les durées proposées&nbsp;: le temps mesure
+      surtout la répartition des tâches, moins leur durée réelle.</li>
     <li><strong>Doublons.</strong> Un foyer peut répondre plusieurs fois&nbsp;; les repères n'en gardent qu'une ligne
-      par foyer, les moyennes publiées comptent encore chaque réponse.</li>
-    <li><strong>Choix de modélisation</strong> soumis à discussion&nbsp;: les poids de la charge mentale (§ 4.2), la
-      garde avec attention et la simple présence (§ 4.3), «&nbsp;les deux&nbsp;» à 50/50 par défaut.</li>
-    <li><strong>Pas de validation externe</strong> à ce jour&nbsp;: le questionnaire n'a pas été construit avec une ou
-      un scientifique. C'est l'objet de cette page.</li>
-  </ol>
+      par foyer, les moyennes publiées comptent chaque réponse.</li>
+    <li><strong>Choix de modélisation.</strong> Les poids de la charge mentale, la garde avec attention, «&nbsp;les
+      deux&nbsp;» à 50/50 par défaut sont des choix raisonnés, pas des mesures. Nous les soumettons à la discussion.</li>
+    <li><strong>Un outil pour en parler.</strong> Le résultat éclaire une conversation de couple&nbsp;; il ne remplace ni
+      une enquête statistique ni l'avis d'un professionnel.</li>
+  </ul>
 
-  <h2 id="sources">8. Sources</h2>
+  <h2 id="vie-privee">8. Vie privée</h2>
+  <ul>
+    <li><strong>Ce qui ne part jamais</strong>&nbsp;: les prénoms, une adresse e-mail, l'adresse IP, la case de suivi
+      médical, la part des revenus.</li>
+    <li><strong>Le lien de partage</strong> contient vos réponses et vos prénoms&nbsp;; il n'est gardé nulle part ailleurs
+      que chez vous.</li>
+    <li><strong>Cookies</strong>&nbsp;: seulement ceux de la mesure d'audience (Google Analytics), et seulement avec
+      votre accord. Vos réponses ne sont jamais envoyées à Google Analytics.</li>
+    <li><strong>Hébergement</strong>&nbsp;: le site est servi par GitHub Pages&nbsp;; l'étude et les avis sont gardés dans
+      une feuille Google privée. Détails et durées de conservation&nbsp;: <a href="/confidentialite/">confidentialité</a>.</li>
+  </ul>
+
+  <h2 id="sources">9. Sources</h2>
   <ul class="sources">
     <li>INSEE, enquête Emploi du temps 2010 (nomenclature des activités et ordres de grandeur)&nbsp;; Insee Première 1423
       (2012), Le travail domestique&nbsp;: 60 milliards d'heures en 2010.</li>
@@ -297,8 +340,13 @@
     <li>FFDys et Poppins (2024), enquête sur le temps consacré au suivi des enfants à besoins particuliers.</li>
   </ul>
 
-  <p>Pour relire, discuter ou demander les données agrégées et anonymes&nbsp;:
-    <a href="mailto:contact@quiypense.org">contact@quiypense.org</a>. Nous répondons à toute remarque de méthode.</p>
+  <h2 id="financement">10. Financement et contact</h2>
+  <p>Qui y pense&nbsp;? vit des dons de celles et ceux qui le trouvent utile. Aucune publicité, aucune donnée vendue,
+    aucun partenaire qui décide de ce que dit le site&nbsp;: voir <a href="/charte/">notre charte</a>.
+    <a href="/soutenir/">Soutenir le site</a>.</p>
+  <p>Une erreur, un biais, un choix discutable&nbsp;? Chercheuses et chercheurs, vos remarques sont les bienvenues, et
+    les données agrégées et anonymes sont disponibles sur demande&nbsp;:
+    <a href="mailto:contact@quiypense.org">contact@quiypense.org</a>.</p>
 </main>
 
 <footer class="pied">
