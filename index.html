@@ -1685,6 +1685,10 @@
     if (!tot || !totP || !wT) { box.hidden = true; return; }
     const X = w.a >= w.b ? "a" : "b", Y = X === "a" ? "b" : "a", nX = X === "a" ? nomA() : nomB(), nY = Y === "a" ? nomA() : nomB();
     if (w[X] / wT < .55) { box.hidden = true; return; }
+    // Avis du 13/11/2026 (« culpabilisant ») : pas de pistes vers celle ou celui qui porte déjà plus de la moitié de la
+    // maison, en temps ou en charge mentale. Le temps total penche alors à cause du travail payé de l'autre : le bloc
+    // « Et le travail rémunéré ? » le montre déjà, sans désigner qui devrait faire plus.
+    if (r[Y].h / tot > .5 || r[Y].m / totP > .5) { box.hidden = true; return; }
     const taches = allTasks().map(t => ({ t, st: S.t[t.id] })).filter(x => x.st && x.st.fait);
     const pense1 = taches.filter(x => x.st.fait === Y && penseOf(x.st) === X).map(x => ({ ...x, h: 0, p: poids(x.st) }));
     let resteH = (w[X] - wT / 2) / 7;   // en heures par jour, ce qu'il faudrait déplacer pour l'équilibre du temps total
