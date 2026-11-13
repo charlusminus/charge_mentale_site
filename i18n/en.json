@@ -209,6 +209,34 @@
    "<span>Just being there, per week<small>the older ones are at home, you can do other things; not added to the time</small>"
   ],
   [
+   "<button type=\"button\" data-vers=\"sec-resultat\" aria-current=\"true\">Résultat</button><button type=\"button\" data-vers=\"parcat\">Détail</button><button type=\"button\" data-vers=\"sec-parler\">En parler</button><button type=\"button\" data-vers=\"comparer\">Comparer</button><button type=\"button\" data-vers=\"affiner\">Affiner</button>",
+   "<button type=\"button\" data-vers=\"sec-resultat\" aria-current=\"true\">Result</button><button type=\"button\" data-vers=\"parcat\">Detail</button><button type=\"button\" data-vers=\"sec-parler\">Talk it over</button><button type=\"button\" data-vers=\"comparer\">Compare</button><button type=\"button\" data-vers=\"affiner\">Adjust</button>"
+  ],
+  [
+   "aria-label=\"Sections du résultat\"",
+   "aria-label=\"Result sections\""
+  ],
+  [
+   "${nomA()} ${pct(c.a)} %, les deux ${pct(c.both)} %, ${nomB()} ${pct(c.b)} %",
+   "${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%"
+  ],
+  [
+   "PA.innerHTML = partBarre(\"Le temps à faire\", pa, hmQuart(r.a.h) + \" par jour\", hmQuart(r.b.h) + \" par jour\")",
+   "PA.innerHTML = partBarre(\"Time spent doing\", pa, hmQuart(r.a.h) + \" a day\", hmQuart(r.b.h) + \" a day\")"
+  ],
+  [
+   "+ (totP ? partBarre(\"La charge mentale\", qa, choses(r.a.nPense), choses(r.b.nPense)) : \"\");",
+   "+ (totP ? partBarre(\"Mental load\", qa, choses(r.a.nPense), choses(r.b.nPense)) : \"\");"
+  ],
+  [
+   "const choses = v => `${n0(v)} ${v > 1 ? \"choses\" : \"chose\"} en tête`;\n    PA.innerHTML",
+   "const choses = v => `${n0(v)} ${v > 1 ? \"things\" : \"thing\"} in mind`;\n    PA.innerHTML"
+  ],
+  [
+   "<i class=\"ia\" style=\"width:${v}%\">${v >= 12 ? v + \" %\" : \"\"}</i><i class=\"ib\" style=\"width:${100 - v}%\">${100 - v >= 12 ? (100 - v) + \" %\" : \"\"}</i>",
+   "<i class=\"ia\" style=\"width:${v}%\">${v >= 12 ? v + \"%\" : \"\"}</i><i class=\"ib\" style=\"width:${100 - v}%\">${100 - v >= 12 ? (100 - v) + \"%\" : \"\"}</i>"
+  ],
+  [
    "const aQui = pres.a && pres.b ? \"à vous deux\" : pres.a ? \"pour \" + nomA() : \"pour \" + nomB();",
    "const aQui = pres.a && pres.b ? \"between you\" : pres.a ? \"for \" + nomA() : \"for \" + nomB();"
   ],
@@ -477,8 +505,8 @@
    ">See the result</button>"
   ],
   [
-   "<h2>Votre répartition</h2>",
-   "<h2>Your split</h2>"
+   "<h2 id=\"sec-resultat\">Votre répartition</h2>",
+   "<h2 id=\"sec-resultat\">Your split</h2>"
   ],
   [
    "<p class=\"muted\">Calculée avec des durées courantes pour chaque tâche. Corrigez-les plus bas si elles ne collent pas chez vous&nbsp;: le résultat se met à jour en direct. <a href=\"#poids-pense\" class=\"src-btn\" role=\"button\" aria-expanded=\"false\" aria-controls=\"poids-pense\">La charge mentale tient compte de la fréquence<span class=\"i\" aria-hidden=\"true\">i</span></a>.<span id=\"note-garde\"></span></p>",
@@ -937,8 +965,8 @@
    "<tr><td class=\"lbl\">Tasks to keep in mind</td>"
   ],
   [
-   "<h3>Le temps par jour pour la maison, par famille de tâches</h3>",
-   "<h3>Time per day on the home, by group of tasks</h3>"
+   "<h3>Le partage, famille par famille</h3><p class=\"muted small\">De la plus longue à la plus courte. À droite, le temps par jour pour la maison.</p>",
+   "<h3>The split, family by family</h3><p class=\"muted small\">From the longest to the shortest. On the right, time per day for the home.</p>"
   ],
   [
    "<i style=\"background:var(--both)\"></i>les deux</span>",

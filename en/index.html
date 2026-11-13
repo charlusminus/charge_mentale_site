@@ -363,13 +363,28 @@
   .resultats td strong { font-family: var(--serif); font-weight: 600; font-size: 1.9rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .resultats td small { display: block; color: var(--muted); font-size: .82rem; }
   .resultats td small a { color: inherit; text-underline-offset: 2px; }
+  /* Résultat, premier écran (revue du 13/11/2026) : les deux barres promises par l'accroche, puis le détail. */
+  .parts { display: grid; gap: 1.1rem; margin: 1.4rem 0 1.8rem; }
+  .part { display: grid; gap: .35rem; }
+  .part-t { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .part .bar { display: flex; gap: 2px; height: 40px; font-size: .95rem; font-weight: 600; color: var(--paper); }
+  .part .bar i { display: flex; align-items: center; padding: 0 .7rem; font-style: normal; white-space: nowrap; overflow: hidden; min-width: 4px; }
+  .part .bar .ia { background: var(--a); border-radius: 8px 3px 3px 8px; } .part .bar .ib { background: var(--b); border-radius: 3px 8px 8px 3px; justify-content: flex-end; }
+  .part-s { display: flex; justify-content: space-between; gap: 1rem; font-size: .88rem; color: var(--muted); }
+  .part-s b { font-weight: 600; } .part-s .pa { color: var(--a); } .part-s .pb { color: var(--b); }
+  .sec-nav { position: sticky; top: 0; z-index: 6; display: flex; gap: .3rem; overflow-x: auto; margin: 0 -16px 1.2rem; padding: .5rem 16px; background: var(--bg); border-bottom: 1px solid var(--line); scrollbar-width: none; }
+  .sec-nav::-webkit-scrollbar { display: none; }
+  .sec-nav button { flex: none; font: 500 .9rem var(--sans); color: var(--muted); background: none; border: 0; border-radius: 999px; padding: .45rem .8rem; cursor: pointer; }
+  .sec-nav button[aria-current="true"] { background: var(--ink); color: var(--bg); }
+  .sec-nav button[hidden] { display: none; }
+  #sec-resultat, #parcat, #comparer, #sec-parler, #affiner { scroll-margin-top: 64px; }
   .parcat { margin-top: 2.4rem; }
   .parcat h3 { font-family: var(--serif); font-size: 1.3rem; }
   .legende-barres { display: flex; gap: 1.2rem; font-size: .82rem; color: var(--muted); margin: .4rem 0 .6rem; }
   .legende-barres i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: .35rem; vertical-align: middle; }
   .barre { display: grid; grid-template-columns: 220px 1fr 64px; gap: 1rem; align-items: center; padding: .45rem 0; font-size: .9rem; }
   .barre .val { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .barre .track { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--bg-2); }
+  .barre .track { display: flex; gap: 2px; height: 18px; border-radius: 5px; overflow: hidden; }
   .barre .fa { background: var(--a); } .barre .fb { background: var(--b); } .barre .fboth { background: var(--both); }
   .lecture { margin-top: 1.6rem; padding: 1rem 1.2rem; background: var(--bg-2); border-radius: 12px; }
   /* « Et les autres couples ? » (20/10/2026) : repères agrégés de l'étude, sans jugement */
@@ -418,7 +433,7 @@
   .pro-txt { margin-top: .9rem; }
   .pro-tab .hors-tot td { color: var(--muted); font-size: .9rem; }
   /* la conclusion du travail payé, le résultat le plus parlant du site : encadrée, en grand (10/11/2026) */
-  .pro-conclusion { margin: 1.1rem 0 0; font-family: var(--serif); font-size: 1.65rem; line-height: 1.3; font-variation-settings: "opsz" 40; }   /* même style que le verdict */
+  .pro-conclusion { margin: 1.1rem 0 0; font-family: var(--serif); font-size: 1.25rem; line-height: 1.35; font-variation-settings: "opsz" 40; }   /* sous le verdict : un cran plus petit (revue du 13/11/2026) */
   .pro-conclusion .pa { color: var(--a); } .pro-conclusion .pb { color: var(--b); }
   .pro-tab { border-collapse: collapse; margin-top: .9rem; font-size: .92rem; font-variant-numeric: tabular-nums; }
   .pro-tab th, .pro-tab td { padding: .35rem .9rem .35rem 0; text-align: right; border-bottom: 1px solid var(--line); }
@@ -1010,11 +1025,13 @@
   <!-- ÉCRAN 3 : le compte -->
   <div class="ecran" id="e3">
     <section>
-      <h2>Your split</h2>
-      <p class="muted">Calculated with typical durations for each task. Adjust them further down if they do not match your home: the result updates as you go. <a href="#poids-pense" class="src-btn" role="button" aria-expanded="false" aria-controls="poids-pense">The mental load takes frequency into account<span class="i" aria-hidden="true">i</span></a>.<span id="note-garde"></span></p>
-      <div class="bulle-info" id="poids-pense" hidden><p>Thinking about meals every day does not weigh the same as thinking about holidays a few times a year. Something you think of every week or more counts three times, every month twice, less often once. The table gives the number of things on your mind; the percentages take this weight into account.</p></div>
+      <nav class="sec-nav" id="sec-nav" aria-label="Result sections"><button type="button" data-vers="sec-resultat" aria-current="true">Result</button><button type="button" data-vers="parcat">Detail</button><button type="button" data-vers="sec-parler">Talk it over</button><button type="button" data-vers="comparer">Compare</button><button type="button" data-vers="affiner">Adjust</button></nav>
+      <h2 id="sec-resultat">Your split</h2>
       <div class="cmp" id="cmp" hidden></div>
       <p class="verdict" id="verdict"></p>
+      <div class="parts" id="parts"></div>
+      <p class="muted">Calculated with typical durations for each task. Adjust them further down if they do not match your home: the result updates as you go. <a href="#poids-pense" class="src-btn" role="button" aria-expanded="false" aria-controls="poids-pense">The mental load takes frequency into account<span class="i" aria-hidden="true">i</span></a>.<span id="note-garde"></span></p>
+      <div class="bulle-info" id="poids-pense" hidden><p>Thinking about meals every day does not weigh the same as thinking about holidays a few times a year. Something you think of every week or more counts three times, every month twice, less often once. The table gives the number of things on your mind; the percentages take this weight into account.</p></div>
       <table class="resultats" id="cartes"></table>
       <div class="parcat" id="parcat"></div>
       <div class="lecture" id="lecture"></div>
@@ -1025,6 +1042,7 @@
         <div class="pro-txt" id="pro-txt"></div>
       </div>
       <div class="reeq" id="reeq" hidden></div>
+      <span id="sec-parler"></span>
       <div class="envoi" id="envoi-bloc">
         <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Send this result to your partner</button>
         <p class="small muted">To read it together: whoever opens the link sees exactly this result.</p>
@@ -1056,7 +1074,7 @@
         </div>
       </section>
 
-      <div class="affiner">
+      <div class="affiner" id="affiner">
         <h2>Fine-tune the result</h2>
         <p class="muted">Everything can be corrected here, without going back to the list: who does it, who thinks of it, and the time. <a href="#sources-durees" class="src-btn" role="button" aria-expanded="false" aria-controls="sources-durees">The suggested values come from surveys on time spent on domestic work<span class="i" aria-hidden="true">i</span></a>. For each task: how many times a day, week, month or year, and how many minutes each time (not in total). The daily total recalculates itself. Example: shopping twice a week, 90 minutes each time, makes 26 minutes a day.</p>
         <div class="bulle-info" id="sources-durees" hidden><p>The INSEE time-use survey in France (2010), which measures domestic time with diaries, and the Fair Play card deck (Eve Rodsky, 2019) for the tasks the diary does not capture. A couple with children who keeps all the default values totals about eight and a half hours a day, at the high end of what INSEE observes in France. The distinction between ‘thinking of it’ and ‘doing it’ comes from the work of Allison Daminger (2019): anticipating and checking is work, even when someone else carries it out.</p></div>
@@ -1876,18 +1894,18 @@
       <tr><td class="lbl">Tasks to keep in mind</td><td><strong>${n0(r.a.nPense)}</strong></td><td><strong>${n0(r.b.nPense)}</strong></td></tr>`;
 
     const pc = document.getElementById("parcat");
-    const cats = Object.values(r.cats).filter(c => c.a + c.b + c.both > 0);
-    const maxTot = Math.max(...cats.map(c => c.a + c.b + c.both), 0.01);
-    pc.innerHTML = cats.length ? `<h3>Time per day on the home, by group of tasks</h3>
+    const cats = Object.values(r.cats).filter(c => c.a + c.b + c.both > 0).sort((x, y) => (y.a + y.b + y.both) - (x.a + x.b + x.both));
+    pc.innerHTML = cats.length ? `<h3>The split, family by family</h3><p class="muted small">From the longest to the shortest. On the right, time per day for the home.</p>
       <div class="legende-barres"><span><i style="background:var(--a)"></i>${nomA()}</span><span><i style="background:var(--both)"></i>both</span><span><i style="background:var(--b)"></i>${nomB()}</span></div>` + cats.map(c => {
       const tot = c.a + c.b + c.both;
-      const w = 100 * tot / maxTot;
+      const pct = v => Math.round(100 * v / tot);
       return `<div class="barre"><span>${c.nom}</span>
-        <div class="track" style="width:${w}%"><div class="fa" style="width:${100 * c.a / tot}%"></div><div class="fboth" style="width:${100 * c.both / tot}%"></div><div class="fb" style="width:${100 * c.b / tot}%"></div></div><span class="val">${hm5(tot)}</span></div>`;
+        <div class="track" role="img" aria-label="${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%" title="${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%">${[["fa", c.a], ["fboth", c.both], ["fb", c.b]].filter(x => x[1] > 0).map(x => `<div class="${x[0]}" style="flex:${x[1]}"></div>`).join("")}</div><span class="val">${hm5(tot)}</span></div>`;
     }).join("") : "";
 
-    const L = document.getElementById("lecture"), V = document.getElementById("verdict");
+    const L = document.getElementById("lecture"), V = document.getElementById("verdict"), PA = document.getElementById("parts");
     const tot = r.a.h + r.b.h;
+    PA.innerHTML = "";
     if (!tot) { V.textContent = ""; L.textContent = "No task assigned to either of you yet. Go back to step 2."; return; }
     const pa = Math.round(100 * r.a.h / tot), pb = 100 - pa;
     const totP = r.a.m + r.b.m;
@@ -1897,6 +1915,12 @@
     V.innerHTML = gros[0] === tete[0]
       ? `<span class="${gros[0]}">${gros[1]}</span> carries ${gros[2]}% of the time and ${tete[2]}% of the household's mental load.`
       : `<span class="${gros[0]}">${gros[1]}</span> carries ${gros[2]}% of the time, <span class="${tete[0]}">${tete[1]}</span> ${tete[2]}% of the household's mental load.`;
+    const partBarre = (titre, v, sa, sb) => `<div class="part"><span class="part-t">${titre}</span>
+      <div class="bar" role="img" aria-label="${nomA()} ${v} %, ${nomB()} ${100 - v} %"><i class="ia" style="width:${v}%">${v >= 12 ? v + "%" : ""}</i><i class="ib" style="width:${100 - v}%">${100 - v >= 12 ? (100 - v) + "%" : ""}</i></div>
+      <span class="part-s"><span><b class="pa">${nomA()}</b> ${sa}</span><span>${sb} <b class="pb">${nomB()}</b></span></span></div>`;
+    const choses = v => `${n0(v)} ${v > 1 ? "things" : "thing"} in mind`;
+    PA.innerHTML = partBarre("Time spent doing", pa, hmQuart(r.a.h) + " a day", hmQuart(r.b.h) + " a day")
+      + (totP ? partBarre("Mental load", qa, choses(r.a.nPense), choses(r.b.nPense)) : "");
     let txt = `${hm(quart(r.a.h) + quart(r.b.h))} a day of tasks in all.`;   // somme des deux durées arrondies affichées plus haut
     const pres = presenceDe();
     if (pres) { const aQui = pres.a && pres.b ? "between you" : pres.a ? "for " + nomA() : "for " + nomB();
@@ -2393,6 +2417,21 @@
     document.getElementById("go2").textContent = n === 1 ? "Continue" : "Start";
     document.getElementById("dem-n").textContent = n + " of 2";
   }
+  // Navigation de section du résultat (revue du 13/11/2026) : des boutons, pas des ancres, car l'adresse porte les réponses.
+  (function () {
+    const nav = document.getElementById("sec-nav"), bs = [...nav.querySelectorAll("button")];
+    const cible = b => document.getElementById(b.dataset.vers);
+    const visible = e => e && !e.hidden && (e.offsetParent !== null || e.id === "sec-parler");
+    bs.forEach(b => b.addEventListener("click", () => { const c = cible(b); if (c) c.scrollIntoView({ behavior: "smooth", block: "start" }); if (window.__ga) gtag("event", "section_resultat", { section: b.dataset.vers }); }));
+    let attente = false;
+    const maj = () => { attente = false; if (S.ecran !== 3) return;
+      let cur = bs[0];
+      for (const b of bs) { const c = cible(b); b.hidden = !visible(c); if (!b.hidden && c.getBoundingClientRect().top < 90) cur = b; }
+      bs.forEach(b => b.setAttribute("aria-current", String(b === cur)));
+      if (cur.offsetLeft < nav.scrollLeft || cur.offsetLeft + cur.offsetWidth > nav.scrollLeft + nav.clientWidth) nav.scrollLeft = cur.offsetLeft - 16; };
+    addEventListener("scroll", () => { if (!attente) { attente = true; requestAnimationFrame(maj); } }, { passive: true });
+    addEventListener("resize", maj); setTimeout(maj, 600);
+  })();
   // Bouton de l'accroche (13/11/2026) : descend au formulaire et place le curseur sur le premier prénom.
   document.getElementById("hero-go").addEventListener("click", e => {
     e.preventDefault();
