@@ -358,7 +358,7 @@
   .resultats th { text-align: left; font-family: var(--serif); font-weight: 600; font-size: 1.3rem; padding: .4rem 0 .5rem; border-bottom: 1.5px solid var(--ink); }
   .resultats th.a { color: var(--a); } .resultats th.b { color: var(--b); }
   .a-indiquer-lien { white-space: nowrap; }   /* « à indiquer » ne se coupe pas entre deux colonnes étroites (mobile) */
-  .resultats td { padding: .7rem 0; border-bottom: 1px solid var(--line); vertical-align: baseline; }
+  .resultats td { padding: .7rem .9rem .7rem 0; border-bottom: 1px solid var(--line); vertical-align: baseline; }
   .resultats td.lbl { color: var(--muted); font-size: .9rem; width: 34%; }
   .resultats td strong { font-family: var(--serif); font-weight: 600; font-size: 1.9rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .resultats td small { display: block; color: var(--muted); font-size: .82rem; }
@@ -378,6 +378,16 @@
   .sec-nav button[aria-current="true"] { background: var(--ink); color: var(--bg); }
   .sec-nav button[hidden] { display: none; }
   #sec-resultat, #parcat, #comparer, #sec-parler, #affiner { scroll-margin-top: 64px; }
+  .sec-titre { margin-top: 3rem; }
+  /* Ordinateur : le résumé reste à gauche, le détail défile à droite (revue du 13/11/2026). */
+  @media (min-width: 1100px) {
+    main:has(#e3.actif) { max-width: 1140px; }
+    #e3 > section { display: grid; grid-template-columns: 340px minmax(0, 1fr); column-gap: 56px; align-items: start; }
+    #e3 .sec-nav { grid-column: 1 / -1; }
+    #e3 .res-tete { position: sticky; top: 72px; }
+    #e3 .res-tete .verdict { font-size: 1.45rem; }
+    #e3 .res-corps > :first-child { margin-top: 0; }
+  }
   .parcat { margin-top: 2.4rem; }
   .parcat h3 { font-family: var(--serif); font-size: 1.3rem; }
   .legende-barres { display: flex; gap: 1.2rem; font-size: .82rem; color: var(--muted); margin: .4rem 0 .6rem; }
@@ -400,11 +410,16 @@
   .comparer .carte-vide .phrase { margin-bottom: 0; }
   .comparer button.lien { border: 0; background: none; padding: 0; font: inherit; font-weight: 600; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
   .comparer .puce-age select { border: 0; background: transparent; font: inherit; font-size: inherit; color: inherit; padding: .35rem .2rem; cursor: pointer; }
+  .cmp-seg { display: inline-flex; flex-wrap: wrap; border: 1.5px solid var(--border); border-radius: var(--r); overflow: hidden; margin-top: .8rem; }
+  .cmp-seg button { font: 500 .9rem var(--sans); color: var(--ink); background: var(--paper); border: 0; border-right: 1px solid var(--line); padding: .5rem .8rem; cursor: pointer; }
+  .cmp-seg button:last-child { border-right: 0; }
+  .cmp-seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .comparer .carte[hidden] { display: none; }
   .comparer .carte { background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem 1.1rem; margin-top: 1rem; }
   .comparer .carte h4 { margin: 0; font-size: 1rem; font-weight: 600; }
   .comparer .graphe { position: relative; isolation: isolate; height: 120px; margin: 1.8rem 0 .3rem; }
   .comparer .barres { position: absolute; inset: 0; z-index: 1; display: flex; align-items: flex-end; gap: 3px; padding: 0 1px; }
-  .comparer .barres i { flex: 1; background: var(--line); border-radius: 3px 3px 0 0; min-height: 1px; }
+  .comparer .barres i { flex: 1; background: #D9CDB9; border-radius: 3px 3px 0 0; min-height: 1px; }
   .comparer .barres i.mil { background: #B9AA92; }
   .comparer .barres i.ici { background: var(--c, var(--a)); }
   .comparer .vous { position: absolute; top: 0; bottom: 0; border-left: 2px dashed var(--border); z-index: 0; }
@@ -575,7 +590,6 @@
   .envoi { margin-top: 1.4rem; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
   .envoi p { margin: 0; flex: 1 1 22ch; }
   .envoi-boite { max-width: 560px; }
-  .connaitre .image-cta { margin-top: 1rem; }
   .affiner tr.repart-ligne td { padding: 0 0 .6rem; border: 0; }
   .affiner tr.repart-ligne .repart { margin-top: 0; max-width: 30rem; }
   .affiner .repart input { width: 100%; padding: 0; border: 0; border-radius: 0; background: transparent; }   /* la réglette ne prend pas le gabarit des champs chiffrés */
@@ -1030,10 +1044,13 @@
   <div class="ecran" id="e3">
     <section>
       <nav class="sec-nav" id="sec-nav" aria-label="Sections du résultat"><button type="button" data-vers="sec-resultat" aria-current="true">Résultat</button><button type="button" data-vers="parcat">Détail</button><button type="button" data-vers="sec-parler">En parler</button><button type="button" data-vers="comparer">Comparer</button><button type="button" data-vers="affiner">Affiner</button></nav>
+      <div class="res-tete">
       <h2 id="sec-resultat">Votre répartition</h2>
       <div class="cmp" id="cmp" hidden></div>
       <p class="verdict" id="verdict"></p>
       <div class="parts" id="parts"></div>
+      </div>
+      <div class="res-corps">
       <p class="muted">Calculée avec des durées courantes pour chaque tâche. Corrigez-les plus bas si elles ne collent pas chez vous&nbsp;: le résultat se met à jour en direct. <a href="#poids-pense" class="src-btn" role="button" aria-expanded="false" aria-controls="poids-pense">La charge mentale tient compte de la fréquence<span class="i" aria-hidden="true">i</span></a>.<span id="note-garde"></span></p>
       <div class="bulle-info" id="poids-pense" hidden><p>Penser aux repas chaque jour ne pèse pas autant que penser aux vacances quelques fois par an. Une chose à laquelle on pense chaque semaine ou plus compte trois fois, chaque mois deux fois, plus rarement une fois. Le tableau donne le nombre de choses en tête, les pourcentages tiennent compte de ce poids.</p></div>
       <table class="resultats" id="cartes"></table>
@@ -1046,7 +1063,7 @@
         <div class="pro-txt" id="pro-txt"></div>
       </div>
       <div class="reeq" id="reeq" hidden></div>
-      <span id="sec-parler"></span>
+      <h2 class="sec-titre" id="sec-parler">En parler à deux</h2>
       <div class="envoi" id="envoi-bloc">
         <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce résultat à l'autre</button>
         <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce résultat.</p>
@@ -1084,14 +1101,15 @@
         <div class="bulle-info" id="sources-durees" hidden><p>De l'enquête Emploi du temps de l'INSEE (2010), qui mesure le temps domestique au carnet, et du jeu de cartes Fair Play (Eve Rodsky, 2019) pour les tâches que le carnet ne voit pas. Un couple avec enfants qui garde toutes les valeurs par défaut totalise environ 8 heures et demie par jour, dans la fourchette haute de ce que l'INSEE observe. La distinction « y penser » et « s'en occuper » vient des travaux d'Allison Daminger (2019) : anticiper et vérifier, c'est du travail, même quand quelqu'un d'autre exécute.</p></div>
         <p class="avert-5050"><strong>Un mot avant de tout régler à la minute.</strong> Chercher l'équilibre exact ligne par ligne épuise les couples autant que le déséquilibre lui-même. Un écart n'est pas un problème tant qu'il est choisi, dit et réversible : <a href="blog/desequilibre-assume-couple.html?utm_source=quiypense&amp;utm_medium=compte&amp;utm_campaign=affiner" target="_blank" rel="noopener">un déséquilibre choisi n'est pas une injustice</a>.</p>
         <table id="table-affiner"></table>
+        <p><button class="btn secondary" id="back2">Revenir aux questions</button></p>
       </div>
 
       <div class="fin" id="fin">
-        <h2>Et maintenant</h2>
+        <h2>Garder votre résultat</h2>
         <div class="actions">
           <button class="btn" id="sauver">Sauvegarder</button>
           <button class="btn secondary" id="xlsx">Télécharger en Excel</button>
-          <button class="btn secondary" id="back2">Modifier qui y pense</button>
+          <button class="btn secondary image-cta" type="button" id="image-ouvrir" aria-haspopup="dialog">Créer une image à partager</button>
         </div>
         <p class="small muted garde-note">Ce résultat n'est gardé pour vous nulle part : copiez le lien ou ajoutez la page aux favoris pour le retrouver.</p>
         <p class="small"><a href="#" id="reset">Recommencer depuis le début</a></p>
@@ -1100,7 +1118,7 @@
         <h2>Faire connaître Qui y pense ?</h2>
         <p class="muted">Un couple sur cinq se dit à égalité. Si le résultat vous a été utile, envoyez le site à un couple qui en aurait besoin, ou partagez-le sur vos réseaux : c'est ce qui le fait vivre.</p>
         <div class="rs" data-partage="site"></div>
-        <button class="btn secondary image-cta" type="button" id="image-ouvrir" aria-haspopup="dialog">Créer une image à partager</button>
+      </div>
       </div>
     </section>
   </div>
@@ -1978,6 +1996,7 @@
     if (pf - ph > 5) return "elle-plus";
     return "proches";
   }
+  let cmpVue = 0;   // graphique affiché dans « Et les autres couples ? » : 0 charge mentale, 1 temps, 2 temps total
   let cmpPar = null, cmpAge = "";   // critère choisi dans « Et les autres couples ? » (heures de travail ou âge), âge saisi sur place
   function renderComparer(r) {
     const box = document.getElementById("comparer"), R = window.REPERES;
@@ -2029,7 +2048,7 @@
         <div class="graphe" role="img" aria-label="${nom} : ${v} %. Chez la moitié de ces couples, entre ${q1} et ${q3} %."><div class="barres">${barres}</div>
         <div class="vous${v < 15 ? " gauche" : v > 85 ? " droite" : ""}" style="left:${v}%"><span>${nom}, ${v}\u00a0%</span></div></div>
         <div class="axe"><span>0\u00a0%</span><span>à parts égales</span><span>100\u00a0%</span></div>
-        ${legende ? `<div class="legende"><span><i style="background:var(--c)"></i>votre tranche</span><span><i style="background:#B9AA92"></i>la moitié des couples du milieu</span><span><i style="background:var(--line)"></i>les autres</span></div>` : ""}
+        ${legende ? `<div class="legende"><span><i style="background:var(--c)"></i>votre tranche</span><span><i style="background:#B9AA92"></i>la moitié des couples du milieu</span><span><i style="background:#D9CDB9"></i>les autres</span></div>` : ""}
         <p class="phrase">Chez la moitié de ces couples, elle en ${verbe} entre <b>${q1}</b> et <b>${q3}\u00a0%</b>. Chez vous, <b>${v}\u00a0%</b>.</p></div>`;
     };
     // Troisième repère (10/11/2026) : part du temps total, travail payé par semaine plus maison (heures par jour x 7),
@@ -2039,7 +2058,7 @@
       const titreT = "Part du temps total, travail payé compris, fait par";
       if (pr) {
         const tf = pf + 7 * r[elle].h, th = ph + 7 * r[elle === "a" ? "b" : "a"].h;
-        if (tf + th > 0) totalCarte = carte(titreT, Math.round(100 * tf / (tf + th)), g.total, "fait", false);
+        if (tf + th > 0) totalCarte = carte(titreT, Math.round(100 * tf / (tf + th)), g.total, "fait", true);
       } else totalCarte = `<div class="carte carte-vide"><h4>${titreT} <span class="${cls}">${nom}</span></h4>
         <p class="phrase">Le travail payé compte aussi. <button type="button" class="lien" data-aller="pro">Indiquer les heures de travail</button> pour vous situer parmi les ${g.total.n.toLocaleString("fr-FR")} couples qui l'ont fait.</p></div>`;
     }
@@ -2048,10 +2067,16 @@
       <p class="muted">Votre résultat, à côté de ceux des couples qui vous ressemblent. Un repère pour en parler, pas une note.</p>
       <div class="filtres">${puces.join("")}</div>
       <p class="small muted">${g.n.toLocaleString("fr-FR")} couples comparables ont fait le point.${note}</p>
-      ${carte("Part de la charge mentale portée par", tete, g.tete, "porte", true)}
-      ${carte("Part du temps à la maison fait par", temps, g.temps, "fait", false)}
-      ${totalCarte}
+      <div class="cmp-seg" role="group" aria-label="Ce que l'on compare"><button type="button" data-vue="0">Charge mentale</button><button type="button" data-vue="1">Temps à la maison</button>${totalCarte ? `<button type="button" data-vue="2">Temps total</button>` : ""}</div>
+      <div class="cmp-cartes">${carte("Part de la charge mentale portée par", tete, g.tete, "porte", true)}
+      ${carte("Part du temps à la maison fait par", temps, g.temps, "fait", true)}
+      ${totalCarte}</div>
       <p class="small muted">Repères calculés à partir des copies anonymisées de l'étude, mis à jour chaque semaine (dernière mise à jour : ${new Date(R.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}). Ils sont déjà dans la page : rien de plus ne part de votre navigateur.</p>`;
+    // Un seul graphique à la fois (revue du 13/11/2026) : trois histogrammes empilés se ressemblaient trop.
+    const cartesCmp = [...box.querySelectorAll(".cmp-cartes > .carte")], segs = [...box.querySelectorAll(".cmp-seg button")];
+    const voir = i => { cmpVue = Math.min(i, cartesCmp.length - 1); cartesCmp.forEach((c, j) => c.hidden = j !== cmpVue); segs.forEach((b, j) => b.setAttribute("aria-pressed", String(j === cmpVue))); };
+    segs.forEach((b, j) => b.addEventListener("click", () => { voir(j); if (window.__ga) gtag("event", "comparer_vue", { vue: j }); }));
+    voir(cmpVue);
     box.querySelectorAll("[data-par]").forEach(b => b.addEventListener("click", () => { cmpPar = b.dataset.par; renderComparer(r); }));
     const sa = box.querySelector("[data-age-cmp]");
     if (sa) sa.addEventListener("change", () => { cmpAge = sa.value; cmpPar = "age"; renderComparer(r); });

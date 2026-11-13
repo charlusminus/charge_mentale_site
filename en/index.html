@@ -358,7 +358,7 @@
   .resultats th { text-align: left; font-family: var(--serif); font-weight: 600; font-size: 1.3rem; padding: .4rem 0 .5rem; border-bottom: 1.5px solid var(--ink); }
   .resultats th.a { color: var(--a); } .resultats th.b { color: var(--b); }
   .a-indiquer-lien { white-space: nowrap; }   /* « à indiquer » ne se coupe pas entre deux colonnes étroites (mobile) */
-  .resultats td { padding: .7rem 0; border-bottom: 1px solid var(--line); vertical-align: baseline; }
+  .resultats td { padding: .7rem .9rem .7rem 0; border-bottom: 1px solid var(--line); vertical-align: baseline; }
   .resultats td.lbl { color: var(--muted); font-size: .9rem; width: 34%; }
   .resultats td strong { font-family: var(--serif); font-weight: 600; font-size: 1.9rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .resultats td small { display: block; color: var(--muted); font-size: .82rem; }
@@ -378,6 +378,16 @@
   .sec-nav button[aria-current="true"] { background: var(--ink); color: var(--bg); }
   .sec-nav button[hidden] { display: none; }
   #sec-resultat, #parcat, #comparer, #sec-parler, #affiner { scroll-margin-top: 64px; }
+  .sec-titre { margin-top: 3rem; }
+  /* Ordinateur : le résumé reste à gauche, le détail défile à droite (revue du 13/11/2026). */
+  @media (min-width: 1100px) {
+    main:has(#e3.actif) { max-width: 1140px; }
+    #e3 > section { display: grid; grid-template-columns: 340px minmax(0, 1fr); column-gap: 56px; align-items: start; }
+    #e3 .sec-nav { grid-column: 1 / -1; }
+    #e3 .res-tete { position: sticky; top: 72px; }
+    #e3 .res-tete .verdict { font-size: 1.45rem; }
+    #e3 .res-corps > :first-child { margin-top: 0; }
+  }
   .parcat { margin-top: 2.4rem; }
   .parcat h3 { font-family: var(--serif); font-size: 1.3rem; }
   .legende-barres { display: flex; gap: 1.2rem; font-size: .82rem; color: var(--muted); margin: .4rem 0 .6rem; }
@@ -400,11 +410,16 @@
   .comparer .carte-vide .phrase { margin-bottom: 0; }
   .comparer button.lien { border: 0; background: none; padding: 0; font: inherit; font-weight: 600; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
   .comparer .puce-age select { border: 0; background: transparent; font: inherit; font-size: inherit; color: inherit; padding: .35rem .2rem; cursor: pointer; }
+  .cmp-seg { display: inline-flex; flex-wrap: wrap; border: 1.5px solid var(--border); border-radius: var(--r); overflow: hidden; margin-top: .8rem; }
+  .cmp-seg button { font: 500 .9rem var(--sans); color: var(--ink); background: var(--paper); border: 0; border-right: 1px solid var(--line); padding: .5rem .8rem; cursor: pointer; }
+  .cmp-seg button:last-child { border-right: 0; }
+  .cmp-seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .comparer .carte[hidden] { display: none; }
   .comparer .carte { background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem 1.1rem; margin-top: 1rem; }
   .comparer .carte h4 { margin: 0; font-size: 1rem; font-weight: 600; }
   .comparer .graphe { position: relative; isolation: isolate; height: 120px; margin: 1.8rem 0 .3rem; }
   .comparer .barres { position: absolute; inset: 0; z-index: 1; display: flex; align-items: flex-end; gap: 3px; padding: 0 1px; }
-  .comparer .barres i { flex: 1; background: var(--line); border-radius: 3px 3px 0 0; min-height: 1px; }
+  .comparer .barres i { flex: 1; background: #D9CDB9; border-radius: 3px 3px 0 0; min-height: 1px; }
   .comparer .barres i.mil { background: #B9AA92; }
   .comparer .barres i.ici { background: var(--c, var(--a)); }
   .comparer .vous { position: absolute; top: 0; bottom: 0; border-left: 2px dashed var(--border); z-index: 0; }
@@ -575,7 +590,6 @@
   .envoi { margin-top: 1.4rem; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
   .envoi p { margin: 0; flex: 1 1 22ch; }
   .envoi-boite { max-width: 560px; }
-  .connaitre .image-cta { margin-top: 1rem; }
   .affiner tr.repart-ligne td { padding: 0 0 .6rem; border: 0; }
   .affiner tr.repart-ligne .repart { margin-top: 0; max-width: 30rem; }
   .affiner .repart input { width: 100%; padding: 0; border: 0; border-radius: 0; background: transparent; }   /* la réglette ne prend pas le gabarit des champs chiffrés */
@@ -1026,10 +1040,13 @@
   <div class="ecran" id="e3">
     <section>
       <nav class="sec-nav" id="sec-nav" aria-label="Result sections"><button type="button" data-vers="sec-resultat" aria-current="true">Result</button><button type="button" data-vers="parcat">Detail</button><button type="button" data-vers="sec-parler">Talk it over</button><button type="button" data-vers="comparer">Compare</button><button type="button" data-vers="affiner">Adjust</button></nav>
+      <div class="res-tete">
       <h2 id="sec-resultat">Your split</h2>
       <div class="cmp" id="cmp" hidden></div>
       <p class="verdict" id="verdict"></p>
       <div class="parts" id="parts"></div>
+      </div>
+      <div class="res-corps">
       <p class="muted">Calculated with typical durations for each task. Adjust them further down if they do not match your home: the result updates as you go. <a href="#poids-pense" class="src-btn" role="button" aria-expanded="false" aria-controls="poids-pense">The mental load takes frequency into account<span class="i" aria-hidden="true">i</span></a>.<span id="note-garde"></span></p>
       <div class="bulle-info" id="poids-pense" hidden><p>Thinking about meals every day does not weigh the same as thinking about holidays a few times a year. Something you think of every week or more counts three times, every month twice, less often once. The table gives the number of things on your mind; the percentages take this weight into account.</p></div>
       <table class="resultats" id="cartes"></table>
@@ -1042,7 +1059,7 @@
         <div class="pro-txt" id="pro-txt"></div>
       </div>
       <div class="reeq" id="reeq" hidden></div>
-      <span id="sec-parler"></span>
+      <h2 class="sec-titre" id="sec-parler">Talk it over together</h2>
       <div class="envoi" id="envoi-bloc">
         <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Send this result to your partner</button>
         <p class="small muted">To read it together: whoever opens the link sees exactly this result.</p>
@@ -1080,14 +1097,15 @@
         <div class="bulle-info" id="sources-durees" hidden><p>The INSEE time-use survey in France (2010), which measures domestic time with diaries, and the Fair Play card deck (Eve Rodsky, 2019) for the tasks the diary does not capture. A couple with children who keeps all the default values totals about eight and a half hours a day, at the high end of what INSEE observes in France. The distinction between ‘thinking of it’ and ‘doing it’ comes from the work of Allison Daminger (2019): anticipating and checking is work, even when someone else carries it out.</p></div>
         <p class="avert-5050"><strong>A word before you set everything to the minute.</strong> Chasing an exact balance line by line wears couples out as much as the imbalance itself. A gap is not a problem as long as it is chosen, talked about and reversible: an imbalance you choose is not an injustice.</p>
         <table id="table-affiner"></table>
+        <p><button class="btn secondary" id="back2">Back to the questions</button></p>
       </div>
 
       <div class="fin" id="fin">
-        <h2>What next</h2>
+        <h2>Keep your result</h2>
         <div class="actions">
           <button class="btn" id="sauver">Save</button>
           <button class="btn secondary" id="xlsx">Download as Excel</button>
-          <button class="btn secondary" id="back2">Edit your answers</button>
+          <button class="btn secondary image-cta" type="button" id="image-ouvrir" aria-haspopup="dialog">Create an image to share</button>
         </div>
         <p class="small muted garde-note">This result is not stored anywhere for you: copy the link or bookmark the page to find it again.</p>
         <p class="small"><a href="#" id="reset">Start again from the beginning</a></p>
@@ -1096,7 +1114,7 @@
         <h2>Tell others about Who thinks of it?</h2>
         <p class="muted">In France, one couple in five says they share equally. If the result was useful, send the site to a couple who could use it, or share it on social media: that is what keeps it going.</p>
         <div class="rs" data-partage="site"></div>
-        <button class="btn secondary image-cta" type="button" id="image-ouvrir" aria-haspopup="dialog">Create an image to share</button>
+      </div>
       </div>
     </section>
   </div>
@@ -1974,6 +1992,7 @@
     if (pf - ph > 5) return "elle-plus";
     return "proches";
   }
+  let cmpVue = 0;   // graphique affiché dans « Et les autres couples ? » : 0 charge mentale, 1 temps, 2 temps total
   let cmpPar = null, cmpAge = "";   // critère choisi dans « Et les autres couples ? » (heures de travail ou âge), âge saisi sur place
   function renderComparer(r) {
     const box = document.getElementById("comparer"), R = window.REPERES;
@@ -2025,7 +2044,7 @@
         <div class="graphe" role="img" aria-label="${nom}: ${v}%. In half of these couples, between ${q1} and ${q3}%."><div class="barres">${barres}</div>
         <div class="vous${v < 15 ? " gauche" : v > 85 ? " droite" : ""}" style="left:${v}%"><span>${nom}, ${v}%</span></div></div>
         <div class="axe"><span>0%</span><span>equal shares</span><span>100%</span></div>
-        ${legende ? `<div class="legende"><span><i style="background:var(--c)"></i>your band</span><span><i style="background:#B9AA92"></i>the middle half of couples</span><span><i style="background:var(--line)"></i>the others</span></div>` : ""}
+        ${legende ? `<div class="legende"><span><i style="background:var(--c)"></i>your band</span><span><i style="background:#B9AA92"></i>the middle half of couples</span><span><i style="background:#D9CDB9"></i>the others</span></div>` : ""}
         <p class="phrase">In half of these couples, she ${verbe} between <b>${q1}</b> and <b>${q3}%</b>. In yours, <b>${v}%</b>.</p></div>`;
     };
     // Troisième repère (10/11/2026) : part du temps total, travail payé par semaine plus maison (heures par jour x 7),
@@ -2035,7 +2054,7 @@
       const titreT = "Share of total time, paid work included, done by";
       if (pr) {
         const tf = pf + 7 * r[elle].h, th = ph + 7 * r[elle === "a" ? "b" : "a"].h;
-        if (tf + th > 0) totalCarte = carte(titreT, Math.round(100 * tf / (tf + th)), g.total, "does", false);
+        if (tf + th > 0) totalCarte = carte(titreT, Math.round(100 * tf / (tf + th)), g.total, "does", true);
       } else totalCarte = `<div class="carte carte-vide"><h4>${titreT} <span class="${cls}">${nom}</span></h4>
         <p class="phrase">Paid work counts too. <button type="button" class="lien" data-aller="pro">Enter your working hours</button> to see where you stand among the ${g.total.n.toLocaleString("en-GB")} couples who did.</p></div>`;
     }
@@ -2044,10 +2063,16 @@
       <p class="muted">Your result, next to those of couples like you. A reference point for talking, not a score.</p>
       <div class="filtres">${puces.join("")}</div>
       <p class="small muted">${g.n.toLocaleString("en-GB")} comparable couples have taken stock.${note}</p>
-      ${carte("Share of the mental load carried by", tete, g.tete, "carries", true)}
-      ${carte("Share of home time done by", temps, g.temps, "does", false)}
-      ${totalCarte}
+      <div class="cmp-seg" role="group" aria-label="What is compared"><button type="button" data-vue="0">Mental load</button><button type="button" data-vue="1">Time at home</button>${totalCarte ? `<button type="button" data-vue="2">Total time</button>` : ""}</div>
+      <div class="cmp-cartes">${carte("Share of the mental load carried by", tete, g.tete, "carries", true)}
+      ${carte("Share of home time done by", temps, g.temps, "does", true)}
+      ${totalCarte}</div>
       <p class="small muted">Comparisons calculated from the study's anonymised copies, updated every week (last update: ${new Date(R.date).toLocaleDateString("en-GB", { day: "numeric", month: "long" })}). They are already in the page: nothing more leaves your browser.</p>`;
+    // Un seul graphique à la fois (revue du 13/11/2026) : trois histogrammes empilés se ressemblaient trop.
+    const cartesCmp = [...box.querySelectorAll(".cmp-cartes > .carte")], segs = [...box.querySelectorAll(".cmp-seg button")];
+    const voir = i => { cmpVue = Math.min(i, cartesCmp.length - 1); cartesCmp.forEach((c, j) => c.hidden = j !== cmpVue); segs.forEach((b, j) => b.setAttribute("aria-pressed", String(j === cmpVue))); };
+    segs.forEach((b, j) => b.addEventListener("click", () => { voir(j); if (window.__ga) gtag("event", "comparer_vue", { vue: j }); }));
+    voir(cmpVue);
     box.querySelectorAll("[data-par]").forEach(b => b.addEventListener("click", () => { cmpPar = b.dataset.par; renderComparer(r); }));
     const sa = box.querySelector("[data-age-cmp]");
     if (sa) sa.addEventListener("change", () => { cmpAge = sa.value; cmpPar = "age"; renderComparer(r); });
