@@ -121,6 +121,7 @@
   * { box-sizing: border-box; }
   html { font-size: 17px; scroll-behavior: smooth; }
   body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.5; }
+  a { color: inherit; text-underline-offset: 3px; }   /* aucun lien au bleu par défaut du navigateur (revue du 13/11/2026) */
   main { max-width: var(--max); margin: 0 auto; padding: 0 16px 120px; }
   h1, h2, h3 { line-height: 1.15; margin: 0; font-weight: 600; letter-spacing: -0.01em; }
   h1, h2, .stat strong { font-family: var(--serif); font-weight: 600; letter-spacing: 0; }
@@ -188,7 +189,10 @@
   .faq { margin-top: 64px; max-width: 64ch; }
   .faq details { border-top: 1px solid var(--line); padding: .7rem 0; }
   .faq details:last-of-type { border-bottom: 1px solid var(--line); }
-  .faq summary { cursor: pointer; font-weight: 500; }
+  .faq summary { cursor: pointer; font-weight: 500; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: ""; flex: none; width: .55rem; height: .55rem; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); margin-right: .35rem; transform: rotate(45deg) translateY(-2px); }
+  .faq details[open] summary::after { transform: rotate(-135deg) translateY(-2px); }
   .faq p { color: var(--muted); margin: .5rem 0 .2rem; }
   /* blog sur l'accueil : quatre articles, liste tenue par blog/build.py */
   .blog-accueil { margin-top: 64px; max-width: 64ch; }
@@ -203,6 +207,7 @@
   @media (max-width: 640px) { .dem-n { display: block; margin: .4rem 0 0; } }   /* mobile : « 1 sur 2 » sous le titre, jamais coupé (retour du 11/11/2026) */
   .dem-titre { margin: .8rem 0 0; font-weight: 600; }
   .dem[hidden] { display: none; }
+  .btn[hidden] { display: none; }   /* « Retour » de la partie 1 : l'attribut hidden était écrasé par display: inline-block */
   #suiviBtn.cache { display: none; }
   /* Prototype « chacun de son côté, puis on compare » (11/11/2026) */
   .cmp-bandeau { margin: 0 0 1.2rem; padding: .9rem 1.1rem; background: var(--bg-2); border-left: 4px solid var(--ink); border-radius: var(--r); font-size: .95rem; }
@@ -272,7 +277,7 @@
   .suivi-med small { display: block; color: var(--muted); font-size: .82rem; margin-top: .2rem; }
   /* genre : trois pastilles, aucune cochée au départ, à choisir avant de commencer (nc possible), sans incidence sur le calcul */
   .genre, .choix { display: flex; gap: .35rem; margin-top: .45rem; }
-  .genre .g, .choix .g { flex: 1; padding: .35rem 0; border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper);
+  .genre .g, .choix .g { flex: 1; min-height: 44px; padding: .35rem 0; border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper);
     color: var(--muted); cursor: pointer; font-size: .95rem; line-height: 1.2; font-family: inherit; }
   .genre .g .sym { font-size: 1.3rem; line-height: 1; vertical-align: -.12em; }
   .genre .g:hover, .choix .g:hover { border-color: var(--border); color: var(--ink); }
@@ -584,10 +589,9 @@
   @media (min-width: 700px) { .haut { position: relative; } .haut nav { position: absolute; right: 0; top: 100%; height: 58px; } }
   /* bouton Soutenir (09/11/2026), vers Ko-fi : terracotta (rétabli le 10/11/2026 après un essai en teal ; la deuxième personne est en violet), texte blanc dans la police du site (Instrument Sans 600, charte ;
      la Cookie du bouton Buy Me a Coffee n'était pas lisible), emoji. Aucun script tiers : un simple lien. */
-  .soutenir, .bmc { display: inline-flex; align-items: center; gap: .45rem; padding: .62rem 1.15rem .62rem .95rem; border-radius: var(--r); border: 1.5px solid var(--alerte); background: var(--alerte); color: #fff; font-family: var(--sans); font-size: .9rem; font-weight: 600; line-height: 1.3; text-decoration: none; cursor: pointer; }
+  .soutenir, .bmc { display: inline-flex; align-items: center; gap: .45rem; padding: .62rem 1.15rem; border-radius: var(--r); border: 1.5px solid var(--alerte); background: var(--alerte); color: #fff; font-family: var(--sans); font-size: .9rem; font-weight: 600; line-height: 1.3; text-decoration: none; cursor: pointer; }
   .soutenir:hover, .bmc:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
   .bmc { font-size: 1rem; padding: .75rem 1.4rem .75rem 1.15rem; }
-  .bmc-emoji { font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif; font-size: 1.05em; line-height: 1; }
   /* soutenir, sous « Faire connaître » (08/11/2026) : le moment où le point vient de servir */
   .soutien { margin-top: 2rem; padding: 1.3rem 1.4rem; background: var(--bg-2); border-radius: 12px; }
   .soutien h2 { font-size: 1.35rem; margin-bottom: .3rem; }
@@ -623,7 +627,6 @@
   .sortie-actions { display: grid; gap: .6rem; margin-top: 1.2rem; }
   .sortie-actions .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; text-align: center; }
   .sortie-actions .btn svg { width: 18px; height: 18px; fill: currentColor; }
-  .sortie-actions .btn .bmc-emoji { font-size: 1rem; }
   .sortie-actions .small { margin: -.1rem 0 .2rem; }
   /* modale de l'étude : deux sorties de même poids visuel, refuser à gauche, approuver à droite */
   .etude-boite { max-width: 620px; }
@@ -799,7 +802,7 @@
 <main>
   <header class="haut">
     <a class="marque" href="./">Qui y pense&nbsp;?</a>
-    <nav aria-label="Site"><a class="soutenir" id="soutenir" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=entete&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="entete"><span class="bmc-emoji" aria-hidden="true">🙏</span>Soutenir</a></nav>
+    <nav aria-label="Site"><a class="soutenir" id="soutenir" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=entete&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="entete">Soutenir</a></nav>
   </header>
   <nav class="fil" id="fil" aria-label="Étapes"><span data-n="1">Vous</span><span data-n="2">Qui y pense</span><span data-n="3">Le résultat</span></nav>
 
@@ -862,7 +865,7 @@
         </svg>
         <div class="hero-ex" role="img" aria-label="Exemple de résultat : Camille porte 54 % du temps et 78 % de la charge mentale.">
           <p>Exemple de résultat</p>
-          <div class="l"><span>Le temps à faire</span><div class="bar"><i class="ia" style="width:54%">Camille 54 %</i><i class="ib" style="width:46%">46 % Alex</i></div></div>
+          <div class="l"><span>Le temps à faire</span><div class="bar"><i class="ia" style="width:54%">Camille 54 %</i><i class="ib" style="width:46%">46 % Sacha</i></div></div>
           <div class="l"><span>La charge mentale</span><div class="bar"><i class="ia" style="width:78%">Camille 78 %</i><i class="ib" style="width:22%">22 %</i></div></div>
         </div>
       </div>
@@ -1052,7 +1055,7 @@
         <h2 id="soutien-titre">Ce point vous a servi&nbsp;?</h2>
         <p class="muted">Qui y pense&nbsp;? est gratuit, sans inscription ni publicité, et fait sur du temps libre. Un café aide à le garder en ligne et à préparer la suite&nbsp;: refaire le point dans six mois, une sauvegarde en ligne.</p>
         <div class="soutien-actions">
-          <a class="bmc" id="soutien-cafe" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="resultat"><span class="bmc-emoji" aria-hidden="true">🙏</span><span>Offrir un café (2&nbsp;€)</span></a>
+          <a class="bmc" id="soutien-cafe" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="resultat"><span>Offrir un café (2&nbsp;€)</span></a>
           <a href="soutenir/?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir">À quoi sert votre soutien</a>
         </div>
       </section>
@@ -1085,7 +1088,7 @@
   </div>
 
   <footer>
-    <nav class="pied-nav" aria-label="Pied de page"><a href="methode/">Méthode</a><a href="blog/">Ressources</a><a href="presse/">Presse</a><a href="charte/">Charte</a><a href="soutenir/?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir"><span class="bmc-emoji" aria-hidden="true">🙏</span>Soutenir</a><button type="button" id="pied-partager" aria-expanded="false" aria-controls="pied-partage"><svg aria-hidden="true"><use href="#i-partager"/></svg>Partager le site</button><a href="en/" hreflang="en-GB" lang="en-GB">English</a></nav>
+    <nav class="pied-nav" aria-label="Pied de page"><a href="methode/">Méthode</a><a href="blog/">Ressources</a><a href="presse/">Presse</a><a href="charte/">Charte</a><a href="soutenir/?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir">Soutenir</a><button type="button" id="pied-partager" aria-expanded="false" aria-controls="pied-partage"><svg aria-hidden="true"><use href="#i-partager"/></svg>Partager le site</button><a href="en/" hreflang="en-GB" lang="en-GB">English</a></nav>
     <div class="rs rs-pied" id="pied-partage" data-partage="site" hidden></div>
     <p>Qui y pense ? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. Le lien de partage contient vos réponses, rien d'autre. Une question, une idée : <a href="mailto:contact@quiypense.org">contact@quiypense.org</a>. <a href="#" id="consent-lien">Cookies</a>. <a href="confidentialite/">Confidentialité</a>, <a href="conditions/">conditions d'utilisation</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>.</p>
   </footer>
@@ -1180,7 +1183,7 @@
       <button class="btn" type="button" id="sortie-copier"><svg aria-hidden="true"><use href="#i-lien"/></svg><span>Copier le lien de ce résultat</span></button>
       <p class="small muted" id="sortie-ok">Ou ajoutez la page aux favoris : Ctrl + D (⌘ + D sur Mac).</p>
       <button class="btn secondary" type="button" id="sortie-sauver">Une sauvegarde en ligne ? Dites-nous si ça vous intéresse</button>
-      <a class="btn secondary" id="sortie-soutenir" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=sortie&amp;utm_campaign=soutenir" target="_blank" rel="noopener"><span class="bmc-emoji" aria-hidden="true">🙏</span><span>Soutenir le projet</span></a>
+      <a class="btn secondary" id="sortie-soutenir" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=sortie&amp;utm_campaign=soutenir" target="_blank" rel="noopener"><span>Soutenir le projet</span></a>
     </div>
   </div>
 </div>
