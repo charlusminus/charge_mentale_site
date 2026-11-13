@@ -54,7 +54,7 @@ strong { font-weight: 600; }
   .menu > a:not(.btn), .menu .sous-liste a { padding: .85rem 0; border-bottom: 1px solid var(--line); border-radius: 0; }
   .sous-btn { display: none; }   /* mobile : liste à plat, sans intertitre */
   .sous-liste { display: flex; position: static; min-width: 0; padding: 0; background: none; border: 0; box-shadow: none; }
-  .menu .btn { margin-top: 1.8rem; padding: .95rem; font-family: var(--sans); font-size: 1rem; text-align: center; }
+  .haut .menu .btn { margin-top: 1.8rem; padding: .95rem; font-family: var(--sans); font-size: 1rem; text-align: center; }
   html.menu-ouvert { overflow: hidden; }
 }
 .btn { display: inline-block; padding: .75rem 1.3rem; border-radius: var(--r); border: 1.5px solid var(--ink); background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 600; }

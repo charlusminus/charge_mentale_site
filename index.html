@@ -292,6 +292,7 @@
   .remplit { margin-top: 1rem; max-width: 520px; }
   .remplit .lbl { display: block; font-size: .85rem; color: var(--muted); }
   .choix .g { padding: .5rem .4rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  @media (max-width: 400px) { .choix .g { padding: .5rem .2rem; font-size: .88rem; } }
   .choix .g.a[aria-pressed="true"] { border-color: var(--a); background: var(--a); }
   .choix .g.b[aria-pressed="true"] { border-color: var(--b); background: var(--b); }
   .genre.manque .g, .choix.manque .g { border-color: var(--alerte); }
@@ -349,7 +350,7 @@
   .case.inactive { border-color: var(--line); background: transparent; cursor: default; color: var(--line); }
   .case.inactive:hover { border-color: var(--line); }
   .case.vide { visibility: hidden; }
-  .ajout-lien { display: inline-block; margin-top: .6rem; font-size: .88rem; color: var(--muted); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .ajout-lien { display: inline-flex; align-items: center; min-height: 44px; margin-top: .1rem; text-align: left; font-size: .88rem; color: var(--muted); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
   .ajout { margin-top: .8rem; display: flex; gap: .5rem; flex-wrap: wrap; }
   .ajout input { flex: 1; min-width: 200px; padding: .5rem .7rem; border: 1.5px dashed var(--border); border-radius: var(--r); background: transparent; }
   .ajout button { padding: .5rem .9rem; border-radius: var(--r); border: 1.5px solid var(--ink); background: transparent; cursor: pointer; }
@@ -367,6 +368,7 @@
   .resultats td strong { font-family: var(--serif); font-weight: 600; font-size: 1.9rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .resultats td small { display: block; color: var(--muted); font-size: .82rem; }
   .resultats td small a { color: inherit; text-underline-offset: 2px; }
+  @media (max-width: 340px) { .resultats th { font-size: 1.15rem; } .resultats td { padding-right: .45rem; } .resultats td.lbl { width: 28%; font-size: .82rem; } .resultats td strong { font-size: 1.55rem; } }
   /* Résultat, premier écran (revue du 13/11/2026) : les deux barres promises par l'accroche, puis le détail. */
   .parts { display: grid; gap: 1.1rem; margin: 1.4rem 0 1.8rem; }
   .part { display: grid; gap: .35rem; }
@@ -653,7 +655,7 @@
     .menu > a:not(.btn), .menu .sous-liste a { padding: .85rem 0; border-bottom: 1px solid var(--line); border-radius: 0; }
     .sous-btn { display: none; }   /* mobile : liste à plat, sans intertitre */
     .sous-liste { display: flex; position: static; min-width: 0; padding: 0; background: none; border: 0; box-shadow: none; }
-    .menu .btn { margin-top: 1.8rem; padding: .95rem; font-family: var(--sans); font-size: 1rem; text-align: center; }
+    .haut .menu .btn { margin-top: 1.8rem; padding: .95rem; font-family: var(--sans); font-size: 1rem; text-align: center; }
     html.menu-ouvert { overflow: hidden; }
   }
   .menu .btn { padding: .45rem .9rem; font-size: .9rem; }
