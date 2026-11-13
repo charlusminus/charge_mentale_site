@@ -513,8 +513,8 @@
    "<h2 id=\"sec-resultat\">Your split</h2>"
   ],
   [
-   "<p class=\"muted\">Calculée avec des durées courantes pour chaque tâche. Corrigez-les plus bas si elles ne collent pas chez vous&nbsp;: le résultat se met à jour en direct. <a href=\"#poids-pense\" class=\"src-btn\" role=\"button\" aria-expanded=\"false\" aria-controls=\"poids-pense\">La charge mentale tient compte de la fréquence<span class=\"i\" aria-hidden=\"true\">i</span></a>.<span id=\"note-garde\"></span></p>",
-   "<p class=\"muted\">Calculated with typical durations for each task. Adjust them further down if they do not match your home: the result updates as you go. <a href=\"#poids-pense\" class=\"src-btn\" role=\"button\" aria-expanded=\"false\" aria-controls=\"poids-pense\">The mental load takes frequency into account<span class=\"i\" aria-hidden=\"true\">i</span></a>.<span id=\"note-garde\"></span></p>"
+   "<p class=\"muted\">Calculée avec des durées moyennes pour un couple, tâche par tâche. Corrigez-les plus bas si elles ne collent pas chez vous&nbsp;: le résultat se met à jour en direct. <a href=\"#poids-pense\" class=\"src-btn\" role=\"button\" aria-expanded=\"false\" aria-controls=\"poids-pense\">La charge mentale tient compte de la fréquence<span class=\"i\" aria-hidden=\"true\">i</span></a>.<span id=\"note-garde\"></span></p>",
+   "<p class=\"muted\">Calculated with average times for a couple, task by task. Adjust them further down if they do not match your home: the result updates as you go. <a href=\"#poids-pense\" class=\"src-btn\" role=\"button\" aria-expanded=\"false\" aria-controls=\"poids-pense\">The mental load takes frequency into account<span class=\"i\" aria-hidden=\"true\">i</span></a>.<span id=\"note-garde\"></span></p>"
   ],
   [
    "<p>Penser aux repas chaque jour ne pèse pas autant que penser aux vacances quelques fois par an. Une chose à laquelle on pense chaque semaine ou plus compte trois fois, chaque mois deux fois, plus rarement une fois. Le tableau donne le nombre de choses en tête, les pourcentages tiennent compte de ce poids.</p>",
@@ -961,8 +961,8 @@
    "<tr><td class=\"lbl\">Tasks to keep in mind</td>"
   ],
   [
-   "<h3>Le partage, famille par famille</h3><p class=\"muted small\">De la plus longue à la plus courte. À droite, le temps par jour pour la maison.</p>",
-   "<h3>The split, family by family</h3><p class=\"muted small\">From the longest to the shortest. On the right, time per day for the home.</p>"
+   "<h3>Le partage, famille par famille</h3><p class=\"muted small\">De la plus longue à la plus courte. À droite, le temps par jour pour vous deux, avec des durées moyennes à corriger plus bas si besoin.</p>",
+   "<h3>The split, family by family</h3><p class=\"muted small\">From the longest to the shortest. On the right, time per day for the two of you, using average times you can adjust further down.</p>"
   ],
   [
    "<i style=\"background:var(--both)\"></i>les deux</span>",
@@ -981,8 +981,8 @@
    " carries ${gros[2]}% of the time, <span class=\"${tete[0]}\">${tete[1]}</span> ${tete[2]}% of the household's mental load.`"
   ],
   [
-   "`${hm(quart(r.a.h) + quart(r.b.h))} par jour à faire en tout.`",
-   "`${hm(quart(r.a.h) + quart(r.b.h))} a day of tasks in all.`"
+   "`${hm(quart(r.a.h) + quart(r.b.h))} par jour à faire en tout, à vous deux.`",
+   "`${hm(quart(r.a.h) + quart(r.b.h))} a day of tasks in all, for the two of you.`"
   ],
   [
    "` L'écart entre faire et y penser est net : ${who} pense à bien plus de choses que le temps ne le montre. C'est là que se loge la charge mentale.`",
@@ -1245,8 +1245,8 @@
    "<span class=\"pj\"> / day</span>"
   ],
   [
-   "`${ids.length} tâche${ids.length > 1 ? \"s\" : \"\"}, ${hm(h)} / jour`",
-   "`${ids.length} task${ids.length > 1 ? \"s\" : \"\"}, ${hm(h)} / day`"
+   "`${ids.length} tâche${ids.length > 1 ? \"s\" : \"\"}, ${hm(h)} / jour à deux`",
+   "`${ids.length} task${ids.length > 1 ? \"s\" : \"\"}, ${hm(h)} / day for both`"
   ],
   [
    "const rows = [[\"Famille\", \"Tâche\", \"S'en occupe\", \"Y pense\", \"Fois\", \"Par\", \"Minutes à chaque fois\", \"Heures par jour\", \"Heures par semaine\"]];",
@@ -1783,6 +1783,10 @@
   [
    "<p class=\"pied-bas\">Qui y pense ? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. Le lien de partage contient vos réponses, rien d'autre. Une question : <a href=\"mailto:contact@quiypense.org\">contact@quiypense.org</a>. Sources : <a href=\"https://www.insee.fr/fr/statistiques/2123967\">INSEE, Emploi du temps 2010</a>, <a href=\"https://www.ined.fr/fr/premiers-resultats-enquete-famemp\">INED, FAMEMP</a>, <a href=\"https://journals.sagepub.com/doi/10.1177/0003122419859007\">Daminger 2019</a>, <a href=\"https://www.fairplaylife.com/the-book\">Fair Play</a>. <a href=\"en/\" hreflang=\"en-GB\" lang=\"en-GB\">English</a></p>",
    "<p class=\"pied-bas\">Who thinks of it? (quiypense.org) started as a spreadsheet kept by two people, at home. An independent project, with no sign-up and no ads. The share link contains your answers, nothing else. A question: <a href=\"mailto:contact@quiypense.org\">contact@quiypense.org</a>. Sources: <a href=\"https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/articles/womenshouldertheresponsibilityofunpaidwork/2016-11-10\">ONS, unpaid work 2015</a>, <a href=\"https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/bulletins/timeuseintheuk/march2023\">ONS, Time use in the UK 2023</a>, <a href=\"https://www.insee.fr/fr/statistiques/2123967\">INSEE, time-use survey 2010 (France, default durations)</a>, <a href=\"https://journals.sagepub.com/doi/10.1177/0003122419859007\">Daminger 2019</a>, <a href=\"https://www.fairplaylife.com/the-book\">Fair Play</a>. <a href=\"../\" hreflang=\"fr\" lang=\"fr\">Français</a></p>"
+  ],
+  [
+   "<p class=\"pap-note\">Le temps de chaque tâche part d'une moyenne pour un couple&nbsp;: vous l'ajusterez sous le résultat.</p>",
+   "<p class=\"pap-note\">The time for each task starts from an average for a couple: you can adjust it under the result.</p>"
   ]
  ]
 }
