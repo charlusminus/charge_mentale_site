@@ -209,6 +209,42 @@
    "<span>Just being there, per week<small>the older ones are at home, you can do other things; not added to the time</small>"
   ],
   [
+   "<button type=\"button\" data-vers=\"sec-resultat\" aria-current=\"true\">Résultat</button><button type=\"button\" data-vers=\"parcat\">Détail</button><button type=\"button\" data-vers=\"sec-parler\">En parler</button><button type=\"button\" data-vers=\"comparer\">Comparer</button><button type=\"button\" data-vers=\"affiner\">Affiner</button>",
+   "<button type=\"button\" data-vers=\"sec-resultat\" aria-current=\"true\">Result</button><button type=\"button\" data-vers=\"parcat\">Detail</button><button type=\"button\" data-vers=\"sec-parler\">Talk it over</button><button type=\"button\" data-vers=\"comparer\">Compare</button><button type=\"button\" data-vers=\"affiner\">Adjust</button>"
+  ],
+  [
+   "<h2 class=\"sec-titre\" id=\"sec-parler\">En parler à deux</h2>",
+   "<h2 class=\"sec-titre\" id=\"sec-parler\">Talk it over together</h2>"
+  ],
+  [
+   "<div class=\"cmp-seg\" role=\"group\" aria-label=\"Ce que l'on compare\"><button type=\"button\" data-vue=\"0\">Charge mentale</button><button type=\"button\" data-vue=\"1\">Temps à la maison</button>${totalCarte ? `<button type=\"button\" data-vue=\"2\">Temps total</button>` : \"\"}</div>",
+   "<div class=\"cmp-seg\" role=\"group\" aria-label=\"What is compared\"><button type=\"button\" data-vue=\"0\">Mental load</button><button type=\"button\" data-vue=\"1\">Time at home</button>${totalCarte ? `<button type=\"button\" data-vue=\"2\">Total time</button>` : \"\"}</div>"
+  ],
+  [
+   "aria-label=\"Sections du résultat\"",
+   "aria-label=\"Result sections\""
+  ],
+  [
+   "${nomA()} ${pct(c.a)} %, les deux ${pct(c.both)} %, ${nomB()} ${pct(c.b)} %",
+   "${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%"
+  ],
+  [
+   "PA.innerHTML = partBarre(\"Le temps à faire\", pa, hmQuart(r.a.h) + \" par jour\", hmQuart(r.b.h) + \" par jour\")",
+   "PA.innerHTML = partBarre(\"Time spent doing\", pa, hmQuart(r.a.h) + \" a day\", hmQuart(r.b.h) + \" a day\")"
+  ],
+  [
+   "+ (totP ? partBarre(\"La charge mentale\", qa, choses(r.a.nPense), choses(r.b.nPense)) : \"\");",
+   "+ (totP ? partBarre(\"Mental load\", qa, choses(r.a.nPense), choses(r.b.nPense)) : \"\");"
+  ],
+  [
+   "const choses = v => `${n0(v)} ${v > 1 ? \"choses\" : \"chose\"} en tête`;\n    PA.innerHTML",
+   "const choses = v => `${n0(v)} ${v > 1 ? \"things\" : \"thing\"} in mind`;\n    PA.innerHTML"
+  ],
+  [
+   "<i class=\"ia\" style=\"width:${v}%\">${v >= 12 ? v + \" %\" : \"\"}</i><i class=\"ib\" style=\"width:${100 - v}%\">${100 - v >= 12 ? (100 - v) + \" %\" : \"\"}</i>",
+   "<i class=\"ia\" style=\"width:${v}%\">${v >= 12 ? v + \"%\" : \"\"}</i><i class=\"ib\" style=\"width:${100 - v}%\">${100 - v >= 12 ? (100 - v) + \"%\" : \"\"}</i>"
+  ],
+  [
    "const aQui = pres.a && pres.b ? \"à vous deux\" : pres.a ? \"pour \" + nomA() : \"pour \" + nomB();",
    "const aQui = pres.a && pres.b ? \"between you\" : pres.a ? \"for \" + nomA() : \"for \" + nomB();"
   ],
@@ -477,8 +513,8 @@
    ">See the result</button>"
   ],
   [
-   "<h2>Votre répartition</h2>",
-   "<h2>Your split</h2>"
+   "<h2 id=\"sec-resultat\">Votre répartition</h2>",
+   "<h2 id=\"sec-resultat\">Your split</h2>"
   ],
   [
    "<p class=\"muted\">Calculée avec des durées courantes pour chaque tâche. Corrigez-les plus bas si elles ne collent pas chez vous&nbsp;: le résultat se met à jour en direct. <a href=\"#poids-pense\" class=\"src-btn\" role=\"button\" aria-expanded=\"false\" aria-controls=\"poids-pense\">La charge mentale tient compte de la fréquence<span class=\"i\" aria-hidden=\"true\">i</span></a>.<span id=\"note-garde\"></span></p>",
@@ -541,8 +577,8 @@
    "<p class=\"avert-5050\"><strong>A word before you set everything to the minute.</strong> Chasing an exact balance line by line wears couples out as much as the imbalance itself. A gap is not a problem as long as it is chosen, talked about and reversible: an imbalance you choose is not an injustice.</p>"
   ],
   [
-   "<h2>Et maintenant</h2>",
-   "<h2>What next</h2>"
+   "<h2>Garder votre résultat</h2>",
+   "<h2>Keep your result</h2>"
   ],
   [
    "<button class=\"btn\" id=\"sauver\">Sauvegarder</button>",
@@ -553,8 +589,8 @@
    "<button class=\"btn secondary\" id=\"xlsx\">Download as Excel</button>"
   ],
   [
-   "<button class=\"btn secondary\" id=\"back2\">Modifier qui y pense</button>",
-   "<button class=\"btn secondary\" id=\"back2\">Edit your answers</button>"
+   "<button class=\"btn secondary\" id=\"back2\">Revenir aux questions</button>",
+   "<button class=\"btn secondary\" id=\"back2\">Back to the questions</button>"
   ],
   [
    "<p class=\"small muted garde-note\">Ce résultat n'est gardé pour vous nulle part : copiez le lien ou ajoutez la page aux favoris pour le retrouver.</p>",
@@ -937,8 +973,8 @@
    "<tr><td class=\"lbl\">Tasks to keep in mind</td>"
   ],
   [
-   "<h3>Le temps par jour pour la maison, par famille de tâches</h3>",
-   "<h3>Time per day on the home, by group of tasks</h3>"
+   "<h3>Le partage, famille par famille</h3><p class=\"muted small\">De la plus longue à la plus courte. À droite, le temps par jour pour la maison.</p>",
+   "<h3>The split, family by family</h3><p class=\"muted small\">From the longest to the shortest. On the right, time per day for the home.</p>"
   ],
   [
    "<i style=\"background:var(--both)\"></i>les deux</span>",
@@ -1081,8 +1117,8 @@
    "<span>equal shares</span>"
   ],
   [
-   "<i style=\"background:var(--c)\"></i>votre tranche</span><span><i style=\"background:#B9AA92\"></i>la moitié des couples du milieu</span><span><i style=\"background:var(--line)\"></i>les autres</span>",
-   "<i style=\"background:var(--c)\"></i>your band</span><span><i style=\"background:#B9AA92\"></i>the middle half of couples</span><span><i style=\"background:var(--line)\"></i>the others</span>"
+   "<i style=\"background:var(--c)\"></i>votre tranche</span><span><i style=\"background:#B9AA92\"></i>la moitié des couples du milieu</span><span><i style=\"background:#D9CDB9\"></i>les autres</span>",
+   "<i style=\"background:var(--c)\"></i>your band</span><span><i style=\"background:#B9AA92\"></i>the middle half of couples</span><span><i style=\"background:#D9CDB9\"></i>the others</span>"
   ],
   [
    "<p class=\"phrase\">Chez la moitié de ces couples, elle en ${verbe} entre <b>${q1}</b> et <b>${q3}\\u00a0%</b>. Chez vous, <b>${v}\\u00a0%</b>.</p>",
@@ -1093,8 +1129,8 @@
    "const titreT = \"Share of total time, paid work included, done by\";"
   ],
   [
-   "g.total, \"fait\", false)",
-   "g.total, \"does\", false)"
+   "g.total, \"fait\", true)",
+   "g.total, \"does\", true)"
   ],
   [
    "<p class=\"phrase\">Le travail payé compte aussi. <button type=\"button\" class=\"lien\" data-aller=\"pro\">Indiquer les heures de travail</button> pour vous situer parmi les ${g.total.n.toLocaleString(\"fr-FR\")} couples qui l'ont fait.</p>",
@@ -1113,8 +1149,8 @@
    "${carte(\"Share of the mental load carried by\", tete, g.tete, \"carries\", true)}"
   ],
   [
-   "${carte(\"Part du temps à la maison fait par\", temps, g.temps, \"fait\", false)}",
-   "${carte(\"Share of home time done by\", temps, g.temps, \"does\", false)}"
+   "${carte(\"Part du temps à la maison fait par\", temps, g.temps, \"fait\", true)}",
+   "${carte(\"Share of home time done by\", temps, g.temps, \"does\", true)}"
   ],
   [
    "<p class=\"small muted\">Repères calculés à partir des copies anonymisées de l'étude, mis à jour chaque semaine (dernière mise à jour : ${new Date(R.date).toLocaleDateString(\"fr-FR\", { day: \"numeric\", month: \"long\" })}). Ils sont déjà dans la page : rien de plus ne part de votre navigateur.</p>",
