@@ -600,10 +600,14 @@
   footer { padding: 32px 0; color: var(--muted); font-size: .85rem; }
   footer a { color: var(--muted); }
   footer p { margin: 0; }
-  .pied-nav { display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: center; margin: 0 0 .9rem; font-size: .95rem; }
-  .pied-nav a, .pied-nav button { display: inline-flex; align-items: center; gap: .35rem; background: none; border: 0; padding: 0; font: inherit; font-size: .95rem; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
-  .pied-nav a:hover, .pied-nav button:hover { color: var(--muted); }
-  .pied-nav svg { width: 16px; height: 16px; fill: currentColor; }
+  .pied-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem 1.5rem; margin: 0 0 1.2rem; padding-top: 24px; border-top: 1.5px solid var(--line); font-size: .9rem; }
+  .pied-cols div { display: flex; flex-direction: column; align-items: flex-start; gap: .1rem; }
+  .pied-titre { margin: 0 0 .3rem; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+  .pied-cols a, .pied-cols button { display: inline-flex; align-items: center; gap: .35rem; padding: .28rem 0; border: 0; background: none; font: inherit; color: var(--ink); text-decoration: none; cursor: pointer; overflow-wrap: anywhere; text-align: left; }
+  .pied-cols a:hover, .pied-cols button:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .pied-cols svg { width: 16px; height: 16px; fill: currentColor; flex: none; }
+  footer .pied-bas { padding-top: 1rem; border-top: 1px solid var(--line); font-size: .82rem; }
+  @media (max-width: 520px) { .pied-cols { grid-template-columns: 1fr 1fr; } .pied-cols a, .pied-cols button { padding: .45rem 0; } }
   footer .rs-pied { display: flex; gap: .5rem; flex-wrap: wrap; margin: 0 0 1rem; }
   footer .rs-pied[hidden] { display: none; }
   footer .rs-pied a, footer .rs-pied button { font-size: .85rem; padding: .35rem .7rem .35rem .55rem; }
@@ -613,9 +617,52 @@
   /* en-tête de site */
   .haut { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 14px 0 0; }
   .marque { font-family: var(--serif); font-weight: 600; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
-  .haut nav { display: flex; align-items: center; gap: 1rem; font-size: .95rem; }
-  /* Bureau : le bouton Soutenir descend sur la ligne des étapes (10/11/2026), aligné à droite ; .fil fait 58 px sans sa bordure. */
-  @media (min-width: 700px) { .haut { position: relative; } .haut nav { position: absolute; right: 0; top: 100%; height: 58px; } }
+  /* Menu du site (13/11/2026) : le même en-tête partout. Ordinateur : liens en ligne, « À propos » en sous-menu.
+     Mobile : bouton burger, menu plein écran. Même feuille que blog/blog.css, à tenir identique ; l'accueil ajoute le mode réduit ci-dessous. */
+  .haut { position: relative; }
+  .burger { display: none; position: relative; z-index: 61; width: 44px; height: 44px; margin: -6px -10px -6px 0; padding: 0; border: 0; background: none; color: var(--ink); cursor: pointer; }
+  .burger i, .burger i::before, .burger i::after { content: ""; position: absolute; left: 11px; width: 22px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .2s; }
+  .burger i { top: 21px; }
+  .burger i::before { left: 0; top: -7px; }
+  .burger i::after { left: 0; top: 7px; }
+  .haut.ouvert .burger i { background: transparent; }
+  .haut.ouvert .burger i::before { transform: translateY(7px) rotate(45deg); }
+  .haut.ouvert .burger i::after { transform: translateY(-7px) rotate(-45deg); }
+  .menu { display: flex; align-items: center; gap: 1.5rem; font-size: .95rem; }
+  .menu a:not(.btn), .sous-btn { padding: .4rem 0; border: 0; background: none; font: inherit; color: var(--ink); text-decoration: none; cursor: pointer; }
+  .menu a:not(.btn):hover, .sous-btn:hover, .menu a[aria-current] { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 6px; }
+  .burger:focus-visible, .menu a:focus-visible, .sous-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
+  .sous { position: relative; }
+  .sous-btn::after { content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 0 3px 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); }
+  .sous-liste { display: none; position: absolute; right: -12px; top: 100%; z-index: 60; min-width: 190px; padding: 6px; flex-direction: column; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); box-shadow: 0 10px 28px rgba(42, 33, 24, .14); }
+  .sous.ouvert .sous-liste { display: flex; }
+  .menu .sous-liste a { padding: .55rem .75rem; border-radius: 6px; }
+  .menu .sous-liste a:hover { background: var(--bg-2); text-decoration: none; }
+  @media (hover: hover) and (min-width: 761px) { .sous:hover .sous-liste { display: flex; } }
+  @media (max-width: 760px) {
+    .burger { display: block; }
+    .haut .marque { position: relative; z-index: 61; }
+    .menu { display: none; }
+    .haut.ouvert .menu { display: flex; position: fixed; inset: 0; z-index: 60; flex-direction: column; align-items: stretch; gap: 0; padding: 84px 24px 32px; overflow-y: auto; background: var(--bg); font-family: var(--serif); font-size: 1.4rem; }
+    .menu > a:not(.btn), .menu .sous-liste a { padding: .85rem 0; border-bottom: 1px solid var(--line); border-radius: 0; }
+    .sous-btn { display: block; padding: 1.6rem 0 .3rem; font-family: var(--sans); font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); pointer-events: none; }
+    .sous-btn::after { display: none; }
+    .sous-liste { display: flex; position: static; min-width: 0; padding: 0; background: none; border: 0; box-shadow: none; }
+    .menu .btn { margin-top: 1.8rem; padding: .95rem; font-family: var(--sans); font-size: 1rem; text-align: center; }
+    html.menu-ouvert { overflow: hidden; }
+  }
+  .menu .btn { padding: .45rem .9rem; font-size: .9rem; }
+  /* Mode réduit (questionnaire et résultat) : la marque, le fil d'étapes, et le menu derrière le burger à toutes les largeurs. */
+  .haut.compact #menu-go { display: none; }
+  @media (min-width: 761px) {
+    .haut.compact .burger { display: block; }
+    .haut.compact .menu { display: none; }
+    .haut.compact.ouvert .menu { display: flex; position: absolute; right: -6px; top: 100%; z-index: 60; flex-direction: column; align-items: stretch; gap: 0; min-width: 210px; padding: 6px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); box-shadow: 0 10px 28px rgba(42, 33, 24, .14); }
+    .haut.compact .menu a:not(.btn) { padding: .55rem .75rem; border-radius: 6px; }
+    .haut.compact .menu a:not(.btn):hover { background: var(--bg-2); text-decoration: none; }
+    .haut.compact .sous-btn { display: none; }
+    .haut.compact .sous-liste { display: flex; position: static; min-width: 0; margin-top: 4px; padding: 4px 0 0; background: none; border: 0; border-top: 1px solid var(--line); border-radius: 0; box-shadow: none; }
+  }
   /* bouton Soutenir (09/11/2026), vers Ko-fi : terracotta (rétabli le 10/11/2026 après un essai en teal ; la deuxième personne est en violet), texte blanc dans la police du site (Instrument Sans 600, charte ;
      la Cookie du bouton Buy Me a Coffee n'était pas lisible), emoji. Aucun script tiers : un simple lien. */
   .soutenir, .bmc { display: inline-flex; align-items: center; gap: .45rem; padding: .62rem 1.15rem; border-radius: var(--r); border: 1.5px solid var(--alerte); background: var(--alerte); color: #fff; font-family: var(--sans); font-size: .9rem; font-weight: 600; line-height: 1.3; text-decoration: none; cursor: pointer; }
@@ -829,9 +876,10 @@
   <symbol id="i-partager" viewBox="0 0 24 24"><path d="M18 16.1a3 3 0 0 0-2 .8l-7.1-4.1a3 3 0 0 0 0-1.6L16 7.1a3 3 0 1 0-1-1.7L7.9 9.5a3 3 0 1 0 0 5l7.1 4.1a3 3 0 1 0 3-2.5z"/></symbol>
 </svg>
 <main>
-  <header class="haut">
+  <header class="haut" id="haut">
     <a class="marque" href="./">Qui y pense&nbsp;?</a>
-    <nav aria-label="Site"><a class="soutenir" id="soutenir" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=entete&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="entete">Soutenir</a></nav>
+    <button type="button" class="burger" aria-expanded="false" aria-controls="menu"><span class="sr">Menu</span><i aria-hidden="true"></i></button>
+    <nav class="menu" id="menu" aria-label="Site"><a href="blog/">Ressources</a><a href="methode/">Méthode</a><div class="sous"><button type="button" class="sous-btn" aria-expanded="false" aria-controls="menu-sous">À propos</button><div class="sous-liste" id="menu-sous"><a href="presse/">Presse</a><a href="partenaires/">Partenaires</a><a href="charte/">Charte</a><a href="soutenir/?utm_source=quiypense&amp;utm_medium=menu&amp;utm_campaign=soutenir" data-soutenir="menu">Soutenir</a></div></div><a class="btn petit" href="#nomA" id="menu-go">Faire le point</a></nav>
   </header>
   <nav class="fil" id="fil" aria-label="Étapes"><span data-n="1">Vous</span><span data-n="2">Qui y pense</span><span data-n="3">Le résultat</span></nav>
 
@@ -1124,9 +1172,9 @@
   </div>
 
   <footer>
-    <nav class="pied-nav" aria-label="Pied de page"><a href="methode/">Méthode</a><a href="blog/">Ressources</a><a href="presse/">Presse</a><a href="charte/">Charte</a><a href="soutenir/?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir">Soutenir</a><button type="button" id="pied-partager" aria-expanded="false" aria-controls="pied-partage"><svg aria-hidden="true"><use href="#i-partager"/></svg>Partager le site</button><a href="en/" hreflang="en-GB" lang="en-GB">English</a></nav>
+    <div class="pied-cols"><div><p class="pied-titre">Le site</p><a href="methode/">Méthode</a><a href="blog/">Ressources</a><button type="button" id="pied-partager" aria-expanded="false" aria-controls="pied-partage"><svg aria-hidden="true"><use href="#i-partager"/></svg>Partager le site</button></div><div><p class="pied-titre">À propos</p><a href="presse/">Presse</a><a href="partenaires/">Partenaires</a><a href="charte/">Charte</a><a href="soutenir/?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir" data-soutenir="pied">Soutenir</a><a href="mailto:contact@quiypense.org">contact@quiypense.org</a></div><div><p class="pied-titre">Légal</p><a href="confidentialite/">Confidentialité</a><a href="conditions/">Conditions</a><a href="#" id="consent-lien">Cookies</a></div></div>
     <div class="rs rs-pied" id="pied-partage" data-partage="site" hidden></div>
-    <p>Qui y pense ? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. Le lien de partage contient vos réponses, rien d'autre. Une question, une idée : <a href="mailto:contact@quiypense.org">contact@quiypense.org</a>. <a href="#" id="consent-lien">Cookies</a>. <a href="confidentialite/">Confidentialité</a>, <a href="conditions/">conditions d'utilisation</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>.</p>
+    <p class="pied-bas">Qui y pense ? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. Le lien de partage contient vos réponses, rien d'autre. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>. <a href="en/" hreflang="en-GB" lang="en-GB">English</a></p>
   </footer>
   <noscript><p style="padding:16px;background:#F1EBDF">Ce site calcule tout dans votre navigateur : il a besoin de JavaScript pour fonctionner.</p></noscript>
 </main>
@@ -1509,6 +1557,7 @@
     if (n === 3) numeroFoyer();
     if (n === 3 && S.cmp && S.cmp.etat === "e") { S.cmp.etat = "c"; save(); }
     document.querySelectorAll(".ecran").forEach((e, i) => e.classList.toggle("actif", i + 1 === n));
+    document.getElementById("haut").classList.toggle("compact", n > 1);
     document.querySelectorAll("#fil span").forEach((s, i) => { s.classList.toggle("on", i + 1 === n); s.classList.toggle("fait", i + 1 < n); if (i + 1 === n) s.setAttribute("aria-current", "step"); else s.removeAttribute("aria-current"); });
     document.getElementById("suivi").classList.toggle("on", n === 2);
     document.getElementById("barre-partage").classList.toggle("on", n === 3);
@@ -2460,6 +2509,19 @@
       if (cur.offsetLeft < nav.scrollLeft || cur.offsetLeft + cur.offsetWidth > nav.scrollLeft + nav.clientWidth) nav.scrollLeft = cur.offsetLeft - 16; };
     addEventListener("scroll", () => { if (!attente) { attente = true; requestAnimationFrame(maj); } }, { passive: true });
     addEventListener("resize", maj); setTimeout(maj, 600);
+  })();
+  // Menu du site : burger sur mobile et en mode réduit, sous-menu « À propos » sur ordinateur. Même code dans mesure.js pour les autres pages.
+  (function menuSite() {
+    const h = document.getElementById("haut"), b = h.querySelector(".burger"), s = h.querySelector(".sous"), sb = s.querySelector(".sous-btn");
+    const menu = o => { h.classList.toggle("ouvert", o); b.setAttribute("aria-expanded", String(o)); document.documentElement.classList.toggle("menu-ouvert", o); };
+    const sous = o => { s.classList.toggle("ouvert", o); sb.setAttribute("aria-expanded", String(o)); };
+    b.addEventListener("click", () => { const o = !h.classList.contains("ouvert"); menu(o); if (o && window.__ga) gtag("event", "menu_ouvert"); });
+    sb.addEventListener("click", () => sous(!s.classList.contains("ouvert")));
+    document.addEventListener("click", e => { if (!s.contains(e.target)) sous(false); if (!h.contains(e.target)) menu(false); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") { if (h.classList.contains("ouvert")) b.focus(); menu(false); sous(false); } });
+    h.querySelectorAll(".menu a").forEach(a => a.addEventListener("click", () => menu(false)));
+    matchMedia("(min-width: 761px)").addEventListener("change", () => menu(false));
+    document.getElementById("menu-go").addEventListener("click", e => { e.preventDefault(); document.getElementById("hero-go").click(); });
   })();
   // Bouton de l'accroche (13/11/2026) : descend au formulaire et place le curseur sur le premier prénom.
   document.getElementById("hero-go").addEventListener("click", e => {
