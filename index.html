@@ -153,7 +153,8 @@
   /* Accroche illustrée (13/11/2026, décision de Charles sur planche : B sur ordinateur, A sur mobile) : le couple dans
      le canapé, dessiné au trait avec les jetons, et sur ordinateur un exemple de résultat (Camille, comme la presse). */
   header.hero { display: grid; gap: 28px 40px; align-items: center; padding: 40px 0 0; }
-  header.hero h1 { font-size: clamp(2.6rem, 5.2vw, 3.6rem); white-space: nowrap; }
+  header.hero h1 { font-size: clamp(2.6rem, 5.2vw, 3.6rem); }
+  @media (min-width: 700px) { header.hero h1 { white-space: nowrap; } }   /* une ligne sur ordinateur ; libre sur petit écran (titre anglais plus long) */
   header.hero p.lead { font-family: var(--serif); font-size: 1.45rem; line-height: 1.3; margin: .9rem 0 0; font-variation-settings: "opsz" 40; }
   header.hero .sur { font-family: var(--serif); font-size: 1.35rem; color: var(--muted); margin: 0 0 .4rem; font-variation-settings: "opsz" 40; }
   header.hero .preuve { margin: .7rem 0 0; color: var(--muted); }
@@ -611,7 +612,8 @@
   .pied-cols a:hover, .pied-cols button:hover { text-decoration: underline; text-underline-offset: 3px; }
   .pied-cols svg { width: 16px; height: 16px; fill: currentColor; flex: none; }
   footer .pied-bas { padding-top: 1rem; border-top: 1px solid var(--line); font-size: .82rem; }
-  @media (max-width: 520px) { .pied-cols { grid-template-columns: 1fr 1fr; } .pied-cols a, .pied-cols button { padding: .45rem 0; } }
+  /* Mobile : deux colonnes équilibrées, « Le site » puis « Légal » à gauche, « À propos » à droite. */
+  @media (max-width: 520px) { .pied-cols { grid-template-columns: 1fr 1fr; } .pied-cols div:nth-child(1) { grid-area: 1 / 1; } .pied-cols div:nth-child(3) { grid-area: 2 / 1; } .pied-cols div:nth-child(2) { grid-area: 1 / 2 / span 2; } .pied-cols a, .pied-cols button { padding: .45rem 0; } }
   footer .rs-pied { display: flex; gap: .5rem; flex-wrap: wrap; margin: 0 0 1rem; }
   footer .rs-pied[hidden] { display: none; }
   footer .rs-pied a, footer .rs-pied button { font-size: .85rem; padding: .35rem .7rem .35rem .55rem; }
@@ -649,8 +651,7 @@
     .menu { display: none; }
     .haut.ouvert .menu { display: flex; position: fixed; inset: 0; z-index: 60; flex-direction: column; align-items: stretch; gap: 0; padding: 84px 24px 32px; overflow-y: auto; background: var(--bg); font-family: var(--serif); font-size: 1.4rem; }
     .menu > a:not(.btn), .menu .sous-liste a { padding: .85rem 0; border-bottom: 1px solid var(--line); border-radius: 0; }
-    .sous-btn { display: block; padding: 1.6rem 0 .3rem; font-family: var(--sans); font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); pointer-events: none; }
-    .sous-btn::after { display: none; }
+    .sous-btn { display: none; }   /* mobile : liste à plat, sans intertitre */
     .sous-liste { display: flex; position: static; min-width: 0; padding: 0; background: none; border: 0; box-shadow: none; }
     .menu .btn { margin-top: 1.8rem; padding: .95rem; font-family: var(--sans); font-size: 1rem; text-align: center; }
     html.menu-ouvert { overflow: hidden; }
@@ -1184,9 +1185,9 @@
   </div>
 
   <footer>
-    <div class="pied-cols"><div><p class="pied-titre">Le site</p><a href="methode/">Méthode</a><a href="blog/">Ressources</a><button type="button" id="pied-partager" aria-expanded="false" aria-controls="pied-partage"><svg aria-hidden="true"><use href="#i-partager"/></svg>Partager le site</button></div><div><p class="pied-titre">À propos</p><a href="presse/">Presse</a><a href="partenaires/">Partenaires</a><a href="charte/">Charte</a><a href="soutenir/?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir" data-soutenir="pied">Soutenir</a><a href="mailto:contact@quiypense.org">contact@quiypense.org</a></div><div><p class="pied-titre">Légal</p><a href="confidentialite/">Confidentialité</a><a href="conditions/">Conditions</a><a href="#" id="consent-lien">Cookies</a></div></div>
+    <div class="pied-cols"><div><p class="pied-titre">Le site</p><a href="methode/">Méthode</a><a href="blog/">Ressources</a><button type="button" id="pied-partager" aria-expanded="false" aria-controls="pied-partage"><svg aria-hidden="true"><use href="#i-partager"/></svg>Partager le site</button></div><div><p class="pied-titre">À propos</p><a href="presse/">Presse</a><a href="partenaires/">Partenaires</a><a href="charte/">Charte</a><a href="soutenir/?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir" data-soutenir="pied">Soutenir</a><a href="mailto:contact@quiypense.org">Contact</a></div><div><p class="pied-titre">Légal</p><a href="confidentialite/">Confidentialité</a><a href="conditions/">Conditions</a><a href="#" id="consent-lien">Cookies</a></div></div>
     <div class="rs rs-pied" id="pied-partage" data-partage="site" hidden></div>
-    <p class="pied-bas">Qui y pense ? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. Le lien de partage contient vos réponses, rien d'autre. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>. <a href="en/" hreflang="en-GB" lang="en-GB">English</a></p>
+    <p class="pied-bas">Qui y pense ? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. Le lien de partage contient vos réponses, rien d'autre. Une question : <a href="mailto:contact@quiypense.org">contact@quiypense.org</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>. <a href="en/" hreflang="en-GB" lang="en-GB">English</a></p>
   </footer>
   <noscript><p style="padding:16px;background:#F1EBDF">Ce site calcule tout dans votre navigateur : il a besoin de JavaScript pour fonctionner.</p></noscript>
 </main>
