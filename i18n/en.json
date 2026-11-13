@@ -24,7 +24,8 @@
   "vous${v",
   "vous${v < 15 ?",
   "${semaine(x.h)}",
-  "; try { qui = sessionStorage.getItem("
+  "; try { qui = sessionStorage.getItem(",
+  "age_petit"
  ],
  "remplacements": [
   [
@@ -216,12 +217,20 @@
    "txt += ` On top of that, ${fmt(Math.round(pres.tot * 2) / 2, (pres.tot * 2) % 2 ? 1 : 0)} hours a week of just being there for the children, ${aQui}, not counted in this time.`;"
   ],
   [
-   "<tr><td>Présence auprès des enfants</td><td>${pa} h</td><td>${pb} h</td></tr>",
-   "<tr><td>Being there for the children</td><td>${pa}h</td><td>${pb}h</td></tr>"
+   "<tr class=\"hors-tot\"><td>Présence auprès des enfants, hors total</td><td>${pa} h</td><td>${pb} h</td></tr>",
+   "<tr class=\"hors-tot\"><td>Being there for the children, not in the total</td><td>${pa}h</td><td>${pb}h</td></tr>"
   ],
   [
    "[\"Simple présence auprès des enfants, heures par semaine\",",
    "[\"Just being there for the children, hours per week\","
+  ],
+  [
+   "<label for=\"agePetit\">Âge du plus jeune</label>",
+   "<label for=\"agePetit\">Age of the youngest</label>"
+  ],
+  [
+   "<option value=\"\">Facultatif</option><option value=\"0\">Moins de 3 ans</option><option value=\"3\">3 à 5 ans</option><option value=\"6\">6 à 10 ans</option><option value=\"11\">11 ans et plus</option>",
+   "<option value=\"\">Optional</option><option value=\"0\">Under 3</option><option value=\"3\">3 to 5</option><option value=\"6\">6 to 10</option><option value=\"11\">11 and over</option>"
   ],
   [
    "<label for=\"nomA\">Prénom 1</label><input id=\"nomA\" placeholder=\"Prénom\">",
@@ -1136,8 +1145,8 @@
    "<tr><td>Paid work</td><td>${pr.a}h</td><td>${pr.b}h</td></tr>"
   ],
   [
-   "<tr class=\"tot\"><td>Total</td><td>${ta} h</td><td>${tb} h</td></tr></table>",
-   "<tr class=\"tot\"><td>Total</td><td>${ta}h</td><td>${tb}h</td></tr></table>"
+   "<tr class=\"tot\"><td>Total</td><td>${ta} h</td><td>${tb} h</td></tr>${pres",
+   "<tr class=\"tot\"><td>Total</td><td>${ta}h</td><td>${tb}h</td></tr>${pres"
   ],
   [
    "<p class=\"pro-conclusion\">Une charge totale proche, travail payé et maison compris. Reste à voir si la façon de vous la répartir vous convient à tous les deux.</p>",

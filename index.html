@@ -411,6 +411,7 @@
   .pro-champs input { width: 5.5rem; font: inherit; padding: .4rem .5rem; border: 1.5px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); }
   .pro-champs input:focus { border-color: var(--ink); outline: none; }
   .pro-txt { margin-top: .9rem; }
+  .pro-tab .hors-tot td { color: var(--muted); font-size: .9rem; }
   /* la conclusion du travail payé, le résultat le plus parlant du site : encadrée, en grand (10/11/2026) */
   .pro-conclusion { margin: 1.1rem 0 0; font-family: var(--serif); font-size: 1.65rem; line-height: 1.3; font-variation-settings: "opsz" 40; }   /* même style que le verdict */
   .pro-conclusion .pa { color: var(--a); } .pro-conclusion .pb { color: var(--b); }
@@ -900,6 +901,10 @@
           <label for="enfants">Enfants à la maison (à charge)</label>
           <select id="enfants"><option value="0">Aucun</option><option value="1">1</option><option value="2">2</option><option value="3">3 ou plus</option><option value="r">Famille recomposée</option></select>
         </div>
+        <div class="enfants" id="ageBox" hidden>
+          <label for="agePetit">Âge du plus jeune</label>
+          <select id="agePetit"><option value="">Facultatif</option><option value="0">Moins de 3 ans</option><option value="3">3 à 5 ans</option><option value="6">6 à 10 ans</option><option value="11">11 ans et plus</option></select>
+        </div>
         <div class="enfants">
           <label for="animaux">Animaux</label>
           <select id="animaux"><option value="0">Aucun</option><option value="1">Oui</option></select>
@@ -1306,7 +1311,7 @@
   let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
 
   function fresh() {
-    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, suivi: 0, presence: 0, recompo: null, ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null, foyer: "" };   // foyer : numéro tiré au hasard au premier résultat (30/10/2026) ; proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
+    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, suivi: 0, presence: 0, ageP: "", recompo: null, ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null, foyer: "" };   // foyer : numéro tiré au hasard au premier résultat (30/10/2026) ; proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
     for (const cat of C.categories) for (const t of cat.taches) s.t[t.id] = { fait: null, pense: null, n: t.n, p: t.periode, d: t.duree };
     return s;
   }
@@ -1341,7 +1346,7 @@
     const vh = v => v === null || v === undefined ? "" : v, pro = vh(S.proA) === "" && vh(S.proB) === "" ? "" : vh(S.proA) + "_" + vh(S.proB);
     // numéro de foyer (30/10/2026) : champ 13, 32 caractères hexadécimaux tirés au hasard, relie les passages d'un même foyer dans l'étude
     // suivi médical d'un enfant (09/11/2026) : champ 14, « 1 » si la case est cochée ; jamais repris dans la copie de l'étude
-    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : "", S.recompo ? [S.recompo.aN, S.recompo.aP, S.recompo.bN, S.recompo.bP, S.recompo.cN].join("") : "", S.cmp ? S.cmp.par + S.cmp.rep + (S.cmp.etat ? "." + S.cmp.etat + S.cmp.repB : "") : "", S.presence ? esc(S.presence) : ""].join("~").replace(/~+$/, "");   // 17 : heures de simple présence auprès des enfants par semaine (13/11/2026)
+    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : "", S.recompo ? [S.recompo.aN, S.recompo.aP, S.recompo.bN, S.recompo.bP, S.recompo.cN].join("") : "", S.cmp ? S.cmp.par + S.cmp.rep + (S.cmp.etat ? "." + S.cmp.etat + S.cmp.repB : "") : "", S.presence ? esc(S.presence) : "", S.ageP].join("~").replace(/~+$/, "");   // 17 : heures de simple présence auprès des enfants par semaine (13/11/2026)
   }
   function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
@@ -1361,7 +1366,8 @@
     if (f[12]) { const [pa, pb] = f[12].split("_").map(borne); s.proA = pa === undefined ? null : pa; s.proB = pb === undefined ? null : pb; }   // travail rémunéré, 13/10/2026
     if (/^[0-9a-f]{32}$/.test(f[13] || "")) s.foyer = f[13];   // numéro de foyer, 30/10/2026
     s.suivi = f[14] === "1" ? 1 : 0;
-    { const p = parseFloat(unesc(f[17] || "")); s.presence = p > 0 ? Math.min(100, p) : 0; }   // simple présence auprès des enfants, 13/11/2026   // suivi médical d'un enfant, 09/11/2026
+    { const p = parseFloat(unesc(f[17] || "")); s.presence = p > 0 ? Math.min(100, p) : 0; }
+    s.ageP = /^(0|3|6|11)$/.test(f[18] || "") ? f[18] : "";   // âge du plus jeune enfant (tranche), 13/11/2026   // simple présence auprès des enfants, 13/11/2026   // suivi médical d'un enfant, 09/11/2026
     // « Chacun de son côté » (11/11/2026) : qui a rempli d'abord, ses réponses ; puis, une fois le pas à pas « ensemble »
     // commencé (e) ou fini (c), les réponses de la seconde personne, gardées pour la comparaison.
     const cm = /^([ab])([0-9a-z]*)(?:\.([ec])([0-9a-z]*))?$/.exec(f[16] || "");
@@ -2048,13 +2054,14 @@
       <p class="small muted">Indiquez les heures de travail payé plus haut pour voir la charge totale de chacun.</p>`;
       return;
     }
+    // Simple présence affichée à part, hors du total (13/11/2026) : l'ATUS ne l'ajoute pas au temps de travail.
     const pres = presenceDe(), pa = pres ? Math.round(pres.a) : 0, pb = pres ? Math.round(pres.b) : 0;
-    const ta = pr.a + ma + pa, tb = pr.b + mb + pb;
+    const ta = pr.a + ma, tb = pr.b + mb;
     let h = `<table class="pro-tab"><tr><th>Par semaine</th><th class="pa">${nomA()}</th><th class="pb">${nomB()}</th></tr>
       <tr><td>Travail payé</td><td>${pr.a} h</td><td>${pr.b} h</td></tr>
-      <tr><td>Maison</td><td>${ma} h</td><td>${mb} h</td></tr>${pres ? `
-      <tr><td>Présence auprès des enfants</td><td>${pa} h</td><td>${pb} h</td></tr>` : ""}
-      <tr class="tot"><td>Total</td><td>${ta} h</td><td>${tb} h</td></tr></table>`;
+      <tr><td>Maison</td><td>${ma} h</td><td>${mb} h</td></tr>
+      <tr class="tot"><td>Total</td><td>${ta} h</td><td>${tb} h</td></tr>${pres ? `
+      <tr class="hors-tot"><td>Présence auprès des enfants, hors total</td><td>${pa} h</td><td>${pb} h</td></tr>` : ""}</table>`;
     const ecart = Math.abs(ta - tb);
     h += ecart <= 3
       ? `<p class="pro-conclusion">Une charge totale proche, travail payé et maison compris. Reste à voir si la façon de vous la répartir vous convient à tous les deux.</p>`
@@ -2318,7 +2325,7 @@
   const iSm = document.getElementById("suiviMed"), boxSm = document.getElementById("suiviMedBox");
   const boxR = document.getElementById("recompoBox");
   const peindreSuivi = () => {
-    boxSm.hidden = !(S.enfants > 0); iSm.checked = !!S.suivi;
+    boxSm.hidden = !(S.enfants > 0); iSm.checked = !!S.suivi; boxAge.hidden = !(S.enfants > 0);
     boxR.hidden = !S.recompo; iE.value = S.recompo ? "r" : String(S.enfants);
     if (S.recompo) boxR.querySelectorAll("[data-rc]").forEach(sel => { sel.value = String(S.recompo[sel.dataset.rc]); });
     boxR.querySelectorAll("[data-recompo-nom]").forEach(e => { e.textContent = "Enfants de " + (e.dataset.recompoNom === "a" ? nomA() : nomB()); });
@@ -2333,6 +2340,21 @@
     const st = S.t["sante-enfants"], def = santeDefaut(), de = S.suivi ? def : SANTE_MAJ, vers = S.suivi ? SANTE_MAJ : def;
     if (st && st.n === de.n && st.p === de.p && st.d === de.d) Object.assign(st, vers);
     update();
+  });
+  // Âge du plus jeune (13/11/2026) : préremplit la garde avec attention et la simple présence (heures par semaine),
+  // ordres de grandeur à corriger par chacun (revue-litterature.md, point 13). Une valeur déjà changée à la main ne
+  // bouge pas : on ne remplace que la valeur préremplie précédente.
+  // Simple présence jamais préremplie (13/11/2026) : l'ATUS en mesure environ 35 h par semaine et par adulte, un chiffre
+  // qu'on n'impose pas ; chacun la saisit s'il le souhaite.
+  const GARDE_AGE = { "": { att: 3, pres: 0 }, "0": { att: 15, pres: 0 }, "3": { att: 8, pres: 0 }, "6": { att: 3, pres: 0 }, "11": { att: 0, pres: 0 } };
+  const iAge = document.getElementById("agePetit"), boxAge = document.getElementById("ageBox");
+  iAge.value = S.ageP || "";
+  iAge.addEventListener("change", () => {
+    const av = GARDE_AGE[S.ageP || ""], ap = GARDE_AGE[iAge.value] || GARDE_AGE[""], st = S.t.garde;
+    if (st && Math.abs(st.n * st.d / 60 * 7 / J[st.p] - av.att) < .01) { st.n = 1; st.p = "semaine"; st.d = ap.att * 60; }
+    if ((S.presence || 0) === av.pres) S.presence = ap.pres;
+    S.ageP = iAge.value; update();
+    if (window.__ga) gtag("event", "age_plus_jeune", { tranche: S.ageP || "vide" });
   });
   iE.addEventListener("change", () => {
     if (iE.value === "r") { S.recompo = S.recompo || { aN: 1, aP: 2, bN: 0, bP: 2, cN: 0 }; S.enfants = S.recompo.aN + S.recompo.bN + S.recompo.cN; }
@@ -2522,7 +2544,7 @@
         enfants: S.enfants, animaux: S.animaux ? 1 : 0, genre_a: S.genreA, genre_b: S.genreB, saisie: (() => { try { return sessionStorage.getItem("saisie") || ""; } catch (e) { return ""; } })(),
         taches_total: r.total, taches_renseignees: r.renseignees,
         heures_a: r.a.h.toFixed(3), heures_b: r.b.h.toFixed(3), part_temps_a: pct(r.a.h, r.b.h),
-        faites_a: r.a.nFait, faites_b: r.b.nFait, tete_a: r.a.nPense, tete_b: r.b.nPense, part_tete_a: pct(r.a.nPense, r.b.nPense), part_charge_a: pct(r.a.m, r.b.m), presence: S.presence || "",
+        faites_a: r.a.nFait, faites_b: r.b.nFait, tete_a: r.a.nPense, tete_b: r.b.nPense, part_tete_a: pct(r.a.nPense, r.b.nPense), part_charge_a: pct(r.a.m, r.b.m), presence: S.presence || "", age_petit: S.enfants > 0 ? S.ageP : "",
         reponses: champs[5] || "", reglages: champs[6] || "", partages: champs[10] || "",
         pro_a: S.proA ?? "", pro_b: S.proB ?? "",
         recompo: S.recompo ? champs[15] || "" : "",
