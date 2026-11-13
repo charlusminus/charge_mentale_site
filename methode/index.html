@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La méthode, en détail | Qui y pense ?</title>
+<meta name="description" content="Toute la méthode de Qui y pense ? : les 53 tâches, les durées par défaut, les calculs du temps et de la charge mentale, l'étude, les chiffres publiés et leurs limites.">
+<link rel="canonical" href="https://quiypense.org/methode/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Qui y pense ?">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Qui y pense ? La méthode">
+<meta property="og:description" content="Toute la méthode de Qui y pense ? : les 53 tâches, les durées par défaut, les calculs du temps et de la charge mentale, l'étude, les chiffres publiés et leurs limites.">
+<meta property="og:url" content="https://quiypense.org/methode/">
+<meta property="og:image" content="https://quiypense.org/img/apercu-2026-11b.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/img/icon-96.png" sizes="96x96" type="image/png">
+<link rel="apple-touch-icon" href="/img/icon-180.png">
+<link rel="preload" href="/fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/blog/blog.css">
+<script src="/mesure.js" defer></script>
+<style>
+  .meta { font-size: .9rem; color: var(--muted); }
+  .sommaire ol { columns: 2; column-gap: 2rem; padding-left: 1.2rem; margin: 1rem 0 2rem; }
+  @media (max-width: 640px) { .sommaire ol { columns: 1; } }
+  h3 small { font-family: var(--sans); font-weight: 400; font-size: .8rem; color: var(--muted); margin-left: .4rem; }
+  .tab { overflow-x: auto; margin: .6rem 0 1.6rem; }
+  .tab table { border-collapse: collapse; width: 100%; font-size: .88rem; min-width: 600px; table-layout: fixed; }
+  .tab th:nth-child(1) { width: 44%; } .tab th:nth-child(2) { width: 16%; } .tab th:nth-child(3) { width: 11%; }
+  .tab th:nth-child(4) { width: 12%; } .tab th:nth-child(5) { width: 8%; } .tab th:nth-child(6) { width: 9%; }
+  .tab th, .tab td { text-align: left; vertical-align: top; padding: .45rem .5rem; border-bottom: 1px solid var(--line); }
+  .tab th { font-weight: 600; color: var(--muted); font-size: .78rem; }
+  .tab td small { color: var(--muted); }
+  .tab td:nth-child(n+2) { white-space: nowrap; }
+  code { font-size: .9em; background: var(--bg-2); padding: .05rem .3rem; border-radius: 4px; }
+  .sources li, .versions li { margin-bottom: .4rem; }
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Qui y pense ? La méthode","inLanguage":"fr",
+"url":"https://quiypense.org/methode/","description":"Toute la méthode de Qui y pense ? : les 53 tâches, les durées par défaut, les calculs du temps et de la charge mentale, l'étude, les chiffres publiés et leurs limites.",
+"isPartOf":{"@type":"WebSite","name":"Qui y pense ?","url":"https://quiypense.org/"},
+"publisher":{"@type":"Organization","name":"Qui y pense ?","url":"https://quiypense.org/"}}
+</script>
+</head>
+<body>
+<header class="haut">
+  <a class="marque" href="/">Qui y pense&nbsp;?</a>
+  <nav aria-label="Navigation"><a href="/blog/">Blog</a><a class="soutenir" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=methode&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="methode"><span class="bmc-emoji" aria-hidden="true">🙏</span>Soutenir</a><a class="btn petit" href="/">Faire le point</a></nav>
+</header>
+
+<main class="article">
+  <p class="fil"><a href="/">Qui y pense&nbsp;?</a> › Méthode</p>
+  <h1>La méthode, en détail</h1>
+  <p class="chapo">Tout ce que fait Qui y pense&nbsp;?, de la question posée au chiffre publié&nbsp;: les tâches, les
+    durées, les calculs, l'étude et ses limites. Écrit pour être relu et discuté, en particulier par des chercheuses et
+    des chercheurs. Le code du calcul est public.</p>
+  <p class="meta">Version du 13 novembre 2026 · catalogue 2026-11-11a · 53 tâches ·
+    <a href="mailto:contact@quiypense.org">contact@quiypense.org</a></p>
+
+  <nav class="sommaire" aria-label="Sommaire"><ol>
+    <li><a href="#principe">Le principe</a></li><li><a href="#questionnaire">Le questionnaire</a></li>
+    <li><a href="#catalogue">Les 53 tâches et leurs valeurs par défaut</a></li><li><a href="#calculs">Les calculs</a></li>
+    <li><a href="#etude">L'étude</a></li><li><a href="#chiffres">Les chiffres publiés</a></li>
+    <li><a href="#limites">Limites connues</a></li><li><a href="#sources">Sources</a></li><li><a href="#versions">Versions</a></li>
+  </ol></nav>
+
+  <h2 id="principe">1. Le principe</h2>
+  <p>Un couple, ou un foyer, passe en revue les tâches de la maison. Pour chacune, deux questions&nbsp;: <strong>qui
+    s'en occupe</strong> et <strong>qui y pense</strong>. La première donne un temps, en heures. La seconde donne la
+    charge mentale, mesurée en choses à garder en tête&nbsp;: remarquer qu'il faut le faire, prévoir, décider, vérifier,
+    demander ou rappeler quand c'est l'autre qui le fait. Cette distinction suit les travaux sur la dimension cognitive
+    du travail domestique (Daminger, 2019&nbsp;; Wayne et al., 2023).</p>
+  <p>Le calcul se fait dans le navigateur, sans serveur et sans intelligence artificielle. Le site ne juge pas&nbsp;: il
+    ne donne ni note ni score, et ne compare pas à une norme.</p>
+
+  <h2 id="questionnaire">2. Le questionnaire</h2>
+  <ol>
+    <li><strong>Le foyer</strong>&nbsp;: deux prénoms (jamais transmis), le genre de chacun (femme, homme ou ne se
+      prononce pas, pour l'étude seulement), qui remplit (l'un, l'autre ou les deux ensemble), le nombre d'enfants à
+      charge (0 à 3 et plus, ou famille recomposée), l'âge du plus jeune enfant (facultatif, en tranches), les animaux,
+      et une case «&nbsp;suivi médical ou accompagnement particulier d'un enfant&nbsp;».</li>
+    <li><strong>Les tâches</strong>, une à la fois ou en liste&nbsp;: pour chacune, qui s'en occupe (personne 1,
+      personne 2, les deux, pas nous), puis qui y pense (par défaut la même réponse, modifiable). «&nbsp;Les deux&nbsp;»
+      vaut 50/50, réglable par une réglette. «&nbsp;Pas nous&nbsp;»&nbsp;: quelqu'un d'autre s'en occupe ou la tâche
+      n'existe pas chez eux. 21 tâches sont elles-mêmes «&nbsp;de tête&nbsp;» (décider, suivre, organiser)&nbsp;:
+      «&nbsp;qui y pense&nbsp;» y reprend «&nbsp;qui s'en occupe&nbsp;» par défaut. Les couples peuvent ajouter leurs
+      propres tâches.</li>
+    <li><strong>Facultatif</strong>&nbsp;: les heures de travail payé de chacun par semaine (trajets compris), l'âge, la
+      catégorie socioprofessionnelle et le département, et la part de chacun dans les revenus du foyer (affichée, jamais
+      transmise).</li>
+    <li><strong>Le résultat</strong>, après accord pour la copie anonymisée de l'étude (voir <a href="#etude">§ 5</a>).
+      Toutes les réponses et toutes les durées se corrigent ensuite sous le résultat («&nbsp;Affinez le résultat&nbsp;»).</li>
+  </ol>
+  <p>Variante «&nbsp;chacun de son côté, puis on compare&nbsp;»&nbsp;: la seconde personne répond sans voir les réponses
+    de la première&nbsp;; le site montre ensuite les deux regards, puis les tâches où ils diffèrent, à trancher ensemble.</p>
+
+  <h2 id="catalogue">3. Les 53 tâches et leurs valeurs par défaut</h2>
+  <p>Les familles suivent la nomenclature de l'enquête Emploi du temps de l'INSEE (2010, codes indiqués), complétée
+    par les cartes Fair Play (Rodsky, 2019) pour ce que le carnet d'emploi du temps ne voit pas&nbsp;: agenda, cadeaux,
+    école, souvenirs, proches. Les libellés sont génériques&nbsp;; les détails vont dans l'aide. Toute évolution du
+    catalogue se justifie dans notre revue de littérature.</p>
+  <p><strong>Calibrage.</strong> Passe du 20/09/2026, ordres de grandeur INSEE Emploi du temps 2010 par ménage en couple (H+F, minutes par jour) : cuisine avec vaisselle et table 94, ménage 66, linge 27, courses 44, divers et administratif 24, soins aux enfants 62 et jeux 25 (ménages avec enfant, tout âge ; INED 2010 : 95 + 41 min de temps parental avec jeunes enfants), bricolage et jardinage 52. Le catalogue vise la fourchette haute pour un couple avec jeunes enfants : environ 8,5 h par jour sans animaux.</p>
+  <p>«&nbsp;Par semaine&nbsp;» est le temps par défaut pour le foyer. «&nbsp;Poids&nbsp;» est le poids de la tâche
+    dans la part de charge mentale (voir <a href="#calcul-charge">§ 4.2</a>)&nbsp;: 29 tâches pèsent 3,
+    21 pèsent 2, 3 pèsent 1. Les tâches des familles «&nbsp;Enfants&nbsp;» n'apparaissent que s'il
+    y a des enfants, celles des animaux que s'il y en a.</p>
+<h3>Courses et provisions<small> · INSEE 351-352, 322</small></h3>
+<div class="tab"><table><thead><tr><th>Tâche et ce qu'elle recouvre</th><th>Fréquence</th><th>Durée</th><th>Par semaine</th><th>Poids</th><th>De tête</th></tr></thead><tbody>
+<tr><td><strong>Faire la liste de courses</strong><br><small>remarquer ce qui manque et ce qui périme, prévoir les repas, tenir la liste, sans oublier la maison : lessive, papier toilette, ampoules</small></td><td>2 par semaine</td><td>15 min</td><td>0,5 h</td><td>3</td><td>oui</td></tr>
+<tr><td><strong>Faire les courses</strong><br><small>le magasin, le marché ou le drive, porter, ranger en rentrant, les retours</small></td><td>2 par semaine</td><td>95 min</td><td>3,2 h</td><td>3</td><td></td></tr>
+</tbody></table></div>
+<h3>Repas<small> · INSEE 311-313</small></h3>
+<div class="tab"><table><thead><tr><th>Tâche et ce qu'elle recouvre</th><th>Fréquence</th><th>Durée</th><th>Par semaine</th><th>Poids</th><th>De tête</th></tr></thead><tbody>
+<tr><td><strong>S'occuper des repas</strong><br><small>choisir les plats, cuisiner matin, midi et soir</small></td><td>1 par jour</td><td>70 min</td><td>8,2 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Débarrasser et faire la vaisselle</strong><br><small>table, lave-vaisselle ou à la main</small></td><td>1 par jour</td><td>30 min</td><td>3,5 h</td><td>3</td><td></td></tr>
+</tbody></table></div>
+<h3>Ménage et rangement<small> · INSEE 323-324</small></h3>
+<div class="tab"><table><thead><tr><th>Tâche et ce qu'elle recouvre</th><th>Fréquence</th><th>Durée</th><th>Par semaine</th><th>Poids</th><th>De tête</th></tr></thead><tbody>
+<tr><td><strong>Ranger ce qui traîne</strong><br><small>jouets, affaires, courrier, plan de travail</small></td><td>1 par jour</td><td>15 min</td><td>1,8 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Faire la poussière</strong><br><small>meubles, étagères, écrans</small></td><td>1 par semaine</td><td>20 min</td><td>0,3 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Faire les sols</strong><br><small>aspirateur, balai, serpillère, robot</small></td><td>1 par semaine</td><td>60 min</td><td>1 h</td><td>3</td><td></td></tr>
+<tr><td><strong>S'occuper des poubelles</strong><br><small>sortir, rentrer, changer les sacs, tri, compost si vous en avez</small></td><td>2 par semaine</td><td>10 min</td><td>0,3 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Nettoyer la cuisine</strong><br><small>plan de travail, plaques, évier, poubelle</small></td><td>1 par jour</td><td>15 min</td><td>1,8 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Nettoyer salle de bain et toilettes</strong></td><td>1 par semaine</td><td>45 min</td><td>0,8 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Changer les draps et les serviettes</strong><br><small>tous les lits, serviettes de toilette et torchons</small></td><td>2 par mois</td><td>30 min</td><td>0,2 h</td><td>2</td><td></td></tr>
+<tr><td><strong>Faire le grand nettoyage</strong><br><small>vitres, frigo, four, placards, appareils : quelques fois par an</small></td><td>4 par an</td><td>240 min</td><td>0,3 h</td><td>1</td><td></td></tr>
+<tr><td><strong>Trier, ranger, donner ce qui ne sert plus</strong><br><small>vêtements trop petits, jouets, cave, garage, affaires de saison</small></td><td>1 par mois</td><td>90 min</td><td>0,3 h</td><td>2</td><td></td></tr>
+</tbody></table></div>
+<h3>Linge<small> · INSEE 331-335</small></h3>
+<div class="tab"><table><thead><tr><th>Tâche et ce qu'elle recouvre</th><th>Fréquence</th><th>Durée</th><th>Par semaine</th><th>Poids</th><th>De tête</th></tr></thead><tbody>
+<tr><td><strong>Lancer les machines</strong><br><small>trier, détacher, lancer, étendre ou sécher</small></td><td>4 par semaine</td><td>20 min</td><td>1,3 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Repasser</strong></td><td>1 par semaine</td><td>45 min</td><td>0,8 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Ranger le linge propre</strong><br><small>plier, ranger dans les armoires</small></td><td>2 par semaine</td><td>20 min</td><td>0,7 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Laver le gros linge</strong><br><small>couettes, oreillers, rideaux, housses de canapé, quelques fois par an</small></td><td>2 par an</td><td>120 min</td><td>0,1 h</td><td>1</td><td></td></tr>
+<tr><td><strong>Entretenir les vêtements</strong><br><small>recoudre, pressing, cordonnerie, retouches</small></td><td>1 par semaine</td><td>10 min</td><td>0,2 h</td><td>3</td><td></td></tr>
+</tbody></table></div>
+<h3>Enfants : le quotidien<small> · INSEE 411-414</small></h3>
+<div class="tab"><table><thead><tr><th>Tâche et ce qu'elle recouvre</th><th>Fréquence</th><th>Durée</th><th>Par semaine</th><th>Poids</th><th>De tête</th></tr></thead><tbody>
+<tr><td><strong>Préparer les enfants le matin</strong><br><small>lever, habiller, sacs, cartable</small></td><td>1 par jour</td><td>30 min</td><td>3,5 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Déposer les enfants le matin</strong><br><small>école, crèche, nounou</small></td><td>1 par jour</td><td>15 min</td><td>1,8 h</td><td>3</td><td>oui</td></tr>
+<tr><td><strong>Récupérer les enfants le soir</strong><br><small>école, périscolaire, nounou, activités</small></td><td>1 par jour</td><td>15 min</td><td>1,8 h</td><td>3</td><td>oui</td></tr>
+<tr><td><strong>Goûter, devoirs, fin de journée</strong></td><td>1 par jour</td><td>30 min</td><td>3,5 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Donner le bain, brosser les dents</strong></td><td>3 par semaine</td><td>20 min</td><td>1 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Coucher les enfants</strong></td><td>1 par jour</td><td>20 min</td><td>2,3 h</td><td>3</td><td></td></tr>
+<tr><td><strong>S'occuper du bébé</strong><br><small>allaitement ou biberons, petits pots, couches et changes ; « pas nous » s'il n'y a pas de bébé à la maison</small></td><td>6 par jour</td><td>15 min</td><td>10,5 h</td><td>3</td><td></td></tr>
+<tr><td><strong>S'occuper des nuits</strong><br><small>se lever pour un réveil, un cauchemar, un biberon, un enfant malade</small></td><td>2 par semaine</td><td>20 min</td><td>0,7 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Jouer, sortir, lire avec les enfants</strong><br><small>parc, jeux, lecture</small></td><td>1 par jour</td><td>30 min</td><td>3,5 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Garder les enfants</strong><br><small>quand les enfants sont là sans école, crèche ni nounou ; les repas, le bain et le coucher sont comptés à part</small></td><td>1 par semaine</td><td>180 min</td><td>3 h</td><td>3</td><td></td></tr>
+<tr><td><strong>S'occuper d'un enfant malade</strong><br><small>rester à la maison, médecin, médicaments</small></td><td>1 par mois</td><td>120 min</td><td>0,5 h</td><td>2</td><td></td></tr>
+</tbody></table></div>
+<h3>Enfants : école, santé, activités<small> · INSEE 421, 413 + Fair Play</small></h3>
+<div class="tab"><table><thead><tr><th>Tâche et ce qu'elle recouvre</th><th>Fréquence</th><th>Durée</th><th>Par semaine</th><th>Poids</th><th>De tête</th></tr></thead><tbody>
+<tr><td><strong>Suivre l'administratif de l'école</strong><br><small>cahier de liaison, mails, réunions, sorties, papiers à signer, fournitures</small></td><td>1 par semaine</td><td>30 min</td><td>0,5 h</td><td>3</td><td>oui</td></tr>
+<tr><td><strong>Suivre la santé des enfants</strong><br><small>pédiatre, dentiste, vaccins, ordonnances, lunettes</small></td><td>1 par mois</td><td>60 min</td><td>0,2 h</td><td>2</td><td>oui</td></tr>
+<tr><td><strong>Gérer les activités des enfants</strong><br><small>inscriptions, horaires, équipement, trajets</small></td><td>1 par mois</td><td>60 min</td><td>0,2 h</td><td>2</td><td>oui</td></tr>
+<tr><td><strong>Gérer les vêtements des enfants</strong><br><small>tailles, saisons, chaussures, tri, achats</small></td><td>1 par mois</td><td>60 min</td><td>0,2 h</td><td>2</td><td>oui</td></tr>
+<tr><td><strong>Organiser la garde</strong><br><small>nounou, crèche, périscolaire, grands-parents, vacances scolaires</small></td><td>1 par mois</td><td>90 min</td><td>0,3 h</td><td>2</td><td>oui</td></tr>
+<tr><td><strong>Organiser les anniversaires</strong><br><small>celui de vos enfants, et ceux des copains : invitations, cadeaux, présence</small></td><td>1 par mois</td><td>60 min</td><td>0,2 h</td><td>2</td><td>oui</td></tr>
+<tr><td><strong>Tenir les règles avec les enfants</strong><br><small>écrans, sommeil, discipline, les conversations difficiles</small></td><td>1 par semaine</td><td>30 min</td><td>0,5 h</td><td>3</td><td>oui</td></tr>
+<tr><td><strong>Garder les souvenirs de la famille</strong><br><small>photos, albums, dessins, carnet de santé</small></td><td>1 par mois</td><td>30 min</td><td>0,1 h</td><td>2</td><td>oui</td></tr>
+</tbody></table></div>
+<h3>Administratif et argent<small> · INSEE 342, 361</small></h3>
+<div class="tab"><table><thead><tr><th>Tâche et ce qu'elle recouvre</th><th>Fréquence</th><th>Durée</th><th>Par semaine</th><th>Poids</th><th>De tête</th></tr></thead><tbody>
+<tr><td><strong>Gérer l'argent du foyer</strong><br><small>factures, comptes, budget, épargne</small></td><td>2 par mois</td><td>60 min</td><td>0,5 h</td><td>2</td><td>oui</td></tr>
+<tr><td><strong>Faire les démarches et les papiers</strong><br><small>courrier, contrats, assurances, banque, mutuelle, remboursements, impôts et aides</small></td><td>2 par mois</td><td>90 min</td><td>0,7 h</td><td>2</td><td>oui</td></tr>
+<tr><td><strong>Faire marcher le numérique de la maison</strong><br><small>box, téléphones, mots de passe, imprimante, abonnements vidéo</small></td><td>1 par mois</td><td>45 min</td><td>0,2 h</td><td>2</td><td></td></tr>
+<tr><td><strong>Être l'employeur de la nounou ou de l'aide à domicile</strong><br><small>contrat, déclaration, paie, remplacement</small></td><td>1 par mois</td><td>30 min</td><td>0,1 h</td><td>2</td><td>oui</td></tr>
+</tbody></table></div>
+<h3>Organisation, famille, amis<small> · INSEE Fair Play Out et Magic, 431-439</small></h3>
+<div class="tab"><table><thead><tr><th>Tâche et ce qu'elle recouvre</th><th>Fréquence</th><th>Durée</th><th>Par semaine</th><th>Poids</th><th>De tête</th></tr></thead><tbody>
+<tr><td><strong>Tenir l'agenda et prévoir les week-ends</strong><br><small>qui est où, quand, et ce qu'on fait dimanche</small></td><td>1 par semaine</td><td>60 min</td><td>1 h</td><td>3</td><td>oui</td></tr>
+<tr><td><strong>Entretenir les liens avec les amis et la famille</strong><br><small>invitations, appels, visites, nouvelles</small></td><td>4 par mois</td><td>75 min</td><td>1,1 h</td><td>2</td><td>oui</td></tr>
+<tr><td><strong>Penser aux cadeaux et aux fêtes</strong><br><small>anniversaires, Noël, fête des mères, cartes, remerciements</small></td><td>1 par mois</td><td>45 min</td><td>0,2 h</td><td>2</td><td>oui</td></tr>
+<tr><td><strong>Organiser les vacances</strong><br><small>choisir, réserver, préparer les valises</small></td><td>4 par an</td><td>240 min</td><td>0,3 h</td><td>1</td><td>oui</td></tr>
+<tr><td><strong>Aider un parent âgé ou un proche malade</strong><br><small>rendez-vous, courses, démarches, visites</small></td><td>2 par mois</td><td>120 min</td><td>0,9 h</td><td>2</td><td></td></tr>
+</tbody></table></div>
+<h3>Maison, extérieur, véhicules<small> · INSEE 371-374, 382</small></h3>
+<div class="tab"><table><thead><tr><th>Tâche et ce qu'elle recouvre</th><th>Fréquence</th><th>Durée</th><th>Par semaine</th><th>Poids</th><th>De tête</th></tr></thead><tbody>
+<tr><td><strong>Réparer, bricoler, piloter les travaux</strong><br><small>ampoule, fuite, meubles, peinture, artisans</small></td><td>2 par mois</td><td>120 min</td><td>0,9 h</td><td>2</td><td></td></tr>
+<tr><td><strong>S'occuper des plantes, du jardin ou du balcon</strong><br><small>arroser, tondre, tailler, désherber</small></td><td>1 par semaine</td><td>150 min</td><td>2,5 h</td><td>3</td><td></td></tr>
+<tr><td><strong>S'occuper des véhicules</strong><br><small>essence, contrôle technique, révision, pneus, lavage, assurance, PV</small></td><td>3 par mois</td><td>45 min</td><td>0,5 h</td><td>2</td><td></td></tr>
+<tr><td><strong>Assurer l'entretien de la maison</strong><br><small>chauffage, énergie, ramonage, piscine, détecteurs de fumée, clés, alarme</small></td><td>1 par mois</td><td>40 min</td><td>0,2 h</td><td>2</td><td>oui</td></tr>
+<tr><td><strong>Gérer une résidence secondaire ou un logement loué</strong><br><small>ouvrir et fermer la maison, entretien, charges, locataires et état des lieux ; « pas nous » si vous n'en avez pas</small></td><td>2 par mois</td><td>60 min</td><td>0,5 h</td><td>2</td><td>oui</td></tr>
+</tbody></table></div>
+<h3>Animaux<small> · INSEE 384-385</small></h3>
+<div class="tab"><table><thead><tr><th>Tâche et ce qu'elle recouvre</th><th>Fréquence</th><th>Durée</th><th>Par semaine</th><th>Poids</th><th>De tête</th></tr></thead><tbody>
+<tr><td><strong>Nourrir et sortir les animaux</strong><br><small>gamelles, litière, promenade</small></td><td>2 par jour</td><td>15 min</td><td>3,5 h</td><td>3</td><td></td></tr>
+<tr><td><strong>Suivre la santé des animaux</strong><br><small>vétérinaire, vaccins, traitements, garde pendant les vacances</small></td><td>1 par mois</td><td>45 min</td><td>0,2 h</td><td>2</td><td>oui</td></tr>
+</tbody></table></div>
+
+  <h2 id="calculs">4. Les calculs</h2>
+  <p>Toutes les formules sont dans la fonction <code>compute()</code> du <a href="https://github.com/charlusminus/charge_mentale_site/blob/main/index.html">code public du site</a>.</p>
+  <h3>4.1 Le temps</h3>
+  <p>Pour chaque tâche, heures par jour = fréquence × durée ÷ 60 ÷ nombre de jours de la période (jour 1, semaine 7,
+    mois 30,44, an 365,25). Le temps va à qui s'en occupe&nbsp;; «&nbsp;les deux&nbsp;» le partage selon la réglette
+    (50/50 par défaut)&nbsp;; «&nbsp;pas nous&nbsp;» ne compte pour personne. Le résultat donne les heures par jour et
+    par semaine de chacun, arrondies au quart d'heure, et la part du temps de chacun.</p>
+  <h3 id="calcul-charge">4.2 La charge mentale</h3>
+  <p>Chaque tâche compte pour 1 chez qui y pense (ou se partage selon la réglette). Le tableau du résultat donne ce
+    <strong>nombre de choses à garder en tête</strong>. Depuis le 13/11/2026, la <strong>part de charge mentale</strong>
+    (le pourcentage) pondère chaque tâche par sa fréquence, telle qu'elle est réglée pour le foyer&nbsp;: 3 pour une
+    tâche qui revient au moins chaque semaine (52 fois par an ou plus), 2 au moins chaque mois (12 fois par an ou
+    plus), 1 plus rarement. Penser aux repas chaque jour ne pèse pas autant que penser aux vacances quelques fois par
+    an. Sur 15&nbsp;408 couples, cette pondération déplace la part portée par elle de -1,2 point en moyenne et de plus
+    de 5 points dans 6 % des couples&nbsp;: elle change peu les conclusions. Les seuils et les poids sont un choix,
+    pas une mesure&nbsp;; nous les soumettons à la discussion.</p>
+  <h3>4.3 Cas particuliers</h3>
+  <ul>
+    <li><strong>Famille recomposée</strong>&nbsp;: les enfants de chacun, leur présence (tout le temps, une semaine sur
+      deux, un week-end sur deux) et les enfants communs. Le temps des tâches des deux familles «&nbsp;Enfants&nbsp;»
+      compte au prorata du temps où au moins un enfant est là (1 moins le produit des absences, gardes supposées
+      indépendantes). Le nombre de choses en tête ne change pas.</li>
+    <li><strong>Suivi médical d'un enfant</strong> (case de l'étape 1)&nbsp;: «&nbsp;Suivre la santé des enfants&nbsp;»
+      passe de 1 h par mois à 3 fois 2 h par semaine, ordre de grandeur de l'enquête FFDys et Poppins (2024). La case
+      reste dans le navigateur&nbsp;; l'étude reçoit la tâche à sa durée par défaut.</li>
+    <li><strong>Garde des enfants</strong>, deux temps distincts comme dans les enquêtes emploi du temps&nbsp;: la
+      <strong>garde avec attention</strong> (un petit qu'on ne peut pas laisser seul), comptée dans le temps, et la
+      <strong>simple présence</strong> (les grands sont là, on peut faire autre chose), affichée à part et jamais
+      ajoutée au temps, comme dans l'enquête américaine ATUS. La garde avec attention est préremplie selon l'âge du plus
+      jeune&nbsp;: 15 h par semaine avant 3 ans, 8 h de 3 à 5 ans, 3 h de 6 à 10 ans, 0 h ensuite (3 h sans réponse)&nbsp;;
+      la simple présence n'est jamais préremplie. Ces valeurs sont des ordres de grandeur rapprochés de la DREES
+      (127 minutes par jour et par parent de temps parental avec un enfant de moins de 3 ans, contre 51 sans) et de
+      l'ATUS 2025&nbsp;; leur passage à nos deux champs est notre extrapolation.</li>
+    <li><strong>Travail payé</strong>&nbsp;: affiché à côté du résultat sans le changer. Temps total de chacun = maison
+      × 7 + travail payé par semaine. Les pistes «&nbsp;Si vous voulez rééquilibrer&nbsp;» n'apparaissent que si l'un
+      porte 55 % ou plus de ce temps total, et jamais vers la personne qui porte déjà plus de la moitié de la maison, en
+      temps ou en charge mentale.</li>
+  </ul>
+  <h3>4.4 «&nbsp;Et les autres couples&nbsp;?&nbsp;»</h3>
+  <p>Le résultat d'un couple femme-homme est situé parmi les couples de l'étude qui lui ressemblent&nbsp;: même nombre
+    d'enfants, puis mêmes heures de travail (les deux à temps plein, lui plus, elle plus, proches) ou même tranche
+    d'âge. Sont retenus les couples femme-homme ayant renseigné au moins 20 tâches, hors familles recomposées et hors
+    version anglaise, une seule ligne par foyer (la dernière). Le site affiche des histogrammes par tranches de 10 points
+    et des quartiles, jamais une ligne individuelle&nbsp;; un groupe de moins de 30 couples n'est pas publié.</p>
+
+  <h2 id="etude">5. L'étude</h2>
+  <p>Pour afficher le résultat, le couple accepte qu'une copie anonymisée rejoigne l'étude. C'est la condition
+    d'accès au résultat, annoncée avant&nbsp;: sans accord, le résultat ne s'affiche pas.</p>
+  <ul>
+    <li><strong>Ce qui part</strong>&nbsp;: la version du catalogue, le nombre d'enfants, les animaux, les genres, qui
+      remplit, une lettre par tâche (qui s'en occupe, qui y pense), les durées modifiées, les parts «&nbsp;les deux&nbsp;»,
+      les tâches ajoutées, les totaux calculés (heures, tâches, parts), les heures de travail payé, la simple présence et
+      l'âge du plus jeune s'ils sont indiqués, et les réponses facultatives du profil.</li>
+    <li><strong>Ce qui ne part jamais</strong>&nbsp;: les prénoms, une adresse e-mail, l'adresse IP, la case de suivi
+      médical, la part des revenus.</li>
+    <li><strong>Lier les passages d'un foyer</strong>&nbsp;: un numéro tiré au hasard dans le navigateur, gardé dans le
+      lien&nbsp;; l'étude n'en garde qu'une empreinte. Il relie un foyer qui refait le point ou les deux personnes du mode
+      «&nbsp;chacun de son côté&nbsp;».</li>
+    <li><strong>Conservation</strong>&nbsp;: une feuille de calcul privée, accessible au seul responsable du site. Les mises à jour
+      (une durée corrigée après coup) remplacent la ligne de la même session pendant 24 h.</li>
+    <li><strong>Avis</strong>&nbsp;: une note de 0 à 10, «&nbsp;ça vous a aidés à en parler&nbsp;?&nbsp;» et un mot libre,
+      recueillis seulement sous le résultat.</li>
+  </ul>
+
+  <h2 id="chiffres">6. Les chiffres publiés</h2>
+  <p>Les chiffres de la <a href="/presse/">page presse</a> portent sur les couples femme-homme ayant renseigné au moins
+    20 tâches. La part de charge mentale «&nbsp;portée par elle&nbsp;» est la part pondérée du § 4.2&nbsp;; pour les
+    copies antérieures au 13/11/2026, elle est recalculée à partir des réponses enregistrées (le décodage retrouve la
+    part non pondérée enregistrée à 1 point près dans 99 % des lignes). Les moyennes sont données
+    <strong>selon qui remplit</strong>, car chacun se crédite davantage&nbsp;: c'est la première limite ci-dessous.</p>
+
+  <h2 id="limites">7. Limites connues</h2>
+  <ol>
+    <li><strong>Qui remplit.</strong> La part portée par elle vaut environ 69 % quand elle remplit seule, 46 % quand il
+      remplit seul, 61 % à deux. Une partie tient à qui vient sur le site, une autre au fait que chacun voit d'abord ce
+      qu'il fait. Le mode «&nbsp;chacun de son côté&nbsp;» permet de mesurer cet écart dans un même couple.</li>
+    <li><strong>Échantillon volontaire.</strong> Visiteurs du site (bouche-à-oreille, réseaux, article de Marie Claire
+      du 7 novembre 2026), pas un échantillon représentatif. Aucun redressement n'est appliqué à ce jour.</li>
+    <li><strong>Valeurs par défaut.</strong> Les fréquences et durées sont préremplies et beaucoup de couples les
+      gardent&nbsp;: le temps mesure surtout la répartition des tâches, moins leur durée réelle.</li>
+    <li><strong>Doublons.</strong> Un foyer peut répondre plusieurs fois&nbsp;; les repères n'en gardent qu'une ligne
+      par foyer, les moyennes publiées comptent encore chaque réponse.</li>
+    <li><strong>Choix de modélisation</strong> soumis à discussion&nbsp;: les poids de la charge mentale (§ 4.2), la
+      garde avec attention et la simple présence (§ 4.3), «&nbsp;les deux&nbsp;» à 50/50 par défaut.</li>
+    <li><strong>Pas de validation externe</strong> à ce jour&nbsp;: le questionnaire n'a pas été construit avec une ou
+      un scientifique. C'est l'objet de cette page.</li>
+  </ol>
+
+  <h2 id="sources">8. Sources</h2>
+  <ul class="sources">
+    <li>INSEE, enquête Emploi du temps 2010 (nomenclature des activités et ordres de grandeur)&nbsp;; Insee Première 1423
+      (2012), Le travail domestique&nbsp;: 60 milliards d'heures en 2010.</li>
+    <li>Rodsky E. (2019), <em>Fair Play</em>, 100 cartes de tâches domestiques.</li>
+    <li>Daminger A. (2019), The Cognitive Dimension of Household Labor, <em>American Sociological Review</em> 84(4).</li>
+    <li>Wayne J. H. et al. (2023), échelle de mesure de la charge mentale en neuf questions.</li>
+    <li>Brais N. (Université Laval), définition de la charge mentale&nbsp;; Haicault M. (1984), La gestion ordinaire de
+      la vie en deux, <em>Sociologie du travail</em>.</li>
+    <li>DREES, Études et Résultats 841 (2013), Le temps consacré aux activités parentales&nbsp;; Études et Résultats 1355
+      (2025), le temps passé par les jeunes enfants en présence de leurs parents.</li>
+    <li>U.S. Bureau of Labor Statistics, American Time Use Survey 2025, tableaux 9 et 10 (garde principale et secondaire).</li>
+    <li>Craig L. (2006), Does father care mean fathers share?, <em>Gender &amp; Society</em> 20(2)&nbsp;; Folbre N.,
+      Yoon J., Finnoff K., Fuligni A. S. (2005), By what measure? Family time devoted to children in the United States,
+      <em>Demography</em> 42(2).</li>
+    <li>FFDys et Poppins (2024), enquête sur le temps consacré au suivi des enfants à besoins particuliers.</li>
+  </ul>
+
+  <h2 id="versions">9. Versions</h2>
+  <ul class="versions">
+    <li><strong>23/09/2026</strong>&nbsp;: mise en ligne, catalogue v2 aligné sur l'INSEE et Fair Play.</li>
+    <li><strong>26/09/2026</strong>&nbsp;: catalogue 2026-09-26a, «&nbsp;qui y pense&nbsp;» posé pour toutes les tâches.</li>
+    <li><strong>08/11/2026</strong>&nbsp;: catalogue 2026-11-08a, liste de courses distincte des courses (51 tâches).</li>
+    <li><strong>09 et 10/11/2026</strong>&nbsp;: suivi médical d'un enfant, famille recomposée, heures de travail payé dans
+      le temps total, repères par âge.</li>
+    <li><strong>11/11/2026</strong>&nbsp;: catalogue 2026-11-11a (bébé, résidence secondaire), questionnaire une tâche à
+      la fois, mode «&nbsp;chacun de son côté&nbsp;».</li>
+    <li><strong>13/11/2026</strong>&nbsp;: part de charge mentale pondérée par la fréquence, garde avec attention et
+      simple présence, âge du plus jeune enfant, cette page.</li>
+  </ul>
+  <p>Pour relire, discuter ou demander les données agrégées et anonymes&nbsp;:
+    <a href="mailto:contact@quiypense.org">contact@quiypense.org</a>. Nous répondons à toute remarque de méthode.</p>
+</main>
+
+<footer class="pied">
+  <p>Qui y pense&nbsp;? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. <a href="/">Faire le point</a> · <a href="/blog/">Blog</a> · <a href="/presse/">Presse</a> · <a href="/charte/">Charte</a> · <a href="/methode/">Méthode</a> · <a href="/soutenir/">Soutenir</a> · <a href="mailto:contact@quiypense.org">contact@quiypense.org</a> · <a href="#cookies" data-cookies>Cookies</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/conditions/">Conditions</a></p>
+</footer>
+</body>
+</html>
