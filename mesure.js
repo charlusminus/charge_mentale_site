@@ -60,3 +60,20 @@
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", demarrer); else demarrer();
 })();
+
+/* Menu du site : burger sur mobile, sous-menu « À propos » sur ordinateur. Même code dans index.html pour l'accueil. */
+(function () {
+  function init() {
+    var h = document.querySelector(".haut"), b = h && h.querySelector(".burger"); if (!b) return;
+    var s = h.querySelector(".sous"), sb = s && s.querySelector(".sous-btn");
+    function menu(o) { h.classList.toggle("ouvert", o); b.setAttribute("aria-expanded", String(o)); document.documentElement.classList.toggle("menu-ouvert", o); }
+    function sous(o) { if (s) { s.classList.toggle("ouvert", o); sb.setAttribute("aria-expanded", String(o)); } }
+    b.addEventListener("click", function () { menu(!h.classList.contains("ouvert")); });
+    if (sb) sb.addEventListener("click", function () { sous(!s.classList.contains("ouvert")); });
+    document.addEventListener("click", function (e) { if (s && !s.contains(e.target)) sous(false); if (!h.contains(e.target)) menu(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") { if (h.classList.contains("ouvert")) b.focus(); menu(false); sous(false); } });
+    h.querySelectorAll(".menu a").forEach(function (a) { a.addEventListener("click", function () { menu(false); }); });
+    if (window.matchMedia) matchMedia("(min-width: 761px)").addEventListener("change", function () { menu(false); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+})();

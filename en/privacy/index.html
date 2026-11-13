@@ -26,8 +26,8 @@
 <link rel="preload" href="/fonts/Instrument_Sans-pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/Fraunces-6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
-<link rel="stylesheet" href="/blog/blog.css">
-<script src="/mesure.js" defer></script>
+<link rel="stylesheet" href="/blog/blog.css?v=20261113">
+<script src="/mesure.js?v=20261113" defer></script>
 <style>
   .article h2 { margin-top: 2rem; }
   .article table { width: 100%; border-collapse: collapse; font-size: .95rem; margin: .8rem 0 1.2rem; }
@@ -46,7 +46,8 @@
 <body>
 <header class="haut">
   <a class="marque" href="/en/">Who thinks of it?</a>
-  <nav aria-label="Navigation"><a href="/confidentialite/" hreflang="fr" lang="fr">Français</a><a class="soutenir" href="https://ko-fi.com/quiypense" target="_blank" rel="noopener" data-soutenir="privacy">Support</a><a class="btn petit" href="/en/">Take stock</a></nav>
+  <button type="button" class="burger" aria-expanded="false" aria-controls="menu"><span class="sr">Menu</span><i aria-hidden="true"></i></button>
+  <nav class="menu" id="menu" aria-label="Navigation"><a href="/en/blog/">Resources</a><a href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=menu-en&amp;utm_campaign=soutenir" data-soutenir="menu" target="_blank" rel="noopener">Support</a><a class="btn petit" href="/en/">Take stock</a></nav>
 </header>
 
 <main class="article">
@@ -124,7 +125,8 @@
 </main>
 
 <footer class="pied">
-  <p>Who thinks of it? (quiypense.org) began as a spreadsheet kept by two people, at home. An independent project, with no sign-up and no adverts. <a href="/en/">Take stock</a> · <a href="https://ko-fi.com/quiypense" target="_blank" rel="noopener" data-soutenir="privacy-footer">Support</a> · <a href="mailto:contact@quiypense.org">contact@quiypense.org</a> · <a href="#cookies" data-cookies>Cookies</a> · <a href="/en/privacy/">Privacy</a> · <a href="/en/terms/">Terms</a></p>
+  <div class="pied-cols"><div><p class="pied-titre">The site</p><a href="/en/">Take stock</a><a href="/en/blog/">Resources</a></div><div><p class="pied-titre">About</p><a href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=pied-en&amp;utm_campaign=soutenir" data-soutenir="pied" target="_blank" rel="noopener">Support</a><a href="mailto:contact@quiypense.org">contact@quiypense.org</a></div><div><p class="pied-titre">Legal</p><a href="/en/privacy/" aria-current="page">Privacy</a><a href="/en/terms/">Terms</a><a href="#cookies" data-cookies>Cookies</a></div></div>
+  <p class="pied-bas">Who thinks of it? (quiypense.org) started as a spreadsheet kept by two people, at home. An independent project, with no sign-up and no ads. <a href="/confidentialite/" hreflang="fr" lang="fr">Français</a></p>
 </footer>
 </body>
 </html>
