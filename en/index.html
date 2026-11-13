@@ -153,7 +153,7 @@
   /* Accroche illustrée (13/11/2026, décision de Charles sur planche : B sur ordinateur, A sur mobile) : le couple dans
      le canapé, dessiné au trait avec les jetons, et sur ordinateur un exemple de résultat (Camille, comme la presse). */
   header.hero { display: grid; gap: 28px 40px; align-items: center; padding: 40px 0 0; }
-  header.hero h1 { font-size: clamp(2.8rem, 6vw, 4rem); }
+  header.hero h1 { font-size: clamp(2.6rem, 5.2vw, 3.6rem); white-space: nowrap; }
   header.hero p.lead { font-family: var(--serif); font-size: 1.45rem; line-height: 1.3; margin: .9rem 0 0; font-variation-settings: "opsz" 40; }
   header.hero .sur { font-family: var(--serif); font-size: 1.35rem; color: var(--muted); margin: 0 0 .4rem; font-variation-settings: "opsz" 40; }
   header.hero .preuve { margin: .7rem 0 0; color: var(--muted); }
@@ -180,8 +180,10 @@
   .presse-ref-lire { font-size: .95rem; color: var(--muted); }
   .presse-ref:hover .presse-ref-lire, .presse-ref:focus-visible .presse-ref-lire { text-decoration: underline; text-underline-offset: 4px; }
   .presse-ref-bas { margin-top: 64px; }
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin: 64px 0; }
-  .stat { padding-top: .9rem; border-top: 1.5px solid var(--ink); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 64px 0; }
+  .stat { display: flex; flex-direction: column; padding: 1.2rem 1.3rem 1.1rem; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; }
+  .stat strong { margin-bottom: .45rem; font-family: var(--serif); font-weight: 600; }
+  .stat small { margin-top: auto; padding-top: .7rem; }
   .stat strong { display: block; font-size: clamp(1.6rem, 2.4vw, 2.3rem); line-height: 1.1; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .stat span { color: var(--muted); font-size: .9rem; }
   .stat small { display: block; margin-top: .4rem; color: var(--muted); font-size: .75rem; }
@@ -279,7 +281,8 @@
   .genre, .choix { display: flex; gap: .35rem; margin-top: .45rem; }
   .genre .g, .choix .g { flex: 1; min-height: 44px; padding: .35rem 0; border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper);
     color: var(--muted); cursor: pointer; font-size: .95rem; line-height: 1.2; font-family: inherit; }
-  .genre .g .sym { font-size: 1.3rem; line-height: 1; vertical-align: -.12em; }
+  .genre .g { font-size: .85rem; line-height: 1.15; }
+  .etude-note { margin: .7rem 0 0; font-size: .82rem; color: var(--muted); }
   .genre .g:hover, .choix .g:hover { border-color: var(--border); color: var(--ink); }
   .genre .g[aria-pressed="true"], .choix .g[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--bg); }
   .prenoms .a .genre .g[aria-pressed="true"] { border-color: var(--a); background: var(--a); }
@@ -796,10 +799,17 @@
   .pap-mode { display: inline-flex; border: 1.5px solid var(--border); border-radius: var(--r); overflow: hidden; margin: .4rem 0 1.2rem; }
   .pap-mode button { border: 0; background: transparent; padding: .5rem .9rem; font: inherit; font-size: .88rem; color: var(--muted); cursor: pointer; }
   .pap-mode button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  /* Mobile : une tâche à la fois par défaut, l'autre affichage en simple lien. */
+  @media (max-width: 700px) {
+    .pap-mode { border: 0; margin: 0 0 .6rem; }
+    .pap-mode button[aria-pressed="true"] { display: none; }
+    .pap-mode button { min-height: 44px; padding: .3rem 0; text-decoration: underline; text-underline-offset: 3px; }
+  }
   #e2.un .intro-liste, #e2.un #aide-questions { display: none; }
   #e2.un:not(.fin) .pro-saisie, #e2.un:not(.fin) .nav { display: none; }
   .pap { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); padding: 28px 32px 24px; min-height: 430px; display: flex; flex-direction: column; }
   .pap-haut { display: flex; justify-content: space-between; gap: 1rem; font-size: .82rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+  .pap-haut .neuve { color: var(--ink); font-weight: 600; }
   .pap-prog { height: 4px; background: var(--bg-2); border-radius: 2px; margin: .6rem 0 1.6rem; overflow: hidden; }
   .pap-prog i { display: block; height: 100%; background: var(--ink); transition: width .25s; }
   .pap-nom { font-family: var(--serif); font-size: 1.75rem; line-height: 1.15; margin: 0 0 .4rem; font-weight: 500; }
@@ -953,16 +963,16 @@
       <div class="dem" id="dem1">
       <div class="prenoms">
         <div class="a"><label for="nomA">Name 1</label><input id="nomA" placeholder="First name">
-          <div class="genre" role="group" aria-label="Gender of the first person. Only used for the anonymous study, it does not change the calculation. n/a if you prefer not to say." title="Only used for the anonymous study, it does not change the calculation. 'n/a' if you prefer not to say." data-genre="A">
-            <button type="button" class="g" value="f" aria-pressed="false" title="Woman"><span class="sym" aria-hidden="true">&#9792;</span><span class="sr">Woman</span></button>
-            <button type="button" class="g" value="h" aria-pressed="false" title="Man"><span class="sym" aria-hidden="true">&#9794;</span><span class="sr">Man</span></button>
-            <button type="button" class="g" value="x" aria-pressed="false" title="Prefer not to say"><span aria-hidden="true">n/a</span><span class="sr">Prefer not to say</span></button>
+          <div class="genre" role="group" aria-label="Gender of the first person. Only used for the anonymous study, it does not change the calculation." data-genre="A">
+            <button type="button" class="g" value="f" aria-pressed="false">Woman</button>
+            <button type="button" class="g" value="h" aria-pressed="false">Man</button>
+            <button type="button" class="g" value="x" aria-pressed="false">Rather not say</button>
           </div></div>
         <div class="b"><label for="nomB">Name 2</label><input id="nomB" placeholder="First name">
-          <div class="genre" role="group" aria-label="Gender of the second person. Only used for the anonymous study, it does not change the calculation. n/a if you prefer not to say." title="Only used for the anonymous study, it does not change the calculation. 'n/a' if you prefer not to say." data-genre="B">
-            <button type="button" class="g" value="f" aria-pressed="false" title="Woman"><span class="sym" aria-hidden="true">&#9792;</span><span class="sr">Woman</span></button>
-            <button type="button" class="g" value="h" aria-pressed="false" title="Man"><span class="sym" aria-hidden="true">&#9794;</span><span class="sr">Man</span></button>
-            <button type="button" class="g" value="x" aria-pressed="false" title="Prefer not to say"><span aria-hidden="true">n/a</span><span class="sr">Prefer not to say</span></button>
+          <div class="genre" role="group" aria-label="Gender of the second person. Only used for the anonymous study, it does not change the calculation." data-genre="B">
+            <button type="button" class="g" value="f" aria-pressed="false">Woman</button>
+            <button type="button" class="g" value="h" aria-pressed="false">Man</button>
+            <button type="button" class="g" value="x" aria-pressed="false">Rather not say</button>
           </div></div>
       </div>
       <div class="remplit">
@@ -973,6 +983,7 @@
           <button type="button" class="g" value="2" aria-pressed="false" title="Both together">Together</button>
         </div>
       </div>
+      <p class="etude-note">Gender and "who is filling it in" are for the anonymous study. They do not change the calculation.</p>
       </div>
       <div class="dem" id="dem2" hidden>
         <p class="dem-titre">And at home?</p>
@@ -1764,7 +1775,7 @@
     const cats = visibleCats(), ci = cats.findIndex(c => c.id === t.cat);
     const dansFam = list.filter(x => x.cat === t.cat), fi = dansFam.findIndex(x => x.id === t.id);
     const avance = () => { if (PAP.ajout) { PAP.ajout = null; PAP.i = listePap().length; } else PAP.i++; renderCatalogue(); update(); };
-    carte.innerHTML = `<div class="pap-haut"><span>${t.catNom}${fi === 0 ? "" : ` · ${fi + 1} of ${dansFam.length}`}</span><span>${PAP.i + 1} / ${n}</span></div>
+    carte.innerHTML = `<div class="pap-haut"><span${fi === 0 ? ' class="neuve"' : ""}>${t.catNom}${fi === 0 ? ` · ${dansFam.length} task${dansFam.length > 1 ? "s" : ""}` : ` · ${fi + 1} of ${dansFam.length}`}</span><span>${Math.max(1, Math.round((n - PAP.i) * 12 / 60))} min left</span></div>
       <div class="pap-prog"><i style="width:${100 * PAP.i / n}%"></i></div>
       <h3 class="pap-nom">${t.nom}</h3>${t.aide ? `<p class="pap-aide">${t.aide}</p>` : `<p class="pap-aide"></p>`}
       ${S.cmp && S.cmp.etat === "e" ? avantEnsemble(t) : ""}
