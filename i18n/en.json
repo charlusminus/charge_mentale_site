@@ -200,6 +200,14 @@
    ">Camille 78%</i><i class=\"ib\" style=\"width:22%\">22%</i>"
   ],
   [
+   "Combien d'heures de garde par semaine, en tout ? <input",
+   "How many hours of childcare a week, in all? <input"
+  ],
+  [
+   "aria-label=\"Heures de garde par semaine\"> h",
+   "aria-label=\"Childcare hours per week\"> h"
+  ],
+  [
    "<label for=\"nomA\">Prénom 1</label><input id=\"nomA\" placeholder=\"Prénom\">",
    "<label for=\"nomA\">Name 1</label><input id=\"nomA\" placeholder=\"First name\">"
   ],
