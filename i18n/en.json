@@ -152,12 +152,52 @@
    "<p class=\"sur\">Who does what at home?</p>"
   ],
   [
-   "<h1>Qui y pense ?</h1>",
+   "<h1>Qui y pense&nbsp;?</h1>",
    "<h1>Who thinks of it?</h1>"
   ],
   [
-   "<p class=\"lead\">Faites le point à deux, en dix minutes. Les tâches sont déjà listées : pour chacune, dites qui s'en occupe, et qui y pense. Vous lisez ensuite le résultat pour chacun : les heures par jour, et le nombre de choses à garder en tête.</p>",
-   "<p class=\"lead\">Take stock together, in ten minutes. The tasks are already listed: for each one, say who does it, and who thinks of it. You then see the result for each of you: hours a day, and the number of things to keep in mind.</p>"
+   "<p class=\"lead\">Vous partagez les tâches. Et le fait d'y&nbsp;penser&nbsp;?</p>",
+   "<p class=\"lead\">You share the chores. But who thinks of&nbsp;them?</p>"
+  ],
+  [
+   "<p class=\"preuve\">Plus de 22&nbsp;000 couples ont déjà fait le point. Dix minutes, gratuit, sans inscription.</p>",
+   "<p class=\"preuve\">More than 22,000 couples in France have already taken stock. Ten minutes, free, no sign-up.</p>"
+  ],
+  [
+   "id=\"hero-go\">Faire le point à deux</a>",
+   "id=\"hero-go\">Take stock together</a>"
+  ],
+  [
+   "Vu dans Marie Claire<span class=\"sr\"> (nouvel onglet)</span>",
+   "Featured in Marie Claire (France)<span class=\"sr\"> (new tab)</span>"
+  ],
+  [
+   "aria-label=\"Un couple assis dans un canapé. L'un pense à une chose, l'autre à toute une liste.\"",
+   "aria-label=\"A couple sitting on a sofa. One is thinking of one thing, the other of a whole list.\""
+  ],
+  [
+   "aria-label=\"Exemple de résultat : Camille porte 54 % du temps et 78 % de la charge mentale.\"",
+   "aria-label=\"Example result: Camille carries 54% of the time and 78% of the mental load.\""
+  ],
+  [
+   "<p>Exemple de résultat</p>",
+   "<p>Example result</p>"
+  ],
+  [
+   "<span>Le temps à faire</span><div class=\"bar\">",
+   "<span>Time spent doing</span><div class=\"bar\">"
+  ],
+  [
+   "<span>La charge mentale</span><div class=\"bar\">",
+   "<span>Mental load</span><div class=\"bar\">"
+  ],
+  [
+   ">Camille 54 %</i><i class=\"ib\" style=\"width:46%\">46 % Alex</i>",
+   ">Camille 54%</i><i class=\"ib\" style=\"width:46%\">46% Alex</i>"
+  ],
+  [
+   ">Camille 78 %</i><i class=\"ib\" style=\"width:22%\">22 %</i>",
+   ">Camille 78%</i><i class=\"ib\" style=\"width:22%\">22%</i>"
   ],
   [
    "<label for=\"nomA\">Prénom 1</label><input id=\"nomA\" placeholder=\"Prénom\">",
