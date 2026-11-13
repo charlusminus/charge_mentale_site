@@ -37,7 +37,7 @@
   .tab td small { color: var(--muted); }
   .tab td:nth-child(n+2) { white-space: nowrap; }
   code { font-size: .9em; background: var(--bg-2); padding: .05rem .3rem; border-radius: 4px; }
-  .sources li, .versions li { margin-bottom: .4rem; }
+  .sources li { margin-bottom: .4rem; }
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","name":"Qui y pense ? La méthode","inLanguage":"fr",
@@ -58,14 +58,13 @@
   <p class="chapo">Tout ce que fait Qui y pense&nbsp;?, de la question posée au chiffre publié&nbsp;: les tâches, les
     durées, les calculs, l'étude et ses limites. Écrit pour être relu et discuté, en particulier par des chercheuses et
     des chercheurs. Le code du calcul est public.</p>
-  <p class="meta">Version du 13 novembre 2026 · catalogue 2026-11-11a · 53 tâches ·
-    <a href="mailto:contact@quiypense.org">contact@quiypense.org</a></p>
+  <p class="meta">53 tâches · <a href="mailto:contact@quiypense.org">contact@quiypense.org</a></p>
 
   <nav class="sommaire" aria-label="Sommaire"><ol>
     <li><a href="#principe">Le principe</a></li><li><a href="#questionnaire">Le questionnaire</a></li>
     <li><a href="#catalogue">Les 53 tâches et leurs valeurs par défaut</a></li><li><a href="#calculs">Les calculs</a></li>
     <li><a href="#etude">L'étude</a></li><li><a href="#chiffres">Les chiffres publiés</a></li>
-    <li><a href="#limites">Limites connues</a></li><li><a href="#sources">Sources</a></li><li><a href="#versions">Versions</a></li>
+    <li><a href="#limites">Limites connues</a></li><li><a href="#sources">Sources</a></li>
   </ol></nav>
 
   <h2 id="principe">1. Le principe</h2>
@@ -103,7 +102,7 @@
     par les cartes Fair Play (Rodsky, 2019) pour ce que le carnet d'emploi du temps ne voit pas&nbsp;: agenda, cadeaux,
     école, souvenirs, proches. Les libellés sont génériques&nbsp;; les détails vont dans l'aide. Toute évolution du
     catalogue se justifie dans notre revue de littérature.</p>
-  <p><strong>Calibrage.</strong> Passe du 20/09/2026, ordres de grandeur INSEE Emploi du temps 2010 par ménage en couple (H+F, minutes par jour) : cuisine avec vaisselle et table 94, ménage 66, linge 27, courses 44, divers et administratif 24, soins aux enfants 62 et jeux 25 (ménages avec enfant, tout âge ; INED 2010 : 95 + 41 min de temps parental avec jeunes enfants), bricolage et jardinage 52. Le catalogue vise la fourchette haute pour un couple avec jeunes enfants : environ 8,5 h par jour sans animaux.</p>
+  <p><strong>Calibrage.</strong> Ordres de grandeur INSEE Emploi du temps 2010 par ménage en couple (H+F, minutes par jour) : cuisine avec vaisselle et table 94, ménage 66, linge 27, courses 44, divers et administratif 24, soins aux enfants 62 et jeux 25 (ménages avec enfant, tout âge ; INED 2010 : 95 + 41 min de temps parental avec jeunes enfants), bricolage et jardinage 52. Le catalogue vise la fourchette haute pour un couple avec jeunes enfants : environ 8,5 h par jour sans animaux.</p>
   <p>«&nbsp;Par semaine&nbsp;» est le temps par défaut pour le foyer. «&nbsp;Poids&nbsp;» est le poids de la tâche
     dans la part de charge mentale (voir <a href="#calcul-charge">§ 4.2</a>)&nbsp;: 29 tâches pèsent 3,
     21 pèsent 2, 3 pèsent 1. Les tâches des familles «&nbsp;Enfants&nbsp;» n'apparaissent que s'il
@@ -201,12 +200,12 @@
     par semaine de chacun, arrondies au quart d'heure, et la part du temps de chacun.</p>
   <h3 id="calcul-charge">4.2 La charge mentale</h3>
   <p>Chaque tâche compte pour 1 chez qui y pense (ou se partage selon la réglette). Le tableau du résultat donne ce
-    <strong>nombre de choses à garder en tête</strong>. Depuis le 13/11/2026, la <strong>part de charge mentale</strong>
+    <strong>nombre de choses à garder en tête</strong>. La <strong>part de charge mentale</strong>
     (le pourcentage) pondère chaque tâche par sa fréquence, telle qu'elle est réglée pour le foyer&nbsp;: 3 pour une
     tâche qui revient au moins chaque semaine (52 fois par an ou plus), 2 au moins chaque mois (12 fois par an ou
     plus), 1 plus rarement. Penser aux repas chaque jour ne pèse pas autant que penser aux vacances quelques fois par
-    an. Sur 15&nbsp;408 couples, cette pondération déplace la part portée par elle de -1,2 point en moyenne et de plus
-    de 5 points dans 6 % des couples&nbsp;: elle change peu les conclusions. Les seuils et les poids sont un choix,
+    an. Comparée à un simple comptage, sur 15&nbsp;408 couples, cette pondération déplace la part portée par elle de
+    -1,2 point en moyenne et de plus de 5 points dans 6 % des couples&nbsp;: les conclusions n'en dépendent pas. Les seuils et les poids sont un choix,
     pas une mesure&nbsp;; nous les soumettons à la discussion.</p>
   <h3>4.3 Cas particuliers</h3>
   <ul>
@@ -258,9 +257,9 @@
 
   <h2 id="chiffres">6. Les chiffres publiés</h2>
   <p>Les chiffres de la <a href="/presse/">page presse</a> portent sur les couples femme-homme ayant renseigné au moins
-    20 tâches. La part de charge mentale «&nbsp;portée par elle&nbsp;» est la part pondérée du § 4.2&nbsp;; pour les
-    copies antérieures au 13/11/2026, elle est recalculée à partir des réponses enregistrées (le décodage retrouve la
-    part non pondérée enregistrée à 1 point près dans 99 % des lignes). Les moyennes sont données
+    20 tâches. La part de charge mentale «&nbsp;portée par elle&nbsp;» est la part pondérée du § 4.2. Chaque chiffre se
+    recalcule à partir des réponses enregistrées, une lettre par tâche&nbsp;: le recalcul retrouve les parts
+    enregistrées à 1 point près dans 99 % des lignes. Les moyennes sont données
     <strong>selon qui remplit</strong>, car chacun se crédite davantage&nbsp;: c'est la première limite ci-dessous.</p>
 
   <h2 id="limites">7. Limites connues</h2>
@@ -298,18 +297,6 @@
     <li>FFDys et Poppins (2024), enquête sur le temps consacré au suivi des enfants à besoins particuliers.</li>
   </ul>
 
-  <h2 id="versions">9. Versions</h2>
-  <ul class="versions">
-    <li><strong>23/09/2026</strong>&nbsp;: mise en ligne, catalogue v2 aligné sur l'INSEE et Fair Play.</li>
-    <li><strong>26/09/2026</strong>&nbsp;: catalogue 2026-09-26a, «&nbsp;qui y pense&nbsp;» posé pour toutes les tâches.</li>
-    <li><strong>08/11/2026</strong>&nbsp;: catalogue 2026-11-08a, liste de courses distincte des courses (51 tâches).</li>
-    <li><strong>09 et 10/11/2026</strong>&nbsp;: suivi médical d'un enfant, famille recomposée, heures de travail payé dans
-      le temps total, repères par âge.</li>
-    <li><strong>11/11/2026</strong>&nbsp;: catalogue 2026-11-11a (bébé, résidence secondaire), questionnaire une tâche à
-      la fois, mode «&nbsp;chacun de son côté&nbsp;».</li>
-    <li><strong>13/11/2026</strong>&nbsp;: part de charge mentale pondérée par la fréquence, garde avec attention et
-      simple présence, âge du plus jeune enfant, cette page.</li>
-  </ul>
   <p>Pour relire, discuter ou demander les données agrégées et anonymes&nbsp;:
     <a href="mailto:contact@quiypense.org">contact@quiypense.org</a>. Nous répondons à toute remarque de méthode.</p>
 </main>
