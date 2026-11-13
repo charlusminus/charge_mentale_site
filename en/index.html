@@ -725,9 +725,13 @@
   .pap-nom { font-family: var(--serif); font-size: 1.75rem; line-height: 1.15; margin: 0 0 .4rem; font-weight: 500; }
   .pap-aide { color: var(--muted); margin: 0 0 1.4rem; font-size: .95rem; }
   /* heures de garde saisies dès la première réponse (13/11/2026) */
-  .h-saisie { display: inline-flex; align-items: center; gap: .5rem; margin: 0 0 1.2rem; font-size: .95rem; }
+  .h-saisies { display: grid; gap: .6rem; margin: 0 0 1.2rem; }
+  .h-saisie { display: flex; align-items: center; gap: .5rem; font-size: .95rem; }
+  .h-saisie span { flex: 1; }
+  .h-saisie small { display: block; color: var(--muted); font-size: .82rem; }
   .h-saisie input { width: 4.5rem; padding: .35rem .5rem; border: 1.5px solid var(--border); border-radius: var(--r); font: inherit; background: var(--paper); }
-  .tache .h-saisie { margin: .35rem 0 0; font-size: .85rem; }
+  .tache .h-saisies { margin: .4rem 0 0; max-width: 420px; }
+  .tache .h-saisie { font-size: .85rem; }
   .pap-q { font-weight: 600; margin: .4rem 0 .6rem; }
   .pap-q small { display: block; font-weight: 400; color: var(--muted); font-size: .85rem; }
   .pap-choix { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .6rem; margin-bottom: 1.2rem; }
@@ -1220,7 +1224,7 @@
   <button class="btn" type="button" id="barre-envoyer" aria-haspopup="dialog">Share with my other half</button>
 </div></div>
 
-<script src="../catalogue-en.js?v=20261113"></script>
+<script src="../catalogue-en.js?v=20261113b"></script>
 <script src="../reperes.js?v=20261112b"></script>
 <script>
   // bouton collant « Faire le point » : visible dès que le formulaire est sorti de l'écran par le haut
@@ -1298,7 +1302,7 @@
   let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
 
   function fresh() {
-    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, suivi: 0, recompo: null, ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null, foyer: "" };   // foyer : numéro tiré au hasard au premier résultat (30/10/2026) ; proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
+    const s = { nomA: "", nomB: "", genreA: "", genreB: "", enfants: 0, animaux: 0, suivi: 0, presence: 0, recompo: null, ecran: 1, t: {}, custom: [], revA: null, proA: null, proB: null, foyer: "" };   // foyer : numéro tiré au hasard au premier résultat (30/10/2026) ; proA, proB : heures de travail payé par semaine, null si non indiquées   // revA : part des revenus du foyer de la personne 1, en %, null tant que non réglée   // aucun genre proposé : un défaut gardé par inertie fausserait l'étude (24/09/2026)
     for (const cat of C.categories) for (const t of cat.taches) s.t[t.id] = { fait: null, pense: null, n: t.n, p: t.periode, d: t.duree };
     return s;
   }
@@ -1333,7 +1337,7 @@
     const vh = v => v === null || v === undefined ? "" : v, pro = vh(S.proA) === "" && vh(S.proB) === "" ? "" : vh(S.proA) + "_" + vh(S.proB);
     // numéro de foyer (30/10/2026) : champ 13, 32 caractères hexadécimaux tirés au hasard, relie les passages d'un même foyer dans l'étude
     // suivi médical d'un enfant (09/11/2026) : champ 14, « 1 » si la case est cochée ; jamais repris dans la copie de l'étude
-    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : "", S.recompo ? [S.recompo.aN, S.recompo.aP, S.recompo.bN, S.recompo.bP, S.recompo.cN].join("") : "", S.cmp ? S.cmp.par + S.cmp.rep + (S.cmp.etat ? "." + S.cmp.etat + S.cmp.repB : "") : ""].join("~").replace(/~+$/, "");
+    return ["8", esc(S.nomA), esc(S.nomB), S.enfants, S.ecran, rep, regl, ajouts, S.animaux ? 1 : 0, genres, partages, rev, pro, S.foyer || "", S.suivi ? 1 : "", S.recompo ? [S.recompo.aN, S.recompo.aP, S.recompo.bN, S.recompo.bP, S.recompo.cN].join("") : "", S.cmp ? S.cmp.par + S.cmp.rep + (S.cmp.etat ? "." + S.cmp.etat + S.cmp.repB : "") : "", S.presence ? esc(S.presence) : ""].join("~").replace(/~+$/, "");   // 17 : heures de simple présence auprès des enfants par semaine (13/11/2026)
   }
   function decode2(h, ordre) {
     const f = h.split("~"), s = fresh();
@@ -1352,7 +1356,8 @@
     const rv = borne(f[11]); s.revA = rv === undefined ? null : rv;   // revenus du foyer, 12/10/2026
     if (f[12]) { const [pa, pb] = f[12].split("_").map(borne); s.proA = pa === undefined ? null : pa; s.proB = pb === undefined ? null : pb; }   // travail rémunéré, 13/10/2026
     if (/^[0-9a-f]{32}$/.test(f[13] || "")) s.foyer = f[13];   // numéro de foyer, 30/10/2026
-    s.suivi = f[14] === "1" ? 1 : 0;   // suivi médical d'un enfant, 09/11/2026
+    s.suivi = f[14] === "1" ? 1 : 0;
+    { const p = parseFloat(unesc(f[17] || "")); s.presence = p > 0 ? Math.min(100, p) : 0; }   // simple présence auprès des enfants, 13/11/2026   // suivi médical d'un enfant, 09/11/2026
     // « Chacun de son côté » (11/11/2026) : qui a rempli d'abord, ses réponses ; puis, une fois le pas à pas « ensemble »
     // commencé (e) ou fini (c), les réponses de la seconde personne, gardées pour la comparaison.
     const cm = /^([ab])([0-9a-z]*)(?:\.([ec])([0-9a-z]*))?$/.exec(f[16] || "");
@@ -1558,18 +1563,29 @@
     }
   }
 
-  // Garde des enfants (avis du 12/11/2026 : « le temps de garde des petits à la maison n'est pas compté ») : le temps
-  // se saisit dès la première réponse, en heures par semaine, prérempli avec la valeur courante (3 h par défaut).
+  // Garde des enfants (avis des 12 et 13/11/2026) : deux temps distincts, comme dans les enquêtes emploi du temps (garde
+  // « active » et « enfants sous sa responsabilité », cf docs/recherche/revue-litterature.md, point 13). La garde avec
+  // attention compte dans le temps ; la simple présence (les grands sont là, on peut faire autre chose) ne s'ajoute pas
+  // aux heures, pour ne pas compter deux fois la cuisine faite pendant ce temps, mais s'affiche à part.
   const HEURES_SAISIE = new Set(["garde"]);
   function champHeures(t, st) {
     if (!HEURES_SAISIE.has(t.id)) return null;
-    const l = document.createElement("label"); l.className = "h-saisie";
+    const d = document.createElement("div"); d.className = "h-saisies";
     const v = Math.round(st.n * st.d / 60 * 7 / J[st.p] * 2) / 2;
-    l.innerHTML = `How many hours of childcare a week, in all? <input type="number" min="0" max="100" step="0.5" inputmode="decimal" value="${v}" aria-label="Childcare hours per week"> h`;
-    const i = l.querySelector("input");
-    i.addEventListener("input", () => { const h = Math.max(0, Math.min(100, +i.value || 0)); st.n = 1; st.p = "semaine"; st.d = Math.round(h * 60); update(); });
-    i.addEventListener("change", () => { if (window.__ga) gtag("event", "garde_heures", { heures: st.d / 60 }); });
-    return l;
+    d.innerHTML = `<label class="h-saisie"><span>Hands-on childcare, per week<small>a little one you cannot leave alone, at home or at the park</small></span><input type="number" min="0" max="100" step="0.5" inputmode="decimal" value="${v}" data-h="attention"> h</label>
+      <label class="h-saisie"><span>Just being there, per week<small>the older ones are at home, you can do other things; not added to the time</small></span><input type="number" min="0" max="100" step="0.5" inputmode="decimal" value="${S.presence || 0}" data-h="presence"> h</label>`;
+    const [ia, ip] = d.querySelectorAll("input");
+    ia.addEventListener("input", () => { const h = Math.max(0, Math.min(100, +ia.value || 0)); st.n = 1; st.p = "semaine"; st.d = Math.round(h * 60); update(); });
+    ip.addEventListener("input", () => { S.presence = Math.max(0, Math.min(100, +ip.value || 0)); update(); });
+    d.querySelectorAll("input").forEach(i => i.addEventListener("change", () => { if (window.__ga) gtag("event", "garde_heures", { attention: st.d / 60, presence: S.presence }); }));
+    return d;
+  }
+  // Heures de simple présence de chacun, par semaine, selon « qui s'en occupe » de la garde (au prorata d'une famille recomposée).
+  function presenceDe() {
+    const st = S.t.garde; if (!S.presence || !st || !st.fait || S.enfants === 0) return null;
+    const tot = S.presence * prorata("garde"), o = { a: 0, b: 0, tot };
+    for (const [who, k] of parts(st.fait, partA(st, "fait"))) o[who] += tot * k;
+    return o.a + o.b > 0 ? o : null;
   }
   function renderTask(t) {
     const st = S.t[t.id];
@@ -1873,6 +1889,9 @@
       ? `<span class="${gros[0]}">${gros[1]}</span> carries ${gros[2]}% of the time and ${tete[2]}% of the household's mental load.`
       : `<span class="${gros[0]}">${gros[1]}</span> carries ${gros[2]}% of the time, <span class="${tete[0]}">${tete[1]}</span> ${tete[2]}% of the household's mental load.`;
     let txt = `${hm(quart(r.a.h) + quart(r.b.h))} a day of tasks in all.`;   // somme des deux durées arrondies affichées plus haut
+    const pres = presenceDe();
+    if (pres) { const aQui = pres.a && pres.b ? "between you" : pres.a ? "for " + nomA() : "for " + nomB();
+      txt += ` On top of that, ${fmt(Math.round(pres.tot * 2) / 2, (pres.tot * 2) % 2 ? 1 : 0)} hours a week of just being there for the children, ${aQui}, not counted in this time.`; }
     if (totP) {
       if (Math.abs(qa - pa) >= 15) {
         const who = (qa > pa) ? nomA() : nomB();
@@ -2025,10 +2044,12 @@
       <p class="small muted">Enter paid working hours above to see each person's total load.</p>`;
       return;
     }
-    const ta = pr.a + ma, tb = pr.b + mb;
+    const pres = presenceDe(), pa = pres ? Math.round(pres.a) : 0, pb = pres ? Math.round(pres.b) : 0;
+    const ta = pr.a + ma + pa, tb = pr.b + mb + pb;
     let h = `<table class="pro-tab"><tr><th>Per week</th><th class="pa">${nomA()}</th><th class="pb">${nomB()}</th></tr>
       <tr><td>Paid work</td><td>${pr.a}h</td><td>${pr.b}h</td></tr>
-      <tr><td>Home</td><td>${ma}h</td><td>${mb}h</td></tr>
+      <tr><td>Home</td><td>${ma}h</td><td>${mb}h</td></tr>${pres ? `
+      <tr><td>Being there for the children</td><td>${pa}h</td><td>${pb}h</td></tr>` : ""}
       <tr class="tot"><td>Total</td><td>${ta}h</td><td>${tb}h</td></tr></table>`;
     const ecart = Math.abs(ta - tb);
     h += ecart <= 3
@@ -2228,6 +2249,7 @@
       ["Hours a week spent doing", +(r.a.h * 7).toFixed(1), +(r.b.h * 7).toFixed(1)],
       ["Tasks done", r.a.nFait, r.b.nFait],
       ["Tasks to keep in mind", r.a.nPense, r.b.nPense],
+      ...(presenceDe() ? [["Just being there for the children, hours per week", +presenceDe().a.toFixed(1), +presenceDe().b.toFixed(1)]] : []),
       [], ["Children at home (dependent)", S.enfants], ["Pets", S.animaux ? "yes" : "no"], ["Generated on", new Date().toLocaleDateString("en-GB")], ["Source", "quiypense.org/en, default durations from the INSEE time-use survey 2010 (France) and Fair Play"]];
     const nomFichier = `who-thinks-of-it-${(nomA() + "-" + nomB()).toLowerCase().replace(/[^a-z0-9-]+/g, "")}`;
     try {
@@ -2496,7 +2518,7 @@
         enfants: S.enfants, animaux: S.animaux ? 1 : 0, genre_a: S.genreA, genre_b: S.genreB, saisie: (() => { try { return sessionStorage.getItem("saisie") || ""; } catch (e) { return ""; } })(),
         taches_total: r.total, taches_renseignees: r.renseignees,
         heures_a: r.a.h.toFixed(3), heures_b: r.b.h.toFixed(3), part_temps_a: pct(r.a.h, r.b.h),
-        faites_a: r.a.nFait, faites_b: r.b.nFait, tete_a: r.a.nPense, tete_b: r.b.nPense, part_tete_a: pct(r.a.nPense, r.b.nPense), part_charge_a: pct(r.a.m, r.b.m),
+        faites_a: r.a.nFait, faites_b: r.b.nFait, tete_a: r.a.nPense, tete_b: r.b.nPense, part_tete_a: pct(r.a.nPense, r.b.nPense), part_charge_a: pct(r.a.m, r.b.m), presence: S.presence || "",
         reponses: champs[5] || "", reglages: champs[6] || "", partages: champs[10] || "",
         pro_a: S.proA ?? "", pro_b: S.proB ?? "",
         recompo: S.recompo ? champs[15] || "" : "",

@@ -200,12 +200,28 @@
    ">Camille 78%</i><i class=\"ib\" style=\"width:22%\">22%</i>"
   ],
   [
-   "Combien d'heures de garde par semaine, en tout ? <input",
-   "How many hours of childcare a week, in all? <input"
+   "<span>Garde avec attention, par semaine<small>un petit qu'on ne peut pas laisser seul, à la maison ou au parc</small>",
+   "<span>Hands-on childcare, per week<small>a little one you cannot leave alone, at home or at the park</small>"
   ],
   [
-   "aria-label=\"Heures de garde par semaine\"> h",
-   "aria-label=\"Childcare hours per week\"> h"
+   "<span>Simple présence, par semaine<small>les grands sont là, vous pouvez faire autre chose ; ne s'ajoute pas au temps</small>",
+   "<span>Just being there, per week<small>the older ones are at home, you can do other things; not added to the time</small>"
+  ],
+  [
+   "const aQui = pres.a && pres.b ? \"à vous deux\" : pres.a ? \"pour \" + nomA() : \"pour \" + nomB();",
+   "const aQui = pres.a && pres.b ? \"between you\" : pres.a ? \"for \" + nomA() : \"for \" + nomB();"
+  ],
+  [
+   "txt += ` En plus, ${fmt(Math.round(pres.tot * 2) / 2, (pres.tot * 2) % 2 ? 1 : 0)} h de simple présence auprès des enfants par semaine, ${aQui}, sans compter dans ce temps.`;",
+   "txt += ` On top of that, ${fmt(Math.round(pres.tot * 2) / 2, (pres.tot * 2) % 2 ? 1 : 0)} hours a week of just being there for the children, ${aQui}, not counted in this time.`;"
+  ],
+  [
+   "<tr><td>Présence auprès des enfants</td><td>${pa} h</td><td>${pb} h</td></tr>",
+   "<tr><td>Being there for the children</td><td>${pa}h</td><td>${pb}h</td></tr>"
+  ],
+  [
+   "[\"Simple présence auprès des enfants, heures par semaine\",",
+   "[\"Just being there for the children, hours per week\","
   ],
   [
    "<label for=\"nomA\">Prénom 1</label><input id=\"nomA\" placeholder=\"Prénom\">",
