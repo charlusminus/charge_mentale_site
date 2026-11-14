@@ -1138,11 +1138,11 @@
       </div>
       <div class="reeq" id="reeq" hidden></div>
       <h2 class="sec-titre" id="sec-parler">En parler à deux</h2>
+      <div class="cmp-invite" id="cmp-invite" hidden></div>
       <div class="envoi" id="envoi-bloc">
         <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce résultat à l'autre</button>
         <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce résultat.</p>
       </div>
-      <div class="cmp-invite" id="cmp-invite" hidden></div>
 <!-- en:retirer -->      <p class="parler"><strong>Avant d'en parler à deux.</strong> Une méthode en une soirée, testée chez nous et chez des amis : <a href="blog/parler-repartition-couple.html?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=parler" target="_blank" rel="noopener">comment parler du partage des tâches sans que ça finisse en dispute</a> (2 min de lecture).</p><!-- /en:retirer --><!-- en:parler -->
       <div class="comparer" id="comparer" hidden></div>
       <section class="avis" id="avis" aria-labelledby="avis-titre">
@@ -1940,11 +1940,12 @@
   function renderCmp(rCour) {
     const inv = document.getElementById("cmp-invite"), box = document.getElementById("cmp");
     const envoiBloc = document.getElementById("envoi-bloc"), barre = document.getElementById("barre-envoyer");
-    // Partage d'abord (13/11/2026, retour sur la décision du 11/11) : « Envoyer ce résultat à l'autre » et la barre
-    // « Partager à ma moitié » restent l'action principale dans tous les cas ; l'invitation à répondre de son côté
-    // vient en second. Avec l'invitation en premier, l'ouverture de l'envoi était passée de 21 % à 8 % des résultats.
-    const barreTxt = document.querySelector("#barre-partage .texte");
-    const actionEnvoi = () => { envoiBloc.hidden = false; barre.dataset.mode = ""; barre.textContent = "Partager à ma moitié"; barreTxt.textContent = "Ce résultat se lit à deux."; };
+    // Invitation personnalisée en premier quand une seule personne a rempli (14/11/2026, après mesure : le total des
+    // partages est le même qu'avec l'envoi seul, et l'invitation amène une seconde réponse, 27 comparaisons le 12/11) ;
+    // « Envoyer ce résultat à l'autre » reste visible juste dessous, en bouton secondaire. Rempli à deux, ou seconde
+    // personne : l'envoi et « Partager à ma moitié » restent l'action principale.
+    const barreTxt = document.querySelector("#barre-partage .texte"), btnEnvoi = document.getElementById("envoyer");
+    const actionEnvoi = () => { envoiBloc.hidden = false; btnEnvoi.classList.remove("secondary"); barre.dataset.mode = ""; barre.textContent = "Partager à ma moitié"; barreTxt.textContent = "Ce résultat se lit à deux."; };
     let qui = ""; try { qui = sessionStorage.getItem("saisie") || ""; } catch (e) {}
     if (!S.cmp) {
       box.hidden = true;
@@ -1952,8 +1953,9 @@
       const moi = qui === "b" ? "b" : "a", autre = moi === "a" ? nomB() : nomA();
       inv.hidden = false;
       inv.innerHTML = `<h3>Et selon ${autre} ?</h3><p>Chacun voit d'abord ce qu'il fait. Envoyez le questionnaire à ${autre} : ${autre} répond de son côté, sans voir vos réponses, et vous comparez vos deux regards à la fin.</p>
-        <button class="btn secondary" type="button" id="cmp-inviter">Inviter ${autre} à répondre</button><p class="ok" id="cmp-ok" hidden></p>`;
-      actionEnvoi();
+        <button class="btn" type="button" id="cmp-inviter">Inviter ${autre} à répondre</button><p class="ok" id="cmp-ok" hidden></p>`;
+      envoiBloc.hidden = false; btnEnvoi.classList.add("secondary");
+      barre.dataset.mode = "inviter"; barre.textContent = `Inviter ${autre}`; barreTxt.textContent = `Et selon ${autre} ?`;
       inv.querySelector("#cmp-inviter").addEventListener("click", async () => {
         const url = location.origin + location.pathname + "?comparer=" + moi + "#" + encode(), ok = inv.querySelector("#cmp-ok");
         if (window.__ga) gtag("event", "comparer_invite");
