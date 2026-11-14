@@ -1795,6 +1795,10 @@
   [
    "textContent = `Temps proposé pour vous deux : ${hm(repasDefaut(\"cuisiner\", S.midi, S.effort) / 60)} de cuisine et ${hm(repasDefaut(\"vaisselle\", S.midi, S.effort) / 60)} de vaisselle par jour. Facultatif, et modifiable sous le résultat.`;",
    "textContent = `Suggested time for the two of you: ${hm(repasDefaut(\"cuisiner\", S.midi, S.effort) / 60)} of cooking and ${hm(repasDefaut(\"vaisselle\", S.midi, S.effort) / 60)} of washing-up a day. Optional, and you can change it under the result.`;"
+  ],
+  [
+   "barre.textContent = `Inviter ${autre}`; barreTxt.textContent = `Et selon ${autre} ?`;",
+   "barre.textContent = `Invite ${autre}`; barreTxt.textContent = `And according to ${autre}?`;"
   ]
  ]
 }
