@@ -272,6 +272,10 @@
     .recompo-qui { grid-column: 1 / -1; margin-top: .4rem; font-weight: 600; }
   }
   .recompo-tete { font-size: .8rem; color: var(--muted); }
+  .vue-recompo { margin: .2rem 0 1rem; }
+  .vue-seg { margin-bottom: .45rem; }
+  .vue-seg button { min-height: 44px; line-height: 1.2; }
+  .vue-note { margin: 0; font-size: .85rem; color: var(--muted); }
   .recompo-qui { font-size: .9rem; overflow: hidden; text-overflow: ellipsis; }
   .recompo-fixe { font-size: .9rem; color: var(--muted); padding-left: .2rem; }
   .recompo select { padding: .45rem .5rem; border: 1.5px solid var(--border); border-radius: 8px; background: var(--bg); font: inherit; font-size: .9rem; color: var(--ink); min-width: 0; width: 100%; }
@@ -1116,6 +1120,7 @@
       <nav class="sec-nav" id="sec-nav" aria-label="Result sections"><button type="button" data-vers="sec-resultat" aria-current="true">Result</button><button type="button" data-vers="parcat">Detail</button><button type="button" data-vers="sec-parler">Talk it over</button><button type="button" data-vers="comparer">Compare</button><button type="button" data-vers="affiner">Adjust</button></nav>
       <div class="res-tete">
       <h2 id="sec-resultat">Your split</h2>
+      <div class="vue-recompo" id="vueRecompo" hidden></div>
       <div class="cmp" id="cmp" hidden></div>
       <p class="verdict" id="verdict"></p>
       <div class="parts" id="parts"></div>
@@ -1537,7 +1542,7 @@
   function hm5(h) { const c = Math.round(h * 12) / 12; return (c === 0 && h > 0) ? "under 5 min" : hm(c); }   // familles de tâches : à 5 min près (22/10/2026)
   function nomA() { return S.nomA.trim() || "Name 1"; }
   function nomB() { return S.nomB.trim() || "Name 2"; }
-  function label(k) { return k === "a" ? nomA() : k === "b" ? nomB() : k === "both" ? "both" : "neither of us"; }
+  function label(k, t) { return k === "a" ? nomA() : k === "b" ? nomB() : k === "both" ? "both" : autreParent(t) ? "neither of us, or the other parent" : "neither of us"; }
   // Toutes les tâches posent « y pense », celles « de tête » (t.mental) comprises depuis le 26/09/2026 (décision interne) :
   // tant qu'on n'y touche pas, « y pense » suit « s'en occupe », donc les anciens liens se lisent pareil.
   function penseOf(st) { return st.pense === null ? st.fait : st.pense; }
@@ -1550,19 +1555,30 @@
   function poids(st) { const f = st.n * 365.25 / J[st.p]; return f >= 51.9 ? 3 : f >= 11.9 ? 2 : 1; }
   function parts(who, pa = 50) { return who === "a" || who === "b" ? [[who, 1]] : who === "both" ? [["a", pa / 100], ["b", 1 - pa / 100]] : []; }
 
-  function compute() {
+  // Familles recomposées (14/11/2026, idée de Marie) : deux vues du résultat. « Votre couple » (par défaut) ne garde des
+  // tâches des enfants que la part de vos enfants communs, au prorata de la présence des enfants ; sans enfant commun,
+  // aucune (c'est la lecture « hors tâches des enfants »). On suppose le même partage pour tous les enfants : le
+  // questionnaire ne demande pas les tâches enfant par enfant. « Avec les enfants de chacun » : le calcul complet.
+  // L'étude, l'export Excel et l'avis gardent toujours le calcul complet ({ tous: true }).
+  let vueRecompo = "couple";
+  function enfantsDeChacun() { const rc = S.recompo; return !!rc && rc.aN + rc.bN > 0; }
+  function partCommuns() { const rc = S.recompo; return rc.cN > 0 ? rc.cN / (rc.cN + rc.aN / rc.aP + rc.bN / rc.bP) : 0; }
+  function vueCouple(opts) { return !(opts && opts.tous) && S.ecran === 3 && enfantsDeChacun() && vueRecompo === "couple"; }
+  function compute(opts) {
+    const vc = vueCouple(opts), fC = vc ? partCommuns() : 1;
     const r = { a: { h: 0, nFait: 0, nPense: 0, m: 0 }, b: { h: 0, nFait: 0, nPense: 0, m: 0 }, cats: {}, renseignees: 0, total: 0,
       hors: { a: { h: 0, nPense: 0, m: 0 }, b: { h: 0, nPense: 0, m: 0 } } };   // hors tâches des enfants (famille recomposée, 10/11/2026)
     for (const t of allTasks()) {
       r.total++;
       const st = S.t[t.id]; if (!st || st.fait === null) continue;
       r.renseignees++;
-      const h = hj(st, t.id);
+      const enf = FAMILLES_ENFANTS.has(t.cat), f = enf && vc ? fC : 1;
+      if (f === 0) continue;
+      const h = hj(st, t.id) * f;
       const cat = r.cats[t.cat] || (r.cats[t.cat] = { nom: t.catNom, a: 0, b: 0, both: 0 });
       if (st.fait === "both") cat.both += h; else if (st.fait === "a" || st.fait === "b") cat[st.fait] += h;
-      const enf = FAMILLES_ENFANTS.has(t.cat);
       for (const [who, k] of parts(st.fait, partA(st, "fait"))) { r[who].h += h * k; r[who].nFait += k; if (!enf) r.hors[who].h += h * k; }
-      const m = poids(st);
+      const m = poids(st) * f;
       for (const [who, k] of parts(penseOf(st, t), partA(st, "pense"))) { r[who].nPense += k; r[who].m += k * m; if (!enf) { r.hors[who].nPense += k; r.hors[who].m += k * m; } }
     }
     return r;
@@ -1743,7 +1759,7 @@
     const hs = champHeures(t, st); if (hs) el.querySelector(".txt").appendChild(hs);
     for (const k of WHO) {
       const c = document.createElement("button"); c.type = "button"; c.className = "case" + (st.fait === k ? " on-" + k : "");
-      c.textContent = st.fait === k ? "✓" : glyphe(k); c.classList.add("g-" + k); c.setAttribute("aria-label", label(k)); c.title = label(k);
+      c.textContent = st.fait === k ? "✓" : glyphe(k); c.classList.add("g-" + k); c.setAttribute("aria-label", label(k, t)); c.title = label(k, t);
       c.addEventListener("click", () => { st.fait = k; st.pense = null; el.replaceWith(renderTask(t)); update(); });
       el.appendChild(c);
     }
@@ -1754,7 +1770,7 @@
       const c = document.createElement("button"); c.type = "button";
       if (!actif) { c.className = "case inactive"; c.disabled = true; }
       else c.className = "case" + (cur === k ? " on-" + k + (st.pense === null ? " suit" : "") : "");
-      c.textContent = cur === k ? "✓" : glyphe(k); c.classList.add("g-" + k); c.setAttribute("aria-label", "thinks of it: " + label(k)); c.title = "thinks of it: " + label(k);
+      c.textContent = cur === k ? "✓" : glyphe(k); c.classList.add("g-" + k); c.setAttribute("aria-label", "thinks of it: " + label(k, t)); c.title = "thinks of it: " + label(k, t);
       if (actif) c.addEventListener("click", () => { st.pense = (k === st.fait) ? null : k; el.replaceWith(renderTask(t)); update(); });
       el.appendChild(c);
     }
@@ -1771,10 +1787,12 @@
     m.querySelectorAll("button").forEach(b => b.addEventListener("click", () => { PAP.mode = b.dataset.m; renderCatalogue(); update(); }));
     return m;
   }
-  function choixPap(sel, suit, onPick) {
+  // Tâches des enfants d'une famille recomposée (14/11/2026) : « pas nous » couvre aussi l'autre parent de l'enfant.
+  const autreParent = t => !!t && enfantsDeChacun() && FAMILLES_ENFANTS.has(t.cat || FAMILLE_DE[t.id] || (S.custom.find(c => c.id === t.id) || {}).cat);
+  function choixPap(sel, suit, onPick, t) {
     const d = document.createElement("div"); d.className = "pap-choix";
     const [ia, ib] = reperes();
-    const rep = { a: [ia, nomA()], b: [ib, nomB()], both: ["3", "Both"], other: ["4", "Neither of us"] };
+    const rep = { a: [ia, nomA()], b: [ib, nomB()], both: ["3", "Both"], other: ["4", autreParent(t) ? "Neither of us, or the other parent" : "Neither of us"] };
     WHO.forEach((k, j) => {
       const b = document.createElement("button"); b.type = "button"; b.className = "k-" + k + (sel === k ? " on" + (suit ? " suit" : "") : "");
       b.innerHTML = `<span class="touche">${j + 1}</span><span>${rep[k][1]}</span>`;
@@ -1825,7 +1843,7 @@
       ${S.cmp && S.cmp.etat === "e" ? avantEnsemble(t) : ""}
       <p class="pap-q">Who does it?</p>`;
     const hs = champHeures(t, st); if (hs) carte.insertBefore(hs, carte.querySelector(".pap-q"));
-    carte.appendChild(choixPap(st.fait, false, k => { st.fait = k; st.pense = null; renderCatalogue(); update(); }));
+    carte.appendChild(choixPap(st.fait, false, k => { st.fait = k; st.pense = null; renderCatalogue(); update(); }, t));
     if (st.fait) {
       const q = document.createElement("p"); q.className = "pap-q";
       q.innerHTML = `And who thinks of it?<small>Noticing it needs doing, planning ahead, reminding. By default, the same person.</small>`;
@@ -1833,7 +1851,7 @@
       carte.appendChild(choixPap(penseOf(st), st.pense === null, k => {
         st.pense = (k === st.fait) ? null : k; update();
         if (reglette(t, st)) renderCatalogue(); else setTimeout(avance, 180);
-      }));
+      }, t));
       const r = reglette(t, st); if (r) carte.appendChild(r);
     }
     const nav = document.createElement("div"); nav.className = "pap-nav";
@@ -2008,7 +2026,27 @@
       ? `paid work at 0h, <a href="#pro" class="a-indiquer-lien">to fill in</a>` : `including ${pro}h of paid work`}</small></td>`;
     return `<td class="lbl">Including paid work</td>${cel(Math.round(quart(r.a.h) * 7), pr.a, pr.zeroA)}${cel(Math.round(quart(r.b.h) * 7), pr.b, pr.zeroB)}`;
   }
+  function renderVueRecompo() {
+    const box = document.getElementById("vueRecompo"); if (!box) return;
+    if (!enfantsDeChacun()) { box.hidden = true; return; }
+    const rc = S.recompo, plusieurs = rc.aN + rc.bN > 1;
+    const de = rc.aN && rc.bN ? "each of your children" : `${rc.aN ? nomA() : nomB()}'s ${plusieurs ? "children" : "child"}`;
+    const leur = plusieurs || (rc.aN && rc.bN) ? "Their other parent" : "Their other parent";
+    const choix = rc.aN && rc.bN ? "Each of you doing more for your own children may well be a choice"
+      : `${rc.aN ? nomA() : nomB()} doing more for their own children may well be a choice`;
+    const note = vueRecompo === "tous"
+      ? `The result also counts ${de}, in proportion to the time spent with you. ${leur} also carries part of what concerns them, in their other home: this result only measures what happens in yours. ${choix}: the result shows it, it does not judge it.`
+      : rc.cN ? `The result counts the home, the two of you and the share of children's tasks that goes to your children together, assuming the same split for all the children.`
+      : `The result counts the home and the two of you, without the tasks for ${de}.`;
+    box.hidden = false;
+    box.innerHTML = `<div class="choix-mini vue-seg" role="group" aria-label="What the result counts"><button type="button" value="couple" aria-pressed="${vueRecompo === "couple"}">${rc.cN ? "The two of you and your children together" : "The two of you"}</button><button type="button" value="tous" aria-pressed="${vueRecompo === "tous"}">With ${de}</button></div><p class="vue-note">${note}</p>`;
+    box.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+      if (vueRecompo === b.value) return; vueRecompo = b.value; update();
+      if (window.__ga) gtag("event", "vue_recompo", { vue: vueRecompo });
+    }));
+  }
   function renderResults(r) {
+    renderVueRecompo();
     const cartes = document.getElementById("cartes");
     const n0 = v => fmt(v, v % 1 ? 1 : 0);
     cartes.innerHTML = `<tr><th></th><th class="a">${nomA()}</th><th class="b">${nomB()}</th></tr>
@@ -2054,17 +2092,6 @@
         const who = (qa > pa) ? nomA() : nomB();
         txt += ` The gap between doing and thinking of it is clear: ${who} thinks of far more things than the time shows. That is where the mental load sits.`;
       }
-    }
-    // Famille recomposée sans enfant commun (10/11/2026) : la même lecture hors tâches des enfants, et ce que l'on fait
-    // pour ses propres enfants peut être un choix. Le site montre, il ne juge pas.
-    const rc = S.recompo, hH = r.hors.a.h + r.hors.b.h, hP = r.hors.a.m + r.hors.b.m;
-    if (rc && !rc.cN && rc.aN + rc.bN > 0 && hH > 0 && hP > 0) {
-      const ha = Math.round(100 * r.hors.a.h / hH), hq = Math.round(100 * r.hors.a.m / hP);
-      const g = ha >= 50 ? [nomA(), ha] : [nomB(), 100 - ha], q = hq >= 50 ? [nomA(), hq] : [nomB(), 100 - hq];
-      txt += g[0] === q[0] ? ` Leaving out children's tasks, ${g[0]} carries ${g[1]}% of the time and ${q[1]}% of the household's mental load.`
-        : ` Leaving out children's tasks, ${g[0]} carries ${g[1]}% of the time, ${q[0]} ${q[1]}% of the household's mental load.`;
-      txt += rc.aN && rc.bN ? " Each of you doing more for your own children may well be a choice: the result shows it, it does not judge it."
-        : ` ${rc.aN ? nomA() : nomB()} doing more for their own children may well be a choice: the result shows it, it does not judge it.`;
     }
     txt += " A starting point for a conversation.";
     L.textContent = txt;
@@ -2311,7 +2338,7 @@
     // Une famille par <tbody>, repliée par défaut pour garder la page courte (demande du 26/09/2026) ;
     // l'en-tête de famille donne le nombre de tâches et le temps par jour, et se déplie au clic.
     let html = `<thead><tr class="entete-aff"><th>Task</th><th class="cache">Who does it</th><th class="cache">Who thinks of it</th><th>done</th><th>per</th><th>for</th><th class="hj">= per day</th></tr></thead>`;
-    const choix = (v, k, cls, id) => `<select class="qui v-${v} ${cls}" data-k="${k}"${id ? ` id="${id}"` : ""} aria-label="${k === "fait" ? "Who does it" : "Who thinks of it"}">${WHO.map(w => `<option value="${w}" ${w === v ? "selected" : ""}>${label(w)}</option>`).join("")}</select>`;
+    const choix = (v, k, cls, id, t) => `<select class="qui v-${v} ${cls}" data-k="${k}"${id ? ` id="${id}"` : ""} aria-label="${k === "fait" ? "Who does it" : "Who thinks of it"}">${WHO.map(w => `<option value="${w}" ${w === v ? "selected" : ""}>${label(w, t)}</option>`).join("")}</select>`;
     for (const cat of visibleCats()) {
       const rows = visibleTasks(cat).filter(t => S.t[t.id].fait);
       if (!rows.length) continue;
@@ -2319,11 +2346,11 @@
       html += `<tbody data-cat="${cat.id}"${ouverte ? "" : ' class="ferme"'}><tr class="cat"><td colspan="7"><button type="button" class="cat-btn" aria-expanded="${ouverte}"><span class="chev" aria-hidden="true"></span><span class="cat-nom">${cat.nom}</span><span class="cat-tot"></span></button></td></tr>`;
       for (const t of rows) {
         const st = S.t[t.id], pv = penseOf(st, t);
-        const pMob = `<label>thinks of it ${choix(pv, "pense", "")}</label>`, pCell = choix(pv, "pense", "");
+        const pMob = `<label>thinks of it ${choix(pv, "pense", "", "", t)}</label>`, pCell = choix(pv, "pense", "", "", t);
         // Sur mobile, les deux colonnes sont masquées : les mêmes choix passent sur une ligne pleine largeur sous la tâche.
-        const mob = `<tr class="qui-ligne" data-ligne="${t.id}"><td colspan="7"><span class="qui-mobile"><label>does it ${choix(st.fait, "fait", "")}</label>${pMob}</span></td></tr>`;
+        const mob = `<tr class="qui-ligne" data-ligne="${t.id}"><td colspan="7"><span class="qui-mobile"><label>does it ${choix(st.fait, "fait", "", "", t)}</label>${pMob}</span></td></tr>`;
         html += `<tr data-id="${t.id}" class="tache-l${st.fait === "other" ? " pas-nous" : ""}"><td title="${(t.aide || "").replace(/"/g, "&quot;")}"><span class="nom">${t.nom}</span>${t.aide ? ` <button type="button" class="info" aria-expanded="false" aria-label="What the task covers">i</button><span class="aide">${t.aide}</span>` : ""}</td>
-          <td class="cache qui-cell">${choix(st.fait, "fait", "")}</td>
+          <td class="cache qui-cell">${choix(st.fait, "fait", "", "", t)}</td>
           <td class="cache qui-cell">${pCell}</td>
           <td class="avec-unite"><span class="pre">done</span><input type="number" min="0" step="1" value="${st.n}" data-k="n" aria-label="Number of times"><span class="unite">times</span></td>
           <td class="avec-unite"><span class="pre">per</span><select data-k="p" aria-label="Period">${Object.keys(J).map(p => `<option value="${p}" ${p === st.p ? "selected" : ""}>${["day", "week", "month", "year"][PER.indexOf(p)]}</option>`).join("")}</select></td>
@@ -2407,7 +2434,7 @@
   async function exportXlsx() {
     garde = true;
     if (window.__ga) gtag("event", "export_excel");
-    const r = compute();
+    const r = compute({ tous: true });
     const res = [["Who thinks of it? Who does what at home, taking stock of the mental load", "", ""], [],
       ["", nomA(), nomB()],
       ["Hours a day spent doing", +r.a.h.toFixed(2), +r.b.h.toFixed(2)],
@@ -2718,7 +2745,7 @@
       // Suivi médical coché (09/11/2026) : donnée de santé, l'étude reçoit la tâche à sa durée par défaut, sans la case.
       const st = S.t["sante-enfants"], maj = S.suivi && st && st.n === SANTE_MAJ.n && st.p === SANTE_MAJ.p && st.d === SANTE_MAJ.d, sauve = maj && { n: st.n, p: st.p, d: st.d };
       if (maj) Object.assign(st, santeDefaut());
-      const r = compute(), champs = encode().split("~");   // 5 = réponses, 6 = réglages ; les prénoms (1 et 2) ne sont pas repris
+      const r = compute({ tous: true }), champs = encode().split("~");   // 5 = réponses, 6 = réglages ; les prénoms (1 et 2) ne sont pas repris
       if (maj) Object.assign(st, sauve);
       const pct = (x, y) => (x + y) ? String(Math.round(100 * x / (x + y))) : "";
       const data = new URLSearchParams({
@@ -3053,7 +3080,7 @@
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) fermer(); });
     form.addEventListener("submit", async e => {
       e.preventDefault();
-      const r = compute();
+      const r = compute({ tous: true });
       const jeton = (form.querySelector('[name="cf-turnstile-response"]') || {}).value || "";
       if (!jeton) { ok.textContent = "One moment, the bot check is not finished yet."; return; }
       const data = new URLSearchParams({

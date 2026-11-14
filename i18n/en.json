@@ -885,8 +885,8 @@
    "\"Name 2\""
   ],
   [
-   "k === \"both\" ? \"les deux\" : \"pas nous\"; }",
-   "k === \"both\" ? \"both\" : \"neither of us\"; }"
+   "k === \"both\" ? \"les deux\" : autreParent(t) ? \"pas nous ou l'autre parent\" : \"pas nous\"; }",
+   "k === \"both\" ? \"both\" : autreParent(t) ? \"neither of us, or the other parent\" : \"neither of us\"; }"
   ],
   [
    "\\u00a0%",
@@ -933,8 +933,8 @@
    "`${ng} ${v}%, ${nd} ${100 - v}%`"
   ],
   [
-   "\"y pense : \" + label(k)",
-   "\"thinks of it: \" + label(k)"
+   "\"y pense : \" + label(k, t)",
+   "\"thinks of it: \" + label(k, t)"
   ],
   [
    "`<td><strong>${maison + pro} h</strong><small>par semaine, ${zero",
@@ -987,22 +987,6 @@
   [
    "` L'écart entre faire et y penser est net : ${who} pense à bien plus de choses que le temps ne le montre. C'est là que se loge la charge mentale.`",
    "` The gap between doing and thinking of it is clear: ${who} thinks of far more things than the time shows. That is where the mental load sits.`"
-  ],
-  [
-   "` Hors tâches des enfants, ${g[0]} porte ${g[1]} % du temps et ${q[1]} % de la charge mentale de la maison.`",
-   "` Leaving out children's tasks, ${g[0]} carries ${g[1]}% of the time and ${q[1]}% of the household's mental load.`"
-  ],
-  [
-   "` Hors tâches des enfants, ${g[0]} porte ${g[1]} % du temps, ${q[0]} ${q[1]} % de la charge mentale de la maison.`",
-   "` Leaving out children's tasks, ${g[0]} carries ${g[1]}% of the time, ${q[0]} ${q[1]}% of the household's mental load.`"
-  ],
-  [
-   "\" Que chacun s'occupe davantage de ses propres enfants peut être un choix : le résultat le montre, il ne le juge pas.\"",
-   "\" Each of you doing more for your own children may well be a choice: the result shows it, it does not judge it.\""
-  ],
-  [
-   "` ${(n => (/^[aeiouyhàâäéèêëîïôöûüù]/i.test(n) ? \"Qu'\" : \"Que \") + n)(rc.aN ? nomA() : nomB())} s'occupe davantage de ses enfants peut être un choix : le résultat le montre, il ne le juge pas.`",
-   "` ${rc.aN ? nomA() : nomB()} doing more for their own children may well be a choice: the result shows it, it does not judge it.`"
   ],
   [
    "\" Un point de départ pour en parler.\"",
@@ -1213,12 +1197,12 @@
    "aria-label=\"${k === \"fait\" ? \"Who does it\" : \"Who thinks of it\"}\""
   ],
   [
-   "<label>y pense ${choix(pv, \"pense\", \"\")}</label>",
-   "<label>thinks of it ${choix(pv, \"pense\", \"\")}</label>"
+   "<label>y pense ${choix(pv, \"pense\", \"\", \"\", t)}</label>",
+   "<label>thinks of it ${choix(pv, \"pense\", \"\", \"\", t)}</label>"
   ],
   [
-   "<label>s'en occupe ${choix(st.fait, \"fait\", \"\")}</label>",
-   "<label>does it ${choix(st.fait, \"fait\", \"\")}</label>"
+   "<label>s'en occupe ${choix(st.fait, \"fait\", \"\", \"\", t)}</label>",
+   "<label>does it ${choix(st.fait, \"fait\", \"\", \"\", t)}</label>"
   ],
   [
    "aria-label=\"Ce que recouvre la tâche\">i</button>",
@@ -1597,8 +1581,8 @@
    "aria-pressed=\"${PAP.mode === \"un\"}\">One task at a time</button><button type=\"button\" data-m=\"liste\" aria-pressed=\"${PAP.mode === \"liste\"}\">Whole list</button>"
   ],
   [
-   "both: [\"3\", \"Les deux\"], other: [\"4\", \"Pas nous\"] };",
-   "both: [\"3\", \"Both\"], other: [\"4\", \"Neither of us\"] };"
+   "both: [\"3\", \"Les deux\"], other: [\"4\", autreParent(t) ? \"Pas nous ou l'autre parent\" : \"Pas nous\"] };",
+   "both: [\"3\", \"Both\"], other: [\"4\", autreParent(t) ? \"Neither of us, or the other parent\" : \"Neither of us\"] };"
   ],
   [
    "<span>C'est fini</span>",
@@ -1799,6 +1783,10 @@
   [
    "barre.textContent = `Inviter ${autre}`; barreTxt.textContent = `Et selon ${autre} ?`;",
    "barre.textContent = `Invite ${autre}`; barreTxt.textContent = `And according to ${autre}?`;"
+  ],
+  [
+   "  function renderVueRecompo() {\n    const box = document.getElementById(\"vueRecompo\"); if (!box) return;\n    if (!enfantsDeChacun()) { box.hidden = true; return; }\n    const rc = S.recompo, plusieurs = rc.aN + rc.bN > 1;\n    const de = rc.aN && rc.bN ? \"les enfants de chacun\" : `${plusieurs ? \"les enfants\" : \"l'enfant\"} de ${rc.aN ? nomA() : nomB()}`;\n    const leur = plusieurs || (rc.aN && rc.bN) ? \"Leur autre parent porte\" : \"Son autre parent porte\";\n    const choix = rc.aN && rc.bN ? \"Que chacun s'occupe davantage de ses propres enfants peut être un choix\"\n      : `${(n => (/^[aeiouyhàâäéèêëîïôöûüù]/i.test(n) ? \"Qu'\" : \"Que \") + n)(rc.aN ? nomA() : nomB())} s'occupe davantage de ses enfants peut être un choix`;\n    const note = vueRecompo === \"tous\"\n      ? `Le résultat compte aussi ${de}, au prorata du temps passé chez vous. ${leur} aussi une part de ce qui ${plusieurs || (rc.aN && rc.bN) ? \"les\" : \"le\"} concerne, dans son autre foyer&nbsp;: ce résultat ne mesure que ce qui se passe chez vous. ${choix}&nbsp;: le résultat le montre, il ne le juge pas.`\n      : rc.cN ? `Le résultat compte la maison, votre couple et la part des tâches des enfants qui revient à vos enfants communs, avec le même partage supposé pour tous les enfants.`\n      : `Le résultat compte la maison et votre couple, sans les tâches ${de.startsWith(\"les \") ? \"des \" + de.slice(4) : \"de \" + de}.`;\n    box.hidden = false;\n    box.innerHTML = `<div class=\"choix-mini vue-seg\" role=\"group\" aria-label=\"Ce que compte le résultat\"><button type=\"button\" value=\"couple\" aria-pressed=\"${vueRecompo === \"couple\"}\">${rc.cN ? \"Votre couple et vos enfants communs\" : \"Votre couple\"}</button><button type=\"button\" value=\"tous\" aria-pressed=\"${vueRecompo === \"tous\"}\">Avec ${de}</button></div><p class=\"vue-note\">${note}</p>`;\n    box.querySelectorAll(\"button\").forEach(b => b.addEventListener(\"click\", () => {\n      if (vueRecompo === b.value) return; vueRecompo = b.value; update();\n      if (window.__ga) gtag(\"event\", \"vue_recompo\", { vue: vueRecompo });\n    }));\n  }\n",
+   "  function renderVueRecompo() {\n    const box = document.getElementById(\"vueRecompo\"); if (!box) return;\n    if (!enfantsDeChacun()) { box.hidden = true; return; }\n    const rc = S.recompo, plusieurs = rc.aN + rc.bN > 1;\n    const de = rc.aN && rc.bN ? \"each of your children\" : `${rc.aN ? nomA() : nomB()}'s ${plusieurs ? \"children\" : \"child\"}`;\n    const leur = plusieurs || (rc.aN && rc.bN) ? \"Their other parent\" : \"Their other parent\";\n    const choix = rc.aN && rc.bN ? \"Each of you doing more for your own children may well be a choice\"\n      : `${rc.aN ? nomA() : nomB()} doing more for their own children may well be a choice`;\n    const note = vueRecompo === \"tous\"\n      ? `The result also counts ${de}, in proportion to the time spent with you. ${leur} also carries part of what concerns them, in their other home: this result only measures what happens in yours. ${choix}: the result shows it, it does not judge it.`\n      : rc.cN ? `The result counts the home, the two of you and the share of children's tasks that goes to your children together, assuming the same split for all the children.`\n      : `The result counts the home and the two of you, without the tasks for ${de}.`;\n    box.hidden = false;\n    box.innerHTML = `<div class=\"choix-mini vue-seg\" role=\"group\" aria-label=\"What the result counts\"><button type=\"button\" value=\"couple\" aria-pressed=\"${vueRecompo === \"couple\"}\">${rc.cN ? \"The two of you and your children together\" : \"The two of you\"}</button><button type=\"button\" value=\"tous\" aria-pressed=\"${vueRecompo === \"tous\"}\">With ${de}</button></div><p class=\"vue-note\">${note}</p>`;\n    box.querySelectorAll(\"button\").forEach(b => b.addEventListener(\"click\", () => {\n      if (vueRecompo === b.value) return; vueRecompo = b.value; update();\n      if (window.__ga) gtag(\"event\", \"vue_recompo\", { vue: vueRecompo });\n    }));\n  }\n"
   ]
  ]
 }
