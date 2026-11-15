@@ -1361,12 +1361,12 @@
    "dept: [[\"\", \"Not specified\"], [\"gb\", \"United Kingdom\"], [\"fr\", \"France\"],"
   ],
   [
-   "[\"dz\", \"Algérie\"], [\"be\", \"Belgique\"], [\"cm\", \"Cameroun\"], [\"ca\", \"Canada\"], [\"ci\", \"Côte d'Ivoire\"], [\"lb\", \"Liban\"], [\"lu\", \"Luxembourg\"],",
-   "[\"dz\", \"Algeria\"], [\"be\", \"Belgium\"], [\"cm\", \"Cameroon\"], [\"ca\", \"Canada\"], [\"ci\", \"Ivory Coast\"], [\"lb\", \"Lebanon\"], [\"lu\", \"Luxembourg\"],"
+   "[\"dz\", \"Algérie\"], [\"de\", \"Allemagne\"], [\"au\", \"Australie\"], [\"be\", \"Belgique\"], [\"cm\", \"Cameroun\"], [\"ca\", \"Canada\"], [\"ci\", \"Côte d'Ivoire\"], [\"es\", \"Espagne\"], [\"us\", \"États-Unis\"], [\"ie\", \"Irlande\"], [\"it\", \"Italie\"], [\"lb\", \"Liban\"], [\"lu\", \"Luxembourg\"],",
+   "[\"dz\", \"Algeria\"], [\"au\", \"Australia\"], [\"be\", \"Belgium\"], [\"cm\", \"Cameroon\"], [\"ca\", \"Canada\"], [\"de\", \"Germany\"], [\"ie\", \"Ireland\"], [\"it\", \"Italy\"], [\"ci\", \"Ivory Coast\"], [\"lb\", \"Lebanon\"], [\"lu\", \"Luxembourg\"],"
   ],
   [
-   "[\"ma\", \"Maroc\"], [\"mc\", \"Monaco\"], [\"gb\", \"Royaume-Uni\"], [\"sn\", \"Sénégal\"], [\"ch\", \"Suisse\"], [\"tn\", \"Tunisie\"], [\"etranger\", \"Autre pays\"]],",
-   "[\"mc\", \"Monaco\"], [\"ma\", \"Morocco\"], [\"sn\", \"Senegal\"], [\"ch\", \"Switzerland\"], [\"tn\", \"Tunisia\"], [\"etranger\", \"Other country\"]],"
+   "[\"ma\", \"Maroc\"], [\"mc\", \"Monaco\"], [\"nz\", \"Nouvelle-Zélande\"], [\"nl\", \"Pays-Bas\"], [\"pt\", \"Portugal\"], [\"gb\", \"Royaume-Uni\"], [\"sn\", \"Sénégal\"], [\"ch\", \"Suisse\"], [\"tn\", \"Tunisie\"], [\"etranger\", \"Autre pays\"]],",
+   "[\"mc\", \"Monaco\"], [\"ma\", \"Morocco\"], [\"nl\", \"Netherlands\"], [\"nz\", \"New Zealand\"], [\"pt\", \"Portugal\"], [\"sn\", \"Senegal\"], [\"es\", \"Spain\"], [\"ch\", \"Switzerland\"], [\"tn\", \"Tunisia\"], [\"us\", \"United States\"], [\"etranger\", \"Other country\"]],"
   ],
   [
    "\"La vérification anti-robot n'a pas pu se charger. Votre résultat s'affiche quand même, sans être ajouté à l'étude.\"",
