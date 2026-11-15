@@ -157,6 +157,7 @@
   @media (min-width: 700px) { header.hero h1 { white-space: nowrap; } }   /* une ligne sur ordinateur ; libre sur petit écran (titre anglais plus long) */
   header.hero p.lead { font-family: var(--serif); font-size: 1.45rem; line-height: 1.3; margin: .9rem 0 0; font-variation-settings: "opsz" 40; }
   header.hero .sur { font-family: var(--serif); font-size: 1.35rem; color: var(--muted); margin: 0 0 .4rem; font-variation-settings: "opsz" 40; }
+  header.hero h1 .sur { display: block; font-weight: 400; line-height: 1.3; letter-spacing: 0; white-space: normal; }   /* sous-titre dans le H1 pour le référencement (15/11/2026), même rendu qu'avant */
   header.hero .preuve { margin: .7rem 0 0; color: var(--muted); }
   header.hero .cta { margin: 1.4rem 0 0; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
   .vu-mc { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: .85rem; text-decoration: none; opacity: .75; }
@@ -908,7 +909,7 @@
   <header class="haut" id="haut">
     <a class="marque" href="./">Qui y pense&nbsp;?</a>
     <button type="button" class="burger" aria-expanded="false" aria-controls="menu"><span class="sr">Menu</span><i aria-hidden="true"></i></button>
-    <nav class="menu" id="menu" aria-label="Site"><a href="blog/">Ressources</a><a href="methode/">Méthode</a><div class="sous"><button type="button" class="sous-btn" aria-expanded="false" aria-controls="menu-sous">À propos</button><div class="sous-liste" id="menu-sous"><a href="presse/">Presse</a><a href="partenaires/">Partenaires</a><a href="charte/">Charte</a><a href="soutenir/?utm_source=quiypense&amp;utm_medium=menu&amp;utm_campaign=soutenir" data-soutenir="menu">Soutenir</a></div></div><a class="btn petit" href="#nomA" id="menu-go">Faire le point</a></nav>
+    <nav class="menu" id="menu" aria-label="Site"><a href="blog/">Ressources</a><a href="methode/">Méthode</a><div class="sous"><button type="button" class="sous-btn" aria-expanded="false" aria-controls="menu-sous">À propos</button><div class="sous-liste" id="menu-sous"><a href="presse/">Presse</a><a href="partenaires/">Partenaires</a><a href="charte/">Charte</a><a href="soutenir/" data-lien="soutenir-menu" data-soutenir="menu">Soutenir</a></div></div><a class="btn petit" href="#nomA" id="menu-go">Faire le point</a></nav>
   </header>
   <nav class="fil" id="fil" aria-label="Étapes"><span data-n="1">Vous</span><span data-n="2">Qui y pense</span><span data-n="3">Le résultat</span></nav>
 
@@ -916,8 +917,7 @@
   <div class="ecran" id="e1">
     <header class="hero">
       <div class="hero-txt">
-        <p class="sur">Qui fait quoi à la maison ?</p>
-        <h1>Qui y pense&nbsp;?</h1>
+        <h1><span class="sur">Test de charge mentale du couple</span>Qui y pense&nbsp;?</h1>
         <p class="lead">Vous partagez les tâches. Et le fait d'y&nbsp;penser&nbsp;?</p>
         <p class="preuve">Plus de 24&nbsp;000 couples ont déjà fait le point. Dix minutes, gratuit, sans inscription.</p>
         <p class="cta"><a class="btn" href="#nomA" id="hero-go">Faire le point à deux</a><a class="vu-mc" href="https://www.marieclaire.fr/charge-mentale-couple-outil-calcul-temps-repartition-taches,1522721.asp" target="_blank" rel="noopener"><img src="img/presse/marie-claire.png" alt="" width="22" height="22">Vu dans Marie Claire<span class="sr"> (nouvel onglet)</span></a></p>
@@ -1051,6 +1051,7 @@
 
     <div class="pourquoi">
       <h2>Pourquoi faire l'exercice</h2>
+      <p>Qui y pense&nbsp;? est un test de charge mentale pour le couple. Le questionnaire passe en revue une cinquantaine de tâches du quotidien (repas, linge, courses, enfants, papiers, rendez-vous) et, pour chacune, pose deux questions&nbsp;: qui le fait, et qui y pense. Le calcul donne la répartition des tâches à la maison, en heures par jour pour chacun, et la part de charge mentale, c'est-à-dire tout ce qu'il faut garder en tête.</p>
       <p>La plupart des couples n'ont jamais listé ce qu'il y a à faire. Chacun voit ce qu'il fait, et une partie de ce que l'autre fait. Le reste est invisible : remarquer qu'il n'y a plus de lessive, savoir quand tombe le rendez-vous chez le dentiste, vérifier que le sac de piscine est prêt. Ce travail-là ne prend pas d'heures, il prend de la place dans la tête.</p>
       <p>Cette page ne juge rien. Elle met des chiffres à la place des impressions, pour que la conversation parte de quelque chose de concret. Chez nous, la première version a surtout révélé les tâches que personne ne voyait.</p>
     </div>
@@ -1148,7 +1149,7 @@
         <button class="btn" type="button" id="envoyer" aria-haspopup="dialog">Envoyer ce résultat à l'autre</button>
         <p class="small muted">Pour le lire ensemble : la personne qui ouvre le lien retrouve exactement ce résultat.</p>
       </div>
-<!-- en:retirer -->      <p class="parler"><strong>Avant d'en parler à deux.</strong> Une méthode en une soirée, testée chez nous et chez des amis : <a href="blog/parler-repartition-couple.html?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=parler" target="_blank" rel="noopener">comment parler du partage des tâches sans que ça finisse en dispute</a> (2 min de lecture).</p><!-- /en:retirer --><!-- en:parler -->
+<!-- en:retirer -->      <p class="parler"><strong>Avant d'en parler à deux.</strong> Une méthode en une soirée, testée chez nous et chez des amis : <a href="blog/parler-repartition-couple.html" data-lien="parler-resultat" target="_blank" rel="noopener">comment parler du partage des tâches sans que ça finisse en dispute</a> (2 min de lecture).</p><!-- /en:retirer --><!-- en:parler -->
       <div class="comparer" id="comparer" hidden></div>
       <section class="avis" id="avis" aria-labelledby="avis-titre">
         <h3 id="avis-titre">Votre avis</h3>
@@ -1170,7 +1171,7 @@
         <p class="muted">Qui y pense&nbsp;? est gratuit, sans inscription ni publicité, et fait sur du temps libre. Un café aide à le garder en ligne et à préparer la suite&nbsp;: refaire le point dans six mois, une sauvegarde en ligne.</p>
         <div class="soutien-actions">
           <a class="bmc" id="soutien-cafe" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="resultat"><span>Offrir un café (2&nbsp;€)</span></a>
-          <a href="soutenir/?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir">À quoi sert votre soutien</a>
+          <a href="soutenir/" data-lien="soutenir-resultat">À quoi sert votre soutien</a>
         </div>
       </section>
 
@@ -1178,7 +1179,7 @@
         <h2>Affinez le résultat</h2>
         <p class="muted">Tout se corrige ici, sans revenir à la liste : qui s'en occupe, qui y pense, et le temps. <a href="#sources-durees" class="src-btn" role="button" aria-expanded="false" aria-controls="sources-durees">Les valeurs proposées viennent d'enquêtes sur le temps domestique<span class="i" aria-hidden="true">i</span></a>. Pour chaque tâche : combien de fois par jour, semaine, mois ou an, et combien de minutes à chaque fois (pas au total). Le total par jour se recalcule tout seul. Exemple : les courses 2 fois par semaine, 90 minutes à chaque fois, font 26 minutes par jour.</p>
         <div class="bulle-info" id="sources-durees" hidden><p>De l'enquête Emploi du temps de l'INSEE (2010), qui mesure le temps domestique au carnet, et du jeu de cartes Fair Play (Eve Rodsky, 2019) pour les tâches que le carnet ne voit pas. Un couple avec enfants qui garde toutes les valeurs par défaut totalise environ 8 heures et demie par jour, dans la fourchette haute de ce que l'INSEE observe. La distinction « y penser » et « s'en occuper » vient des travaux d'Allison Daminger (2019) : anticiper et vérifier, c'est du travail, même quand quelqu'un d'autre exécute.</p></div>
-        <p class="avert-5050"><strong>Un mot avant de tout régler à la minute.</strong> Chercher l'équilibre exact ligne par ligne épuise les couples autant que le déséquilibre lui-même. Un écart n'est pas un problème tant qu'il est choisi, dit et réversible : <a href="blog/desequilibre-assume-couple.html?utm_source=quiypense&amp;utm_medium=compte&amp;utm_campaign=affiner" target="_blank" rel="noopener">un déséquilibre choisi n'est pas une injustice</a>.</p>
+        <p class="avert-5050"><strong>Un mot avant de tout régler à la minute.</strong> Chercher l'équilibre exact ligne par ligne épuise les couples autant que le déséquilibre lui-même. Un écart n'est pas un problème tant qu'il est choisi, dit et réversible : <a href="blog/desequilibre-assume-couple.html" data-lien="affiner-compte" target="_blank" rel="noopener">un déséquilibre choisi n'est pas une injustice</a>.</p>
         <table id="table-affiner"></table>
         <p><button class="btn secondary" id="back2">Revenir aux questions</button></p>
       </div>
@@ -1203,7 +1204,7 @@
   </div>
 
   <footer>
-    <div class="pied-cols"><div><p class="pied-titre">Le site</p><a href="methode/">Méthode</a><a href="blog/">Ressources</a><button type="button" id="pied-partager" aria-expanded="false" aria-controls="pied-partage"><svg aria-hidden="true"><use href="#i-partager"/></svg>Partager le site</button></div><div><p class="pied-titre">À propos</p><a href="presse/">Presse</a><a href="partenaires/">Partenaires</a><a href="charte/">Charte</a><a href="soutenir/?utm_source=quiypense&amp;utm_medium=pied&amp;utm_campaign=soutenir" data-soutenir="pied">Soutenir</a><a href="mailto:contact@quiypense.org">Contact</a></div><div><p class="pied-titre">Légal</p><a href="confidentialite/">Confidentialité</a><a href="conditions/">Conditions</a><a href="#" id="consent-lien">Cookies</a></div></div>
+    <div class="pied-cols"><div><p class="pied-titre">Le site</p><a href="methode/">Méthode</a><a href="blog/">Ressources</a><button type="button" id="pied-partager" aria-expanded="false" aria-controls="pied-partage"><svg aria-hidden="true"><use href="#i-partager"/></svg>Partager le site</button></div><div><p class="pied-titre">À propos</p><a href="presse/">Presse</a><a href="partenaires/">Partenaires</a><a href="charte/">Charte</a><a href="soutenir/" data-lien="soutenir-pied" data-soutenir="pied">Soutenir</a><a href="mailto:contact@quiypense.org">Contact</a></div><div><p class="pied-titre">Légal</p><a href="confidentialite/">Confidentialité</a><a href="conditions/">Conditions</a><a href="#" id="consent-lien">Cookies</a></div></div>
     <div class="rs rs-pied" id="pied-partage" data-partage="site" hidden></div>
     <p class="pied-bas">Qui y pense ? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, sans inscription ni publicité. Le lien de partage contient vos réponses, rien d'autre. Une question : <a href="mailto:contact@quiypense.org">contact@quiypense.org</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>. <a href="en/" hreflang="en-GB" lang="en-GB">English</a></p>
   </footer>
@@ -2600,6 +2601,8 @@
     const menu = o => { h.classList.toggle("ouvert", o); b.setAttribute("aria-expanded", String(o)); document.documentElement.classList.toggle("menu-ouvert", o); };
     const sous = o => { s.classList.toggle("ouvert", o); sb.setAttribute("aria-expanded", String(o)); };
     b.addEventListener("click", () => { const o = !h.classList.contains("ouvert"); menu(o); if (o && window.__ga) gtag("event", "menu_ouvert"); });
+    // Liens internes : un événement GA plutôt que des paramètres utm dans l'adresse (15/11/2026), qui créaient des doublons indexés.
+    document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-lien]"); if (a && window.__ga) gtag("event", "lien_interne", { origine: a.dataset.lien }); });
     sb.addEventListener("click", () => sous(!s.classList.contains("ouvert")));
     document.addEventListener("click", e => { if (!s.contains(e.target)) sous(false); if (!h.contains(e.target)) menu(false); });
     document.addEventListener("keydown", e => { if (e.key === "Escape") { if (h.classList.contains("ouvert")) b.focus(); menu(false); sous(false); } });
