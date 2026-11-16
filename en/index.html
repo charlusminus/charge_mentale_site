@@ -2645,9 +2645,10 @@
   /* ---------- partage ---------- */
   // Chaque canal porte son utm_source, et utm_medium=partage. Pas d'utm_campaign : ce lien part dans une
   // conversation, chaque paramètre de plus l'allonge et le rend louche. L'endroit d'où part le partage reste
-  // suivi dans l'événement GA, pas dans l'adresse.
+  // suivi dans l'événement GA, pas dans l'adresse. Le lien du résultat, envoyé à l'autre, porte utm_medium=envoi
+  // (16/11/2026) : l'étude garde le medium, pour savoir qui arrive par sa conjointe ou son conjoint.
   function lienPartage(compte, source) {
-    const q = `?utm_source=${source}&utm_medium=partage`;
+    const q = `?utm_source=${source}&utm_medium=${compte ? "envoi" : "partage"}`;
     return compte ? location.origin + location.pathname + q + location.hash : SITE + q;
   }
   function renderPartage() {
@@ -2764,7 +2765,8 @@
         ...profil(),   // âge, activité, département : facultatifs, saisis dans la modale (prototype du 09/11/2026)   // heures de travail payé par semaine, si indiquées avant le compte (13/10/2026)
         foyer: S.foyer || "",   // numéro de foyer tiré au hasard (30/10/2026) : la feuille n'en garde que l'empreinte
         ajouts: S.custom.map(c => c.nom).join(" | ").slice(0, 600),
-        page: location.origin + location.pathname, source: new URLSearchParams(location.search).get("utm_source") || ""
+        page: location.origin + location.pathname, source: new URLSearchParams(location.search).get("utm_source") || "",
+        medium: new URLSearchParams(location.search).get("utm_medium") || ""   // envoi, partage… (16/11/2026)
       });
       return data;
     }
