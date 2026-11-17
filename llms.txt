@@ -60,3 +60,5 @@ Outils : afficher_questionnaire (le questionnaire dans la conversation, pour les
 
 ## Contact
 - contact@quiypense.org
+- Instagram : https://www.instagram.com/quiypense/
+- Facebook : https://www.facebook.com/profile.php?id=61596506253068
