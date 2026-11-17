@@ -39,6 +39,7 @@ Outils : afficher_questionnaire (le questionnaire dans la conversation, pour les
 - [Blog](https://quiypense.org/blog/) : ce que disent les enquêtes, et comment en parler à deux
 
 ## Articles
+- [Liste des tâches de la maison : une cinquantaine de tâches, et ce qu'il faut y penser](https://quiypense.org/blog/liste-taches-maison.html)
 - [Travail payé et travail à la maison : compter les deux](https://quiypense.org/blog/travail-paye-et-maison.html)
 - [Elle remplit, il remplit : pourquoi les chiffres ne disent pas la même chose](https://quiypense.org/blog/elle-remplit-il-remplit.html)
 - [Famille recomposée : faire le point quand les enfants ne sont pas ceux du couple](https://quiypense.org/blog/famille-recomposee.html)
