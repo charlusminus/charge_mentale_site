@@ -1787,6 +1787,30 @@
   [
    "<p>Qui y pense&nbsp;? est un test de charge mentale pour le couple. Le questionnaire passe en revue une cinquantaine de tâches du quotidien (repas, linge, courses, enfants, papiers, rendez-vous) et, pour chacune, pose deux questions&nbsp;: qui le fait, et qui y pense. Le calcul donne la répartition des tâches à la maison, en heures par jour pour chacun, et la part de charge mentale, c'est-à-dire tout ce qu'il faut garder en tête.</p>",
    "<p>Who thinks of it? is a mental load test for couples. The questionnaire goes through around fifty everyday tasks (meals, laundry, shopping, children, paperwork, appointments) and asks two questions about each: who does it, and who thinks of it. The result shows how the household chores are shared, in hours a day for each of you, and each person's share of the mental load: everything that has to be kept in mind.</p>"
+  ],
+  [
+   "      \"description\": \"Projet indépendant, sans publicité ni vente de données, qui propose un test gratuit de la charge mentale et de la répartition des tâches dans le couple, et publie les résultats agrégés de son étude anonyme.\",",
+   "      \"description\": \"An independent project, with no ads and no sale of data, offering a free test of the mental load and the sharing of household tasks in a couple, and publishing the aggregated results of its anonymous study.\","
+  ],
+  [
+   "      \"knowsAbout\": [\"charge mentale\", \"répartition des tâches domestiques\", \"travail domestique\", \"égalité dans le couple\"]",
+   "      \"knowsAbout\": [\"mental load\", \"sharing of household tasks\", \"domestic work\", \"equality in couples\"]"
+  ],
+  [
+   "        { \"@type\": \"Question\", \"name\": \"Ce test de charge mentale est-il fiable ?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"C'est un point de départ pour en parler, pas un diagnostic ni une note. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE et se corrigent tâche par tâche ; la liste des tâches suit la nomenclature de l'INSEE et du jeu Fair Play. La méthode est détaillée sur la page Méthode.\" } },",
+   "        { \"@type\": \"Question\", \"name\": \"Is this mental load test reliable?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"It is a starting point for a conversation, not a diagnosis or a score. The default times come from the French national time-use survey (INSEE) and can be adjusted task by task; the task list follows the INSEE classification and the Fair Play card game. The method is set out on the Method page (in French).\" } },"
+  ],
+  [
+   "        { \"@type\": \"Question\", \"name\": \"Peut-on répondre chacun de son côté ?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Oui. La personne qui remplit en premier envoie un lien à l'autre, qui répond sans voir les premières réponses ; le résultat montre ensuite les deux regards côte à côte.\" } },",
+   "        { \"@type\": \"Question\", \"name\": \"Can we each answer separately?\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Yes. Whoever fills it in first sends a link to the other, who answers without seeing the first answers; the result then shows both views side by side.\" } },"
+  ],
+  [
+   "      <details><summary>Ce test de charge mentale est-il fiable&nbsp;?</summary><p>C'est un point de départ pour en parler, pas un diagnostic ni une note. Les durées par défaut viennent de l'enquête Emploi du temps de l'INSEE et se corrigent tâche par tâche&nbsp;; la liste des tâches suit la nomenclature de l'INSEE et du jeu Fair Play. La méthode est détaillée sur la <a href=\"/methode/\" data-lien=\"faq-methode\">page Méthode</a>.</p></details>",
+   "      <details><summary>Is this mental load test reliable?</summary><p>It is a starting point for a conversation, not a diagnosis or a score. The default times come from the French national time-use survey (INSEE) and can be adjusted task by task; the task list follows the INSEE classification and the Fair Play card game. The method is set out on the <a href=\"/methode/\" data-lien=\"faq-methode\">Method page (in French)</a>.</p></details>"
+  ],
+  [
+   "      <details><summary>Peut-on répondre chacun de son côté&nbsp;?</summary><p>Oui. La personne qui remplit en premier envoie un lien à l'autre, qui répond sans voir les premières réponses&nbsp;; le résultat montre ensuite les deux regards côte à côte.</p></details>",
+   "      <details><summary>Can we each answer separately?</summary><p>Yes. Whoever fills it in first sends a link to the other, who answers without seeing the first answers; the result then shows both views side by side.</p></details>"
   ]
  ]
 }

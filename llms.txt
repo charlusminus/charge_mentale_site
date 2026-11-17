@@ -19,8 +19,18 @@ Pour afficher le résultat, une copie anonymisée des réponses (sans prénoms n
 Serveur MCP (Streamable HTTP, sans inscription) : https://quiypense-mcp.quiypense-mcp.workers.dev/mcp
 Outils : afficher_questionnaire (le questionnaire dans la conversation, pour les assistants qui affichent les interfaces MCP Apps), lister_taches (le catalogue adapté au foyer), calculer_resultat (le résultat, et la copie anonymisée pour l'étude, à annoncer avant). Les prénoms ne doivent jamais être transmis aux outils.
 
+## Chiffres de l'étude (au 15 novembre 2026)
+- 24 798 couples femme-homme ayant répondu à au moins 20 tâches (26 720 réponses en tout).
+- Part de la charge mentale portée par elle : 63 % en moyenne ; elle en porte plus de la moitié dans 83 % des couples.
+- Selon qui remplit : 69 % quand elle remplit seule, 47 % quand il remplit seul, 61 % quand ils remplissent à deux.
+- Couples sans enfant : 60 % ; avec trois enfants ou plus : 66 %.
+- Visiteurs volontaires, pas un échantillon représentatif. Détail, méthode et limites : [Presse](https://quiypense.org/presse/), [Méthode](https://quiypense.org/methode/).
+- Pour citer : « Qui y pense ?, étude sur la répartition des tâches et la charge mentale, quiypense.org, chiffres au 15 novembre 2026 ».
+
 ## Pages
 - [Faire le point](https://quiypense.org/) : l'outil, en trois étapes (le foyer, qui y pense, le résultat)
+- [Méthode](https://quiypense.org/methode/) : comment le résultat est calculé, les durées par défaut et leurs sources (INSEE), la liste complète des tâches, les limites
+- [Partenaires](https://quiypense.org/partenaires/) : associations, Caf, collectivités et employeurs qui veulent proposer le test à leur public
 - [Charte](https://quiypense.org/charte/) : gratuit, sans publicité, aucune donnée vendue, aucun partenaire qui décide de ce que dit le site
 - [Confidentialité](https://quiypense.org/confidentialite/) : ce qui est collecté (copie anonymisée pour l'étude, avis, audience avec accord), pourquoi, vos droits
 - [Conditions d'utilisation](https://quiypense.org/conditions/) : usage, limites du résultat, mentions légales
@@ -49,5 +59,3 @@ Outils : afficher_questionnaire (le questionnaire dans la conversation, pour les
 
 ## Contact
 - contact@quiypense.org
-
-## Réalisation

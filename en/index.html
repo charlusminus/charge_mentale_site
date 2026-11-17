@@ -79,8 +79,20 @@
       "inLanguage": "en-GB",
       "isAccessibleForFree": true,
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
-      "author": { "@type": "Organization", "@id": "https://quiypense.org/#org", "name": "Who thinks of it?", "alternateName": "Who thinks of it?", "url": "https://quiypense.org/en/", "email": "contact@quiypense.org" },
+      "author": { "@id": "https://quiypense.org/#org" },
       "image": "https://quiypense.org/img/apercu-en-2026-11.png"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://quiypense.org/#org",
+      "name": "Who thinks of it?",
+      "alternateName": ["Who thinks of it?", "quiypense.org"],
+      "url": "https://quiypense.org/en/",
+      "email": "contact@quiypense.org",
+      "logo": { "@type": "ImageObject", "url": "https://quiypense.org/img/icon-512.png", "width": 512, "height": 512 },
+      "description": "An independent project, with no ads and no sale of data, offering a free test of the mental load and the sharing of household tasks in a couple, and publishing the aggregated results of its anonymous study.",
+      "foundingDate": "2026-09",
+      "knowsAbout": ["mental load", "sharing of household tasks", "domestic work", "equality in couples"]
     },
     {
       "@type": "FAQPage",
@@ -91,6 +103,8 @@
         { "@type": "Question", "name": "Where do the figures quoted come from?", "acceptedAnswer": { "@type": "Answer", "text": "In the UK, the Office for National Statistics (ONS): women did 60% more unpaid work than men in 2015, 26 hours a week against 16; in 2023, among employed adults aged 18 to 64, 2h 37m of unpaid household work a day for women, 2h 02m for men. Invisible Load Index 2024, 6,000 Europeans surveyed: 86% more time spent thinking about tasks than doing them. The default durations of the tasks come from the French time-use survey (INSEE, 2010), the most detailed task by task: an order of magnitude, to adjust to your household in Fine-tune the result." } },
         { "@type": "Question", "name": "Are my answers sent anywhere?", "acceptedAnswer": { "@type": "Answer", "text": "An anonymised copy, yes, and you are told before the result. Everything is calculated in your browser, with no sign-up: your answers are encoded in the page address, and the Excel file is generated on your computer. To show the result, the site keeps an anonymised copy for a study on how domestic work is shared: no names, no address, no email, no IP address. That is the trade-off for a free, ad-free tool." } },
         { "@type": "Question", "name": "How long does it take, and how many people?", "acceptedAnswer": { "@type": "Answer", "text": "About ten minutes, together. You enter two first names, in no particular order and with no roles, each person's gender, who is filling in, and the number of children. Tasks go from the most frequent to the rarest, with the house, outdoors and vehicles at the end of the list; durations can be fine-tuned afterwards, below the result." } },
+        { "@type": "Question", "name": "Is this mental load test reliable?", "acceptedAnswer": { "@type": "Answer", "text": "It is a starting point for a conversation, not a diagnosis or a score. The default times come from the French national time-use survey (INSEE) and can be adjusted task by task; the task list follows the INSEE classification and the Fair Play card game. The method is set out on the Method page (in French)." } },
+        { "@type": "Question", "name": "Can we each answer separately?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Whoever fills it in first sends a link to the other, who answers without seeing the first answers; the result then shows both views side by side." } },
         { "@type": "Question", "name": "Can you take stock from ChatGPT or Claude?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Who thinks of it? also exists as an MCP server, in English and French, which you add as a connector in an assistant (Claude, ChatGPT, VS Code…) with the address https://quiypense-mcp.quiypense-mcp.workers.dev/mcp. The assistant shows the questionnaire in the conversation (or asks the same questions as the site) and gives the same result; first names stay in the conversation and are never passed on. The anonymised copy for the study is announced before the result, as here." } }
       ]
     }
@@ -1071,6 +1085,8 @@
       <details><summary>Where do the figures quoted come from?</summary><p>In the UK, the Office for National Statistics (<a href="https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/articles/womenshouldertheresponsibilityofunpaidwork/2016-11-10" target="_blank" rel="noopener">ONS</a>): women did 60% more unpaid work than men in 2015, 26 hours a week against 16; in 2023, among employed adults aged 18 to 64, 2h 37m of unpaid household work a day for women, 2h 02m for men. Invisible Load Index 2024, 6,000 Europeans surveyed: 86% more time spent thinking about tasks than doing them. The default durations of the tasks come from the French time-use survey (INSEE, 2010), the most detailed task by task: an order of magnitude, to adjust to your household in Fine-tune the result.</p></details>
       <details><summary>Are my answers sent anywhere?</summary><p>An anonymised copy, yes, and you are told before the result. Everything is calculated in your browser and there is no sign-up: your answers are encoded in the page address, which is the link you share, and the Excel file is generated on your computer. To show the result, the site keeps an anonymised copy for a study on how domestic work is shared: no names, no address, no email, no IP address, nothing that could lead back to you. That is the trade-off for a free, ad-free tool. Fonts are hosted with the site. Audience measurement (Google Analytics) counts visits, only if you accept it in the banner, and never receives your answers.</p></details>
       <details><summary>How long does it take, and how many people?</summary><p>About ten minutes, together. You enter two first names, in no particular order and with no roles, each person's gender, who is filling in, and the number of children. Tasks go from the most frequent to the rarest, with the house, outdoors and vehicles at the end of the list; durations can be fine-tuned afterwards, below the result.</p></details>
+      <details><summary>Is this mental load test reliable?</summary><p>It is a starting point for a conversation, not a diagnosis or a score. The default times come from the French national time-use survey (INSEE) and can be adjusted task by task; the task list follows the INSEE classification and the Fair Play card game. The method is set out on the <a href="/methode/" data-lien="faq-methode">Method page (in French)</a>.</p></details>
+      <details><summary>Can we each answer separately?</summary><p>Yes. Whoever fills it in first sends a link to the other, who answers without seeing the first answers; the result then shows both views side by side.</p></details>
       <details><summary>Can you take stock from ChatGPT or Claude?</summary><p>Yes. Who thinks of it? also exists as an MCP server, in English and French, which you add as a connector in an assistant (Claude, ChatGPT, VS Code…) with the address <code>https://quiypense-mcp.quiypense-mcp.workers.dev/mcp</code>. The assistant shows the questionnaire in the conversation (or asks the same questions as the site) and gives the same result; first names stay in the conversation and are never passed on. The anonymised copy for the study is announced before the result, as here.</p></details>
     </section>
 
