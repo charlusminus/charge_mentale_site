@@ -1811,6 +1811,10 @@
   [
    "      <details><summary>Peut-on répondre chacun de son côté&nbsp;?</summary><p>Oui. La personne qui remplit en premier envoie un lien à l'autre, qui répond sans voir les premières réponses&nbsp;; le résultat montre ensuite les deux regards côte à côte.</p></details>",
    "      <details><summary>Can we each answer separately?</summary><p>Yes. Whoever fills it in first sends a link to the other, who answers without seeing the first answers; the result then shows both views side by side.</p></details>"
+  ],
+  [
+   "    const AVIS_MANQUE = \"Qu'est-ce qui vous a manqué\\u00a0? \";",
+   "    const AVIS_MANQUE = \"What was missing for you? \";"
   ]
  ]
 }

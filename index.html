@@ -3142,12 +3142,15 @@
     const etat = () => { try { return localStorage.getItem(cle()) || ""; } catch (e) { return ""; } };
     const noter = v => { try { localStorage.setItem(cle(), v); } catch (e) {} };
     const formulaires = [];
+    const AVIS_MANQUE = "Qu'est-ce qui vous a manqué\u00a0? ";
 
     function monter(place, contexte) {
       const f = modele.content.firstElementChild.cloneNode(true);
       const notes = f.querySelector(".avis-note"), suite = f.querySelector(".avis-suite"), mot = f.querySelector("textarea");
       const envoi = f.querySelector('button[type="submit"]'), msg = f.querySelector(".avis-etat"), cf = f.querySelector(".cf-avis");
       const o = { f, contexte, note: "", aide: "", jeton: null, widget: null, attend: false, envoye: false };
+      // Note de 6 ou moins (18/11/2026) : la question du commentaire devient « ce qui a manqué », pour savoir quoi corriger.
+      const motQ = f.querySelector("label.avis-mot").firstChild, motDefaut = motQ.textContent;
       for (let i = 0; i <= 10; i++) {
         const b = document.createElement("button"); b.type = "button"; b.className = "g"; b.value = String(i); b.textContent = i; b.setAttribute("aria-pressed", "false");
         notes.appendChild(b);
@@ -3155,6 +3158,7 @@
       notes.addEventListener("click", e => {
         const b = e.target.closest("button.g"); if (!b) return;
         o.note = b.value; notes.querySelectorAll(".g").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+        motQ.textContent = Number(o.note) <= 6 ? AVIS_MANQUE : motDefaut;
         suite.hidden = false; jeton(o);
       });
       f.querySelector(".avis-aide-q .choix").addEventListener("click", e => {
