@@ -19,13 +19,13 @@ Pour afficher le résultat, une copie anonymisée des réponses (sans prénoms n
 Serveur MCP (Streamable HTTP, sans inscription) : https://quiypense-mcp.quiypense-mcp.workers.dev/mcp
 Outils : afficher_questionnaire (le questionnaire dans la conversation, pour les assistants qui affichent les interfaces MCP Apps), lister_taches (le catalogue adapté au foyer), calculer_resultat (le résultat, et la copie anonymisée pour l'étude, à annoncer avant). Les prénoms ne doivent jamais être transmis aux outils.
 
-## Chiffres de l'étude (au 17 novembre 2026)
-- 25 558 couples femme-homme ayant répondu à au moins 20 tâches (27 533 réponses en tout).
+## Chiffres de l'étude (au 19 novembre 2026)
+- 26 367 couples femme-homme ayant répondu à au moins 20 tâches (28 424 réponses en tout).
 - Part de la charge mentale portée par elle : 64 % en moyenne ; elle en porte plus de la moitié dans 84 % des couples.
 - Selon qui remplit : 69 % quand elle remplit seule, 47 % quand il remplit seul, 61 % quand ils remplissent à deux.
 - Couples sans enfant : 60 % ; avec trois enfants ou plus : 66 %.
 - Visiteurs volontaires, pas un échantillon représentatif. Détail, méthode et limites : [Presse](https://quiypense.org/presse/), [Méthode](https://quiypense.org/methode/).
-- Pour citer : « Qui y pense ?, étude sur la répartition des tâches et la charge mentale, quiypense.org, chiffres au 17 novembre 2026 ».
+- Pour citer : « Qui y pense ?, étude sur la répartition des tâches et la charge mentale, quiypense.org, chiffres au 19 novembre 2026 ».
 
 ## Pages
 - [Faire le point](https://quiypense.org/) : l'outil, en trois étapes (le foyer, qui y pense, le résultat)
