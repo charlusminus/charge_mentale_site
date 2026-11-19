@@ -132,6 +132,8 @@
     --sans: "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
     --r: 8px;             /* rayon unique */
     --max: 880px;
+    /* deux largeurs choisies sur l'accueil (19/11/2026) : la zone d'action prend toute la largeur (--max), la zone de lecture se limite à --lecture */
+    --lecture: 680px;
   }
   * { box-sizing: border-box; }
   html { font-size: 17px; scroll-behavior: smooth; }
@@ -196,7 +198,7 @@
   .presse-ref-titre { font-family: var(--serif); font-weight: 400; font-size: 1.15rem; line-height: 1.3; }
   .presse-ref-lire { font-size: .95rem; color: var(--muted); }
   .presse-ref:hover .presse-ref-lire, .presse-ref:focus-visible .presse-ref-lire { text-decoration: underline; text-underline-offset: 4px; }
-  .presse-ref-bas { margin-top: 64px; }
+  .presse-ref-bas { margin-top: 64px; max-width: var(--lecture); }
   .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 64px 0; }
   .stat { display: flex; flex-direction: column; padding: 1.2rem 1.3rem 1.1rem; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; }
   .stat strong { margin-bottom: .45rem; font-family: var(--serif); font-weight: 600; }
@@ -204,8 +206,8 @@
   .stat strong { display: block; font-size: clamp(1.6rem, 2.4vw, 2.3rem); line-height: 1.1; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .stat span { color: var(--muted); font-size: .9rem; }
   .stat small { display: block; margin-top: .4rem; color: var(--muted); font-size: .75rem; }
-  .pourquoi { max-width: 60ch; }
-  .faq { margin-top: 64px; max-width: 64ch; }
+  .pourquoi { max-width: var(--lecture); }
+  .faq { margin-top: 64px; max-width: var(--lecture); }
   .faq details { border-top: 1px solid var(--line); padding: .7rem 0; }
   .faq details:last-of-type { border-bottom: 1px solid var(--line); }
   .faq summary { cursor: pointer; font-weight: 500; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
@@ -214,7 +216,7 @@
   .faq details[open] summary::after { transform: rotate(-135deg) translateY(-2px); }
   .faq p { color: var(--muted); margin: .5rem 0 .2rem; }
   /* blog sur l'accueil : quatre articles, liste tenue par blog/build.py */
-  .blog-accueil { margin-top: 64px; max-width: 64ch; }
+  .blog-accueil { margin-top: 64px; max-width: var(--lecture); }
   .blog-cartes { list-style: none; padding: 0; margin: 1rem 0 1.2rem; display: grid; gap: .7rem; }
   .blog-cartes a { display: block; padding: .9rem 1rem 1rem; background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; text-decoration: none; color: var(--ink); }
   .blog-cartes a:hover { border-color: var(--ink); }
@@ -310,6 +312,9 @@
   .prenoms .b .genre .g[aria-pressed="true"] { border-color: var(--b); background: var(--b); }
   /* qui remplit : même pastilles, aux couleurs de chacun */
   .remplit { margin-top: 1rem; max-width: 520px; }
+  /* dans le panneau de départ, les champs remplissent le panneau au lieu de s'arrêter à 520 px */
+  .demarrer .prenoms, .demarrer .remplit, .demarrer .suivi-med, .demarrer .recompo { max-width: none; }
+  @media (min-width: 760px) { .demarrer .prenoms.foyer { grid-template-columns: repeat(3, 1fr); } }
   .remplit .lbl { display: block; font-size: .85rem; color: var(--muted); }
   .choix .g { padding: .5rem .4rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   @media (max-width: 400px) { .choix .g { padding: .5rem .2rem; font-size: .88rem; } }
