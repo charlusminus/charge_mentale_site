@@ -1803,7 +1803,13 @@
 
 
   /* ---------- une tâche à la fois (retour du 11/11/2026 : « moins de texte, pas à pas ») ---------- */
-  const PAP = { mode: "un", i: 0 };
+  const PAP = { mode: "un", i: 0, vues: new Set() };
+  // Mesure de la progression (21/11/2026) : où décroche-t-on dans le pas à pas ? Un événement à l'entrée de chaque famille
+  // et un à la carte de fin, une seule fois chacun, hors pas à pas « ensemble ». Aucune réponse ne part.
+  function mesurePap(cle, famille) {
+    if (!window.__ga || PAP.vues.has(cle) || (S.cmp && S.cmp.etat === "e")) return;
+    PAP.vues.add(cle); gtag("event", famille ? "pap_famille" : "pap_fin", famille ? { famille } : {});
+  }
   function modePap() {
     const m = document.createElement("div"); m.className = "pap-mode"; m.setAttribute("role", "group"); m.setAttribute("aria-label", "How to show the tasks");
     m.innerHTML = `<button type="button" data-m="un" aria-pressed="${PAP.mode === "un"}">One task at a time</button><button type="button" data-m="liste" aria-pressed="${PAP.mode === "liste"}">Whole list</button>`;
@@ -1834,6 +1840,7 @@
     if (!(S.cmp && S.cmp.etat === "e")) root.appendChild(modePap());
     const carte = document.createElement("div"); carte.className = "pap"; root.appendChild(carte);
     if (PAP.i >= n) {
+      mesurePap("fin");
       const faites = list.filter(t => S.t[t.id] && S.t[t.id].fait).length;
       carte.classList.add("pap-fin");
       carte.innerHTML = `<div class="pap-haut"><span>All done</span><span>${faites} / ${n}</span></div><div class="pap-prog"><i style="width:100%"></i></div>
@@ -1859,6 +1866,7 @@
     const t = list[PAP.i], st = S.t[t.id];
     const cats = visibleCats(), ci = cats.findIndex(c => c.id === t.cat);
     const dansFam = list.filter(x => x.cat === t.cat), fi = dansFam.findIndex(x => x.id === t.id);
+    if (fi === 0) mesurePap("f:" + t.cat, t.cat);
     const avance = () => { if (PAP.ajout) { PAP.ajout = null; PAP.i = listePap().length; } else PAP.i++; renderCatalogue(); update(); };
     carte.innerHTML = `<div class="pap-haut"><span${fi === 0 ? ' class="neuve"' : ""}>${t.catNom}${fi === 0 ? ` · ${dansFam.length} task${dansFam.length > 1 ? "s" : ""}` : ` · ${fi + 1} of ${dansFam.length}`}</span><span>${Math.max(1, Math.round((n - PAP.i) * 12 / 60))} min left</span></div>
       <div class="pap-prog"><i style="width:${100 * PAP.i / n}%"></i></div>
