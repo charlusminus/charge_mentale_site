@@ -351,6 +351,11 @@
   /* « les deux » : une réglette sous la tâche pour la part exacte de chacun, pleine largeur de la grille */
   .repart { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: .2rem .7rem; align-items: center; margin: .45rem 0 .2rem; padding: .5rem .7rem; background: var(--bg-2); border-radius: var(--r); font-size: .85rem; }
   .repart .q { grid-column: 1 / -1; color: var(--muted); }
+  .repart-bloc { grid-column: 1 / -1; }
+  .repart-bloc .repart + .repart { margin-top: .35rem; }
+  .repart-autre { display: inline-block; min-height: 44px; margin: 0; padding: .3rem .1rem; border: 0; background: none; font: inherit; font-size: .88rem;
+    color: var(--muted); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; text-align: left; }
+  .repart-autre:hover { color: var(--ink); }
   .repart .pa { color: var(--a); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
   .repart .pb { color: var(--b); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
   .repart .d { text-align: right; }
@@ -1694,6 +1699,27 @@
     // sur « s'en occupe » (« y pense » la suit s'il n'a pas été changé), sinon sur « y pense ».
     const quoi = st.fait === "both" ? "fait" : (st.fait && st.pense === "both") ? "pense" : null;
     if (!quoi) return null;
+    // Deux proportions (avis du 22/11/2026) : « les deux » aux deux questions donnait une seule réglette, la part de
+    // charge mentale reprenait celle du temps. Un lien ouvre une seconde réglette pour y penser (« y pense » passe alors
+    // de « suit » à « les deux » choisi, avec sa propre part) ; répondre de nouveau « Les deux » à « qui y pense » la referme.
+    const deux = st.fait === "both" && st.pense === "both";
+    const bloc = document.createElement("div"); bloc.className = "repart-bloc";
+    bloc.appendChild(regletteUne(t, st, quoi, onChange, deux ? "To do it: in what proportion?" : null));
+    if (deux) bloc.appendChild(regletteUne(t, st, "pense", onChange, "To think of it: in what proportion?"));
+    else if (st.fait === "both" && st.pense === null) {
+      const l = document.createElement("button"); l.type = "button"; l.className = "lien repart-autre";
+      l.textContent = "It's not the same proportion for thinking of it";
+      l.addEventListener("click", () => {
+        st.pp = partA(st, "fait"); st.pense = "both";
+        const n = reglette(t, st, onChange); bloc.replaceWith(n); update(); if (onChange) onChange();
+        const i = n.querySelectorAll("input")[1]; if (i) i.focus();
+        if (window.__ga) gtag("event", "repartition_penser");
+      });
+      bloc.appendChild(l);
+    }
+    return bloc;
+  }
+  function regletteUne(t, st, quoi, onChange, titre) {
     {
       // Sept crans, départ au centre (retour du 25/09/2026) : 50/50, puis 60/40, 75/25, 90/10 de chaque côté.
       // Couple femme-homme : la femme à gauche, quel que soit l'ordre des prénoms ; sinon la personne 1 à gauche.
@@ -1703,7 +1729,7 @@
       const pg = () => gaucheB ? 100 - partA(st, quoi) : partA(st, quoi);
       const cran = v => CRANS.reduce((m, c, i) => Math.abs(c - v) < Math.abs(CRANS[m] - v) ? i : m, 3);
       const r = document.createElement("div"); r.className = "repart";
-      const q = quoi === "fait" ? (st.pense === null ? "Together: in what proportion?" : "Together: who does more?") : "You both think of it: in what proportion?";
+      const q = titre || (quoi === "fait" ? (st.pense === null ? "Together: in what proportion?" : "Together: who does more?") : "You both think of it: in what proportion?");
       r.innerHTML = `<span class="q">${q}</span><span class="${cg} g"></span><input type="range" min="0" max="6" step="1" aria-label="${ng}'s share"><span class="${cd} d"></span>`;
       r.style.setProperty("--cg", `var(--${gaucheB ? "b" : "a"})`); r.style.setProperty("--cd", `var(--${gaucheB ? "a" : "b"})`);
       const inp = r.querySelector("input"), sg = r.querySelector(".g"), sd = r.querySelector(".d");

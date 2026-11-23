@@ -913,8 +913,8 @@
    "(deux.length <= 3 ? deux : \"both\")"
   ],
   [
-   "(st.pense === null ? \"À deux, dans quelle proportion ?\" : \"À deux, qui en fait le plus ?\") : \"Vous y pensez à deux : dans quelle proportion ?\";",
-   "(st.pense === null ? \"Together: in what proportion?\" : \"Together: who does more?\") : \"You both think of it: in what proportion?\";"
+   "(st.pense === null ? \"À deux, dans quelle proportion ?\" : \"À deux, qui en fait le plus ?\") : \"Vous y pensez à deux : dans quelle proportion ?\");",
+   "(st.pense === null ? \"Together: in what proportion?\" : \"Together: who does more?\") : \"You both think of it: in what proportion?\");"
   ],
   [
    "aria-label=\"Part de ${ng}\"",
@@ -1815,6 +1815,18 @@
   [
    "    const AVIS_MANQUE = \"Qu'est-ce qui vous a manqué\\u00a0? \";",
    "    const AVIS_MANQUE = \"What was missing for you? \";"
+  ],
+  [
+   "\"Pour le faire, dans quelle proportion ?\"",
+   "\"To do it: in what proportion?\""
+  ],
+  [
+   "\"Pour y penser, dans quelle proportion ?\"",
+   "\"To think of it: in what proportion?\""
+  ],
+  [
+   "\"Ce n'est pas la même proportion pour y penser\"",
+   "\"It's not the same proportion for thinking of it\""
   ]
  ]
 }
