@@ -64,7 +64,7 @@
     "amis": { "nom": "Keep in touch with friends and family", "aide": "invitations, calls, visits, news" },
     "cadeaux": { "nom": "Think of presents and celebrations", "aide": "birthdays, Christmas, Mother's Day, cards, thank-yous" },
     "vacances": { "nom": "Organise the holidays", "aide": "choosing, booking, packing the cases" },
-    "parents-ages": { "nom": "Help an elderly parent or an ill loved one", "aide": "appointments, shopping, admin, visits" },
+    "parents-ages": { "nom": "Help an elderly, ill or disabled loved one", "aide": "appointments, shopping, admin, visits, looking after the grandchildren" },
 
     "reparations": { "nom": "Repair, do the DIY, oversee the building work", "aide": "light bulb, leak, furniture, painting, tradespeople" },
     "plantes": { "nom": "Look after the plants, garden or balcony", "aide": "watering, mowing, pruning, weeding" },
