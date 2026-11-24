@@ -29,5 +29,15 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
-      - id: deploy
+      # deploy-pages échoue parfois juste après l'upload (« Fetching artifact metadata failed »,
+      # le 23/11 et le 24/11) : l'artefact n'est pas encore visible. On attend et on retente une fois.
+      - id: deploy1
         uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - if: steps.deploy1.outcome == 'failure'
+        run: sleep 30
+      - id: deploy2
+        if: steps.deploy1.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+      - id: deploy
+        run: echo "page_url=${{ steps.deploy1.outputs.page_url || steps.deploy2.outputs.page_url }}" >> "$GITHUB_OUTPUT"
