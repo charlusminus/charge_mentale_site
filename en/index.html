@@ -431,7 +431,10 @@
   .legende-barres i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: .35rem; vertical-align: middle; }
   .barre { display: grid; grid-template-columns: 220px 1fr 64px; gap: 1rem; align-items: center; padding: .45rem 0; font-size: .9rem; }
   .barre .val { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .barre .track { display: flex; gap: 2px; height: 18px; border-radius: 5px; overflow: hidden; }
+  .barre .track { display: flex; gap: 2px; height: 22px; border-radius: 5px; overflow: hidden; }
+  /* pourcentage dans chaque part (avis du 22/11/2026 : « la barre des % pour qui s'en occupe ») */
+  .barre .track > div { display: flex; align-items: center; padding: 0 .4rem; font-size: .75rem; font-weight: 600; color: var(--paper); white-space: nowrap; overflow: hidden; font-variant-numeric: tabular-nums; }
+  .barre .track > .fb { justify-content: flex-end; } .barre .track > .fboth { justify-content: center; padding: 0; }
   .barre .fa { background: var(--a); } .barre .fb { background: var(--b); } .barre .fboth { background: var(--both); }
   .lecture { margin-top: 1.6rem; padding: 1rem 1.2rem; background: var(--bg-2); border-radius: 12px; }
   /* « Et les autres couples ? » (20/10/2026) : repères agrégés de l'étude, sans jugement */
@@ -2296,7 +2299,7 @@
       const tot = c.a + c.b + c.both;
       const pct = v => Math.round(100 * v / tot);
       return `<div class="barre"><span>${c.nom}</span>
-        <div class="track" role="img" aria-label="${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%" title="${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%">${[["fa", c.a], ["fboth", c.both], ["fb", c.b]].filter(x => x[1] > 0).map(x => `<div class="${x[0]}" style="flex:${100 * x[1] / tot}"></div>`).join("")}</div><span class="val">${hm5(tot)}</span></div>`;
+        <div class="track" role="img" aria-label="${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%" title="${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%">${[["fa", c.a], ["fboth", c.both], ["fb", c.b]].filter(x => x[1] > 0).map(x => `<div class="${x[0]}" style="flex:${100 * x[1] / tot}">${pct(x[1]) >= 14 ? pct(x[1]) + "%" : ""}</div>`).join("")}</div><span class="val">${hm5(tot)}</span></div>`;
     }).join("") : "";
 
     const L = document.getElementById("lecture"), V = document.getElementById("verdict"), PA = document.getElementById("parts");
