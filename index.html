@@ -917,12 +917,11 @@
   .reeq-effet .v s { color: var(--muted); margin-right: .3rem; }
   .reeq small.note { display: block; margin-top: 1rem; color: var(--muted); font-size: .85rem; }
   @media (max-width: 640px) { .reeq { padding: 20px 18px; } .reeq-effet .ligne { grid-template-columns: 1fr auto; } .reeq-effet .bar { grid-column: 1 / -1; grid-row: 2; } }
-  /* ===== Mouvement (étude du 25/11/2026) =====
+  /* ===== Mouvement (25/11/2026) =====
      Sept lots, chacun sous une classe posée sur <html> par le script d'en-tête : m-hero, m-defil, m-ecran, m-quest, m-res,
      m-micro, m-menu. Rien ne bouge sans ces classes, et elles ne sont pas posées si la personne a demandé moins de mouvement
      (prefers-reduced-motion). Seuls transform et opacity sont animés, sauf la largeur de quelques barres. Aucune bibliothèque. */
   :root { --t1: .16s; --t2: .3s; --t3: .65s; --dy: 12px; --e: cubic-bezier(.2, .7, .2, 1); --pop: cubic-bezier(.3, 1.3, .6, 1); }
-  .m-fort { --t2: .42s; --t3: .9s; --dy: 26px; --pop: cubic-bezier(.3, 1.8, .5, 1); }
   .pap-ok { display: none; }
   @media (prefers-reduced-motion: no-preference) {
     @keyframes m-monte { from { opacity: 0; transform: translateY(var(--dy)); } }
@@ -930,7 +929,6 @@
     @keyframes m-fondu { from { opacity: 0; } }
     @keyframes m-pop { from { opacity: 0; transform: scale(.3); } }
     @keyframes m-egal { from { width: 50%; } }
-    @keyframes m-flotte { to { transform: translateY(-4px); } }
     @keyframes m-de-droite { from { opacity: 0; transform: translateX(calc(var(--dy) * 2)); } }
     @keyframes m-de-gauche { from { opacity: 0; transform: translateX(calc(var(--dy) * -2)); } }
     @keyframes m-appui { from { transform: scale(.93); } }
@@ -950,8 +948,6 @@
     .m-hero .hero-illu .bulle-a { transform-origin: 100% 100%; animation-delay: .45s; }
     .m-hero .hero-illu .bulle-b { transform-origin: 36% 100%; animation-delay: .7s; }
     .m-hero .hero-illu .ic { transform-origin: 50% 50%; animation-delay: calc(.7s + var(--i) * .09s); }
-    .m-hero.m-fort .hero-illu .nuage { animation: m-flotte 3.2s ease-in-out 2s infinite alternate; }
-    .m-hero.m-fort .hero-illu .nuage-b { animation-delay: 2.6s; animation-duration: 3.8s; }
     .m-hero .hero-ex { animation: m-monte var(--t3) var(--e) .3s backwards; }
     .m-hero .hero-ex .bar i { animation: m-egal 1s var(--e) 1s backwards; }
 
@@ -1079,8 +1075,7 @@
             <rect x="217" y="214" width="11" height="34" rx="5"/><rect x="237" y="214" width="11" height="34" rx="5"/>
           </g>
           <path d="M20 249 h320" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/>
-          <!-- Mouvement : .nuage flotte, .bulle surgit depuis sa queue, chaque .ic (une chose en tête) apparaît à son tour (--i) -->
-          <g class="nuage nuage-a">
+          <!-- Mouvement : .bulle surgit depuis sa queue, chaque .ic (une chose en tête) apparaît à son tour (--i) -->
           <g class="bulle bulle-a" fill="var(--paper)" stroke="var(--a)" stroke-width="2">
             <circle cx="120" cy="96" r="3"/><circle cx="111" cy="85" r="5"/>
             <rect x="70" y="38" width="52" height="40" rx="18"/>
@@ -1088,8 +1083,6 @@
           <g fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <g class="ic" style="--i:0"><rect x="86" y="48" width="20" height="19" rx="3"/><path d="M86 54 h20 M91 45 v6 M101 45 v6"/></g>
           </g>
-          </g>
-          <g class="nuage nuage-b">
           <g class="bulle bulle-b" fill="var(--paper)" stroke="var(--b)" stroke-width="2">
             <circle cx="242" cy="96" r="3"/><circle cx="251" cy="85" r="5"/>
             <rect x="178" y="4" width="176" height="74" rx="26"/>
@@ -1104,7 +1097,6 @@
             <path class="ic" style="--i:9" d="M246 46 h20 l3 6 h-26 z M250 52 v10 M262 52 v10"/>
             <path class="ic" style="--i:10" d="M282 47 q8-5 16 0 l4 6 l-5 3 v8 h-14 v-8 l-5-3 z"/>
             <path class="ic" style="--i:11" d="M318 52 l4 4 l8-9 M334 52 h6"/>
-          </g>
           </g>
         </svg>
         <div class="hero-ex" role="img" aria-label="Exemple de résultat : Camille porte 54 % du temps et 78 % de la charge mentale.">
@@ -1306,14 +1298,6 @@
         </details>
         <div class="budget-txt" id="budget-txt"></div>
       </div>
-      <section class="soutien" id="soutien" aria-labelledby="soutien-titre">
-        <h2 id="soutien-titre">Ce point vous a servi&nbsp;?</h2>
-        <p class="muted">Qui y pense&nbsp;? est gratuit, sans inscription ni publicité, et fait sur du temps libre. Un café aide à le garder en ligne et à préparer la suite&nbsp;: refaire le point dans six mois, une sauvegarde en ligne.</p>
-        <div class="soutien-actions">
-          <a class="bmc" id="soutien-cafe" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="resultat"><span>Offrir un café (2&nbsp;€)</span></a>
-          <a href="soutenir/" data-lien="soutenir-resultat">À quoi sert votre soutien</a>
-        </div>
-      </section>
 
       <div class="affiner" id="affiner">
         <h2>Affinez le résultat</h2>
@@ -1334,6 +1318,14 @@
         <p class="small muted garde-note">Ce résultat n'est gardé pour vous nulle part : copiez le lien ou ajoutez la page aux favoris pour le retrouver.</p>
         <p class="small"><a href="#" id="reset">Recommencer depuis le début</a></p>
       </div>
+      <section class="soutien" id="soutien" aria-labelledby="soutien-titre">
+        <h2 id="soutien-titre">Ce point vous a servi&nbsp;?</h2>
+        <p class="muted">Qui y pense&nbsp;? est gratuit, sans inscription ni publicité, et fait sur du temps libre. Un café aide à le garder en ligne et à préparer la suite&nbsp;: refaire le point dans six mois, une sauvegarde en ligne.</p>
+        <div class="soutien-actions">
+          <a class="bmc" id="soutien-cafe" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=resultat&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="resultat"><span>Offrir un café (2&nbsp;€)</span></a>
+          <a href="soutenir/" data-lien="soutenir-resultat">À quoi sert votre soutien</a>
+        </div>
+      </section>
       <div class="connaitre" id="connaitre">
         <h2>Faire connaître Qui y pense ?</h2>
         <p class="muted">Un couple sur cinq se dit à égalité. Si le résultat vous a été utile, envoyez le site à un couple qui en aurait besoin, ou partagez-le sur vos réseaux : c'est ce qui le fait vivre.</p>
@@ -1513,7 +1505,7 @@
 <script>
 (function () {
   const C = window.CATALOGUE;
-  /* ---------- Mouvement (étude du 25/11/2026) ---------- */
+  /* ---------- Mouvement (25/11/2026) ---------- */
   // Les animations vivent dans la feuille de style (bloc « Mouvement »). Ce script ne fait que poser des classes au bon
   // moment, et animer ce que la CSS ne peut pas : les barres et les compteurs, reconstruits à chaque rendu.
   const M = {
@@ -1572,7 +1564,7 @@
     const els = [...document.querySelectorAll("#e1 .stat, #e1 .pourquoi, #e1 .presse-ref-bas, #e1 .faq, #e1 .blog-accueil > h2, #e1 .blog-cartes li")];
     const io = new IntersectionObserver(es => es.forEach(e => {
       if (!e.isIntersecting) return; io.unobserve(e.target); e.target.classList.add("m-vu");
-      const s = e.target.querySelector(".stat > strong"), m = s && s.textContent.match(/^(\d+)(\s%)$/);
+      const s = e.target.querySelector(".stat > strong"), m = s && s.textContent.match(/^(\d+)(\s?%)$/);
       if (m && M.on("defil")) M.compte(s, 0, +m[1], 900, performance.now() + (+e.target.style.getPropertyValue("--i") || 0) * 90, m[2]);
     }), { rootMargin: "0px 0px -8% 0px" });
     els.forEach(el => { const fr = [...el.parentNode.children].filter(x => els.includes(x)); el.style.setProperty("--i", fr.indexOf(el)); el.classList.add("m-rev"); io.observe(el); });
