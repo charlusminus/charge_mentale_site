@@ -1823,6 +1823,18 @@
   [
    "\"Pour y penser, dans quelle proportion ?\"",
    "\"To think of it: in what proportion?\""
+  ],
+  [
+   "<p class=\"small muted avis-cafe\">Si vous le souhaitez, un café aide à garder le site gratuit et en ligne.</p>",
+   "<p class=\"small muted avis-cafe\">If you like, a coffee helps keep the site free and online.</p>"
+  ],
+  [
+   "data-soutenir=\"avis\"><span>Remercier d'un café (2&nbsp;€)</span></a>",
+   "data-soutenir=\"avis\"><span>Say thanks with a coffee (€2)</span></a>"
+  ],
+  [
+   "// Note de 9 ou 10 (26/11/2026) : le remerciement propose, sans insister, le café de la page Soutenir.",
+   "// Score of 9 or 10 (26/11/2026): the thank-you offers, without pressing, the coffee from the Support page."
   ]
  ]
 }

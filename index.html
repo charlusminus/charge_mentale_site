@@ -618,6 +618,7 @@
     background: var(--paper); font: inherit; font-size: .95rem; resize: vertical; }
   .avis-form .nav { margin: .9rem 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
   .avis-merci { margin: .6rem 0 0; font-weight: 600; }
+  .avis-cafe { margin: .3rem 0 .8rem; }
   .avis-encart { position: fixed; z-index: 30; right: 16px; bottom: calc(84px + env(safe-area-inset-bottom)); width: min(420px, calc(100vw - 32px));
     max-height: calc(100vh - 120px); overflow: auto; background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px;
     box-shadow: 0 10px 30px rgba(42, 33, 24, .18); padding: 1rem 1.1rem 1.1rem; }
@@ -3412,8 +3413,16 @@
       try { fetch(ETUDE_URL, { method: "POST", body: data, keepalive: true, mode: "no-cors", credentials: "omit" }).catch(() => {}); } catch (e) {}
       if (window.__ga) gtag("event", "avis_envoye", { contexte: o.contexte, note: o.note === "" ? "aucune" : o.note, aide: o.aide || "aucune" });
       noter("envoye");
-      formulaires.forEach(x => { x.envoye = true; x.f.innerHTML = `<p class="avis-merci">Merci pour votre avis.</p>`; });
-      if (o.contexte === "encart") setTimeout(() => { encart.hidden = true; }, 2500);
+      // Note de 9 ou 10 (26/11/2026) : le remerciement propose, sans insister, le café de la page Soutenir.
+      const cafe = Number(o.note) >= 9;
+      formulaires.forEach(x => {
+        x.envoye = true;
+        x.f.innerHTML = `<p class="avis-merci">Merci pour votre avis.</p>` + (cafe ? `<p class="small muted avis-cafe">Si vous le souhaitez, un café aide à garder le site gratuit et en ligne.</p>
+          <a class="bmc" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=avis&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="avis"><span>Remercier d'un café (2&nbsp;€)</span></a>` : "");
+        const a = x.f.querySelector("[data-soutenir]");
+        if (a) a.addEventListener("click", () => { if (window.__ga) gtag("event", "soutenir_clic", { origine: "avis-" + x.contexte }); });
+      });
+      if (o.contexte === "encart" && !cafe) setTimeout(() => { encart.hidden = true; }, 2500);
     }
 
     monter(bloc.querySelector(".avis-place"), "bloc");
