@@ -1,4 +1,4 @@
-// Langue du navigateur (11/11/2026, demande de Charles) : un navigateur qui n'est pas réglé en français arrive sur la
+// Langue du navigateur (11/11/2026) : un navigateur qui n'est pas réglé en français arrive sur la
 // version anglaise de la page, quand elle existe (lien hreflang « en » dans l'en-tête). Chargé tôt dans <head>, après
 // les liens hreflang, sur les pages qui ont une traduction (et sur les pages anglaises, pour mémoriser le choix).
 // Jamais pour un robot : Google indexe chaque langue par ses hreflang. Jamais quand la personne a choisi sa langue
