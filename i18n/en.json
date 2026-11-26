@@ -953,8 +953,8 @@
    "<tr><td class=\"lbl\">Tasks to keep in mind</td>"
   ],
   [
-   "<h3>Le partage, famille par famille</h3><p class=\"muted small\">De la plus longue à la plus courte. À droite, le temps par jour pour vous deux, avec des durées moyennes à corriger plus bas si besoin.</p>",
-   "<h3>The split, family by family</h3><p class=\"muted small\">From the longest to the shortest. On the right, time per day for the two of you, using average times you can adjust further down.</p>"
+   "<h3>Le partage, famille par famille</h3><p class=\"muted small\">La longueur de chaque barre suit le temps passé, de la plus longue à la plus courte. À droite, le temps par jour pour vous deux, avec des durées moyennes à corriger plus bas si besoin.</p>",
+   "<h3>The split, family by family</h3><p class=\"muted small\">Each bar is as long as the time it takes, from the longest to the shortest. On the right, time per day for the two of you, using average times you can adjust further down.</p>"
   ],
   [
    "<i style=\"background:var(--both)\"></i>les deux</span>",
