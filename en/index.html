@@ -2287,12 +2287,15 @@
 
     const pc = document.getElementById("parcat");
     const cats = Object.values(r.cats).filter(c => c.a + c.b + c.both > 0).sort((x, y) => (y.a + y.b + y.both) - (x.a + x.b + x.both));
-    pc.innerHTML = cats.length ? `<h3>The split, family by family</h3><p class="muted small">From the longest to the shortest. On the right, time per day for the two of you, using average times you can adjust further down.</p>
+    const maxTot = Math.max(...cats.map(c => c.a + c.b + c.both), 0.01);
+    pc.innerHTML = cats.length ? `<h3>The split, family by family</h3><p class="muted small">Each bar is as long as the time it takes, from the longest to the shortest. On the right, time per day for the two of you, using average times you can adjust further down.</p>
       <div class="legende-barres"><span><i style="background:var(--a)"></i>${nomA()}</span><span><i style="background:var(--both)"></i>both</span><span><i style="background:var(--b)"></i>${nomB()}</span></div>` + cats.map(c => {
       const tot = c.a + c.b + c.both;
       const pct = v => Math.round(100 * v / tot);
+      // longueur de la barre proportionnelle au temps de la famille (la plus longue fait toute la largeur)
+      const w = Math.max(100 * tot / maxTot, 3);
       return `<div class="barre"><span>${c.nom}</span>
-        <div class="track" role="img" aria-label="${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%" title="${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%">${[["fa", c.a], ["fboth", c.both], ["fb", c.b]].filter(x => x[1] > 0).map(x => `<div class="${x[0]}" style="flex:${100 * x[1] / tot}">${pct(x[1]) >= 14 ? pct(x[1]) + "%" : ""}</div>`).join("")}</div><span class="val">${hm5(tot)}</span></div>`;
+        <div class="track" style="width:${w.toFixed(1)}%" role="img" aria-label="${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%" title="${nomA()} ${pct(c.a)}%, both ${pct(c.both)}%, ${nomB()} ${pct(c.b)}%">${[["fa", c.a], ["fboth", c.both], ["fb", c.b]].filter(x => x[1] > 0).map(x => `<div class="${x[0]}" style="flex:${100 * x[1] / tot}">${pct(x[1]) * w / 100 >= 14 ? pct(x[1]) + "%" : ""}</div>`).join("")}</div><span class="val">${hm5(tot)}</span></div>`;
     }).join("") : "";
 
     const L = document.getElementById("lecture"), V = document.getElementById("verdict"), PA = document.getElementById("parts");
