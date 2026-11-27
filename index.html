@@ -937,6 +937,10 @@
   .reeq-effet .v { text-align: right; font-variant-numeric: tabular-nums; }
   .reeq-effet .v s { color: var(--muted); margin-right: .3rem; }
   .reeq small.note { display: block; margin-top: 1rem; color: var(--muted); font-size: .85rem; }
+  .partenaire { margin: 20px 0; padding: 16px 20px; border: 1px solid var(--line); border-radius: var(--r); font-size: .92rem; }
+  .partenaire .etiquette { display: inline-block; margin-bottom: .4rem; color: var(--muted); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; }
+  .partenaire p { margin: 0 0 .5rem; }
+  .partenaire small { display: block; color: var(--muted); font-size: .8rem; }
   @media (max-width: 640px) { .reeq { padding: 20px 18px; } .reeq-effet .ligne { grid-template-columns: 1fr auto; } .reeq-effet .bar { grid-column: 1 / -1; grid-row: 2; } }
   /* ===== Mouvement (25/11/2026) =====
      Sept lots, chacun sous une classe posée sur <html> par le script d'en-tête : m-hero, m-defil, m-ecran, m-quest, m-res,
@@ -1301,6 +1305,7 @@
         <div class="pro-txt" id="pro-txt"></div>
       </div>
       <div class="reeq" id="reeq" hidden></div>
+      <aside class="partenaire" id="partenaire" aria-label="Suggestion d'un partenaire" hidden></aside>
       <h2 class="sec-titre" id="sec-parler">En parler à deux</h2>
       <div class="cmp-invite" id="cmp-invite" hidden></div>
       <div class="envoi" id="envoi-bloc">
@@ -2215,6 +2220,26 @@
 
 
 
+  /* ---------- suggestion d'un partenaire (charte du 27/11/2026) ---------- */
+  // Jamais pendant le parcours : seulement dans le résultat, discrète, liée aux réponses, signalée « Partenaire », sans
+  // effet sur le calcul. Ici : le foyer fait lui-même le ménage. PARTENAIRE vaut null tant qu'aucune convention n'est
+  // signée, et rien ne s'affiche. Forme attendue : { nom, url } ; le nom ne sert qu'à la mesure d'audience, pas au texte.
+  const PARTENAIRE = null;
+  const MENAGE = ["poussiere", "sols", "sanitaires", "gros-nettoyage"];
+  function renderPartenaire() {
+    const box = document.getElementById("partenaire");
+    if (!box) return;
+    const faits = MENAGE.map(id => ({ id, st: S.t[id] })).filter(x => x.st && ["a", "b", "both"].includes(x.st.fait));
+    const h = faits.reduce((s, x) => s + hj(x.st, x.id), 0) * 7;
+    if (!PARTENAIRE || faits.length < 2 || h < 1) { box.hidden = true; box.innerHTML = ""; return; }
+    box.innerHTML = `<span class="etiquette">Partenaire</span>
+      <p>Vous faites le ménage vous-mêmes : ${hm(h, h >= 10)} par semaine d'après vos réponses. En confier une partie libère du temps ; y penser reste à organiser à deux.</p>
+      <p><a href="${PARTENAIRE.url}" target="_blank" rel="sponsored noopener" data-lien="partenaire">En savoir plus</a></p>
+      <small>Suggestion d'un partenaire du site, affichée d'après vos réponses. Elle ne change rien à votre résultat.</small>`;
+    box.hidden = false;
+    box.querySelector("a").addEventListener("click", () => { if (window.__ga) gtag("event", "partenaire_clic", { partenaire: PARTENAIRE.nom }); });
+  }
+
   /* ---------- chacun de son côté, puis on compare (11/11/2026) ---------- */
   // Réponses d'une personne à partir des lettres du lien, dans l'ordre du catalogue.
   function reponsesDe(lettres) { const o = {}; ordreLien().forEach((id, i) => { o[id] = delettre(lettres[i]); }); return o; }
@@ -2395,6 +2420,7 @@
     txt += " Un point de départ pour en parler.";
     L.textContent = txt;
     renderReeq(r);
+    renderPartenaire();
     renderCmp(r);
     renderComparer(r);
     renderPro(r);
@@ -2553,7 +2579,7 @@
     const v = i.value.trim() === "" ? null : Math.max(0, Math.min(100, Math.round(+i.value) || 0));
     if (i.dataset.pro === "a") S.proA = v; else S.proB = v;
     document.querySelectorAll(`input[data-pro=${i.dataset.pro}]`).forEach(j => { if (j !== i) j.value = v === null ? "" : v; });
-    if (S.ecran === 3) { const r = compute(); renderPro(r); renderComparer(r); renderReeq(r); const lt = document.getElementById("ligne-total"); if (lt) lt.innerHTML = ligneTotal(r); } save();
+    if (S.ecran === 3) { const r = compute(); renderPro(r); renderComparer(r); renderReeq(r); renderPartenaire(); const lt = document.getElementById("ligne-total"); if (lt) lt.innerHTML = ligneTotal(r); } save();
   }));
   document.querySelectorAll("input[data-pro]").forEach(i => i.addEventListener("change", () => { if (window.__ga) gtag("event", "travail_paye_indique", { champ: S.ecran === 3 ? "compte" : "liste" }); }));
 

@@ -1891,6 +1891,26 @@
   [
    "`${noms} aviez commencé à faire le point : ${v.n} tâche${v.n > 1 ? \"s\" : \"\"} sur ${v.total} déjà répondue${v.n > 1 ? \"s\" : \"\"}, encore ${min} min environ.`",
    "`${noms} had started taking stock: ${v.n} of ${v.total} tasks already answered, about ${min} min to go.`"
+  ],
+  [
+   "aria-label=\"Suggestion d'un partenaire\"",
+   "aria-label=\"A partner's suggestion\""
+  ],
+  [
+   "<span class=\"etiquette\">Partenaire</span>",
+   "<span class=\"etiquette\">Partner</span>"
+  ],
+  [
+   "<p>Vous faites le ménage vous-mêmes : ${hm(h, h >= 10)} par semaine d'après vos réponses. En confier une partie libère du temps ; y penser reste à organiser à deux.</p>",
+   "<p>You do the cleaning yourselves: ${hm(h, h >= 10)} a week, based on your answers. Handing some of it over frees up time; keeping it in mind is still something to organise together.</p>"
+  ],
+  [
+   "data-lien=\"partenaire\">En savoir plus</a>",
+   "data-lien=\"partenaire\">Find out more</a>"
+  ],
+  [
+   "<small>Suggestion d'un partenaire du site, affichée d'après vos réponses. Elle ne change rien à votre résultat.</small>",
+   "<small>A suggestion from a partner of the site, shown because of your answers. It changes nothing in your result.</small>"
   ]
  ]
 }
