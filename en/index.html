@@ -638,6 +638,12 @@
      d'autre, avec un bloc placé tout en bas. Une demande explicite, juste après l'envoi à l'autre, et un message prêt. */
   .amis { margin-top: 2rem; padding: 1.2rem 1.3rem; border: 1.5px solid var(--ink); border-radius: var(--r); }
   .amis h3 { margin-bottom: .2rem; }
+  /* jauge collective (27/11/2026, plan de relance) : foyers à date sur 50 000 avant le baromètre ; mise à jour par tools/chiffres.py */
+  .jauge { margin: .9rem 0 0; }
+  .jauge-barre { height: 12px; background: var(--bg-2); border: 1.5px solid var(--ink); border-radius: 99px; overflow: hidden; }
+  .jauge-barre span { display: block; height: 100%; background: var(--a); }
+  .jauge-txt { margin: .5rem 0 0; font-size: .92rem; color: var(--muted); }
+  .jauge-txt strong { color: var(--ink); }
   .amis-msg { margin: .8rem 0 0; padding: .7rem .9rem; background: var(--bg-2); border-radius: var(--r); font-size: .92rem; }
   .amis-msg::before { content: "The message: "; font-weight: 600; }
   .avis-amis-place .amis-msg { display: none; }
@@ -1309,6 +1315,7 @@
       <section class="amis" id="amis" aria-labelledby="amis-titre">
         <h3 id="amis-titre">Send it to a couple you know</h3>
         <p class="muted">You probably have a couple in mind who would get something out of this. The message is ready, just pick the conversation.</p>
+
         <div class="amis-place" data-amis="resultat"></div>
       </section>
       <section class="avis" id="avis" aria-labelledby="avis-titre">
