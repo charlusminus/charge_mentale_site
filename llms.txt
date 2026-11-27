@@ -6,6 +6,7 @@ Pour afficher le résultat, une copie anonymisée des réponses (sans prénoms n
 
 ## English version
 - [Who thinks of it?](https://quiypense.org/en/) : the same free tool in British English (no sign-up). For each household task, who does it and who thinks of it; results computed in the browser, an anonymised copy (no names, no IP) goes to the study.
+- [Mental load statistics 2026](https://quiypense.org/en/figures/): the study figures across 27,819 couples, with the method and how to cite them
 - [Privacy](https://quiypense.org/en/privacy/) and [Terms](https://quiypense.org/en/terms/)
 - [Blog](https://quiypense.org/en/blog/): what the surveys say, and how to talk about it together
   - [What is the mental load, exactly? The idea is forty years old](https://quiypense.org/en/blog/what-is-the-mental-load.html)
@@ -24,8 +25,8 @@ Outils : afficher_questionnaire (le questionnaire dans la conversation, pour les
 - Part de la charge mentale portée par elle : 64 % en moyenne ; elle en porte plus de la moitié dans 84 % des couples.
 - Selon qui remplit : 69 % quand elle remplit seule, 48 % quand il remplit seul, 61 % quand ils remplissent à deux.
 - Couples sans enfant : 60 % ; avec trois enfants ou plus : 66 %.
-- Visiteurs volontaires, pas un échantillon représentatif. Détail, méthode et limites : [Presse](https://quiypense.org/presse/), [Méthode](https://quiypense.org/methode/).
-- Pour citer : « Qui y pense ?, étude sur la répartition des tâches et la charge mentale, quiypense.org, chiffres au 26 novembre 2026 ».
+- Visiteurs volontaires, pas un échantillon représentatif. Tous les chiffres, la méthode et les limites : [Chiffres 2026](https://quiypense.org/chiffres/) ([English](https://quiypense.org/en/figures/), [CSV](https://quiypense.org/chiffres/qui-y-pense-chiffres-2026-11-26.csv)), [Méthode](https://quiypense.org/methode/).
+- Pour citer : « Qui y pense ?, étude sur la répartition des tâches et la charge mentale, quiypense.org/chiffres, chiffres au 26 novembre 2026 ».
 
 ## Pages
 - [Faire le point](https://quiypense.org/) : l'outil, en trois étapes (le foyer, qui y pense, le résultat)
@@ -35,6 +36,7 @@ Outils : afficher_questionnaire (le questionnaire dans la conversation, pour les
 - [Confidentialité](https://quiypense.org/confidentialite/) : ce qui est collecté (copie anonymisée pour l'étude, avis, audience avec accord), pourquoi, vos droits
 - [Conditions d'utilisation](https://quiypense.org/conditions/) : usage, limites du résultat, mentions légales
 - [Soutenir](https://quiypense.org/soutenir/) : à quoi sert un don, ce que le site ne fera pas (ni vente de données, ni publicité pendant le parcours)
+- [Chiffres 2026](https://quiypense.org/chiffres/) : les résultats de l'étude sur 27 819 couples, par nombre d'enfants, selon qui remplit, avec le travail payé ; phrase pour citer et fichier CSV
 - [Presse](https://quiypense.org/presse/) : premiers résultats de l'étude, chiffres sourcés, dossier de presse
 - [Blog](https://quiypense.org/blog/) : ce que disent les enquêtes, et comment en parler à deux
 
