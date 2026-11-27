@@ -43,6 +43,7 @@ Outils : afficher_questionnaire (le questionnaire dans la conversation, pour les
 - [Blog](https://quiypense.org/blog/) : ce que disent les enquêtes, et comment en parler à deux
 
 ## Articles
+- [Charge mentale de Noël : qui pense aux cadeaux, au menu et aux invitations ?](https://quiypense.org/blog/charge-mentale-noel.html)
 - [Liste des tâches de la maison : une cinquantaine de tâches, et ce qu'il faut y penser](https://quiypense.org/blog/liste-taches-maison.html)
 - [Travail payé et travail à la maison : compter les deux](https://quiypense.org/blog/travail-paye-et-maison.html)
 - [Elle remplit, il remplit : pourquoi les chiffres ne disent pas la même chose](https://quiypense.org/blog/elle-remplit-il-remplit.html)
