@@ -25,7 +25,7 @@
 <meta name="description" content="Test et calcul de la charge mentale du couple : qui fait quoi à la maison et qui y pense, en heures et en choses en tête. Gratuit, sans inscription.">
 <link rel="canonical" href="https://quiypense.org/">
 <link rel="alternate" hreflang="fr" href="https://quiypense.org/">
-<link rel="alternate" hreflang="en-GB" href="https://quiypense.org/en/">
+<link rel="alternate" hreflang="en" href="https://quiypense.org/en/">
 <link rel="alternate" hreflang="x-default" href="https://quiypense.org/">
 <script src="/langue.js"></script>
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -1065,6 +1065,7 @@
 
   <!-- ÉCRAN 1 : accueil -->
   <div class="ecran" id="e1">
+    <script>/* Premier affichage : sans réponses dans l'adresse, l'accueil est visible tout de suite, sans attendre le script de l'appli (sinon le pied de page s'affiche seul puis saute). */ if (location.hash.length < 2) document.getElementById("e1").classList.add("actif");</script>
     <aside class="reprise" id="reprise" aria-labelledby="reprise-titre" hidden>
       <p class="reprise-titre" id="reprise-titre"></p>
       <p class="small muted">Vos réponses sont gardées sur cet appareil seulement, et effacées dès que le résultat s'affiche.</p>
@@ -1074,7 +1075,7 @@
       <div class="hero-txt">
         <h1><span class="sur">Test de charge mentale du couple</span>Qui y pense&nbsp;?</h1>
         <p class="lead">Vous partagez les tâches. Et le fait d'y&nbsp;penser&nbsp;?</p>
-        <p class="preuve">Plus de 27&nbsp;000 couples ont déjà fait le point. Dix minutes, gratuit, sans inscription.</p>
+        <p class="preuve">Plus de 27&nbsp;000 couples ont déjà fait le point (<a href="chiffres/">voir les chiffres</a>). Dix minutes, gratuit, sans inscription.</p>
         <p class="cta"><a class="btn" href="#nomA" id="hero-go">Faire le point à deux</a><a class="vu-mc" href="https://www.marieclaire.fr/charge-mentale-couple-outil-calcul-temps-repartition-taches,1522721.asp" target="_blank" rel="noopener"><img src="img/presse/marie-claire.png" alt="" width="22" height="22">Vu dans Marie Claire<span class="sr"> (nouvel onglet)</span></a></p>
       </div>
       <div class="hero-illu">
@@ -1369,7 +1370,7 @@
   <footer>
     <div class="pied-cols"><div><p class="pied-titre">Le site</p><a href="methode/">Méthode</a><a href="blog/">Ressources</a><a href="professionnels/" data-lien="pro-pied">Professionnels</a><button type="button" id="pied-partager" aria-expanded="false" aria-controls="pied-partage"><svg aria-hidden="true"><use href="#i-partager"/></svg>Partager le site</button></div><div><p class="pied-titre">À propos</p><a href="presse/">Presse</a><a href="partenaires/">Partenaires</a><a href="charte/">Charte</a><a href="soutenir/" data-lien="soutenir-pied" data-soutenir="pied">Soutenir</a><a href="mailto:contact@quiypense.org">Contact</a></div><div><p class="pied-titre">Légal</p><a href="confidentialite/">Confidentialité</a><a href="conditions/">Conditions</a><a href="#" id="consent-lien">Cookies</a></div></div>
     <div class="rs rs-pied" id="pied-partage" data-partage="site" hidden></div>
-    <p class="pied-bas">Qui y pense ? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, gratuit et sans inscription. Le lien de partage contient vos réponses, rien d'autre. Une question : <a href="mailto:contact@quiypense.org">contact@quiypense.org</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>. <a href="en/" hreflang="en-GB" lang="en-GB">English</a></p>
+    <p class="pied-bas">Qui y pense ? (quiypense.org) est né d'un tableur tenu à deux, à la maison. Un projet indépendant, gratuit et sans inscription. Le lien de partage contient vos réponses, rien d'autre. Une question : <a href="mailto:contact@quiypense.org">contact@quiypense.org</a>. Sources : <a href="https://www.insee.fr/fr/statistiques/2123967">INSEE, Emploi du temps 2010</a>, <a href="https://www.ined.fr/fr/premiers-resultats-enquete-famemp">INED, FAMEMP</a>, <a href="https://journals.sagepub.com/doi/10.1177/0003122419859007">Daminger 2019</a>, <a href="https://www.fairplaylife.com/the-book">Fair Play</a>. <a href="en/" hreflang="en" lang="en-GB">English</a></p>
   </footer>
   <noscript><p style="padding:16px;background:#F1EBDF">Ce site calcule tout dans votre navigateur : il a besoin de JavaScript pour fonctionner.</p></noscript>
 </main>
