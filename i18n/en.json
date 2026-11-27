@@ -1821,16 +1821,52 @@
    "\"To think of it: in what proportion?\""
   ],
   [
-   "<p class=\"small muted avis-cafe\">Si vous le souhaitez, un café aide à garder le site gratuit et en ligne.</p>",
-   "<p class=\"small muted avis-cafe\">If you like, a coffee helps keep the site free and online.</p>"
-  ],
-  [
-   "data-soutenir=\"avis\"><span>Remercier d'un café (2&nbsp;€)</span></a>",
-   "data-soutenir=\"avis\"><span>Say thanks with a coffee (€2)</span></a>"
-  ],
-  [
    "// Note de 9 ou 10 (26/11/2026) : le remerciement propose, sans insister, le café de la page Soutenir.",
    "// Score of 9 or 10 (26/11/2026): the thank-you offers, without pressing, the coffee from the Support page."
+  ],
+  [
+   "<h3 id=\"amis-titre\">Envoyez-le à un couple d'amis</h3>",
+   "<h3 id=\"amis-titre\">Send it to a couple you know</h3>"
+  ],
+  [
+   "<p class=\"muted\">Vous avez sûrement en tête un couple à qui ce point ferait du bien. Le message est prêt, il ne reste qu'à choisir la conversation.</p>",
+   "<p class=\"muted\">You probably have a couple in mind who would get something out of this. The message is ready, just pick the conversation.</p>"
+  ],
+  [
+   "content: \"Le message : \";",
+   "content: \"The message: \";"
+  ],
+  [
+   "const AMIS_TEXTE = \"On vient de faire le point à deux sur qui fait quoi à la maison, et surtout qui y pense : 50 tâches, une dizaine de minutes, gratuit et sans inscription. Essayez, vous nous direz : \";",
+   "const AMIS_TEXTE = \"We just took stock together of who does what at home, and above all who thinks of it: 50 tasks, about ten minutes, free and with no sign-up. Give it a go and tell us what you think: \";"
+  ],
+  [
+   "enc(\"Qui y pense ? Qui fait quoi à la maison\")",
+   "enc(\"Who thinks of it? Who does what at home\")"
+  ],
+  [
+   "aria-label=\"Envoyer par ${nom}\"",
+   "aria-label=\"Send via ${nom}\""
+  ],
+  [
+   "Copier le message`",
+   "Copy the message`"
+  ],
+  [
+   "copier.lastChild.textContent = \"Message copié\"; setTimeout(() => copier.lastChild.textContent = \"Copier le message\", 2000);",
+   "copier.lastChild.textContent = \"Message copied\"; setTimeout(() => copier.lastChild.textContent = \"Copy the message\", 2000);"
+  ],
+  [
+   "prompt(\"Copiez ce message :\", t)",
+   "prompt(\"Copy this message:\", t)"
+  ],
+  [
+   "<p class=\"small muted avis-amis\">Puisque vous le recommanderiez, un couple d'amis à qui l'envoyer&nbsp;? Le message est prêt.</p>",
+   "<p class=\"small muted avis-amis\">Since you would recommend it, is there a couple you know to send it to? The message is ready.</p>"
+  ],
+  [
+   "<p class=\"avis-cafe-lien\">Ou <a href=\"https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=avis&amp;utm_campaign=soutenir\" target=\"_blank\" rel=\"noopener\" data-soutenir=\"avis\">remerciez-nous d'un café (2&nbsp;€)</a>, pour garder le site gratuit et en ligne.</p>",
+   "<p class=\"avis-cafe-lien\">Or <a href=\"https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=avis&amp;utm_campaign=soutenir\" target=\"_blank\" rel=\"noopener\" data-soutenir=\"avis\">say thanks with a coffee (€2)</a>, to keep the site free and online.</p>"
   ],
   [
    "<p class=\"pap-note\">${n} tâches, une dizaine de minutes. Le temps de chaque tâche part d'une moyenne pour un couple&nbsp;: vous l'ajusterez sous le résultat. Besoin de vous arrêter&nbsp;? Revenez sur le site depuis cet appareil, vous reprendrez ici.</p>",
