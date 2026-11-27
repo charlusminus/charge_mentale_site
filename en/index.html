@@ -1875,7 +1875,7 @@
     const quoi = st.fait === "both" ? "fait" : (st.fait && st.pense === "both") ? "pense" : null;
     if (!quoi) return null;
     // Deux proportions (avis du 22/11/2026) : « les deux » à « qui s'en occupe » ouvre deux réglettes, une pour le temps
-    // passé à le faire, une pour y penser. Depuis le 26/11/2026 (retour de Charles), les deux s'affichent d'emblée, sans
+    // passé à le faire, une pour y penser. Depuis le 26/11/2026, les deux s'affichent d'emblée, sans
     // passer par un lien : tant qu'on ne touche pas à la seconde, « y pense » suit la part du temps ; la régler fait passer
     // « y pense » de « suit » à « les deux » choisi, avec sa propre part.
     const deux = st.fait === "both" && (st.pense === "both" || st.pense === null);
