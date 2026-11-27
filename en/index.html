@@ -633,6 +633,17 @@
   .affiner tr.repart-ligne td { padding: 0 0 .6rem; border: 0; }
   .affiner tr.repart-ligne .repart { margin-top: 0; max-width: 30rem; }
   .affiner .repart input { width: 100%; padding: 0; border: 0; border-radius: 0; background: transparent; }   /* la réglette ne prend pas le gabarit des champs chiffrés */
+  /* « Envoyez-le à un couple d'amis » (27/11/2026, plan de relance) : seuls 2 % des foyers envoyaient le site à quelqu'un
+     d'autre, avec un bloc placé tout en bas. Une demande explicite, juste après l'envoi à l'autre, et un message prêt. */
+  .amis { margin-top: 2rem; padding: 1.2rem 1.3rem; border: 1.5px solid var(--ink); border-radius: var(--r); }
+  .amis h3 { margin-bottom: .2rem; }
+  .amis-msg { margin: .8rem 0 0; padding: .7rem .9rem; background: var(--bg-2); border-radius: var(--r); font-size: .92rem; }
+  .amis-msg::before { content: "The message: "; font-weight: 600; }
+  .avis-amis-place .amis-msg { display: none; }
+  .avis-amis { margin: .3rem 0 .4rem; }
+  .avis-cafe-lien { margin: .9rem 0 0; font-size: .9rem; }
+  .avis-cafe-lien a { color: var(--ink); font-weight: 600; text-underline-offset: 3px; }
+  @media print { .amis { display: none; } }
   .rs { display: flex; gap: .6rem; flex-wrap: wrap; margin: .7rem 0 0; }
   .rs a, .rs button { display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .85rem .5rem .7rem; border-radius: 999px; border: 1.5px solid var(--border); background: var(--paper); color: var(--ink); text-decoration: none; font: inherit; font-size: .9rem; cursor: pointer; }
   .rs a:hover, .rs button:hover { border-color: var(--ink); }
@@ -1281,6 +1292,11 @@
       </div>
 <p class="parler"><strong>Before you talk it over.</strong> A method for one evening, tried at home and with friends: <a href="blog/talking-about-chores-without-a-row.html" data-lien="parler-resultat">how to talk about sharing chores without a row</a>.</p>
       <div class="comparer" id="comparer" hidden></div>
+      <section class="amis" id="amis" aria-labelledby="amis-titre">
+        <h3 id="amis-titre">Send it to a couple you know</h3>
+        <p class="muted">You probably have a couple in mind who would get something out of this. The message is ready, just pick the conversation.</p>
+        <div class="amis-place" data-amis="resultat"></div>
+      </section>
       <section class="avis" id="avis" aria-labelledby="avis-titre">
         <h3 id="avis-titre">Your feedback</h3>
         <p class="small muted">Two clicks to tell us whether the tool was useful. Optional and anonymous.</p>
@@ -2884,6 +2900,34 @@
     const q = `?utm_source=${source}&utm_medium=${compte ? "envoi" : "partage"}`;
     return compte ? location.origin + location.pathname + q + location.hash : SITE + q;
   }
+  // « Envoyez-le à un couple d'amis » (27/11/2026) : sous l'envoi à l'autre, et dans le merci d'un avis de 9 ou 10.
+  // utm_medium=amis, pour lire dans l'étude les foyers arrivés par cette demande ; GA : partage, campagne « amis ».
+  const AMIS_TEXTE = "We just took stock together of who does what at home, and above all who thinks of it: 50 tasks, about ten minutes, free and with no sign-up. Give it a go and tell us what you think: ";
+  function amis(place, origine) {
+    const L = src => SITE + `?utm_source=${src}&utm_medium=amis`, enc = encodeURIComponent;
+    const msg = document.createElement("p"); msg.className = "amis-msg"; msg.textContent = AMIS_TEXTE + SITE;
+    const rs = document.createElement("div"); rs.className = "rs";
+    const items = [["whatsapp", "WhatsApp", `https://wa.me/?text=${enc(AMIS_TEXTE + L("whatsapp"))}`]];
+    if (matchMedia("(pointer: coarse)").matches) items.push(["sms", "SMS", `sms:?&body=${enc(AMIS_TEXTE + L("sms"))}`]);
+    items.push(["mail", "Email", `mailto:?subject=${enc("Who thinks of it? Who does what at home")}&body=${enc(AMIS_TEXTE + L("email"))}`]);
+    const mesure = canal => { if (window.__ga) gtag("event", "partage", { canal, campagne: "amis", origine }); };
+    rs.innerHTML = items.map(([ic, nom, href]) => `<a href="${href}" ${ic === "sms" ? "" : 'target="_blank" rel="noopener" '}data-canal="${ic}" aria-label="Send via ${nom}">${ic === "sms" ? "" : `<svg><use href="#i-${ic}"/></svg>`}${nom}</a>`).join("");
+    rs.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mesure(a.dataset.canal)));
+    const copier = document.createElement("button"); copier.type = "button"; copier.innerHTML = `<svg><use href="#i-lien"/></svg>Copy the message`;
+    copier.addEventListener("click", async () => {
+      mesure("copie"); const t = AMIS_TEXTE + L("copie");
+      try { await navigator.clipboard.writeText(t); copier.lastChild.textContent = "Message copied"; setTimeout(() => copier.lastChild.textContent = "Copy the message", 2000); }
+      catch (e) { prompt("Copy this message:", t); }
+    });
+    rs.appendChild(copier);
+    if (navigator.share) {
+      const natif = document.createElement("button"); natif.type = "button"; natif.innerHTML = `<svg><use href="#i-partager"/></svg>Other app`;
+      natif.addEventListener("click", () => { mesure("natif"); navigator.share({ title: "Qui y pense ?", text: AMIS_TEXTE, url: L("natif") }).catch(() => {}); });
+      rs.appendChild(natif);
+    }
+    place.replaceChildren(msg, rs);
+  }
+  document.querySelectorAll("[data-amis]").forEach(p => amis(p, p.dataset.amis));
   function renderPartage() {
     document.querySelectorAll(".rs[data-partage]").forEach(box => {
       const compte = box.dataset.partage === "compte", pied = box.classList.contains("rs-pied");
@@ -3413,11 +3457,14 @@
       if (window.__ga) gtag("event", "avis_envoye", { contexte: o.contexte, note: o.note === "" ? "aucune" : o.note, aide: o.aide || "aucune" });
       noter("envoye");
       // Score of 9 or 10 (26/11/2026): the thank-you offers, without pressing, the coffee from the Support page.
+      // Depuis le 27/11/2026, la demande passe d'abord par l'envoi à un couple d'amis (la question portait justement sur
+      // la recommandation) ; le café reste, en simple lien dessous.
       const cafe = Number(o.note) >= 9;
       formulaires.forEach(x => {
         x.envoye = true;
-        x.f.innerHTML = `<p class="avis-merci">Thank you for your feedback.</p>` + (cafe ? `<p class="small muted avis-cafe">If you like, a coffee helps keep the site free and online.</p>
-          <a class="bmc" href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=avis&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="avis"><span>Say thanks with a coffee (€2)</span></a>` : "");
+        x.f.innerHTML = `<p class="avis-merci">Thank you for your feedback.</p>` + (cafe ? `<p class="small muted avis-amis">Since you would recommend it, is there a couple you know to send it to? The message is ready.</p><div class="avis-amis-place"></div>
+          <p class="avis-cafe-lien">Or <a href="https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=avis&amp;utm_campaign=soutenir" target="_blank" rel="noopener" data-soutenir="avis">say thanks with a coffee (€2)</a>, to keep the site free and online.</p>` : "");
+        const p = x.f.querySelector(".avis-amis-place"); if (p) amis(p, "avis-" + x.contexte);
         const a = x.f.querySelector("[data-soutenir]");
         if (a) a.addEventListener("click", () => { if (window.__ga) gtag("event", "soutenir_clic", { origine: "avis-" + x.contexte }); });
       });
