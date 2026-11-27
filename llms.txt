@@ -13,6 +13,7 @@ Pour afficher le résultat, une copie anonymisée des réponses (sans prénoms n
   - [Paid work and work at home: counting both](https://quiypense.org/en/blog/paid-work-and-housework.html)
   - [She fills it in, he fills it in: why the figures don't say the same thing](https://quiypense.org/en/blog/she-fills-it-in-he-fills-it-in.html)
   - [Handing over a task but keeping the thinking lightens nothing](https://quiypense.org/en/blog/delegating-without-the-thinking.html)
+  - [A household chores list for two: fifty tasks, and what each one takes to think of](https://quiypense.org/en/blog/household-chores-list.html)
   - [How to talk about sharing the chores without it ending in a row](https://quiypense.org/en/blog/talking-about-chores-without-a-row.html)
 - MCP server, same endpoint (https://quiypense-mcp.quiypense-mcp.workers.dev/mcp): pass `langue: "en"` to lister_taches, calculer_resultat and afficher_questionnaire for British English tasks, results and a link to /en/.
 
