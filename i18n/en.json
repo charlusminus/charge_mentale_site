@@ -1761,10 +1761,6 @@
    "<p class=\"pied-bas\">Who thinks of it? (quiypense.org) started as a spreadsheet kept by two people, at home. An independent project, with no sign-up and no ads. The share link contains your answers, nothing else. A question: <a href=\"mailto:contact@quiypense.org\">contact@quiypense.org</a>. Sources: <a href=\"https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/articles/womenshouldertheresponsibilityofunpaidwork/2016-11-10\">ONS, unpaid work 2015</a>, <a href=\"https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/bulletins/timeuseintheuk/march2023\">ONS, Time use in the UK 2023</a>, <a href=\"https://www.insee.fr/fr/statistiques/2123967\">INSEE, time-use survey 2010 (France, default durations)</a>, <a href=\"https://journals.sagepub.com/doi/10.1177/0003122419859007\">Daminger 2019</a>, <a href=\"https://www.fairplaylife.com/the-book\">Fair Play</a>. <a href=\"../\" hreflang=\"fr\" lang=\"fr\">Français</a></p>"
   ],
   [
-   "<p class=\"pap-note\">Le temps de chaque tâche part d'une moyenne pour un couple&nbsp;: vous l'ajusterez sous le résultat.</p>",
-   "<p class=\"pap-note\">The time for each task starts from an average for a couple: you can adjust it under the result.</p>"
-  ],
-  [
    "d.innerHTML = `<p class=\"repas-lbl\">Le midi, en semaine</p><div class=\"choix-mini\" data-k=\"midi\" role=\"group\" aria-label=\"Le midi, en semaine\">${b(\"midi\", \"m\", \"À la maison\")}${b(\"midi\", \"d\", \"Dehors\")}</div>\n      <p class=\"repas-lbl\">En général, les repas sont</p><div class=\"choix-mini\" data-k=\"effort\" role=\"group\" aria-label=\"En général, les repas sont\">${b(\"effort\", \"p\", \"Tout prêts\")}${b(\"effort\", \"s\", \"Simples\")}${b(\"effort\", \"f\", \"Faits maison\")}</div>\n      <p class=\"repas-temps\"></p>`;",
    "d.innerHTML = `<p class=\"repas-lbl\">Lunch on weekdays</p><div class=\"choix-mini\" data-k=\"midi\" role=\"group\" aria-label=\"Lunch on weekdays\">${b(\"midi\", \"m\", \"At home\")}${b(\"midi\", \"d\", \"Out\")}</div>\n      <p class=\"repas-lbl\">Meals are usually</p><div class=\"choix-mini\" data-k=\"effort\" role=\"group\" aria-label=\"Meals are usually\">${b(\"effort\", \"p\", \"Ready-made\")}${b(\"effort\", \"s\", \"Simple\")}${b(\"effort\", \"f\", \"Home-made\")}</div>\n      <p class=\"repas-temps\"></p>`;"
   ],
@@ -1871,6 +1867,30 @@
   [
    "<p class=\"avis-cafe-lien\">Ou <a href=\"https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=avis&amp;utm_campaign=soutenir\" target=\"_blank\" rel=\"noopener\" data-soutenir=\"avis\">remerciez-nous d'un café (2&nbsp;€)</a>, pour garder le site gratuit et en ligne.</p>",
    "<p class=\"avis-cafe-lien\">Or <a href=\"https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=avis&amp;utm_campaign=soutenir\" target=\"_blank\" rel=\"noopener\" data-soutenir=\"avis\">say thanks with a coffee (€2)</a>, to keep the site free and online.</p>"
+  ],
+  [
+   "<p class=\"pap-note\">${n} tâches, une dizaine de minutes. Le temps de chaque tâche part d'une moyenne pour un couple&nbsp;: vous l'ajusterez sous le résultat. Besoin de vous arrêter&nbsp;? Revenez sur le site depuis cet appareil, vous reprendrez ici.</p>",
+   "<p class=\"pap-note\">${n} tasks, about ten minutes. Each task's time starts from an average for a couple: you can adjust it below the result. Need to stop? Come back to the site on this device and you will pick up here.</p>"
+  ],
+  [
+   "<p class=\"small muted\">Vos réponses sont gardées sur cet appareil seulement, et effacées dès que le résultat s'affiche.</p>",
+   "<p class=\"small muted\">Your answers are kept on this device only, and erased as soon as the result is shown.</p>"
+  ],
+  [
+   ">Reprendre où vous en étiez</button>",
+   ">Pick up where you left off</button>"
+  ],
+  [
+   ">Recommencer à zéro</button>",
+   ">Start again from scratch</button>"
+  ],
+  [
+   "`${v.a} et ${v.b}, vous` : \"Vous\"",
+   "`${v.a} and ${v.b}, you` : \"You\""
+  ],
+  [
+   "`${noms} aviez commencé à faire le point : ${v.n} tâche${v.n > 1 ? \"s\" : \"\"} sur ${v.total} déjà répondue${v.n > 1 ? \"s\" : \"\"}, encore ${min} min environ.`",
+   "`${noms} had started taking stock: ${v.n} of ${v.total} tasks already answered, about ${min} min to go.`"
   ]
  ]
 }

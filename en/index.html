@@ -16,6 +16,7 @@
     gtag('config', 'G-NYTV9VXCBN', { send_page_view: false });
     if (window.__pageEtape) window.__pageEtape(true);
     if (window.__cmpOuvert) gtag('event', 'comparer_ouvert');   // lien « chacun de son côté » ouvert (11/11/2026)
+    if (window.__repriseProposee) gtag('event', 'reprise_proposee', { faites: window.__repriseProposee });   // questionnaire commencé, reprise proposée (27/11/2026)
   }
 </script>
 <meta charset="utf-8">
@@ -862,6 +863,13 @@
   .pap-prog i { display: block; height: 100%; background: var(--ink); transition: width .25s; }
   .pap-nom { font-family: var(--serif); font-size: 1.75rem; line-height: 1.15; margin: 0 0 .4rem; font-weight: 500; }
   .pap-aide { color: var(--muted); margin: 0 0 1.4rem; font-size: .95rem; }
+  /* reprise d'un questionnaire commencé (27/11/2026, plan de relance : 15 % des foyers s'arrêtent dans les quatre premières familles) */
+  .reprise { margin: 0 0 1.4rem; padding: 1rem 1.2rem; background: var(--bg-2); border-left: 3px solid var(--ink); border-radius: 0 var(--r) var(--r) 0; }
+  .reprise[hidden] { display: none; }
+  .reprise p { margin: 0; }
+  .reprise .reprise-titre { font-weight: 600; }
+  .reprise .actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.2rem; margin-top: .8rem; }
+  .reprise .lien { background: none; border: 0; padding: 0; font: inherit; font-size: .92rem; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
   .pap-note { margin: -.8rem 0 1.2rem; padding: .55rem .8rem; border-radius: var(--r); background: var(--bg-2); font-size: .85rem; color: var(--muted); }
   /* heures de garde saisies dès la première réponse (13/11/2026) */
   .h-saisies { display: grid; gap: .6rem; margin: 0 0 1.2rem; }
@@ -1057,6 +1065,11 @@
 
   <!-- ÉCRAN 1 : accueil -->
   <div class="ecran" id="e1">
+    <aside class="reprise" id="reprise" aria-labelledby="reprise-titre" hidden>
+      <p class="reprise-titre" id="reprise-titre"></p>
+      <p class="small muted">Your answers are kept on this device only, and erased as soon as the result is shown.</p>
+      <div class="actions"><button class="btn" type="button" id="reprise-go">Pick up where you left off</button><button class="lien" type="button" id="reprise-non">Start again from scratch</button></div>
+    </aside>
     <header class="hero">
       <div class="hero-txt">
         <h1><span class="sur">The mental load test for couples</span>Who thinks of it?</h1>
@@ -1641,6 +1654,38 @@
     try { sessionStorage.setItem("saisie", par === "a" ? "b" : "a"); } catch (e) {}
     history.replaceState(null, "", location.pathname + "#" + encode());
   })();
+  /* ---------- reprendre là où l'on s'est arrêté (27/11/2026, plan de relance) ----------
+     15 % des foyers quittent le questionnaire, surtout dans les quatre premières familles, et le lien n'est gardé nulle
+     part : revenir sur le site faisait tout recommencer. Tant que le résultat n'est pas affiché, l'adresse en cours est
+     gardée dans le navigateur (localStorage, cette page seulement, 30 jours) ; elle est effacée dès le résultat, ou par
+     « Recommencer à zéro ». Rien ne part ailleurs. */
+  const reprise = (() => {
+    const CLE = "en-cours:" + location.pathname, TRENTE_JOURS = 1000 * 60 * 60 * 24 * 30;
+    const lire = () => { try { const v = JSON.parse(localStorage.getItem(CLE) || "null"); return v && v.h && Date.now() - v.t < TRENTE_JOURS ? v : null; } catch (e) { return null; } };
+    const effacer = () => { try { localStorage.removeItem(CLE); } catch (e) {} };
+    return {
+      garder(n, total) { try { localStorage.setItem(CLE, JSON.stringify({ h: encode(), t: Date.now(), n, total, a: S.nomA, b: S.nomB })); } catch (e) {} },
+      effacer,
+      proposer() {
+        if (location.hash) return;
+        const v = lire(); if (!v) { effacer(); return; }
+        const box = document.getElementById("reprise"); if (!box) return;
+        const noms = v.a && v.b ? `${v.a} and ${v.b}, you` : "You";
+        const min = Math.max(1, Math.round((v.total - v.n) * 12 / 60));
+        box.querySelector(".reprise-titre").textContent = `${noms} had started taking stock: ${v.n} of ${v.total} tasks already answered, about ${min} min to go.`;
+        box.hidden = false;
+        if (window.__ga) gtag("event", "reprise_proposee", { faites: v.n }); else window.__repriseProposee = v.n;
+        document.getElementById("reprise-go").addEventListener("click", () => {
+          if (window.__ga) gtag("event", "reprise_clic", { action: "reprendre", faites: v.n });
+          history.replaceState(null, "", location.pathname + location.search + "#" + v.h); location.reload();
+        });
+        document.getElementById("reprise-non").addEventListener("click", () => {
+          if (window.__ga) gtag("event", "reprise_clic", { action: "recommencer", faites: v.n });
+          effacer(); box.hidden = true; document.getElementById("nomA").focus();
+        });
+      }
+    };
+  })();
   let garde = false;   // vrai dès que le compte a été gardé quelque part (lien copié ou envoyé, Excel, intention envoyée) : plus d'avertissement à la sortie
 
   function fresh() {
@@ -1812,7 +1857,7 @@
   }
   function show(n) {
     S.ecran = n; M.ecran(n);
-    if (n === 3) numeroFoyer();
+    if (n === 3) { numeroFoyer(); reprise.effacer(); }
     if (n === 3 && S.cmp && S.cmp.etat === "e") { S.cmp.etat = "c"; save(); }
     document.querySelectorAll(".ecran").forEach((e, i) => e.classList.toggle("actif", i + 1 === n));
     document.getElementById("haut").classList.toggle("compact", n > 1);
@@ -2082,7 +2127,7 @@
     const avance = () => { if (PAP.ajout) { PAP.ajout = null; PAP.i = listePap().length; } else PAP.i++; renderCatalogue(); update(); };
     carte.innerHTML = `<div class="pap-haut"><span${fi === 0 ? ' class="neuve"' : ""}>${t.catNom}${fi === 0 ? ` · ${dansFam.length} task${dansFam.length > 1 ? "s" : ""}` : ` · ${fi + 1} of ${dansFam.length}`}</span><span>${Math.max(1, Math.round((n - PAP.i) * 12 / 60))} min left</span></div>
       <div class="pap-prog"><i style="width:${100 * PAP.i / n}%"></i></div>
-      <h3 class="pap-nom">${t.nom}</h3>${t.aide ? `<p class="pap-aide">${t.aide}</p>` : `<p class="pap-aide"></p>`}${PAP.i === 0 ? `<p class="pap-note">The time for each task starts from an average for a couple: you can adjust it under the result.</p>` : ""}
+      <h3 class="pap-nom">${t.nom}</h3>${t.aide ? `<p class="pap-aide">${t.aide}</p>` : `<p class="pap-aide"></p>`}${PAP.i === 0 ? `<p class="pap-note">${n} tasks, about ten minutes. Each task's time starts from an average for a couple: you can adjust it below the result. Need to stop? Come back to the site on this device and you will pick up here.</p>` : ""}
       ${S.cmp && S.cmp.etat === "e" ? avantEnsemble(t) : ""}
       <p class="pap-q">Who does it?</p>`;
     M.prog(carte, 100 * PAP.i / n);
@@ -2718,6 +2763,7 @@
     document.getElementById("hint2").textContent = r.renseignees < r.total ? `${r.total - r.renseignees} task${r.total - r.renseignees > 1 ? "s" : ""} without an answer will be left out` : "";
     if (S.ecran === 3) renderResults(r); else renderPro(null);   // prénoms des champs « travail rémunéré » de l'étape 2
     save();
+    if (S.ecran === 2 && r.renseignees > 0) reprise.garder(r.renseignees, r.total);
     renderPartage();
   }
 
@@ -2885,9 +2931,12 @@
   document.getElementById("reset").addEventListener("click", (e) => {
     e.preventDefault();
     if (!confirm("Clear everything and start again?")) return;
-    S = fresh(); iA.value = iB.value = ""; iE.value = "0"; iAn.value = "0"; location.hash = ""; show(1);
+    S = fresh(); iA.value = iB.value = ""; iE.value = "0"; iAn.value = "0"; location.hash = ""; reprise.effacer(); show(1);
   });
 
+  // Reprise dans l'onglet (27/11/2026) : une page rouverte sur l'étape 2 repart de la première tâche sans réponse, pas de la première.
+  if (S.ecran === 2 && !(S.cmp && S.cmp.etat === "e")) { const l = listePap(), i = l.findIndex(t => !(S.t[t.id] && S.t[t.id].fait)); PAP.i = i < 0 ? l.length : i; }
+  reprise.proposer();
   show(S.ecran || 1);
 
 
