@@ -31,10 +31,10 @@ Outils : afficher_questionnaire (le questionnaire dans la conversation, pour les
 - [Faire le point](https://quiypense.org/) : l'outil, en trois étapes (le foyer, qui y pense, le résultat)
 - [Méthode](https://quiypense.org/methode/) : comment le résultat est calculé, les durées par défaut et leurs sources (INSEE), la liste complète des tâches, les limites
 - [Partenaires](https://quiypense.org/partenaires/) : associations, Caf, collectivités et employeurs qui veulent proposer le test à leur public
-- [Charte](https://quiypense.org/charte/) : gratuit, aucune donnée vendue, aucun partenaire qui décide de ce que dit le site
+- [Charte](https://quiypense.org/charte/) : gratuit, aucune donnée vendue, aucun partenaire qui décide de ce que dit le site, suggestion de partenaire toujours signalée
 - [Confidentialité](https://quiypense.org/confidentialite/) : ce qui est collecté (copie anonymisée pour l'étude, avis, audience avec accord), pourquoi, vos droits
 - [Conditions d'utilisation](https://quiypense.org/conditions/) : usage, limites du résultat, mentions légales
-- [Soutenir](https://quiypense.org/soutenir/) : à quoi sert un don, ce que le site ne fera pas (ni vente de données, ni mise en relation payante)
+- [Soutenir](https://quiypense.org/soutenir/) : à quoi sert un don, ce que le site ne fera pas (ni vente de données, ni publicité pendant le parcours)
 - [Presse](https://quiypense.org/presse/) : premiers résultats de l'étude, chiffres sourcés, dossier de presse
 - [Blog](https://quiypense.org/blog/) : ce que disent les enquêtes, et comment en parler à deux
 
