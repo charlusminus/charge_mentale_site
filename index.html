@@ -638,6 +638,12 @@
      d'autre, avec un bloc placé tout en bas. Une demande explicite, juste après l'envoi à l'autre, et un message prêt. */
   .amis { margin-top: 2rem; padding: 1.2rem 1.3rem; border: 1.5px solid var(--ink); border-radius: var(--r); }
   .amis h3 { margin-bottom: .2rem; }
+  /* jauge collective (27/11/2026, plan de relance) : foyers à date sur 50 000 avant le baromètre ; mise à jour par tools/chiffres.py */
+  .jauge { margin: .9rem 0 0; }
+  .jauge-barre { height: 12px; background: var(--bg-2); border: 1.5px solid var(--ink); border-radius: 99px; overflow: hidden; }
+  .jauge-barre span { display: block; height: 100%; background: var(--a); }
+  .jauge-txt { margin: .5rem 0 0; font-size: .92rem; color: var(--muted); }
+  .jauge-txt strong { color: var(--ink); }
   .amis-msg { margin: .8rem 0 0; padding: .7rem .9rem; background: var(--bg-2); border-radius: var(--r); font-size: .92rem; }
   .amis-msg::before { content: "Le message : "; font-weight: 600; }
   .avis-amis-place .amis-msg { display: none; }
@@ -1313,6 +1319,10 @@
       <section class="amis" id="amis" aria-labelledby="amis-titre">
         <h3 id="amis-titre">Envoyez-le à un couple d'amis</h3>
         <p class="muted">Vous avez sûrement en tête un couple à qui ce point ferait du bien. Le message est prêt, il ne reste qu'à choisir la conversation.</p>
+<!-- en:retirer -->        <div class="jauge">
+          <div class="jauge-barre" aria-hidden="true"><span style="width:60%"></span></div>
+          <p class="jauge-txt"><strong>Plus de 30&nbsp;000 foyers</strong> ont fait le point. Nous en espérons 50&nbsp;000 avant le baromètre du 8&nbsp;mars&nbsp;2027&nbsp;: chaque couple à qui vous l'envoyez nous en rapproche.</p>
+        </div><!-- /en:retirer -->
         <div class="amis-place" data-amis="resultat"></div>
       </section>
       <section class="avis" id="avis" aria-labelledby="avis-titre">
