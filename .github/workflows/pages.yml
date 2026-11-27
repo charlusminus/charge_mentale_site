@@ -23,9 +23,18 @@ jobs:
       - uses: actions/configure-pages@v5
         with:
           enablement: true
-      # Seuls les fichiers du site partent en ligne : pas de README, RELEASE, outils ni workflow (aucune trace du dépôt sur le site).
+      # Seuls les fichiers du site partent en ligne : aucun fichier caché (.git, .github, .gitignore…), aucun .md
+      # (README, RELEASE…), ni les outils et leurs entrées (tools/, i18n/ lu par tools/traduire.mjs).
       - name: Assembler le site
-        run: rsync -a --exclude='.git' --exclude='.github' --exclude='README.md' --exclude='RELEASE.md' --exclude='tools' --exclude='_site' ./ _site/
+        run: |
+          rsync -a --exclude='.*' --exclude='*.md' --exclude='/tools' --exclude='/i18n' \
+            --exclude='node_modules' --exclude='/_site' ./ _site/
+      # Garde-fou : si un fichier interne passe quand même, le déploiement s'arrête avant la mise en ligne.
+      - name: Vérifier qu'aucun fichier interne n'est publié
+        run: |
+          fuite=$(cd _site && find . \( -name '.*' -o -name '*.md' -o -path './tools*' -o -path './i18n*' -o -name node_modules \) ! -name . -print)
+          if [ -n "$fuite" ]; then echo "Fichiers internes dans le site :"; echo "$fuite"; exit 1; fi
+          echo "OK : $(cd _site && find . -type f | wc -l) fichiers publiés, aucun fichier interne."
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
@@ -41,3 +50,14 @@ jobs:
         uses: actions/deploy-pages@v4
       - id: deploy
         run: echo "page_url=${{ steps.deploy1.outputs.page_url || steps.deploy2.outputs.page_url }}" >> "$GITHUB_OUTPUT"
+      # Contrôle en ligne après déploiement : les fichiers internes doivent répondre 404 sur quiypense.org.
+      - name: Contrôler le site en ligne
+        run: |
+          sleep 60
+          ko=0
+          for f in README.md RELEASE.md .gitignore tools/traduire.mjs i18n/en.json .github/workflows/pages.yml; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "https://quiypense.org/$f?v=$GITHUB_RUN_ID")
+            echo "$f -> $code"; [ "$code" = 404 ] || ko=1
+          done
+          [ "$(curl -s -o /dev/null -w '%{http_code}' https://quiypense.org/)" = 200 ] || { echo "Accueil injoignable"; ko=1; }
+          exit $ko
