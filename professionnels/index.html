@@ -48,6 +48,11 @@
   .cta { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.2rem; margin: 1.6rem 0 2rem;
     padding: 1.2rem 1.3rem; background: var(--bg-2); border-radius: 12px; }
   .cta p { margin: 0; flex: 1 1 18rem; }
+  .temoin { display: flex; gap: 1rem; align-items: flex-start; margin: 0 0 2rem; padding: 1.1rem 1.3rem; background: var(--bg-2); border-left: 3px solid var(--a); border-radius: 0 12px 12px 0; }
+  .temoin img { flex: none; width: 64px; height: 64px; border-radius: 50%; border: 1px solid var(--line); }
+  .temoin blockquote { margin: 0; padding: 0; border: 0; font-family: var(--serif); font-size: 1.1rem; line-height: 1.5; }
+  @media (max-width: 720px) { .temoin { flex-direction: column; gap: .7rem; } .temoin img { width: 52px; height: 52px; } }
+  .temoin figcaption { margin-top: .7rem; font-size: .92rem; color: var(--muted); }
   .date { font-size: .9rem; color: var(--muted); }
   @media (max-width: 720px) { .paire { grid-template-columns: 1fr; } table.deroule td:first-child { white-space: normal; width: 5rem; } }
   @media print { .haut, .pied, .cta, .lien-pro button, .fil { display: none; } }
@@ -75,6 +80,17 @@
       rééquilibrer n'apparaissent que si le temps penche nettement, et jamais vers celle ou celui qui porte déjà le plus.</li>
     <li>Deux façons de répondre&nbsp;: ensemble, ou chacun de son côté, puis les deux regards côte à côte.</li>
   </ul>
+
+  <figure class="temoin">
+    <img src="/img/temoins/marie-mayo.jpg" alt="" width="64" height="64">
+    <div>
+    <blockquote>«&nbsp;Un formidable outil, qui permet de sortir du ressentiment pour objectiver. La possibilité de le
+      remplir à deux facilite l'échange entre les partenaires. Bref, une belle première étape pour discuter du contrat
+      implicite nommé “vie commune”.&nbsp;»</blockquote>
+    <figcaption><a href="https://www.linkedin.com/in/marie-mayo-81b020103/" rel="noopener">Marie Mayo</a>,
+      accompagnement parental (parents d'enfants avec un trouble du neurodéveloppement)</figcaption>
+    </div>
+  </figure>
 
   <h2>Trois façons de l'utiliser</h2>
   <ol class="etapes">

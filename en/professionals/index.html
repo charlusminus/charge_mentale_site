@@ -49,6 +49,11 @@
   .cta { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.2rem; margin: 1.6rem 0 2rem;
     padding: 1.2rem 1.3rem; background: var(--bg-2); border-radius: 12px; }
   .cta p { margin: 0; flex: 1 1 18rem; }
+  .temoin { display: flex; gap: 1rem; align-items: flex-start; margin: 0 0 2rem; padding: 1.1rem 1.3rem; background: var(--bg-2); border-left: 3px solid var(--a); border-radius: 0 12px 12px 0; }
+  .temoin img { flex: none; width: 64px; height: 64px; border-radius: 50%; border: 1px solid var(--line); }
+  .temoin blockquote { margin: 0; padding: 0; border: 0; font-family: var(--serif); font-size: 1.1rem; line-height: 1.5; }
+  @media (max-width: 720px) { .temoin { flex-direction: column; gap: .7rem; } .temoin img { width: 52px; height: 52px; } }
+  .temoin figcaption { margin-top: .7rem; font-size: .92rem; color: var(--muted); }
   .date { font-size: .9rem; color: var(--muted); }
   @media (max-width: 720px) { .paire { grid-template-columns: 1fr; } table.deroule td:first-child { white-space: normal; width: 5rem; } }
   @media print { .haut, .pied, .cta, .lien-pro button, .fil { display: none; } }
@@ -76,6 +81,17 @@
       only appear when the time leans clearly one way, and never towards the person already carrying more.</li>
     <li>Two ways to answer: together, or each on their own, then both views side by side.</li>
   </ul>
+
+  <figure class="temoin">
+    <img src="/img/temoins/marie-mayo.jpg" alt="" width="64" height="64">
+    <div>
+    <blockquote>“A wonderful tool, which helps move from resentment to something objective. Being able to fill it in
+      together makes it easier for the partners to talk. In short, a fine first step towards discussing the unspoken
+      contract called ‘life together’.”</blockquote>
+    <figcaption><a href="https://www.linkedin.com/in/marie-mayo-81b020103/" rel="noopener">Marie Mayo</a>,
+      parenting support (parents of children with a neurodevelopmental disorder). Translated from French.</figcaption>
+    </div>
+  </figure>
 
   <h2>Three ways to use it</h2>
   <ol class="etapes">
