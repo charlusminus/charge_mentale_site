@@ -11,7 +11,7 @@ Jamais de commit/push direct sur `main`. Toute modif → branche + PR. `main` pr
 3. `git push -u origin feat/…` puis ouvrir la PR. Feu vert du responsable du site avant merge.
 4. Merge `main` → l'Action Pages déploie ; run **vert**.
    Réglage requis : Settings > Pages > Source = **GitHub Actions** (pas « Deploy from a branch », qui publie tout le dépôt, README, RELEASE et tools compris).
-5. **Smoke test prod** : https://charlusminus.github.io/charge_mentale_site/ (puis le domaine .org) → la page charge avec les polices, un compte complet jusqu'à l'export.
+5. **Smoke test prod** : https://quiypense.org/ → la page charge avec les polices, un compte complet jusqu'à l'export.
 6. **Commits orphelins** : `node tools/check-orphans.js` → doit sortir vert.
 7. **Rollback** : `git revert -m 1 <sha-merge>` + push.
 
