@@ -1869,8 +1869,8 @@
    "<p class=\"avis-cafe-lien\">Or <a href=\"https://ko-fi.com/quiypense?utm_source=quiypense&amp;utm_medium=avis&amp;utm_campaign=soutenir\" target=\"_blank\" rel=\"noopener\" data-soutenir=\"avis\">say thanks with a coffee (€2)</a>, to keep the site free and online.</p>"
   ],
   [
-   "<p class=\"pap-note\">${n} tâches, une dizaine de minutes. Le temps de chaque tâche part d'une moyenne pour un couple&nbsp;: vous l'ajusterez sous le résultat. Besoin de vous arrêter&nbsp;? Revenez sur le site depuis cet appareil, vous reprendrez ici.</p>",
-   "<p class=\"pap-note\">${n} tasks, about ten minutes. Each task's time starts from an average for a couple: you can adjust it below the result. Need to stop? Come back to the site on this device and you will pick up here.</p>"
+   "<p class=\"pap-note\">${n} tâches. Vous pouvez vous arrêter et reprendre ici depuis cet appareil.</p>",
+   "<p class=\"pap-note\">${n} tasks. You can stop and pick up here on this device.</p>"
   ],
   [
    "<p class=\"small muted\">Vos réponses sont gardées sur cet appareil seulement, et effacées dès que le résultat s'affiche.</p>",

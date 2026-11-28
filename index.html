@@ -876,7 +876,9 @@
   .reprise .reprise-titre { font-weight: 600; }
   .reprise .actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.2rem; margin-top: .8rem; }
   .reprise .lien { background: none; border: 0; padding: 0; font: inherit; font-size: .92rem; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
-  .pap-note { margin: -.8rem 0 1.2rem; padding: .55rem .8rem; border-radius: var(--r); background: var(--bg-2); font-size: .85rem; color: var(--muted); }
+  /* première carte allégée (28/11/2026) : la moitié des abandons se fait dans les quatre premières tâches ; une ligne
+     discrète sous la progression au lieu d'un encart, la carte de fin dit déjà que les durées s'ajustent sous le résultat */
+  .pap-note { margin: -.6rem 0 1.1rem; font-size: .82rem; color: var(--muted); }
   /* heures de garde saisies dès la première réponse (13/11/2026) */
   .h-saisies { display: grid; gap: .6rem; margin: 0 0 1.2rem; }
   .repas-q { margin: 0 0 1.2rem; padding: .8rem .9rem .7rem; border-radius: var(--r); background: var(--bg-2); }
@@ -2141,8 +2143,8 @@
     if (fi === 0) mesurePap("f:" + t.cat, t.cat);
     const avance = () => { if (PAP.ajout) { PAP.ajout = null; PAP.i = listePap().length; } else PAP.i++; renderCatalogue(); update(); };
     carte.innerHTML = `<div class="pap-haut"><span${fi === 0 ? ' class="neuve"' : ""}>${t.catNom}${fi === 0 ? ` · ${dansFam.length} tâche${dansFam.length > 1 ? "s" : ""}` : ` · ${fi + 1} sur ${dansFam.length}`}</span><span>encore ${Math.max(1, Math.round((n - PAP.i) * 12 / 60))} min</span></div>
-      <div class="pap-prog"><i style="width:${100 * PAP.i / n}%"></i></div>
-      <h3 class="pap-nom">${t.nom}</h3>${t.aide ? `<p class="pap-aide">${t.aide}</p>` : `<p class="pap-aide"></p>`}${PAP.i === 0 ? `<p class="pap-note">${n} tâches, une dizaine de minutes. Le temps de chaque tâche part d'une moyenne pour un couple&nbsp;: vous l'ajusterez sous le résultat. Besoin de vous arrêter&nbsp;? Revenez sur le site depuis cet appareil, vous reprendrez ici.</p>` : ""}
+      <div class="pap-prog"><i style="width:${100 * PAP.i / n}%"></i></div>${PAP.i === 0 ? `<p class="pap-note">${n} tâches. Vous pouvez vous arrêter et reprendre ici depuis cet appareil.</p>` : ""}
+      <h3 class="pap-nom">${t.nom}</h3>${t.aide ? `<p class="pap-aide">${t.aide}</p>` : `<p class="pap-aide"></p>`}
       ${S.cmp && S.cmp.etat === "e" ? avantEnsemble(t) : ""}
       <p class="pap-q">Qui s'en occupe ?</p>`;
     M.prog(carte, 100 * PAP.i / n);
